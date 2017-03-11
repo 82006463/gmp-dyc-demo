@@ -14,7 +14,7 @@
  *  * limitations under the License.
  *
  */
-package com.snakerflow.framework.flow;
+package com.snakerflow.common.utils;
 
 import java.beans.PropertyDescriptor;
 import java.util.*;

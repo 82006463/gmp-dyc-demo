@@ -36,7 +36,7 @@ import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.model.ProcessModel;
 
 import com.snakerflow.framework.security.shiro.ShiroUtils;
-import com.snakerflow.framework.flow.SnakerHelper;
+import com.snakerflow.common.utils.SnakerHelper;
 import com.snakerflow.framework.flow.service.SnakerEngineFacets;
 
 import org.springframework.beans.factory.annotation.Autowired;

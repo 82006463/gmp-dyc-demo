@@ -6,5 +6,5 @@
 	<bean class="org.snaker.engine.impl.LogInterceptor"/>
 	<bean class="org.snaker.engine.spring.SpelExpression"/>
 	<bean class="org.snaker.engine.impl.SurrogateInterceptor"/>
-	<bean class="com.snakerflow.framework.flow.CustomAccessStrategy"/>
+	<bean class="com.snakerflow.framework.flow.ext.CustomAccessStrategy"/>
 </config>
