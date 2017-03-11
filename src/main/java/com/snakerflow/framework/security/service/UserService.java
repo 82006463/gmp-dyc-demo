@@ -13,14 +13,15 @@ import com.snakerflow.common.utils.Digests;
 import com.snakerflow.common.utils.EncodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 用户管理类
  * @author yuqs
  * @since 0.1
  */
-@Component
-public class UserManager {
+@Service
+public class UserService {
 	public static final String HASH_ALGORITHM = "SHA-1";
 	public static final int HASH_INTERATIONS = 1024;
 	private static final int SALT_SIZE = 8;

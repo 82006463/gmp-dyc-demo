@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.snakerflow.framework.orm.Page;
 import com.snakerflow.framework.orm.PropertyFilter;
 import com.snakerflow.framework.security.entity.Menu;
-import com.snakerflow.framework.security.service.MenuManager;
+import com.snakerflow.framework.security.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MenuController {
 	//注入菜单管理对象
 	@Autowired
-	private MenuManager menuManager;
+	private MenuService menuManager;
 	
 	/**
 	 * 分页查询菜单，返回菜单列表视图

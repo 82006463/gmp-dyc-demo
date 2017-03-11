@@ -9,20 +9,21 @@ import com.snakerflow.framework.security.entity.Role;
 import com.snakerflow.framework.security.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 角色管理类
  * @author yuqs
  * @since 0.1
  */
-@Component
-public class RoleManager {
+@Service
+public class RoleService {
 	//注入角色持久化对象
 	@Autowired
 	private RoleDao roleDao;
 	//注入用户管理对象
 	@Autowired
-	private UserManager userManager;
+	private UserService userManager;
 	
 	/**
 	 * 保存、更新角色实体

@@ -8,7 +8,7 @@ import com.snakerflow.framework.orm.Page;
 import com.snakerflow.framework.orm.PropertyFilter;
 import com.snakerflow.framework.security.entity.Menu;
 import com.snakerflow.framework.security.entity.Resource;
-import com.snakerflow.framework.security.service.ResourceManager;
+import com.snakerflow.framework.security.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ResourceController {
 	//注入资源管理对象
 	@Autowired
-	private ResourceManager resourceManager;
+	private ResourceService resourceManager;
 	
 	/**
 	 * 分页查询资源，返回资源列表视图

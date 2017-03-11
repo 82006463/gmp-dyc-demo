@@ -10,7 +10,7 @@ import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.Ini.Section;
 import com.snakerflow.framework.security.entity.Authority;
 import com.snakerflow.framework.security.entity.Resource;
-import com.snakerflow.framework.security.service.ResourceManager;
+import com.snakerflow.framework.security.service.ResourceService;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,7 +26,7 @@ public class ShiroDefinitionSectionMetaSource implements FactoryBean<Ini.Section
 
 	//注入资源管理对象
 	@Autowired
-	private ResourceManager resourceManager;
+	private ResourceService resourceManager;
 	//注入默认的授权定义
 	private String filterChainDefinitions;
 	//格式化数据，符合shiro的格式，如：perms["admin"]

@@ -21,7 +21,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import com.snakerflow.framework.security.entity.User;
-import com.snakerflow.framework.security.service.UserManager;
+import com.snakerflow.framework.security.service.UserService;
 import com.snakerflow.common.utils.EncodeUtils;
 
 /**
@@ -32,12 +32,12 @@ import com.snakerflow.common.utils.EncodeUtils;
 public class ShiroAuthorizingRealm extends AuthorizingRealm {
 	private static Log log = LogFactory.getLog(ShiroAuthorizingRealm.class);
 
-    public void setUserManager(UserManager userManager) {
+    public void setUserManager(UserService userManager) {
         this.userManager = userManager;
     }
 
     //注入用户管理对象
-	private UserManager userManager;
+	private UserService userManager;
 	
 	/**
 	 * 构造函数，设置安全的初始化信息
@@ -120,8 +120,8 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
 	
 	@PostConstruct
 	public void initCredentialsMatcher() {
-		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(UserManager.HASH_ALGORITHM);
-		matcher.setHashIterations(UserManager.HASH_INTERATIONS);
+		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(UserService.HASH_ALGORITHM);
+		matcher.setHashIterations(UserService.HASH_INTERATIONS);
 		setCredentialsMatcher(matcher);
 	}
 

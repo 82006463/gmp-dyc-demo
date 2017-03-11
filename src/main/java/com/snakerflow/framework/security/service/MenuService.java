@@ -8,21 +8,21 @@ import com.snakerflow.framework.orm.PropertyFilter;
 import com.snakerflow.framework.security.dao.MenuDao;
 import com.snakerflow.framework.security.entity.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 菜单管理类
  * @author yuqs
  * @since 0.1
  */
-@Component
-public class MenuManager {
+@Service
+public class MenuService {
 	//注入菜单持久化对象
 	@Autowired
 	private MenuDao menuDao;
 	//注入资源管理对象
 	@Autowired
-	private ResourceManager resourceManager;
+	private ResourceService resourceManager;
 	
 	/**
 	 * 保存菜单实体

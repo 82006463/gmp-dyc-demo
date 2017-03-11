@@ -9,20 +9,21 @@ import com.snakerflow.framework.security.entity.Authority;
 import com.snakerflow.framework.security.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 权限管理类
  * @author yuqs
  * @since 0.1
  */
-@Component
-public class AuthorityManager {
+@Service
+public class AuthorityService {
 	//注入权限持久化对象
 	@Autowired
 	private AuthorityDao authorityDao;
 	//注入角色管理对象
 	@Autowired
-	private RoleManager roleManager;
+	private RoleService roleManager;
 	
 	/**
 	 * 保存权限实体

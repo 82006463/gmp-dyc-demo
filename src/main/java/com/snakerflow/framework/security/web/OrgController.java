@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.snakerflow.framework.orm.Page;
 import com.snakerflow.framework.orm.PropertyFilter;
 import com.snakerflow.framework.security.entity.Org;
-import com.snakerflow.framework.security.service.OrgManager;
+import com.snakerflow.framework.security.service.OrgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class OrgController {
 	//注入部门管理对象
 	@Autowired
-	private OrgManager orgManager;
+	private OrgService orgManager;
 	
 	/**
 	 * 分页查询部门，返回部门列表视图

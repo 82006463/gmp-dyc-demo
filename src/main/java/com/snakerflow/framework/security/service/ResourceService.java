@@ -10,20 +10,21 @@ import com.snakerflow.framework.security.entity.Authority;
 import com.snakerflow.framework.security.entity.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 资源管理类
  * @author yuqs
  * @since 0.1
  */
-@Component
-public class ResourceManager {
+@Service
+public class ResourceService {
 	//注入资源持久化对象
 	@Autowired
 	private ResourceDao resourceDao;
 	//注入权限持久化对象
 	@Autowired
-	private AuthorityManager authorityManager;
+	private AuthorityService authorityManager;
 	
 	/**
 	 * 保存资源实体

@@ -9,7 +9,7 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.StringUtils;
 import com.snakerflow.framework.security.entity.Menu;
-import com.snakerflow.framework.security.service.MenuManager;
+import com.snakerflow.framework.security.service.MenuService;
 import com.snakerflow.framework.security.shiro.ShiroUtils;
 import com.snakerflow.framework.web.TagDTO;
 import com.snakerflow.framework.web.TagBuilder;
@@ -75,7 +75,7 @@ public class MenuTagBuilder implements TagBuilder {
 	 * @return
 	 */
 	private List<Menu> getAllowedAccessMenu() {
-		MenuManager menuManager = springContext.getBean(MenuManager.class);
+		MenuService menuManager = springContext.getBean(MenuService.class);
 		return menuManager.getAllowedAccessMenu(ShiroUtils.getUserId());
 	}
 

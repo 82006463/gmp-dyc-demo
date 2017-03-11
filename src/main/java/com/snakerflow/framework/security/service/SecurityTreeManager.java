@@ -22,18 +22,19 @@ import com.snakerflow.framework.security.entity.TreeNode;
 import com.snakerflow.framework.security.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 安全树管理类(用户、部门)
  * @author yuqs
  * @since 0.1
  */
-@Component
+@Service
 public class SecurityTreeManager {
 	@Autowired
-	private OrgManager orgManager;
+	private OrgService orgManager;
 	@Autowired
-	private UserManager userManager;
+	private UserService userManager;
 	
 	/**
 	 * 根据parentId获取下级部门树集合

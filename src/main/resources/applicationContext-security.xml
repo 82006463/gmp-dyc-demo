@@ -30,7 +30,7 @@
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
 	<bean id="dbRealm" class="com.snakerflow.framework.security.shiro.ShiroAuthorizingRealm">
-        <property name="userManager" ref="userManager"/>
+        <property name="userManager" ref="userService"/>
     </bean>
 
 <!--	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">

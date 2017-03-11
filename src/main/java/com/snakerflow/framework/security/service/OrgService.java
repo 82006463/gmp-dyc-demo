@@ -8,14 +8,15 @@ import com.snakerflow.framework.security.dao.OrgDao;
 import com.snakerflow.framework.security.entity.Org;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 部门管理类
  * @author yuqs
  * @since 0.1
  */
-@Component
-public class OrgManager {
+@Service
+public class OrgService {
 	//注入部门持久化对象
 	@Autowired
 	private OrgDao orgDao;

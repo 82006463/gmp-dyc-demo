@@ -9,8 +9,8 @@ import com.snakerflow.framework.orm.PropertyFilter;
 import com.snakerflow.framework.security.entity.Org;
 import com.snakerflow.framework.security.entity.Role;
 import com.snakerflow.framework.security.entity.User;
-import com.snakerflow.framework.security.service.RoleManager;
-import com.snakerflow.framework.security.service.UserManager;
+import com.snakerflow.framework.security.service.RoleService;
+import com.snakerflow.framework.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +28,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
 	//注入用户管理对象
 	@Autowired
-	private UserManager userManager;
+	private UserService userManager;
 	//注入角色管理对象
 	@Autowired
-	private RoleManager roleManager;
+	private RoleService roleManager;
 	
 	/**
 	 * 分页查询用户，返回用户列表视图
