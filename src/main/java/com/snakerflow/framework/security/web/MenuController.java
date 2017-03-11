@@ -23,16 +23,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "/security/menu")
 public class MenuController {
-	//注入菜单管理对象
+
 	@Autowired
-	private MenuService menuManager;
+	private MenuService menuService;
 	
 	/**
 	 * 分页查询菜单，返回菜单列表视图
-	 * @param model
-	 * @param page
-	 * @param request
-	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model, Page<Menu> page, HttpServletRequest request) {
@@ -42,7 +38,7 @@ public class MenuController {
 			page.setOrderBy("id");
 			page.setOrder(Page.ASC);
 		}
-		page = menuManager.findPage(page, filters);
+		page = menuService.findPage(page, filters);
 		model.addAttribute("page", page);
 		model.addAttribute("lookup", request.getParameter("lookup"));
 		return "security/menuList";
@@ -50,8 +46,6 @@ public class MenuController {
 	
 	/**
 	 * 新建菜单时，返回菜单编辑视图
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String create(Model model) {
@@ -61,32 +55,24 @@ public class MenuController {
 
 	/**
 	 * 编辑菜单时，返回菜单编辑视图
-	 * @param id
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("menu", menuManager.get(id));
+		model.addAttribute("menu", menuService.get(id));
 		return "security/menuEdit";
 	}
 	
 	/**
 	 * 编辑菜单时，返回菜单查看视图
-	 * @param id
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "view/{id}", method = RequestMethod.GET)
 	public String view(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("menu", menuManager.get(id));
+		model.addAttribute("menu", menuService.get(id));
 		return "security/menuView";
 	}
 	
 	/**
 	 * 新增、编辑菜单页面的提交处理。保存菜单实体，并返回菜单列表视图
-	 * @param Menu
-	 * @return
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String update(Menu menu, Long parentMenuId) {
@@ -94,7 +80,7 @@ public class MenuController {
 			Menu parent = new Menu(parentMenuId);
 			menu.setParentMenu(parent);
 		}
-		menuManager.save(menu);
+		menuService.save(menu);
 		return "redirect:/security/menu";
 	}
 	
@@ -105,7 +91,7 @@ public class MenuController {
 	 */
 	@RequestMapping(value = "delete/{id}")
 	public String delete(@PathVariable("id") Long id) {
-		menuManager.delete(id);
+		menuService.delete(id);
 		return "redirect:/security/menu";
 	}
 }

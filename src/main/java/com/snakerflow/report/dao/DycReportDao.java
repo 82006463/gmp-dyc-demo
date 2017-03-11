@@ -2,9 +2,9 @@ package com.snakerflow.report.dao;
 
 import com.snakerflow.report.entity.DycReport;
 import com.snakerflow.common.dao.HibernateDao;
+import org.springframework.stereotype.Repository;
 
-/**
- * Created by Administrator on 2017/3/11.
- */
+
+@Repository
 public class DycReportDao extends HibernateDao<DycReport, Long> {
 }

@@ -27,10 +27,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AuthorityController {
 	//注入权限管理对象
 	@Autowired
-	private AuthorityService authorityManager;
+	private AuthorityService authorityService;
 	//注入资源管理对象
 	@Autowired
-	private ResourceService resourceManager;
+	private ResourceService resourceService;
 	
 	/**
 	 * 分页查询权限，返回权限列表视图
@@ -47,7 +47,7 @@ public class AuthorityController {
 			page.setOrderBy("id");
 			page.setOrder(Page.ASC);
 		}
-		page = authorityManager.findPage(page, filters);
+		page = authorityService.findPage(page, filters);
 		model.addAttribute("page", page);
 		return "security/authorityList";
 	}
@@ -60,7 +60,7 @@ public class AuthorityController {
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String create(Model model) {
 		model.addAttribute("authority", new Authority(null));
-		model.addAttribute("resources", resourceManager.getAll());
+		model.addAttribute("resources", resourceService.getAll());
 		return "security/authorityEdit";
 	}
 
@@ -72,8 +72,8 @@ public class AuthorityController {
 	 */
 	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") Long id, Model model) {
-		Authority entity = authorityManager.get(id);
-		List<Resource> resources = resourceManager.getAll();
+		Authority entity = authorityService.get(id);
+		List<Resource> resources = resourceService.getAll();
 		List<Resource> resss = entity.getResources();
 		for(Resource res : resources) {
 			for(Resource selRes : resss) {
@@ -100,7 +100,7 @@ public class AuthorityController {
 	 */
 	@RequestMapping(value = "view/{id}", method = RequestMethod.GET)
 	public String view(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("authority", authorityManager.get(id));
+		model.addAttribute("authority", authorityService.get(id));
 		return "security/authorityView";
 	}
 	
@@ -117,7 +117,7 @@ public class AuthorityController {
 				authority.getResources().add(res);
 			}
 		}
-		authorityManager.save(authority);
+		authorityService.save(authority);
 		return "redirect:/security/authority";
 	}
 	
@@ -128,7 +128,7 @@ public class AuthorityController {
 	 */
 	@RequestMapping(value = "delete/{id}")
 	public String delete(@PathVariable("id") Long id) {
-		authorityManager.delete(id);
+		authorityService.delete(id);
 		return "redirect:/security/authority";
 	}
 }

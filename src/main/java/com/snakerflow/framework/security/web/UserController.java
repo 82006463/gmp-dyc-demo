@@ -26,19 +26,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "/security/user")
 public class UserController {
-	//注入用户管理对象
+
 	@Autowired
-	private UserService userManager;
-	//注入角色管理对象
+	private UserService userService;
 	@Autowired
-	private RoleService roleManager;
+	private RoleService roleService;
 	
 	/**
 	 * 分页查询用户，返回用户列表视图
-	 * @param model
-	 * @param page
-	 * @param request
-	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model, Page<User> page, HttpServletRequest request) {
@@ -48,33 +43,28 @@ public class UserController {
 			page.setOrderBy("id");
 			page.setOrder(Page.ASC);
 		}
-		page = userManager.findPage(page, filters);
+		page = userService.findPage(page, filters);
 		model.addAttribute("page", page);
 		return "security/userList";
 	}
 	
 	/**
 	 * 新建用户时，返回用户编辑视图
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String create(Model model) {
 		model.addAttribute("user", new User());
-		model.addAttribute("roles", roleManager.getAll());
+		model.addAttribute("roles", roleService.getAll());
 		return "security/userEdit";
 	}
 
 	/**
 	 * 编辑用户时，返回用户编辑视图
-	 * @param id
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") Long id, Model model) {
-		User entity = userManager.get(id);
-		List<Role> roles = roleManager.getAll();
+		User entity = userService.get(id);
+		List<Role> roles = roleService.getAll();
 		List<Role> roless = entity.getRoles();
 		for(Role role : roles) {
 			for(Role selRole : roless) {
@@ -88,27 +78,22 @@ public class UserController {
 				}
 			}
 		}
-		model.addAttribute("user", userManager.get(id));
+		model.addAttribute("user", userService.get(id));
 		model.addAttribute("roles", roles);
 		return "security/userEdit";
 	}
 	
 	/**
 	 * 编辑用户时，返回用户查看视图
-	 * @param id
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "view/{id}", method = RequestMethod.GET)
 	public String view(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("user", userManager.get(id));
+		model.addAttribute("user", userService.get(id));
 		return "security/userView";
 	}
 	
 	/**
 	 * 新增、编辑用户页面的提交处理。保存用户实体，并返回用户列表视图
-	 * @param user
-	 * @return
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String update(User user, Long[] orderIndexs, Long parentOrgId) {
@@ -123,18 +108,16 @@ public class UserController {
 			Org parent = new Org(parentOrgId);
 			user.setOrg(parent);
 		}
-		userManager.save(user);
+		userService.save(user);
 		return "redirect:/security/user";
 	}
 	
 	/**
 	 * 根据主键ID删除用户实体，并返回用户列表视图
-	 * @param id
-	 * @return
 	 */
 	@RequestMapping(value = "delete/{id}")
 	public String delete(@PathVariable("id") Long id) {
-		userManager.delete(id);
+		userService.delete(id);
 		return "redirect:/security/user";
 	}
 }

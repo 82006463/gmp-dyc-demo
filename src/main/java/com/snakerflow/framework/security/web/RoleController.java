@@ -25,19 +25,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "/security/role")
 public class RoleController {
-	//注入角色管理对象
+
 	@Autowired
-	private RoleService roleManager;
-	//注入权限管理对象
+	private RoleService roleService;
 	@Autowired
-	private AuthorityService authorityManager;
+	private AuthorityService authorityService;
 	
 	/**
 	 * 分页查询角色，返回角色列表视图
-	 * @param model
-	 * @param page
-	 * @param request
-	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model, Page<Role> page, HttpServletRequest request) {
@@ -47,33 +42,28 @@ public class RoleController {
 			page.setOrderBy("id");
 			page.setOrder(Page.ASC);
 		}
-		page = roleManager.findPage(page, filters);
+		page = roleService.findPage(page, filters);
 		model.addAttribute("page", page);
 		return "security/roleList";
 	}
 	
 	/**
 	 * 新建角色时，返回角色编辑视图
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String create(Model model) {
 		model.addAttribute("role", new Role());
-		model.addAttribute("authorities", authorityManager.getAll());
+		model.addAttribute("authorities", authorityService.getAll());
 		return "security/roleEdit";
 	}
 
 	/**
 	 * 编辑角色时，返回角色编辑视图
-	 * @param id
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") Long id, Model model) {
-		Role entity  = roleManager.get(id);
-		List<Authority> authorities = authorityManager.getAll();
+		Role entity  = roleService.get(id);
+		List<Authority> authorities = authorityService.getAll();
 		List<Authority> auths = entity.getAuthorities();
 		for(Authority auth : authorities) {
 			for(Authority selAuth : auths) {
@@ -94,20 +84,15 @@ public class RoleController {
 	
 	/**
 	 * 编辑角色时，返回角色查看视图
-	 * @param id
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "view/{id}", method = RequestMethod.GET)
 	public String view(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("role", roleManager.get(id));
+		model.addAttribute("role", roleService.get(id));
 		return "security/roleView";
 	}
 	
 	/**
 	 * 新增、编辑角色页面的提交处理。保存角色实体，并返回角色列表视图
-	 * @param user
-	 * @return
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String update(Role role, Long[] orderIndexs) {
@@ -117,7 +102,7 @@ public class RoleController {
 				role.getAuthorities().add(auth);
 			}
 		}
-		roleManager.save(role);
+		roleService.save(role);
 		return "redirect:/security/role";
 	}
 	
@@ -128,7 +113,7 @@ public class RoleController {
 	 */
 	@RequestMapping(value = "delete/{id}")
 	public String delete(@PathVariable("id") Long id) {
-		roleManager.delete(id);
+		roleService.delete(id);
 		return "redirect:/security/role";
 	}
 }

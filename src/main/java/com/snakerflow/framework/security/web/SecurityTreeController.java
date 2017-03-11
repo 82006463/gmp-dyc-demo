@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/security/tree")
 public class SecurityTreeController {
+	
 	@Autowired
 	private SecurityTreeManager manager;
 	

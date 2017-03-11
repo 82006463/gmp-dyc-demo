@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class LoginController {
+
 	private static Log log = LogFactory.getLog(LoginController.class);
 	
 	@RequestMapping(value = "/login" ,method = RequestMethod.POST)

@@ -24,16 +24,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "/security/resource")
 public class ResourceController {
-	//注入资源管理对象
+
 	@Autowired
-	private ResourceService resourceManager;
+	private ResourceService resourceService;
 	
 	/**
 	 * 分页查询资源，返回资源列表视图
-	 * @param model
-	 * @param page
-	 * @param request
-	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model, Page<Resource> page, HttpServletRequest request) {
@@ -43,15 +39,13 @@ public class ResourceController {
 			page.setOrderBy("id");
 			page.setOrder(Page.ASC);
 		}
-		page = resourceManager.findPage(page, filters);
+		page = resourceService.findPage(page, filters);
 		model.addAttribute("page", page);
 		return "security/resourceList";
 	}
 	
 	/**
 	 * 新建资源时，返回资源编辑视图
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String create(Model model) {
@@ -61,33 +55,24 @@ public class ResourceController {
 
 	/**
 	 * 编辑资源时，返回资源编辑视图
-	 * @param id
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("resource", resourceManager.get(id));
+		model.addAttribute("resource", resourceService.get(id));
 		return "security/resourceEdit";
 	}
 	
 	/**
 	 * 编辑资源时，返回资源查看视图
-	 * @param id
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "view/{id}", method = RequestMethod.GET)
 	public String view(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("resource", resourceManager.get(id));
+		model.addAttribute("resource", resourceService.get(id));
 		return "security/resourceView";
 	}
 	
 	/**
 	 * 新增、编辑资源页面的提交处理。保存资源实体，并返回资源列表视图
-	 * @param resource
-     * @param parentMenuId
-     * @return
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String update(Resource resource, Long parentMenuId) {
@@ -95,18 +80,16 @@ public class ResourceController {
 			Menu menu = new Menu(parentMenuId);
 			resource.setMenu(menu);
 		}
-		resourceManager.save(resource);
+		resourceService.save(resource);
 		return "redirect:/security/resource";
 	}
 	
 	/**
 	 * 根据主键ID删除资源实体，并返回资源列表视图
-	 * @param id
-	 * @return
 	 */
 	@RequestMapping(value = "delete/{id}")
 	public String delete(@PathVariable("id") Long id) {
-		resourceManager.delete(id);
+		resourceService.delete(id);
 		return "redirect:/security/resource";
 	}
 }

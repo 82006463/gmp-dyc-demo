@@ -23,16 +23,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "/security/org")
 public class OrgController {
-	//注入部门管理对象
+
 	@Autowired
-	private OrgService orgManager;
+	private OrgService orgService;
 	
 	/**
 	 * 分页查询部门，返回部门列表视图
-	 * @param model
-	 * @param page
-	 * @param request
-	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model, Page<Org> page, HttpServletRequest request) {
@@ -42,7 +38,7 @@ public class OrgController {
 			page.setOrderBy("id");
 			page.setOrder(Page.ASC);
 		}
-		page = orgManager.findPage(page, filters);
+		page = orgService.findPage(page, filters);
 		model.addAttribute("page", page);
 		model.addAttribute("lookup", request.getParameter("lookup"));
 		return "security/orgList";
@@ -50,8 +46,6 @@ public class OrgController {
 	
 	/**
 	 * 新建部门时，返回部门编辑视图
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String create(Model model) {
@@ -61,32 +55,24 @@ public class OrgController {
 
 	/**
 	 * 编辑部门时，返回部门编辑视图
-	 * @param id
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("org", orgManager.get(id));
+		model.addAttribute("org", orgService.get(id));
 		return "security/orgEdit";
 	}
 	
 	/**
 	 * 编辑部门时，返回部门查看视图
-	 * @param id
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "view/{id}", method = RequestMethod.GET)
 	public String view(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("org", orgManager.get(id));
+		model.addAttribute("org", orgService.get(id));
 		return "security/orgView";
 	}
 	
 	/**
 	 * 新增、编辑部门页面的提交处理。保存部门实体，并返回部门列表视图
-	 * @param org
-	 * @return
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String update(Org org, Long parentOrgId) {
@@ -94,18 +80,16 @@ public class OrgController {
 			Org parent = new Org(parentOrgId);
 			org.setParentOrg(parent);
 		}
-		orgManager.save(org);
+		orgService.save(org);
 		return "redirect:/security/org";
 	}
 	
 	/**
 	 * 根据主键ID删除部门实体，并返回部门列表视图
-	 * @param id
-	 * @return
 	 */
 	@RequestMapping(value = "delete/{id}")
 	public String delete(@PathVariable("id") Long id) {
-		orgManager.delete(id);
+		orgService.delete(id);
 		return "redirect:/security/org";
 	}
 }
