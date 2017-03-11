@@ -5,7 +5,7 @@
  * 
  * $Id: Page.java 1183 2010-08-28 08:05:49Z calvinxiu $
  */
-package com.snakerflow.framework.orm;
+package com.snakerflow.framework.page;
 
 import java.util.List;
 

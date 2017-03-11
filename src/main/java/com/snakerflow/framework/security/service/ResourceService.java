@@ -3,13 +3,12 @@ package com.snakerflow.framework.security.service;
 import java.util.List;
 
 import org.hibernate.SQLQuery;
-import com.snakerflow.framework.orm.Page;
-import com.snakerflow.framework.orm.PropertyFilter;
+import com.snakerflow.framework.page.Page;
+import com.snakerflow.framework.page.PropertyFilter;
 import com.snakerflow.framework.security.dao.ResourceDao;
 import com.snakerflow.framework.security.entity.Authority;
 import com.snakerflow.framework.security.entity.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**

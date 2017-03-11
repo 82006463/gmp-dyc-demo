@@ -5,7 +5,7 @@
  * 
  * $Id: PropertyFilter.java 1205 2010-09-09 15:12:17Z calvinxiu $
  */
-package com.snakerflow.framework.orm;
+package com.snakerflow.framework.page;
 
 import java.util.ArrayList;
 import java.util.Date;

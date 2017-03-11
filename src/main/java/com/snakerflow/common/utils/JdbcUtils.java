@@ -15,7 +15,7 @@
  *
  */
 
-package com.snakerflow.framework.orm;
+package com.snakerflow.common.utils;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

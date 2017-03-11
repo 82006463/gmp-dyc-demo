@@ -2,13 +2,12 @@ package com.snakerflow.framework.security.service;
 
 import java.util.List;
 
-import com.snakerflow.framework.orm.Page;
-import com.snakerflow.framework.orm.PropertyFilter;
+import com.snakerflow.framework.page.Page;
+import com.snakerflow.framework.page.PropertyFilter;
 import com.snakerflow.framework.security.dao.AuthorityDao;
 import com.snakerflow.framework.security.entity.Authority;
 import com.snakerflow.framework.security.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**

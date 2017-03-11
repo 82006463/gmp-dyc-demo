@@ -1,9 +1,9 @@
 package com.snakerflow.common.dao;
 
 import com.snakerflow.common.utils.ReflectionUtils;
-import com.snakerflow.framework.orm.Page;
-import com.snakerflow.framework.orm.PropertyFilter;
-import com.snakerflow.framework.orm.PropertyFilter.MatchType;
+import com.snakerflow.framework.page.Page;
+import com.snakerflow.framework.page.PropertyFilter;
+import com.snakerflow.framework.page.PropertyFilter.MatchType;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;

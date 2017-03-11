@@ -1,7 +1,7 @@
 package com.snakerflow.report.web;
 
-import com.snakerflow.framework.orm.Page;
-import com.snakerflow.framework.orm.PropertyFilter;
+import com.snakerflow.framework.page.Page;
+import com.snakerflow.framework.page.PropertyFilter;
 import com.snakerflow.report.entity.DycReport;
 import com.snakerflow.report.service.DycReportService;
 import org.springframework.beans.factory.annotation.Autowired;
