@@ -1,5 +1,7 @@
 package com.snakerflow.framework.security.entity;
 
+import com.snakerflow.common.entity.IdEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "SEC_USER")
-public class User extends SecurityEntity
+public class User extends IdEntity
 {
 	private static final long serialVersionUID = 7446802057673100315L;
 	//系统管理员账号类型

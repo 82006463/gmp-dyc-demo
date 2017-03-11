@@ -1,5 +1,7 @@
 package com.snakerflow.framework.security.entity;
 
+import com.snakerflow.common.entity.IdEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "SEC_ORG")
-public class Org extends SecurityEntity
+public class Org extends IdEntity
 {
 	private static final long serialVersionUID = 7297765946510001885L;
 	//根部门ID号默认为0

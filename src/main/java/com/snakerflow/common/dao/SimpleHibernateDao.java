@@ -5,11 +5,10 @@
  * 
  * $Id: SimpleHibernateDao.java 1205 2010-09-09 15:12:17Z calvinxiu $
  */
-package com.snakerflow.framework.orm.hibernate;
+package com.snakerflow.common.dao;
 
 import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +28,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.engine.SessionFactoryImplementor;
 import org.hibernate.metadata.ClassMetadata;
 import com.snakerflow.framework.orm.JdbcUtils;
-import com.snakerflow.framework.utils.ReflectionUtils;
+import com.snakerflow.common.utils.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

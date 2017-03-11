@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class ShiroDefinitionSectionMetaSource implements FactoryBean<Ini.Section> {
 	private static Log log = LogFactory.getLog(ShiroDefinitionSectionMetaSource.class);
+
 	//注入资源管理对象
 	@Autowired
 	private ResourceManager resourceManager;

@@ -14,7 +14,7 @@
  *  * limitations under the License.
  *
  */
-package com.snakerflow.framework.utils;
+package com.snakerflow.common.utils;
 
 import org.joda.time.DateTime;
 

@@ -1,5 +1,7 @@
 package com.snakerflow.framework.security.entity;
 
+import com.snakerflow.common.entity.IdEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "SEC_RESOURCE")
-public class Resource extends SecurityEntity
+public class Resource extends IdEntity
 {
 	/**
 	 * 

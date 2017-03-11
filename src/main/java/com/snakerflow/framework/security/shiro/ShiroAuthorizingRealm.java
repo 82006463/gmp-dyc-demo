@@ -22,8 +22,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import com.snakerflow.framework.security.entity.User;
 import com.snakerflow.framework.security.service.UserManager;
-import com.snakerflow.framework.utils.EncodeUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.snakerflow.common.utils.EncodeUtils;
 
 /**
  * shiro的认证授权域

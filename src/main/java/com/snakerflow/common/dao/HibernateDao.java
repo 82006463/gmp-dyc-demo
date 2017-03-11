@@ -5,7 +5,7 @@
  * 
  * $Id: HibernateDao.java 1205 2010-09-09 15:12:17Z calvinxiu $
  */
-package com.snakerflow.framework.orm.hibernate;
+package com.snakerflow.common.dao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import org.hibernate.transform.ResultTransformer;
 import com.snakerflow.framework.orm.Page;
 import com.snakerflow.framework.orm.PropertyFilter;
 import com.snakerflow.framework.orm.PropertyFilter.MatchType;
-import com.snakerflow.framework.utils.ReflectionUtils;
+import com.snakerflow.common.utils.ReflectionUtils;
 import org.springframework.util.Assert;
 
 /**

@@ -15,8 +15,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import com.snakerflow.framework.utils.ConvertUtils;
-import com.snakerflow.framework.utils.ServletUtils;
+import com.snakerflow.common.utils.ConvertUtils;
+import com.snakerflow.common.utils.ServletUtils;
 import org.springframework.util.Assert;
 
 /**

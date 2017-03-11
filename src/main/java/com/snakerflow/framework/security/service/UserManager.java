@@ -9,8 +9,8 @@ import com.snakerflow.framework.orm.PropertyFilter;
 import com.snakerflow.framework.security.dao.UserDao;
 import com.snakerflow.framework.security.entity.Org;
 import com.snakerflow.framework.security.entity.User;
-import com.snakerflow.framework.utils.Digests;
-import com.snakerflow.framework.utils.EncodeUtils;
+import com.snakerflow.common.utils.Digests;
+import com.snakerflow.common.utils.EncodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

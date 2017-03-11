@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.snakerflow.app.modules.entity.Borrow;
 import com.snakerflow.app.modules.service.BorrowManager;
-import com.snakerflow.framework.utils.DateUtils;
+import com.snakerflow.common.utils.DateUtils;
 
 @Controller
 @RequestMapping(value = "/flow/borrow")

@@ -5,7 +5,7 @@
  * 
  * $Id: ConvertUtils.java 1211 2010-09-10 16:20:45Z calvinxiu $
  */
-package com.snakerflow.framework.utils;
+package com.snakerflow.common.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;

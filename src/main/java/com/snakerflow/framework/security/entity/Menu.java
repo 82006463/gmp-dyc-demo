@@ -1,5 +1,7 @@
 package com.snakerflow.framework.security.entity;
 
+import com.snakerflow.common.entity.IdEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +20,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "SEC_MENU")
-public class Menu extends SecurityEntity {
-	/**
-	 * 
-	 */
+public class Menu extends IdEntity {
+
 	private static final long serialVersionUID = 3488405380107404492L;
 	//菜单资源的根菜单标识为0
 	public static final Long ROOT_MENU = 0L;

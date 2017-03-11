@@ -1,7 +1,7 @@
 package com.snakerflow.framework.config.dao;
 
 import com.snakerflow.framework.config.entity.Dictionary;
-import com.snakerflow.framework.orm.hibernate.HibernateDao;
+import com.snakerflow.common.dao.HibernateDao;
 import org.springframework.stereotype.Component;
 
 /**

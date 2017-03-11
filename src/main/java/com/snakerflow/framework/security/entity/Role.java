@@ -1,5 +1,7 @@
 package com.snakerflow.framework.security.entity;
 
+import com.snakerflow.common.entity.IdEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "SEC_ROLE")
-public class Role extends SecurityEntity
+public class Role extends IdEntity
 {
 	private static final long serialVersionUID = 2041148498753846675L;
 	//角色名称

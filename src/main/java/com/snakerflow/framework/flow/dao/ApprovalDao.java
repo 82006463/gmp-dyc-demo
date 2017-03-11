@@ -18,7 +18,7 @@
 package com.snakerflow.framework.flow.dao;
 
 import com.snakerflow.framework.flow.entity.Approval;
-import com.snakerflow.framework.orm.hibernate.HibernateDao;
+import com.snakerflow.common.dao.HibernateDao;
 import org.springframework.stereotype.Component;
 
 /**

@@ -1,4 +1,4 @@
-package com.snakerflow.framework.security.entity;
+package com.snakerflow.common.entity;
 
 import java.io.Serializable;
 
@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
  * @since 0.1
  */
 @MappedSuperclass
-public abstract class SecurityEntity implements Serializable{
+public abstract class IdEntity implements Serializable{
 
 	/**
 	 * 
