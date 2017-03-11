@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <config>
 	<bean name="task" class="com.snakerflow.framework.flow.ext.ExtTaskParser"/>
 	<bean class="org.snaker.engine.access.dialect.MySqlDialect"/>
