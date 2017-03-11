@@ -27,22 +27,17 @@
 		<table class="table_all" align="center" border="0" cellpadding="0"
 			cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td class="td_table_1">
-					<span>账号：</span>
-				</td>
+				<td class="td_table_1">账号：</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="filter_LIKES_username" value="${param['filter_LIKES_username']}"/>
 				</td>
-				<td class="td_table_1">
-					<span>姓名：</span>
-				</td>
+				<td class="td_table_1">姓名：</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="filter_LIKES_fullname" value="${param['filter_LIKES_fullname']}"/>
 				</td>
 			</tr>
 		</table>
-		<table align="center" border="0" cellpadding="0"
-			cellspacing="0">
+		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
 				<shiro:hasPermission name="USEREDIT">
@@ -52,40 +47,32 @@
 				</td>
 			</tr>
 		</table>
-		<table class="table_all" align="center" border="0" cellpadding="0"
-			cellspacing="0">
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=20% class="td_list_1" nowrap>
+				<td align=center width=20% class="td_list_1">
 					账号
 				</td>
-				<td align=center width=20% class="td_list_1" nowrap>
+				<td align=center width=20% class="td_list_1">
 					姓名
 				</td>
-				<td align=center width=30% class="td_list_1" nowrap>
+				<td align=center width=30% class="td_list_1">
 					是否可用
 				</td>
-				<td align=center width=20% class="td_list_1" nowrap>
+				<td align=center width=20% class="td_list_1">
 					部门
 				</td>
-				<td align=center width=10% class="td_list_1" nowrap>
+				<td align=center width=10% class="td_list_1">
 					操作
 				</td>				
 			</tr>
 			<c:forEach items="${page.result}" var="user">
 				<tr>
-					<td class="td_list_2" align=left nowrap>
-						${user.username}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
-						${user.fullname}&nbsp;
-					</td>
+					<td class="td_list_2" align=left nowrap>${user.username}</td>
+					<td class="td_list_2" align=left nowrap>${user.fullname}</td>
 					<td class="td_list_2" align=left nowrap>
 						<frame:select name="enabled" type="select" configName="yesNo" value="${user.enabled}" displayType="1"/>
-						&nbsp;
 					</td>
-					<td class="td_list_2" align=left nowrap>
-						${user.org.name}&nbsp;
-					</td>
+					<td class="td_list_2" align=left nowrap>${user.org.name}</td>
 					<td class="td_list_2" align=left nowrap>
 					<shiro:hasPermission name="USERDELETE">
 						<a href="${ctx}/security/user/delete/${user.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>

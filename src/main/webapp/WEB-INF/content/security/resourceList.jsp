@@ -19,17 +19,12 @@
 		<table width="100%" border="0" align="center" cellpadding="0"
 				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">
-					资源管理
-				</td>
+				<td class="td_table_top" align="center">资源管理</td>
 			</tr>
 		</table>
-		<table class="table_all" align="center" border="0" cellpadding="0"
-			cellspacing="0" style="margin-top: 0px">
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td class="td_table_1">
-					<span>资源名称：</span>
-				</td>
+				<td class="td_table_1">资源名称：</td>
 				<td class="td_table_2" colspan="3">
 					<input type="text" class="input_240" name="filter_LIKES_name" value="${param['filter_LIKES_name']}"/>
 				</td>
@@ -45,28 +40,17 @@
 				</td>
 			</tr>
 		</table>
-		<table class="table_all" align="center" border="0" cellpadding="0"
-			cellspacing="0">
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=20% class="td_list_1" nowrap>
-					资源名称
-				</td>
-				<td align=center width=20% class="td_list_1" nowrap>
-					资源值
-				</td>
-				<td align=center width=10% class="td_list_1" nowrap>
-					操作
-				</td>				
+				<td align=center width=20% class="td_list_1">资源名称</td>
+				<td align=center width=20% class="td_list_1">资源值</td>
+				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="resource">
 				<tr>
-					<td class="td_list_2" align=left nowrap>
-						${resource.name}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
-						${resource.source}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
+					<td class="td_list_2" align=left>${resource.name}</td>
+					<td class="td_list_2" align=left>${resource.source}</td>
+					<td class="td_list_2" align=left>
 					<shiro:hasPermission name="ORGDELETE">
 						<a href="${ctx}/security/resource/delete/${resource.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 					</shiro:hasPermission>

@@ -20,24 +20,18 @@
 		<table width="100%" border="0" align="center" cellpadding="0"
 				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">
-					菜单管理
-				</td>
+				<td class="td_table_top" align="center">菜单管理</td>
 			</tr>
 		</table>
-		<table class="table_all" align="center" border="0" cellpadding="0"
-			cellspacing="0" style="margin-top: 0px">
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td class="td_table_1">
-					<span>菜单名称：</span>
-				</td>
+				<td class="td_table_1">菜单名称：</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="filter_LIKES_name" value="${param['filter_LIKES_name']}"/>
 				</td>
 			</tr>
 		</table>
-		<table align="center" border="0" cellpadding="0"
-			cellspacing="0">
+		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
 				<c:choose>
@@ -54,28 +48,17 @@
 				</td>
 			</tr>
 		</table>
-		<table class="table_all" align="center" border="0" cellpadding="0"
-			cellspacing="0">
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=45% class="td_list_1" nowrap>
-					菜单名称
-				</td>
-				<td align=center width=45% class="td_list_1" nowrap>
-					上级菜单名称
-				</td>
-				<td align=center width=10% class="td_list_1" nowrap>
-					操作
-				</td>				
+				<td align=center width=45% class="td_list_1">菜单名称</td>
+				<td align=center width=45% class="td_list_1">上级菜单名称</td>
+				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="menu">
 				<tr>
-					<td class="td_list_2" align=left nowrap>
-						${menu.name}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
-						${menu.parentMenu.name}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
+					<td class="td_list_2" align=left>${menu.name}</td>
+					<td class="td_list_2" align=left>${menu.parentMenu.name}</td>
+					<td class="td_list_2" align=left>
 				    <c:choose>
 				    <c:when test="${empty lookup}">
 				    <shiro:hasPermission name="MENUDELETE">

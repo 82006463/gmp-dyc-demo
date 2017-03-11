@@ -17,27 +17,20 @@
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="order" id="order" value="${page.order}"/>
-		<table width="100%" border="0" align="center" cellpadding="0"
-				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
+		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">
-					部门管理
-				</td>
+				<td class="td_table_top" align="center">部门管理</td>
 			</tr>
 		</table>
-		<table class="table_all" align="center" border="0" cellpadding="0"
-			cellspacing="0" style="margin-top: 0px">
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td class="td_table_1">
-					<span>部门名称：</span>
-				</td>
+				<td class="td_table_1">部门名称：</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="filter_LIKES_name" value="${param['filter_LIKES_name']}"/>
 				</td>
 			</tr>
 		</table>
-		<table align="center" border="0" cellpadding="0"
-			cellspacing="0">
+		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
 				<c:choose>
@@ -54,28 +47,17 @@
 				</td>
 			</tr>
 		</table>
-		<table class="table_all" align="center" border="0" cellpadding="0"
-			cellspacing="0">
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=45% class="td_list_1" nowrap>
-					部门名称
-				</td>
-				<td align=center width=45% class="td_list_1" nowrap>
-					上级部门名称
-				</td>
-				<td align=center width=10% class="td_list_1" nowrap>
-					操作
-				</td>				
+				<td align=center width=45% class="td_list_1">部门名称</td>
+				<td align=center width=45% class="td_list_1">上级部门名称</td>
+				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="org">
 				<tr>
-					<td class="td_list_2" align=left nowrap>
-						${org.name}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
-						${org.parentOrg.name}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
+					<td class="td_list_2" align=left>${org.name}</td>
+					<td class="td_list_2" align=left>${org.parentOrg.name}</td>
+					<td class="td_list_2" align=left>
 				    <c:choose>
 				    <c:when test="${empty lookup}">
 				    <shiro:hasPermission name="ORGDELETE">
