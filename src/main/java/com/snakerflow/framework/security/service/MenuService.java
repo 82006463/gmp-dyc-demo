@@ -3,8 +3,8 @@ package com.snakerflow.framework.security.service;
 import java.util.List;
 
 import org.hibernate.SQLQuery;
-import com.snakerflow.framework.page.Page;
-import com.snakerflow.framework.page.PropertyFilter;
+import com.snakerflow.common.page.Page;
+import com.snakerflow.common.page.PropertyFilter;
 import com.snakerflow.framework.security.dao.MenuDao;
 import com.snakerflow.framework.security.entity.Menu;
 import org.springframework.beans.factory.annotation.Autowired;

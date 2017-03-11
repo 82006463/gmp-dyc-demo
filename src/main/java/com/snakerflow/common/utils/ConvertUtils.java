@@ -17,7 +17,7 @@ public class ConvertUtils {
 
 	/**
 	 * 提取集合中的对象的属性(通过getter函数), 组合成List.
-	 * 
+	 *
 	 * @param collection 来源集合.
 	 * @param propertyName 要提取的属性名.
 	 */
@@ -38,7 +38,7 @@ public class ConvertUtils {
 
 	/**
 	 * 提取集合中的对象的属性(通过getter函数), 组合成由分割符分隔的字符串.
-	 * 
+	 *
 	 * @param collection 来源集合.
 	 * @param propertyName 要提取的属性名.
 	 * @param separator 分隔符.

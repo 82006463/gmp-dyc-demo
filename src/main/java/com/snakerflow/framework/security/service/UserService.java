@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.SQLQuery;
-import com.snakerflow.framework.page.Page;
-import com.snakerflow.framework.page.PropertyFilter;
+import com.snakerflow.common.page.Page;
+import com.snakerflow.common.page.PropertyFilter;
 import com.snakerflow.framework.security.dao.UserDao;
 import com.snakerflow.framework.security.entity.Org;
 import com.snakerflow.framework.security.entity.User;

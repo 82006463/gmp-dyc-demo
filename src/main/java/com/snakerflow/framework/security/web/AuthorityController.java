@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.snakerflow.framework.page.Page;
-import com.snakerflow.framework.page.PropertyFilter;
+import com.snakerflow.common.page.Page;
+import com.snakerflow.common.page.PropertyFilter;
 import com.snakerflow.framework.security.entity.Authority;
 import com.snakerflow.framework.security.entity.Resource;
 import com.snakerflow.framework.security.service.AuthorityService;

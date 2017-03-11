@@ -2,8 +2,8 @@ package com.snakerflow.framework.security.service;
 
 import java.util.List;
 
-import com.snakerflow.framework.page.Page;
-import com.snakerflow.framework.page.PropertyFilter;
+import com.snakerflow.common.page.Page;
+import com.snakerflow.common.page.PropertyFilter;
 import com.snakerflow.framework.security.dao.RoleDao;
 import com.snakerflow.framework.security.entity.Role;
 import com.snakerflow.framework.security.entity.User;
