@@ -1,38 +1,35 @@
 package com.snakerflow.common.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 
 /**
  * 安全实体抽象类
- * @author yuqs
- * @since 0.1
+ *
+ * @author zhanlu
+ * @date 2017-03-11
  */
 @MappedSuperclass
-public abstract class IdEntity implements Serializable{
+public abstract class IdEntity implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5288872906807628038L;
-	//主键标识ID
-	protected Long id;
+    private static final long serialVersionUID = -5288872906807628038L;
 
-	/**
-	 * 安全实体的主键生成策略为序列，序列名称为SEC_SEQUENCE
-	 * @return
-	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
-		return id;
-	}
+    //主键标识ID
+    protected Long id;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * 安全实体的主键生成策略为序列，序列名称为SEC_SEQUENCE
+     */
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
