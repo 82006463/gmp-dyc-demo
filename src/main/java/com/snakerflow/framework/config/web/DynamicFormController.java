@@ -2,7 +2,7 @@ package com.snakerflow.framework.config.web;
 
 import com.snakerflow.framework.config.entity.Field;
 import com.snakerflow.framework.config.entity.Form;
-import com.snakerflow.framework.config.service.DynamicFormManager;
+import com.snakerflow.framework.config.service.DynamicFormService;
 import com.snakerflow.framework.orm.Page;
 import com.snakerflow.framework.orm.PropertyFilter;
 import com.snakerflow.framework.security.shiro.ShiroUtils;
@@ -35,7 +35,7 @@ public class DynamicFormController {
     public static final String PARA_TASKID = "taskId";
 
     @Autowired
-    private DynamicFormManager dynamicFormManager;
+    private DynamicFormService dynamicFormManager;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, Page<Form> page, HttpServletRequest request, String lookup) {

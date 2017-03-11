@@ -27,7 +27,7 @@ import java.util.Map;
  * @since 0.1
  */
 @Component
-public class DynamicFormManager {
+public class DynamicFormService {
     private static final String TABLE_PREFIX = "TBL_";
     @Autowired
     private SnakerEngineFacets facets;
