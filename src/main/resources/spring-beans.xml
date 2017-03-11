@@ -11,8 +11,7 @@
 	<description>Spring公共配置 </description>
 	
 	<context:annotation-config/>
-
-	<context:component-scan base-package="com.snakerflow" />	
+	<context:component-scan base-package="com.snakerflow" />
 
 	<!-- 定义受环境影响易变的变量 -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -79,7 +78,7 @@
 		</property> 
 	</bean>
 
-	<bean class="org.springframework.jdbc.core.JdbcTemplate">
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 
@@ -114,9 +113,7 @@
 			<tx:method name="*" propagation="REQUIRED" />
 		</tx:attributes>
 	</tx:advice>
-	<!-- or execution(* org.snaker.framework.flow.service..*.*(..))
 
-	 -->
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice" pointcut="execution(* org.snaker.engine.core..*.*(..))
 		or execution(* com.snakerflow.app.modules.service..*.*(..))
