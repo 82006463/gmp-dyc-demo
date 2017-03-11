@@ -1,4 +1,4 @@
-package com.snakerflow.taglibs.builder;
+package com.snakerflow.common.taglibs;
 
 import com.snakerflow.framework.security.entity.Menu;
 import com.snakerflow.framework.security.service.MenuService;
@@ -16,8 +16,8 @@ import java.util.TreeMap;
 /**
  * 自定义菜单标签处理类。 根据当前认证实体获取允许访问的所有菜单，并输出特定导航菜单的html
  *
- * @author yuqs
- * @since 0.1
+ * @author 杨新伦
+ * @date 2016-04-11
  */
 @Component
 public class MenuTagBuilder implements TagBuilder {
@@ -52,14 +52,15 @@ public class MenuTagBuilder implements TagBuilder {
             /**
              * 判断是否有上一级菜单，如果有，则添加到上一级菜单的Map中去 如果没有上一级菜单，把该菜单作为根节点
              */
-            Long parentMenuId = menu.getParentMenu() == null ? Menu.ROOT_MENU
-                    : menu.getParentMenu().getId();
+            Long parentMenuId = menu.getParentMenu() == null ? Menu.ROOT_MENU : menu.getParentMenu().getId();
             if (!menuMap.containsKey(parentMenuId)) {
                 List<Menu> subMenus = new ArrayList<Menu>();
                 subMenus.add(menu);
                 menuMap.put(parentMenuId, subMenus);
             } else {
                 List<Menu> subMenus = menuMap.get(parentMenuId);
+                if (subMenus.contains(menu))
+                    continue;
                 subMenus.add(menu);
                 menuMap.put(parentMenuId, subMenus);
             }
@@ -74,7 +75,7 @@ public class MenuTagBuilder implements TagBuilder {
      */
     private List<Menu> getAllowedAccessMenu() {
         MenuService menuManager = springContext.getBean(MenuService.class);
-        return menuManager.getAllowedAccessMenu(ShiroUtils.getUserId());
+        return menuManager.getAllowedAccessMenu(ShiroUtils.getUser() != null ? ShiroUtils.getUser().getId() : null);
     }
 
     /**
@@ -84,8 +85,7 @@ public class MenuTagBuilder implements TagBuilder {
      * @param menuMap
      * @param menuId
      */
-    private void buildMenuTreeFolder(StringBuffer buffer,
-                                     Map<Long, List<Menu>> menuMap, Long menuId) {
+    private void buildMenuTreeFolder(StringBuffer buffer, Map<Long, List<Menu>> menuMap, Long menuId) {
         List<Menu> treeFolders = menuMap.get(menuId);
         if (treeFolders == null) {
             return;

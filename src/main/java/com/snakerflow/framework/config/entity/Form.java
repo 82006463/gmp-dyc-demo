@@ -1,18 +1,22 @@
 package com.snakerflow.framework.config.entity;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.snakerflow.common.entity.IdEntity;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * 表单实体类
+ *
  * @author yuqs
  * @since 0.1
  */
 @Entity
 @Table(name = "DF_FORM")
-public class Form implements Serializable {
+public class Form extends IdEntity {
+
     private static final long serialVersionUID = -1;
-    private long id;
+
     private String name;
     private String displayName;
     private String type;
@@ -21,15 +25,6 @@ public class Form implements Serializable {
     private String originalHtml;
     private String parseHtml;
     private int fieldNum = 0;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

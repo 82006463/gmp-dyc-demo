@@ -1,5 +1,6 @@
 package com.snakerflow.framework.config.entity;
 
+import com.snakerflow.common.entity.IdEntity;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.Column;
@@ -15,11 +16,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CONF_DICTITEM")
-public class DictionaryItem extends DictionaryEntity {
+public class DictionaryItem extends IdEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1382491728106297904L;
 	//字典选项名称
 	private String name;

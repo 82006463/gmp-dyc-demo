@@ -1,5 +1,7 @@
 package com.snakerflow.framework.config.entity;
 
+import com.snakerflow.common.entity.IdEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +18,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CONF_DICTIONARY")
-public class Dictionary extends DictionaryEntity {
+public class Dictionary extends IdEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7610108657592274423L;
+
 	//名称
 	private String name;
 	//中文名称

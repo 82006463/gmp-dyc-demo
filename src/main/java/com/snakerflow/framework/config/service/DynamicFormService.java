@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import java.util.Map;
  * @author yuqs
  * @since 0.1
  */
-@Component
+@Service
 public class DynamicFormService {
     private static final String TABLE_PREFIX = "TBL_";
     @Autowired
