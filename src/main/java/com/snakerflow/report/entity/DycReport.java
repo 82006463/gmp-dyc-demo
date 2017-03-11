@@ -7,7 +7,11 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * Created by Administrator on 2017/3/11.
+ * 报表
+ *
+ * @author zhanlu
+ * @date 2017-03-11
+ * @since 0.1
  */
 @Entity
 @Table(name = "dyc_report")
@@ -18,6 +22,7 @@ public class DycReport extends IdEntity {
     private String processName; //流程名称
 
     private Long deptId; //部门
+    private String deptName;
     private String level; //级别
     private Date occurTime;//发现时间
     private Date startTime; //流程开始时间
@@ -114,5 +119,13 @@ public class DycReport extends IdEntity {
 
     public void setExtraJson(String extraJson) {
         this.extraJson = extraJson;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 }

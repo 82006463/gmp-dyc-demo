@@ -91,19 +91,6 @@ public class SimpleHibernateDao<T, PK extends Serializable> {
 	}
 
     /**
-     * 根据连接对象获取数据库类型
-     * @return 类型
-     * @throws Exception
-     */
-    public String getDatabaseType() {
-        try {
-            return JdbcUtils.getDatabaseType(getConnection());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
      * 获取数据库连接
      * @return
      * @throws SQLException

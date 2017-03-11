@@ -16,9 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 用户管理Controller
+ * 报表Controller
  *
- * @author yuqs
+ * @author zhanlu
+ * @date 2017-03-11
  * @since 0.1
  */
 @Controller

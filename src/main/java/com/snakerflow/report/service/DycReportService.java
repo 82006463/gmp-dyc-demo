@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 权限管理类
+ * 报表Service
  *
- * @author yuqs
+ * @author zhanlu
+ * @date 2017-03-11
  * @since 0.1
  */
 @Service
