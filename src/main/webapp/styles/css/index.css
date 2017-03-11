@@ -4,7 +4,7 @@
 }
 
 html {
-	overflow-y: none;
+	overflow-y: hidden;
 }
 
 body {
@@ -117,7 +117,6 @@ a:active {
 	border: 1px solid #BCD2E9;
 	box-shadow: 0 1px 1px rgba(196, 213, 224, 0.5);
 	width: 210px;
-	height: 500px;
 	margin: 5px auto 0;
 	overflow:auto;
 }
