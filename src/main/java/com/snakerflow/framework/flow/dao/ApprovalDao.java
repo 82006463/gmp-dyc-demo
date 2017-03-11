@@ -20,10 +20,11 @@ package com.snakerflow.framework.flow.dao;
 import com.snakerflow.framework.flow.entity.Approval;
 import com.snakerflow.common.dao.HibernateDao;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author yuqs
  */
-@Component
+@Repository
 public class ApprovalDao extends HibernateDao<Approval, Long> {
 }
