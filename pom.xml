@@ -5,7 +5,7 @@
   <version>0.1.0</version>
   <packaging>war</packaging>
   
-<properties>
+    <properties>
         <snaker.version>2.5.1</snaker.version>
         <spring.version>3.2.14.RELEASE</spring.version>
         <hibernate.version>3.5.5-Final</hibernate.version>
