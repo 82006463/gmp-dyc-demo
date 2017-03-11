@@ -10,7 +10,7 @@ import org.snaker.engine.entity.HistoryOrder;
 import com.snakerflow.framework.flow.entity.Approval;
 import com.snakerflow.framework.security.shiro.ShiroUtils;
 import com.snakerflow.common.utils.ConvertUtils;
-import com.snakerflow.framework.flow.service.ApprovalManager;
+import com.snakerflow.framework.flow.service.ApprovalService;
 import com.snakerflow.framework.flow.service.SnakerEngineFacets;
 
 import org.snaker.engine.model.TaskModel;
@@ -43,7 +43,7 @@ public class FlowController {
     @Autowired
     private SnakerEngineFacets facets;
     @Autowired
-    private ApprovalManager manager;
+    private ApprovalService manager;
     /**
      * 流程实例查询
      * @param model

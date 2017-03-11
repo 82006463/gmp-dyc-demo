@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
  * @author yuqs
  */
 @Component
-public class ApprovalManager {
+public class ApprovalService {
     @Autowired
     private ApprovalDao dao;
 	
