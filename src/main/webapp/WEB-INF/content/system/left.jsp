@@ -20,26 +20,24 @@
         $(this).addClass("current").siblings().removeClass("current");
     }).hover(function() {
         $(this).addClass("lihover");
-    },
-    function() {
+    }, function() {
         $(this).removeClass("lihover");
     })
+
     function removeCSS(){
     	$("li").each(function(){
 			$(this).removeClass("current").siblings().removeClass("current");
 		});
     }
-</script>
-<script type="text/javascript">
 	function Show_left() {
-	if (document.getElementById("oaleft").style.display == "none") {
-		document.getElementById("oaleft").style.display = "block";
-		document.getElementById("leftimg").style.background = 'url(../images/switch_left.gif)';
-	} else {
-		document.getElementById("oaleft").style.display = "none";
-		document.getElementById("leftimg").style.background = 'url(../images/switch_right.gif)';
+		if (document.getElementById("oaleft").style.display == "none") {
+			document.getElementById("oaleft").style.display = "block";
+			document.getElementById("leftimg").style.background = 'url(../images/switch_left.gif)';
+		} else {
+			document.getElementById("oaleft").style.display = "none";
+			document.getElementById("leftimg").style.background = 'url(../images/switch_right.gif)';
+		}
 	}
-}
 </script>
 </body>
 </html>
