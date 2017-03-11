@@ -31,10 +31,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @MappedSuperclass
 public abstract class FlowEntity implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2538960674566954856L;
+
 	//主键标识ID
 	protected Long id;
 	//流程实例ID

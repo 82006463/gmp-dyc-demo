@@ -9,10 +9,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "FLOW_APPROVAL")
 public class Approval extends FlowEntity {
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1280430261161731105L;
+
 	private String operator;
     private String operateTime;
     private String result;
