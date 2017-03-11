@@ -1,10 +1,3 @@
-/**
- * Copyright (c) 2005-20010 springside.org.cn
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * 
- * $Id: PropertyFilter.java 1205 2010-09-09 15:12:17Z calvinxiu $
- */
 package com.snakerflow.common.page;
 
 import java.util.ArrayList;
