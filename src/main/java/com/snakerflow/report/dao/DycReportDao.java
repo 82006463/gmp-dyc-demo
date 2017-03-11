@@ -1,6 +1,6 @@
-package com.snakerflow.app.report.dao;
+package com.snakerflow.report.dao;
 
-import com.snakerflow.app.report.entity.DycReport;
+import com.snakerflow.report.entity.DycReport;
 import com.snakerflow.common.dao.HibernateDao;
 
 /**

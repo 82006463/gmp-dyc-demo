@@ -61,6 +61,7 @@
                 <value>com.snakerflow.framework.flow.entity</value>
                 <value>com.snakerflow.framework.config.entity</value>
                 <value>com.snakerflow.app.modules.entity</value>
+				<value>com.snakerflow.report.entity</value>
 			</list>
 		</property>
 		<property name="mappingResources">
