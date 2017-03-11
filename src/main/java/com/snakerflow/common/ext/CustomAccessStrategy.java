@@ -1,4 +1,4 @@
-package com.snakerflow.framework.flow.ext;
+package com.snakerflow.common.ext;
 
 import com.snakerflow.framework.security.shiro.ShiroUtils;
 import org.snaker.engine.impl.GeneralAccessStrategy;

@@ -1,4 +1,4 @@
-package com.snakerflow.framework.flow.ext;
+package com.snakerflow.common.ext;
 
 import org.snaker.engine.model.TaskModel;
 
