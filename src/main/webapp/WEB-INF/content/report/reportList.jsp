@@ -18,6 +18,7 @@
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="order" id="order" value="${page.order}"/>
+		<input type="hidden" class="input_240" name="processType" value="${param['processType']}"/>
 
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
@@ -28,50 +29,38 @@
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
 				<td class="td_table_1">
-					<span>编号：</span>
+					${param['processType']=='dev' ? '偏差':param['processType']=='cc' ? '变更':param['processType']=='capa' ? 'CAPA':param['processType']=='oos'? 'OOS':''}编号：
 				</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="filter_LIKES_processNo" value="${param['filter_LIKES_processNo']}"/>
 				</td>
-				<td class="td_table_1">
-					<span>关键字：</span>
-				</td>
+				<td class="td_table_1">关键字：</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="filter_LIKES_processName" value="${param['filter_LIKES_processName']}"/>
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">
-					<span>部门：</span>
-				</td>
+				<td class="td_table_1">部门：</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="filter_EQL_deptId" value="${param['filter_EQL_deptId']}"/>
 				</td>
-				<td class="td_table_1">
-					<span>级别：</span>
-				</td>
+				<td class="td_table_1">级别：</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="filter_EQS_level" value="${param['filter_EQS_level']}"/>
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">
-					<span>发现时间起：</span>
-				</td>
+				<td class="td_table_1">发现时间起：</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="startTime1" value="${param['startTime1']}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly/>
 				</td>
-				<td class="td_table_1">
-					<span>发现时间止：</span>
-				</td>
+				<td class="td_table_1">发现时间止：</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="startTime2" value="${param['startTime2']}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly/>
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">
-					<span>物料名称：</span>
-				</td>
+				<td class="td_table_1">物料名称：</td>
 				<td class="td_table_2" colspan="3">
 					<input type="text" class="input_240" name="filter_LIKES_backup1" value="${param['filter_LIKES_backup1']}"/>
 				</td>
@@ -88,15 +77,29 @@
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=45% class="td_list_1" nowrap>编号</td>
-				<td align=center width=45% class="td_list_1" nowrap>名称</td>
-				<td align=center width=10% class="td_list_1" nowrap>操作</td>
+				<td align="center" class="td_list_1">
+					${param['processType']=='dev' ? '偏差':param['processType']=='cc' ? '变更':param['processType']=='capa' ? 'CAPA':param['processType']=='oos'? 'OOS':''}编号
+				</td>
+				<td align="center" class="td_list_1">部门</td>
+				<td align="center" class="td_list_1">级别</td>
+				<td align="center" class="td_list_1">发现时间</td>
+				<td align="center" class="td_list_1">关闭时间</td>
+				<td align="center" width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item">
 				<tr>
-					<td class="td_list_2" align=left nowrap>${item.processNo}</td>
-					<td class="td_list_2" align=left nowrap>${item.processName}</td>
-					<td class="td_list_2" align=left nowrap></td>
+					<td class="td_list_2" align=left>${item.processNo}</td>
+					<td class="td_list_2" align=left>${item.deptId}</td>
+					<td class="td_list_2" align=left>${item.level}</td>
+					<td class="td_list_2" align=left>
+						<fmt:formatDate value="${item.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					</td>
+					<td class="td_list_2" align=left>
+						<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					</td>
+					<td class="td_list_2" align=left>
+
+					</td>
 				</tr>
 			</c:forEach>
 			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup}"/>
