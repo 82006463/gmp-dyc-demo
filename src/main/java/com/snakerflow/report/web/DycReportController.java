@@ -35,7 +35,7 @@ public class DycReportController {
 	/**
 	 * 分页查询用户，返回用户列表视图
 	 */
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(DycReport entity, Page<DycReport> page, HttpServletRequest request) {
 		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
 		//设置默认排序方式
