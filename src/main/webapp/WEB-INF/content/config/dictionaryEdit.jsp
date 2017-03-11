@@ -12,73 +12,48 @@
 	<body>
 		<form id="inputForm" action="${ctx }/config/dictionary/update" method="post">
 			<input type="hidden" name="id" id="id" value="${id }"/>
-			<table width="100%" border="0" align="center" cellpadding="0"
-					class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
+			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
-					<td class="td_table_top" align="center">
-						配置管理
-					</td>
+					<td class="td_table_top" align="center">配置管理</td>
 				</tr>
 			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
-					<td class="td_table_1">
-						<span>配置名称：</span>
-					</td>
+					<td class="td_table_1">配置名称：</td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="name" name="name"
-							value="${dictionary.name }" />
+						<input type="text" class="input_240" id="name" name="name" value="${dictionary.name }" />
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">
-						<span>显示名称：</span>
-					</td>
+					<td class="td_table_1">显示名称：</td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="cnName" name="cnName"
-							value="${dictionary.cnName }" />
+						<input type="text" class="input_240" id="cnName" name="cnName" value="${dictionary.cnName }" />
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">
-						<span>配置描述：</span>
-					</td>
+					<td class="td_table_1">配置描述：</td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="description" name="description"
-							value="${dictionary.description }" />
+						<input type="text" class="input_240" id="description" name="description" value="${dictionary.description }" />
 					</td>
 				</tr>
 			</table>
 			
-			<table class="table_all" align="center" border="0" cellpadding="0"
-				cellspacing="0">
+			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="td_table_1">
-						<span>添加选项：</span>
-					</td>
+					<td class="td_table_1">添加选项：</td>
 					<td class="td_table_2" colspan="3">
 						<input type="button" class="button_70px" value="添加选项" onclick="addItem()">
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">
-						<span>选项列表：</span>
-					</td>
+					<td class="td_table_1">选项列表：</td>
 					<td class="td_table_2" colspan="3">
 						<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" id="itemTable" style="margin: 0">
 							<tr>
-								<td align=center width=15% class="td_list_1" nowrap>
-									序号
-								</td>
-								<td align=center width=25% class="td_list_1" nowrap>
-									编号
-								</td>
-								<td align=center width=60% class="td_list_1" nowrap>
-									名称
-								</td>
-								<td align=center width=10% class="td_list_1" nowrap>
-									操作
-								</td>
+								<td align=center width=15% class="td_list_1">序号</td>
+								<td align=center width=25% class="td_list_1">编号</td>
+								<td align=center width=60% class="td_list_1">名称</td>
+								<td align=center width=10% class="td_list_1">操作</td>
 							</tr>
 							<c:forEach var="item" items="${dictionary.dictionaryItems}" varStatus="s">
 								<tr>
@@ -101,14 +76,12 @@
 					</td>
 				</tr>
 			</table>
-			<table align="center" border="0" cellpadding="0"
-				cellspacing="0">
+			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
 						<input type="submit" class="button_70px" name="submit" value="提交">
 						&nbsp;&nbsp;
-						<input type="button" class="button_70px" name="reback" value="返回"
-							onclick="history.back()">
+						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>
 			</table>
