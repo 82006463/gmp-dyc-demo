@@ -14,7 +14,6 @@
 
 <body>
 	<form id="mainForm" action="${ctx}/dyc/report/list" method="get">
-		<input type="hidden" name="lookup" value="${lookup}" />
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="order" id="order" value="${page.order}"/>
@@ -75,6 +74,7 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
+					<input type='button' onclick="addNew('${ctx}/dyc/report/create?processType=dev')" class='button_70px' value='新建'/>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>

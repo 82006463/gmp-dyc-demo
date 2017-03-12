@@ -53,11 +53,10 @@ public class DycReportService {
     }
 
     /**
-     * 获取所有权限记录
-     *
-     * @return
+     * 根据主键ID删除对应的实体
+     * @param id
      */
-    public List<DycReport> getAll() {
-        return reportDao.getAll();
+    public void delete(Long id) {
+        reportDao.delete(id);
     }
 }

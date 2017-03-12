@@ -2,13 +2,11 @@ package com.snakerflow.report.web;
 
 import com.snakerflow.common.page.Page;
 import com.snakerflow.common.page.PropertyFilter;
-import com.snakerflow.framework.config.service.DataDictService;
 import com.snakerflow.framework.security.service.OrgService;
 import com.snakerflow.report.entity.DycReport;
 import com.snakerflow.report.service.DycReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,11 +30,9 @@ public class DycReportController {
     private DycReportService reportService;
     @Autowired
     private OrgService orgService;
-    @Autowired
-    private DataDictService dataDictService;
 
     /**
-     * 分页查询用户，返回用户列表视图
+     * 分页列表
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list(DycReport entity, Page<DycReport> page, HttpServletRequest request) {
@@ -52,21 +48,60 @@ public class DycReportController {
         ModelAndView view = new ModelAndView("report/reportList");
         view.addObject("page", page);
         view.addObject("orgList", orgService.findAll());
-        view.addObject("devLevelList", dataDictService.findItems("devLevel"));
         return view;
     }
 
     /**
-     * 编辑用户时，返回用户查看视图
-     *
-     * @param id
-     * @param model
-     * @return
+     * 新建页面
+     */
+    @RequestMapping(value = "create", method = RequestMethod.GET)
+    public ModelAndView create(DycReport entity) {
+        ModelAndView view = new ModelAndView("report/reportEdit");
+        view.addObject("entity", entity);
+        view.addObject("orgList", orgService.findAll());
+        return view;
+    }
+
+    /**
+     * 编辑页面
+     */
+    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable("id") Long id) {
+        ModelAndView view = new ModelAndView("report/reportEdit");
+        view.addObject("entity", reportService.get(id));
+        view.addObject("orgList", orgService.findAll());
+        return view;
+    }
+
+    /**
+     * 新增、编辑的提交处理。保存实体，并返回列表视图
+     */
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public ModelAndView update(DycReport entity) {
+        ModelAndView view = new ModelAndView("redirect:/report/list?processType=" + entity.getProcessType());
+        reportService.save(entity);
+        return view;
+    }
+
+    /**
+     * 查看页面
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
-    public String view(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("report", reportService.get(id));
-        return "report/reportView";
+    public ModelAndView view(@PathVariable("id") Long id) {
+        ModelAndView view = new ModelAndView("report/reportView");
+        view.addObject("entity", reportService.get(id));
+        return view;
+    }
+
+    /**
+     * 根据主键ID删除实体，并返回列表视图
+     */
+    @RequestMapping(value = "delete/{id}")
+    public ModelAndView delete(@PathVariable("id") Long id) {
+        DycReport entity = reportService.get(id);
+        ModelAndView view = new ModelAndView("redirect:/report/list?processType=" + entity.getProcessType());
+        reportService.delete(id);
+        return view;
     }
 
 }

@@ -2,6 +2,7 @@ package com.snakerflow.report.entity;
 
 import com.snakerflow.common.entity.IdEntity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
@@ -20,19 +21,21 @@ public class DycReport extends IdEntity {
     private String processType; //流程类型
     private String processNo; //流程编号
     private String processName; //流程名称
+    private String processDesc;//描述
 
     private Long deptId; //部门
     private String deptName;
     private String level; //级别
     private Date occurTime;//发现时间
+    private String occurPerson;//发现人
     private Date startTime; //流程开始时间
     private Date endTime; //流程关闭时间
 
-    //备用的字段
-    private String backup1;
-    private String backup2;
+    private String materielCode;//物料编号
+    private String materielName;//物料名称
     private String extraJson; //流程额外的非键数据
 
+    @Column(length = 10)
     public String getProcessType() {
         return processType;
     }
@@ -41,6 +44,7 @@ public class DycReport extends IdEntity {
         this.processType = processType;
     }
 
+    @Column(length = 20)
     public String getProcessNo() {
         return processNo;
     }
@@ -49,6 +53,7 @@ public class DycReport extends IdEntity {
         this.processNo = processNo;
     }
 
+    @Column(length = 50)
     public String getProcessName() {
         return processName;
     }
@@ -65,6 +70,7 @@ public class DycReport extends IdEntity {
         this.deptId = deptId;
     }
 
+    @Column(length = 20)
     public String getLevel() {
         return level;
     }
@@ -97,21 +103,6 @@ public class DycReport extends IdEntity {
         this.endTime = endTime;
     }
 
-    public String getBackup1() {
-        return backup1;
-    }
-
-    public void setBackup1(String backup1) {
-        this.backup1 = backup1;
-    }
-
-    public String getBackup2() {
-        return backup2;
-    }
-
-    public void setBackup2(String backup2) {
-        this.backup2 = backup2;
-    }
 
     public String getExtraJson() {
         return extraJson;
@@ -121,11 +112,48 @@ public class DycReport extends IdEntity {
         this.extraJson = extraJson;
     }
 
+    @Column(length = 50)
     public String getDeptName() {
         return deptName;
     }
 
     public void setDeptName(String deptName) {
         this.deptName = deptName;
+    }
+
+    @Column(length = 200)
+    public String getProcessDesc() {
+        return processDesc;
+    }
+
+    public void setProcessDesc(String processDesc) {
+        this.processDesc = processDesc;
+    }
+
+    @Column(length = 20)
+    public String getOccurPerson() {
+        return occurPerson;
+    }
+
+    public void setOccurPerson(String occurPerson) {
+        this.occurPerson = occurPerson;
+    }
+
+    @Column(length = 50)
+    public String getMaterielCode() {
+        return materielCode;
+    }
+
+    public void setMaterielCode(String materielCode) {
+        this.materielCode = materielCode;
+    }
+
+    @Column(length = 100)
+    public String getMaterielName() {
+        return materielName;
+    }
+
+    public void setMaterielName(String materielName) {
+        this.materielName = materielName;
     }
 }
