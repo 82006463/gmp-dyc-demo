@@ -89,20 +89,6 @@ public class SimpleHibernateDao<T, PK extends Serializable> {
 		this.sessionFactory = sessionFactory;
 	}
 
-    /**
-     * 获取数据库连接
-     * @return
-     * @throws SQLException
-     */
-    public Connection getConnection() throws SQLException {
-        if (sessionFactory instanceof SessionFactoryImplementor) {
-            ConnectionProvider cp = ((SessionFactoryImplementor) sessionFactory).getConnectionProvider();
-            return cp.getConnection();
-        } else {
-            return null;
-        }
-    }
-
 	/**
 	 * 取得当前Session.
 	 */
@@ -113,10 +99,11 @@ public class SimpleHibernateDao<T, PK extends Serializable> {
 	/**
 	 * 保存新增或修改的对象.
 	 */
-	public void save(final T entity) {
+	public T save(final T entity) {
 		Assert.notNull(entity, "entity不能为空");
 		getSession().saveOrUpdate(entity);
 		logger.debug("save entity: {}", entity);
+		return entity;
 	}
 
 	/**
