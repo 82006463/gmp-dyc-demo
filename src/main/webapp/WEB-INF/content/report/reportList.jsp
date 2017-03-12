@@ -42,7 +42,7 @@
 			<tr>
 				<td class="td_table_1">部门：</td>
 				<td class="td_table_2">
-					<select name="filter_EQL_deptId" class="input_radio">
+					<select name="filter_EQL_deptId" class="input_select">
 						<option value="" selected="">------请选择------</option>
 						<c:forEach items="${orgList}" var="item">
 							<option value="${item.id}" ${param['filter_EQL_deptId']==item.id ? 'selected="selected"':''}>${item.name}</option>
@@ -51,7 +51,7 @@
 				</td>
 				<td class="td_table_1">级别：</td>
 				<td class="td_table_2">
-					<frame:dict name="filter_EQS_level" type="select" typeCode="devLevel" value="${param['filter_EQS_level']}" cssClass="input_radio"/>
+					<frame:dict name="filter_EQS_level" type="select" typeCode="devLevel" value="${param['filter_EQS_level']}" cssClass="input_select"/>
 				</td>
 			</tr>
 			<tr>

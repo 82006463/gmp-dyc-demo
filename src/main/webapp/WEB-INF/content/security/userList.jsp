@@ -53,13 +53,13 @@
 			</tr>
 			<c:forEach items="${page.result}" var="user">
 				<tr>
-					<td class="td_list_2" align=left nowrap>${user.username}</td>
-					<td class="td_list_2" align=left nowrap>${user.fullname}</td>
-					<td class="td_list_2" align=left nowrap>
-						<frame:select name="enabled" type="select" configName="yesNo" value="${user.enabled}" displayType="1"/>
+					<td class="td_list_2" align=left>${user.username}</td>
+					<td class="td_list_2" align=left>${user.fullname}</td>
+					<td class="td_list_2" align=left>
+						<frame:dict name="enabled" type="select" typeCode="yesNo" value="${user.enabled}" displayType="1"/>
 					</td>
-					<td class="td_list_2" align=left nowrap>${user.org.name}</td>
-					<td class="td_list_2" align=left nowrap>
+					<td class="td_list_2" align=left>${user.org.name}</td>
+					<td class="td_list_2" align=left>
 					<shiro:hasPermission name="USERDELETE">
 						<a href="${ctx}/security/user/delete/${user.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 					</shiro:hasPermission>
@@ -73,5 +73,5 @@
 			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup }"/>
 		</table>
 	</form>
-	</body>
+</body>
 </html>
