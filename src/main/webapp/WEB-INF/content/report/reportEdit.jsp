@@ -1,8 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/common/taglibs.jsp"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="en">
+<html>
 <head>
 	<title>报表管理</title>
 	<%@ include file="/common/meta.jsp"%>
@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<form id="inputForm" action="${ctx }/dyc/report/update" method="post">
+	<form id="inputForm" action="${ctx}/dyc/report/update" method="post">
 		<input type="hidden" name="id" value="${entity.id}"/>
 		<input type="hidden" name="processType" value="${entity.processType}"/>
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
@@ -23,13 +23,15 @@
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td class="td_table_1">编号：</td>
+				<td class="td_table_1">
+					${entity.processType=='dev' ? '偏差':entity.processType=='cc' ? '变更':entity.processType=='capa' ? 'CAPA':entity.processType=='oos'? 'OOS':''}编号：
+				</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="processNo" value="${entity.processNo}" />
 				</td>
 				<td class="td_table_1">发现时间：</td>
 				<td class="td_table_2">
-					<input type="text" class="input_240" name="occurTime" value="${entity.occurTime}"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly/>
+					<%--<input type="text" class="input_240" name="occurTime" value="${entity.occurTime}"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>--%>
 				</td>
 			</tr>
 			<tr>

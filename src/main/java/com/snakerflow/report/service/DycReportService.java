@@ -6,7 +6,9 @@ import com.snakerflow.report.dao.DycReportDao;
 import com.snakerflow.report.entity.DycReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Transient;
 import java.util.List;
 
 /**
@@ -27,6 +29,7 @@ public class DycReportService {
      *
      * @param entity
      */
+    @Transactional
     public void save(DycReport entity) {
         reportDao.save(entity);
     }
@@ -56,6 +59,7 @@ public class DycReportService {
      * 根据主键ID删除对应的实体
      * @param id
      */
+    @Transactional
     public void delete(Long id) {
         reportDao.delete(id);
     }

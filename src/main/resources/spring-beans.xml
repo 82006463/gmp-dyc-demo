@@ -117,5 +117,7 @@
 		or execution(* com.snakerflow.app.modules.service..*.*(..))
 		or execution(* com.snakerflow.framework.*.service..*.*(..))"/>
 	</aop:config>
+
 	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

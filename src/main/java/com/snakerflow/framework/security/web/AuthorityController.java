@@ -106,7 +106,6 @@ public class AuthorityController {
 	
 	/**
 	 * 新增、编辑权限页面的提交处理。保存权限实体，并返回权限列表视图
-	 * @param Authority
 	 * @return
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)

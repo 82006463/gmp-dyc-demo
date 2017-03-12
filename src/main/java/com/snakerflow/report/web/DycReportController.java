@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -67,7 +68,7 @@ public class DycReportController {
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("id") Long id) {
-        ModelAndView view = new ModelAndView("report/reportEdit");
+        ModelAndView view = new ModelAndView("/report/reportEdit");
         view.addObject("entity", reportService.get(id));
         view.addObject("orgList", orgService.findAll());
         return view;
@@ -77,9 +78,10 @@ public class DycReportController {
      * 新增、编辑的提交处理。保存实体，并返回列表视图
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ModelAndView update(DycReport entity) {
-        ModelAndView view = new ModelAndView("redirect:/report/list?processType=" + entity.getProcessType());
+    public ModelAndView update(RedirectAttributes attributes, DycReport entity) {
         reportService.save(entity);
+        ModelAndView view = new ModelAndView("redirect:/dyc/report/list");
+        attributes.addAttribute("processType", entity.getProcessType());
         return view;
     }
 
@@ -97,10 +99,10 @@ public class DycReportController {
      * 根据主键ID删除实体，并返回列表视图
      */
     @RequestMapping(value = "delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id) {
-        DycReport entity = reportService.get(id);
-        ModelAndView view = new ModelAndView("redirect:/report/list?processType=" + entity.getProcessType());
+    public ModelAndView delete(RedirectAttributes attributes, @PathVariable("id") Long id) {
         reportService.delete(id);
+        ModelAndView view = new ModelAndView("redirect:/dyc/report/list");
+        attributes.addAttribute("processType", reportService.get(id).getProcessType());
         return view;
     }
 

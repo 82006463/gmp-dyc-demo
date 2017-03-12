@@ -103,7 +103,8 @@
 						<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 					</td>
 					<td class="td_list_2" align=left>
-
+						<a href="${ctx}/dyc/report/update/${item.id }" class="btnEdit" title="编辑">编辑</a>
+						<a href="${ctx}/dyc/report/view/${item.id }" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>
 			</c:forEach>
