@@ -2,6 +2,7 @@ package com.snakerflow.report.web;
 
 import com.snakerflow.common.page.Page;
 import com.snakerflow.common.page.PropertyFilter;
+import com.snakerflow.framework.security.entity.Org;
 import com.snakerflow.framework.security.service.OrgService;
 import com.snakerflow.report.entity.DycReport;
 import com.snakerflow.report.service.DycReportService;
@@ -79,6 +80,10 @@ public class DycReportController {
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ModelAndView update(RedirectAttributes attributes, DycReport entity) {
+        if (entity.getDeptId() != null && entity.getDeptId() > 0) {
+            Org org = orgService.get(entity.getDeptId());
+            entity.setDeptName(org.getName());
+        }
         reportService.save(entity);
         ModelAndView view = new ModelAndView("redirect:/dyc/report/list");
         attributes.addAttribute("processType", entity.getProcessType());

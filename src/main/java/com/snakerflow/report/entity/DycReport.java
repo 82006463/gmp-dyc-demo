@@ -1,6 +1,7 @@
 package com.snakerflow.report.entity;
 
 import com.snakerflow.common.entity.IdEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -79,6 +80,7 @@ public class DycReport extends IdEntity {
         this.level = level;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date getOccurTime() {
         return occurTime;
     }
@@ -87,6 +89,7 @@ public class DycReport extends IdEntity {
         this.occurTime = occurTime;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date getStartTime() {
         return startTime;
     }
@@ -95,6 +98,7 @@ public class DycReport extends IdEntity {
         this.startTime = startTime;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date getEndTime() {
         return endTime;
     }

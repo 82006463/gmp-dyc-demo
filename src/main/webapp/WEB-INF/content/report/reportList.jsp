@@ -97,10 +97,10 @@
 					<td class="td_list_2" align=left>${item.deptName}</td>
 					<td class="td_list_2" align=left>${item.level}</td>
 					<td class="td_list_2" align=left>
-						<fmt:formatDate value="${item.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+						<fmt:formatDate value="${item.occurTime}" pattern="yyyy-MM-dd"/>
 					</td>
 					<td class="td_list_2" align=left>
-						<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+						<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd"/>
 					</td>
 					<td class="td_list_2" align=left>
 						<a href="${ctx}/dyc/report/update/${item.id }" class="btnEdit" title="编辑">编辑</a>
