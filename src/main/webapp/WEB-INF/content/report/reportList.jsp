@@ -52,11 +52,11 @@
 			<tr>
 				<td class="td_table_1">发现时间起：</td>
 				<td class="td_table_2">
-					<input type="text" class="input_240" name="startTime1" value="${param['startTime1']}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly/>
+					<input type="text" class="input_240" name="filter_GED_startTime" value="${param['filter_GED_startTime']}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly/>
 				</td>
 				<td class="td_table_1">发现时间止：</td>
 				<td class="td_table_2">
-					<input type="text" class="input_240" name="startTime2" value="${param['startTime2']}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly/>
+					<input type="text" class="input_240" name="filter_LED_startTime" value="${param['filter_LED_startTime']}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly/>
 				</td>
 			</tr>
 			<tr>

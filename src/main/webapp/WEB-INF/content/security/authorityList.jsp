@@ -17,8 +17,7 @@
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="order" id="order" value="${page.order}"/>
-		<table width="100%" border="0" align="center" cellpadding="0"
-				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
+		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="center">权限管理</td>
 			</tr>
@@ -34,16 +33,16 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-				<c:choose>
-					<c:when test="${empty lookup}">
-					<shiro:hasPermission name="AUTHORITYEDIT">
-					<input type='button' onclick="addNew('${ctx}/security/authority/create')" class='button_70px' value='新建'/>
-					</shiro:hasPermission>
-					</c:when>
-					<c:otherwise>
-					<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
-					</c:otherwise>
-				</c:choose>
+					<c:choose>
+						<c:when test="${empty lookup}">
+							<shiro:hasPermission name="AUTHORITYEDIT">
+								<input type='button' onclick="addNew('${ctx}/security/authority/create')" class='button_70px' value='新建'/>
+							</shiro:hasPermission>
+						</c:when>
+						<c:otherwise>
+							<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
+						</c:otherwise>
+					</c:choose>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>

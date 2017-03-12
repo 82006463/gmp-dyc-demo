@@ -2,6 +2,7 @@ package com.snakerflow.report.web;
 
 import com.snakerflow.common.page.Page;
 import com.snakerflow.common.page.PropertyFilter;
+import com.snakerflow.framework.security.service.OrgService;
 import com.snakerflow.report.entity.DycReport;
 import com.snakerflow.report.service.DycReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class DycReportController {
 
     @Autowired
     private DycReportService reportService;
+    @Autowired
+    private OrgService orgService;
 
     /**
      * 分页查询用户，返回用户列表视图
@@ -45,6 +48,7 @@ public class DycReportController {
 
         ModelAndView view = new ModelAndView("report/reportList");
         view.addObject("page", page);
+        view.addObject("orgList", orgService.findAll());
         return view;
     }
 

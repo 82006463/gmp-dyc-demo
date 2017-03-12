@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrgService {
-	//注入部门持久化对象
+
 	@Autowired
 	private OrgDao orgDao;
 	
@@ -53,6 +53,10 @@ public class OrgService {
 	 */
 	public Page<Org> findPage(final Page<Org> page, final List<PropertyFilter> filters) {
 		return orgDao.findPage(page, filters);
+	}
+
+	public List<Org> findAll() {
+		return orgDao.getAll();
 	}
 	
 	/**

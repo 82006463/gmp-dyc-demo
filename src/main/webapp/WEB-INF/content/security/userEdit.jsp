@@ -35,75 +35,50 @@
 	<body>
 		<form id="inputForm" action="${ctx }/security/user/update" method="post">
 			<input type="hidden" name="id" id="id" value="${id }"/>
-		<table width="100%" border="0" align="center" cellpadding="0"
-				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
+		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">
-					用户管理
-				</td>
+				<td class="td_table_top" align="center">用户管理</td>
 			</tr>
 		</table>
-		<table class="table_all" align="center" border="0" cellpadding="0"
-			cellspacing="0" style="margin-top: 0px">
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
-					<td class="td_table_1">
-						<span>账号：</span>
-					</td>
+					<td class="td_table_1">账号：</td>
 					<td class="td_table_2">
-						<input type="text" class="input_240" id="username" name="username"
-							value="${user.username }" />
+						<input type="text" class="input_240" id="username" name="username" value="${user.username }" />
 					</td>
-					<td class="td_table_1">
-						<span>姓名：</span>
-					</td>
+					<td class="td_table_1">姓名：</td>
 					<td class="td_table_2">
-						<input type="text" class="input_240" id="fullname" name="fullname"
-							value="${user.fullname }" />
+						<input type="text" class="input_240" id="fullname" name="fullname" value="${user.fullname }" />
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">
-						<span>密码：</span>
-					</td>
+					<td class="td_table_1">密码：</td>
 					<td class="td_table_2">
-						<input type="password" class="input_240" id="plainPassword" name="plainPassword"
-							value="${user.plainPassword }" />
+						<input type="password" class="input_240" id="plainPassword" name="plainPassword" value="${user.plainPassword }" />
 					</td>
-					<td class="td_table_1">
-						<span>确认密码：</span>
-					</td>
+					<td class="td_table_1">确认密码：</td>
 					<td class="td_table_2">
-						<input type="password" class="input_240" id="passwordConfirm"
-							name="passwordConfirm" value="${user.plainPassword }" />
+						<input type="password" class="input_240" id="passwordConfirm" name="passwordConfirm" value="${user.plainPassword }" />
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">
-						<span>邮箱：</span>
-					</td>
+					<td class="td_table_1">邮箱：</td>
 					<td class="td_table_2">
-						<input type="text" class="input_240" id="email" name="email"
-							value="${user.email }" />
+						<input type="text" class="input_240" id="email" name="email" value="${user.email }" />
 					</td>
-					<td class="td_table_1">
-						<span>性别：</span>
-					</td>
+					<td class="td_table_1">性别：</td>
 					<td class="td_table_2">
 						<frame:select name="sex" type="radio" configName="sex" value="${user.sex == null ? '1' : user.sex }" cssClass="input_radio"/>
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">
-						<span>是否可用：</span>
-					</td>
+					<td class="td_table_1">是否可用：</td>
 					<td class="td_table_2" colspan="3">
 						<frame:select name="enabled" type="radio" configName="yesNo" value="${user.enabled == null ? '1' : user.enabled }" cssClass="input_radio"/>
 					</td>
 				</tr>
  				<tr>
-					<td class="td_table_1">
-						<span>部门：</span>
-					</td>
+					<td class="td_table_1">部门：</td>
 					<td class="td_table_2" colspan="3">
 						<input type="hidden" id="parentOrgId" name="parentOrgId" value="${user.org.id }">
 						<input type="text" id="parentOrgName" readonly="readonly" name="parentOrgName" class="input_520" value="${user.org.name }">
@@ -111,20 +86,17 @@
 					</td>
 				</tr>
 			</table>
-			<table align="center" border="0" cellpadding="0"
-				cellspacing="0">
+			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
 						<input type="submit" class="button_70px" name="submit" value="提交">
 						&nbsp;&nbsp;
-						<input type="button" class="button_70px" name="reback" value="返回"
-							onclick="history.back()">
+						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>
 			</table>
 			
-			<table class="table_all" align="center" border="0" cellpadding="0"
-				cellspacing="0">
+			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
 					<td align=center width=10% class="td_list_1" nowrap>
 						<input type="checkbox" title="全选" id="selectAll">
@@ -136,14 +108,12 @@
 
 				<c:forEach items="${roles}" var="role">
 					<tr>
-						<td class="td_list_2" align=center nowrap>
+						<td class="td_list_2" align=center>
 							<label class="checkbox">
 								<input type="checkbox" name="orderIndexs" value="${role.id}" ${role.selected== 1 ? 'checked=true' : '' }>
 							</label>
 						</td>
-						<td class="td_list_2" align=left nowrap>
-							${role.name}&nbsp;
-						</td>
+						<td class="td_list_2" align=left>${role.name}</td>
 					</tr>
 				</c:forEach>
 			</table>

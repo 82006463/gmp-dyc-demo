@@ -16,8 +16,7 @@
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="order" id="order" value="${page.order}"/>
-		<table width="100%" border="0" align="center" cellpadding="0"
-				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
+		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="center">资源管理</td>
 			</tr>
@@ -33,9 +32,9 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-				<shiro:hasPermission name="RESOURCEEDIT">
-					<input type='button' onclick="addNew('${ctx}/security/resource/create')" class='button_70px' value='新建'/>
-				</shiro:hasPermission>
+					<shiro:hasPermission name="RESOURCEEDIT">
+						<input type='button' onclick="addNew('${ctx}/security/resource/create')" class='button_70px' value='新建'/>
+					</shiro:hasPermission>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>

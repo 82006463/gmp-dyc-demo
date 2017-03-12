@@ -13,37 +13,22 @@
 	<body>
 		<form id="inputForm" action="" method="post">
 			<input type="hidden" name="id" id="id" value="${id }"/>
-			<table class="table_all" align="center" border="0" cellpadding="0"
-				cellspacing="0">
+			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="td_table_1">
-						<span>资源名称：</span>
-					</td>
-					<td class="td_table_2">
-						${resource.name }&nbsp;
-					</td>
-					<td class="td_table_1">
-						<span>资源值：</span>
-					</td>
-					<td class="td_table_2">
-						${resource.source }&nbsp;
-					</td>
+					<td class="td_table_1">资源名称：</td>
+					<td class="td_table_2">${resource.name }</td>
+					<td class="td_table_1">资源值：</td>
+					<td class="td_table_2">${resource.source }</td>
 				</tr>
  				<tr>
-					<td class="td_table_1">
-						<span>所属菜单：</span>
-					</td>
-					<td class="td_table_2" colspan="3">
-						${resource.menu.name }&nbsp;
-					</td>
+					<td class="td_table_1">所属菜单：</td>
+					<td class="td_table_2" colspan="3">${resource.menu.name }</td>
 				</tr>
 			</table>
-			<table align="center" border="0" cellpadding="0"
-				cellspacing="0">
+			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
-						<input type="button" class="button_70px" name="reback" value="返回"
-							onclick="history.back()">
+						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>
 			</table>

@@ -33,16 +33,16 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-				<c:choose>
-					<c:when test="${empty lookup}">
-					<shiro:hasPermission name="ORGEDIT">
-					<input type='button' onclick="addNew('${ctx}/security/org/create')" class='button_70px' value='新建'/>
-					</shiro:hasPermission>
-					</c:when>
-					<c:otherwise>
-					<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
-					</c:otherwise>
-				</c:choose>
+					<c:choose>
+						<c:when test="${empty lookup}">
+							<shiro:hasPermission name="ORGEDIT">
+								<input type='button' onclick="addNew('${ctx}/security/org/create')" class='button_70px' value='新建'/>
+							</shiro:hasPermission>
+						</c:when>
+						<c:otherwise>
+							<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
+						</c:otherwise>
+					</c:choose>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>

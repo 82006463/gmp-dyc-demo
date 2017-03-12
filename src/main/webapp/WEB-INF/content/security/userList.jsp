@@ -16,16 +16,12 @@
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="order" id="order" value="${page.order}"/>
-		<table width="100%" border="0" align="center" cellpadding="0"
-				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
+		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">
-					账号管理
-				</td>
+				<td class="td_table_top" align="center">账号管理</td>
 			</tr>
 		</table>
-		<table class="table_all" align="center" border="0" cellpadding="0"
-			cellspacing="0" style="margin-top: 0px">
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
 				<td class="td_table_1">账号：</td>
 				<td class="td_table_2">
@@ -40,30 +36,20 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-				<shiro:hasPermission name="USEREDIT">
-					<input type='button' onclick="addNew('${ctx}/security/user/create')" class='button_70px' value='新建'/>
-				</shiro:hasPermission>
+					<shiro:hasPermission name="USEREDIT">
+						<input type='button' onclick="addNew('${ctx}/security/user/create')" class='button_70px' value='新建'/>
+					</shiro:hasPermission>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=20% class="td_list_1">
-					账号
-				</td>
-				<td align=center width=20% class="td_list_1">
-					姓名
-				</td>
-				<td align=center width=30% class="td_list_1">
-					是否可用
-				</td>
-				<td align=center width=20% class="td_list_1">
-					部门
-				</td>
-				<td align=center width=10% class="td_list_1">
-					操作
-				</td>				
+				<td align=center width=20% class="td_list_1">账号</td>
+				<td align=center width=20% class="td_list_1">姓名</td>
+				<td align=center width=30% class="td_list_1">是否可用</td>
+				<td align=center width=20% class="td_list_1">部门</td>
+				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="user">
 				<tr>

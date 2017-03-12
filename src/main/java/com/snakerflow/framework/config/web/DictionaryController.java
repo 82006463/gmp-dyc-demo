@@ -41,8 +41,7 @@ public class DictionaryController {
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, Page<DataDict> page, HttpServletRequest request) {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
-        PropertyFilter filter = new PropertyFilter("EQL_pid", "0");
-        filters.add(filter);
+        filters.add(new PropertyFilter("EQL_pid", "0"));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");
@@ -75,7 +74,7 @@ public class DictionaryController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
         DataDict entity = dataDictService.get(id);
-        entity.setItems(dataDictService.findItems(entity.getId()));
+        entity.setItems(dataDictService.findItems(entity.getCode()));
         model.addAttribute("entity", entity);
         return "config/dataDictEdit";
     }
@@ -90,7 +89,7 @@ public class DictionaryController {
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
         DataDict entity = dataDictService.get(id);
-        entity.setItems(dataDictService.findItems(entity.getId()));
+        entity.setItems(dataDictService.findItems(entity.getCode()));
         model.addAttribute("entity", entity);
         return "config/dataDictView";
     }

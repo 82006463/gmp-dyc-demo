@@ -16,28 +16,18 @@
 			<table class="table_all" align="center" border="0" cellpadding="0"
 				cellspacing="0">
 				<tr>
-					<td class="td_table_1">
-						<span>菜单名称：</span>
-					</td>
-					<td class="td_table_2" colspan="3">
-						${menu.name }&nbsp;
-					</td>
+					<td class="td_table_1">菜单名称：</td>
+					<td class="td_table_2" colspan="3">${menu.name }</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">
-						<span>上级菜单：</span>
-					</td>
-					<td class="td_table_2" colspan="3">
-						${menu.parentMenu.name }&nbsp;
-					</td>
+					<td class="td_table_1">上级菜单：</td>
+					<td class="td_table_2" colspan="3">${menu.parentMenu.name }</td>
 				</tr>
 			</table>
-			<table align="center" border="0" cellpadding="0"
-				cellspacing="0">
+			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
-						<input type="button" class="button_70px" name="reback" value="返回"
-							onclick="history.back()">
+						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>
 			</table>

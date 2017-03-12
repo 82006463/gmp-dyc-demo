@@ -15,49 +15,36 @@
 	<body>
 		<form id="inputForm" action="${ctx }/security/authority/update" method="post">
 			<input type="hidden" name="id" id="id" value="${id }"/>
-		<table width="100%" border="0" align="center" cellpadding="0"
-				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
+		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">
-					权限管理
-				</td>
+				<td class="td_table_top" align="center">权限管理</td>
 			</tr>
 		</table>
-		<table class="table_all" align="center" border="0" cellpadding="0"
-			cellspacing="0" style="margin-top: 0px">
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
-					<td class="td_table_1">
-						<span>权限名称：</span>
-					</td>
+					<td class="td_table_1">权限名称：</td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="name" name="name"
-							value="${authority.name }" />
+						<input type="text" class="input_240" id="name" name="name" value="${authority.name }" />
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">
-						<span>权限描述：</span>
-					</td>
+					<td class="td_table_1">权限描述：</td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="description" name="description"
-							value="${authority.description }" />
+						<input type="text" class="input_240" id="description" name="description" value="${authority.description }" />
 					</td>
 				</tr>
 			</table>
-			<table align="center" border="0" cellpadding="0"
-				cellspacing="0">
+			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
 						<input type="submit" class="button_70px" name="submit" value="提交">
 						&nbsp;&nbsp;
-						<input type="button" class="button_70px" name="reback" value="返回"
-							onclick="history.back()">
+						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>
 			</table>
 			
-			<table class="table_all" align="center" border="0" cellpadding="0"
-				cellspacing="0">
+			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
 					<td align=center width=10% class="td_list_1" nowrap>
 						<input type="checkbox" title="全选" id="selectAll">
@@ -71,17 +58,13 @@
 				</tr>
 				<c:forEach items="${resources}" var="resource">
 					<tr>
-						<td class="td_list_2" align=center nowrap>
+						<td class="td_list_2" align=center>
 							<label class="checkbox">
 								<input type="checkbox" name="orderIndexs" value="${resource.id}" ${resource.selected== 1 ? 'checked' : '' }>
 							</label>
 						</td>
-						<td class="td_list_2" align=left nowrap>
-							${resource.name}&nbsp;
-						</td>
-						<td class="td_list_2" align=left nowrap>
-							${resource.source}&nbsp;
-						</td>
+						<td class="td_list_2" align=left>${resource.name}</td>
+						<td class="td_list_2" align=left>${resource.source}</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -96,7 +79,6 @@
 		} else {
 			$("input[name='orderIndexs']").attr("checked",false);
 		}
-	    
 	});
 	</script>
 </html>

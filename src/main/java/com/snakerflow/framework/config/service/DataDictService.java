@@ -87,8 +87,8 @@ public class DataDictService {
         return dataDictDao.findPage(page, filters);
     }
 
-    public List<DataDict> findItems(final Long pid) {
-        PropertyFilter filter = new PropertyFilter("EQL_pid", pid.toString());
+    public List<DataDict> findItems(final String pcode) {
+        PropertyFilter filter = new PropertyFilter("EQS_pcode", pcode);
         List<PropertyFilter> filters = new ArrayList<>(1);
         filters.add(filter);
         return dataDictDao.find(filters);
