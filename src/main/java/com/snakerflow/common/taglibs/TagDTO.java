@@ -16,12 +16,13 @@ import java.util.Map;
 public class TagDTO implements Serializable {
 	
 	private static final long serialVersionUID = 2439992485911479461L;
+
 	//Spring的上下文
 	private WebApplicationContext springContext;
 	//Servlet的上下文
 	private ServletContext servletContext = null;
 	//自定义标签的属性集合
-	private Map<String, String> properties = new HashMap<String, String>();
+	private Map<String, String> properties = new HashMap<>();
 	
 	/**
 	 * 构造函数，接收ServletContext上下文参数。该参数经常在标签处理类中需要用到

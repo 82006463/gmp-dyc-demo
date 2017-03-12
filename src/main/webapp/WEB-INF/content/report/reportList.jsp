@@ -51,12 +51,7 @@
 				</td>
 				<td class="td_table_1">级别：</td>
 				<td class="td_table_2">
-					<select name="filter_EQS_level" class="input_radio">
-						<option value="" selected="">------请选择------</option>
-						<c:forEach items="${devLevelList}" var="item">
-							<option value="${item.id}" ${param['filter_EQS_level']==item.id ? 'selected="selected"':''}>${item.name}</option>
-						</c:forEach>
-					</select>
+					<frame:dict name="filter_EQS_level" type="select" typeCode="devLevel" value="${param['filter_EQS_level']}" cssClass="input_radio"/>
 				</td>
 			</tr>
 			<tr>
@@ -99,7 +94,7 @@
 			<c:forEach items="${page.result}" var="item">
 				<tr>
 					<td class="td_list_2" align=left>${item.processNo}</td>
-					<td class="td_list_2" align=left>${item.deptId}</td>
+					<td class="td_list_2" align=left>${item.deptName}</td>
 					<td class="td_list_2" align=left>${item.level}</td>
 					<td class="td_list_2" align=left>
 						<fmt:formatDate value="${item.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
