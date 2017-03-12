@@ -1,17 +1,15 @@
 package com.snakerflow.framework.config.web;
 
-import com.snakerflow.framework.config.entity.Dictionary;
-import com.snakerflow.framework.config.entity.DictionaryItem;
-import com.snakerflow.framework.config.service.DictionaryService;
 import com.snakerflow.common.page.Page;
 import com.snakerflow.common.page.PropertyFilter;
+import com.snakerflow.framework.config.entity.DataDict;
+import com.snakerflow.framework.config.service.DataDictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -26,9 +24,11 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/config/dictionary")
 public class DictionaryController {
-    //注入配置字典管理对象
+
+    /*@Autowired
+    private DictionaryService dictionaryService;*/
     @Autowired
-    private DictionaryService dictionaryService;
+    private DataDictService dataDictService;
 
     /**
      * 分页查询配置，返回配置字典列表视图
@@ -39,16 +39,18 @@ public class DictionaryController {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String list(Model model, Page<Dictionary> page, HttpServletRequest request) {
+    public String list(Model model, Page<DataDict> page, HttpServletRequest request) {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
+        PropertyFilter filter = new PropertyFilter("EQL_pid", "0");
+        filters.add(filter);
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");
             page.setOrder(Page.ASC);
         }
-        page = dictionaryService.findPage(page, filters);
+        page = dataDictService.findPage(page, filters);
         model.addAttribute("page", page);
-        return "config/dictionaryList";
+        return "config/dataDictList";
     }
 
     /**
@@ -59,8 +61,8 @@ public class DictionaryController {
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
-        model.addAttribute("dictionary", new Dictionary());
-        return "config/dictionaryEdit";
+        model.addAttribute("entity", new DataDict());
+        return "config/dataDictEdit";
     }
 
     /**
@@ -72,9 +74,10 @@ public class DictionaryController {
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
-        Dictionary entity = dictionaryService.get(id);
-        model.addAttribute("dictionary", entity);
-        return "config/dictionaryEdit";
+        DataDict entity = dataDictService.get(id);
+        entity.setItems(dataDictService.findItems(entity.getId()));
+        model.addAttribute("entity", entity);
+        return "config/dataDictEdit";
     }
 
     /**
@@ -86,31 +89,28 @@ public class DictionaryController {
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("dictionary", dictionaryService.get(id));
-        return "config/dictionaryView";
+        DataDict entity = dataDictService.get(id);
+        entity.setItems(dataDictService.findItems(entity.getId()));
+        model.addAttribute("entity", entity);
+        return "config/dataDictView";
     }
 
     /**
      * 新增、编辑配置字典页面的提交处理。保存配置字典实体，并返回配置字典列表视图
      *
-     * @param dictionary
-     * @param itemNames
-     * @param orderbys
-     * @param codes
      * @return
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(Dictionary dictionary, String[] itemNames, Integer[] orderbys, String[] codes) {
-        List<DictionaryItem> items = new ArrayList<DictionaryItem>();
+    public String update(DataDict dataDict, Long[] itemIds, String[] itemCodes, String[] itemNames) {
+        List<DataDict> items = new ArrayList<>();
         for (int i = 0; i < itemNames.length; i++) {
-            DictionaryItem ci = new DictionaryItem();
-            ci.setDictionary(dictionary);
-            ci.setName(itemNames[i]);
-            ci.setOrderby(orderbys[i]);
-            ci.setCode(codes[i]);
-            items.add(ci);
+            DataDict item = new DataDict();
+            item.setId(itemIds[i]);
+            item.setCode(itemCodes[i]);
+            item.setName(itemNames[i]);
+            items.add(item);
         }
-        dictionaryService.save(dictionary, items);
+        dataDictService.save(dataDict, items);
         return "redirect:/config/dictionary";
     }
 
@@ -122,25 +122,8 @@ public class DictionaryController {
      */
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable("id") Long id) {
-        dictionaryService.delete(id);
+        dataDictService.delete(id);
         return "redirect:/config/dictionary";
     }
 
-    /**
-     * 根据字典名称获取数据
-     *
-     * @param config
-     * @return
-     */
-    @RequestMapping(value = "items")
-    @ResponseBody
-    public List<DictionaryItem> getItems(String config) {
-        return dictionaryService.getItemsByName(config);
-    }
-
-    @RequestMapping(value = "dicts")
-    @ResponseBody
-    public List<Dictionary> getDicts() {
-        return dictionaryService.getAll();
-    }
 }

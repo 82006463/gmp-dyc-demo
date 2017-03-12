@@ -11,29 +11,22 @@
 
 	<body>
 		<form id="inputForm" action="${ctx }/config/dictionary/update" method="post">
-			<input type="hidden" name="id" id="id" value="${id }"/>
+			<input type="hidden" name="id" id="id" value="${entity.id}"/>
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
 					<td class="td_table_top" align="center">配置管理</td>
 				</tr>
 			</table>
+
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
-					<td class="td_table_1">配置名称：</td>
+					<td class="td_table_1">编号：</td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="name" name="name" value="${dictionary.name }" />
+						<input type="text" class="input_520" id="code" name="code" value="${entity.code}" />
 					</td>
-				</tr>
-				<tr>
-					<td class="td_table_1">显示名称：</td>
+					<td class="td_table_1">名称：</td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="cnName" name="cnName" value="${dictionary.cnName }" />
-					</td>
-				</tr>
-				<tr>
-					<td class="td_table_1">配置描述：</td>
-					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="description" name="description" value="${dictionary.description }" />
+						<input type="text" class="input_520" id="name" name="name" value="${entity.name}" />
 					</td>
 				</tr>
 			</table>
@@ -50,27 +43,23 @@
 					<td class="td_table_2" colspan="3">
 						<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" id="itemTable" style="margin: 0">
 							<tr>
-								<td align=center width=15% class="td_list_1">序号</td>
 								<td align=center width=25% class="td_list_1">编号</td>
 								<td align=center width=60% class="td_list_1">名称</td>
 								<td align=center width=10% class="td_list_1">操作</td>
 							</tr>
-							<c:forEach var="item" items="${dictionary.dictionaryItems}" varStatus="s">
+							<c:forEach items="${entity.items}" var="item" varStatus="itemIndex">
 								<tr>
 									<td class="td_list_2">
-										<input type="text" value="${item.orderby }" name='orderbys' size="2">
+										<input type="hidden" value='${item.id}' name='itemIds' class='input_50'>
+										<input type="text" value='${item.code}' name='itemCodes' class='input_520'>
 									</td>
 									<td class="td_list_2">
-										<input type="text" value='${item.code }' name='codes' class='input_50' >
+										<input type="text" value='${item.name}' name='itemNames' class='input_520'>
 									</td>
 									<td class="td_list_2">
-										<input type="text" value='${item.name }' name='itemNames' class='input_520' >
-									</td>
-									<td class="td_list_2">
-										<a href='javascript:void(0)' onclick='delRow(${item.orderby})' class='btnDel' title='删除'>删除</a>
+										<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a>
 									</td>
 								</tr>
-								<c:set var="index" value="${item.orderby }"/>
 							</c:forEach>
 						</table>
 					</td>
@@ -86,47 +75,21 @@
 				</tr>
 			</table>
 			
-			<script type="text/javascript">
-			var order = ${index + 1};
+		<script type="text/javascript">
 			function addItem() {
 				var table = document.getElementById("itemTable");
 				var row = table.insertRow(-1);
 				var cell = row.insertCell(-1);
-				if(order) {
-					cell.innerHTML = "<input type='text' value='" + order + "' name='orderbys' size='2'>";
-				} else {
-					cell.innerHTML = "<input type='text' value='" + 1 + "' name='orderbys' size='2'>";
-				}
-				
+				cell.innerHTML = "<input type='hidden' name='itemIds' value='' class='input_50'><input type='text' name='itemCodes' value='' class='input_520'>";
 				cell.className = "td_list_2";
 				
 				cell = row.insertCell(-1);
-				cell.innerHTML = "<input type='text' value='' class='input_50' name='codes' >";
+				cell.innerHTML = "<input type='text' name='itemNames' value='' class='input_520'>";
 				cell.className = "td_list_2";
 				
 				cell = row.insertCell(-1);
-				cell.innerHTML = "<input type='text' value='' class='input_520' name='itemNames' >";
+				cell.innerHTML = "<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a>";
 				cell.className = "td_list_2";
-				
-				cell = row.insertCell(-1);
-				cell.innerHTML = "<a href='javascript:void(0)' onclick='delRow(" + order + ")' class='btnDel' title='删除'>删除</a>";
-				cell.className = "td_list_2";
-				order = order + 1;
-			}
-			
-			function delRow(rowId) {
-				var table = document.getElementById("itemTable");
-				table.deleteRow(rowId);
-				order = order - 1;
-				var rns = table.rows.length;
-				if(rns >= 2) {
-					var cns = table.rows[0].cells.length;
-					var idx;
-					for(idx = 1; idx < rns; idx++) {
-						table.rows[idx].cells[0].innerHTML="<input type='text' value='" + idx + "' name='orderbys' size='2'>";
-						table.rows[idx].cells[cns - 1].innerHTML="<a href='javascript:void(0)' onclick='delRow(" + idx + ")' class='btnDel' title='删除'>删除</a>";
-					}
-				}
 			}
 			
 			function validateInput(){
@@ -148,7 +111,7 @@
 						return false;
 					}
 			}
-			</script>
+		</script>
 		</form>
 	</body>
 </html>

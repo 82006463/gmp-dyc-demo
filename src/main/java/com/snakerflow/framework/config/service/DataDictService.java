@@ -7,6 +7,7 @@ import com.snakerflow.framework.config.entity.DataDict;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,11 +37,14 @@ public class DataDictService {
      * @param entity
      */
     public void save(DataDict entity, List<DataDict> items) {
+        if (entity.getId() != null && entity.getId() > 0) {
+            dataDictDao.batchExecute("delete DataDict where pid=" + entity.getId());
+        }
         dataDictDao.save(entity);
         for (DataDict item : items) {
             item.setPid(entity.getId());
             item.setPcode(entity.getCode());
-            dataDictDao.save(item);
+            dataDictDao.getSession().save(item);
         }
     }
 
@@ -83,4 +87,10 @@ public class DataDictService {
         return dataDictDao.findPage(page, filters);
     }
 
+    public List<DataDict> findItems(final Long pid) {
+        PropertyFilter filter = new PropertyFilter("EQL_pid", pid.toString());
+        List<PropertyFilter> filters = new ArrayList<>(1);
+        filters.add(filter);
+        return dataDictDao.find(filters);
+    }
 }

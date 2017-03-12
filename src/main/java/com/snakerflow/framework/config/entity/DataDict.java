@@ -4,6 +4,9 @@ import com.snakerflow.common.entity.IdEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 配置字典实体类
@@ -21,12 +24,12 @@ public class DataDict extends IdEntity {
     private String code;
     //名称
     private String name;
-    //描述
-    private String desc;
     //父ID
-    private Long pid;
+    private Long pid = 0L;
     //父编号
     private String pcode;
+
+    private List<DataDict> items = new ArrayList<>();
 
     public String getCode() {
         return code;
@@ -44,14 +47,6 @@ public class DataDict extends IdEntity {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public Long getPid() {
         return pid;
     }
@@ -66,5 +61,14 @@ public class DataDict extends IdEntity {
 
     public void setPcode(String pcode) {
         this.pcode = pcode;
+    }
+
+    @Transient
+    public List<DataDict> getItems() {
+        return items;
+    }
+
+    public void setItems(List<DataDict> items) {
+        this.items = items;
     }
 }
