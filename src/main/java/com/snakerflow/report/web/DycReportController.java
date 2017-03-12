@@ -2,6 +2,7 @@ package com.snakerflow.report.web;
 
 import com.snakerflow.common.page.Page;
 import com.snakerflow.common.page.PropertyFilter;
+import com.snakerflow.framework.config.service.DataDictService;
 import com.snakerflow.framework.security.service.OrgService;
 import com.snakerflow.report.entity.DycReport;
 import com.snakerflow.report.service.DycReportService;
@@ -31,6 +32,8 @@ public class DycReportController {
     private DycReportService reportService;
     @Autowired
     private OrgService orgService;
+    @Autowired
+    private DataDictService dataDictService;
 
     /**
      * 分页查询用户，返回用户列表视图
@@ -49,6 +52,7 @@ public class DycReportController {
         ModelAndView view = new ModelAndView("report/reportList");
         view.addObject("page", page);
         view.addObject("orgList", orgService.findAll());
+        view.addObject("devLevelList", dataDictService.findItems("devLevel"));
         return view;
     }
 

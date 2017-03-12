@@ -15,7 +15,9 @@ import java.util.*;
  */
 @Component
 public class SelectTagBuilder implements TagBuilder {
+
 	private static final Logger log = LoggerFactory.getLogger(SelectTagBuilder.class);
+
 	private static final String TYPE_SELECT = "select";
 	private static final String TYPE_RADIO = "radio";
 	private static final String TYPE_CHECKBOX = "checkbox";
@@ -28,8 +30,7 @@ public class SelectTagBuilder implements TagBuilder {
 	public static final String DISPLAYTYPE = "displayType";
 	public static final String VALUE = "value";
 	public static final String FROM = "from";
-	//Spring的上下文
-	//private WebApplicationContext springContext;
+
 	//控件名称
 	private String name;
 	//控件类型
