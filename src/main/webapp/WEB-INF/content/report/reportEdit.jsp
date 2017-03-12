@@ -74,6 +74,12 @@
 					<input type="text" name="occurPerson" value="${entity.occurPerson}" class="input_240 validate[required]"/>
 				</td>
 			</tr>
+			<tr>
+				<td class="td_table_1">描述：</td>
+				<td class="td_table_2" colspan="3">
+					<textarea class="input_textarea_600" name="processDesc">${entity.processDesc}</textarea>
+				</td>
+			</tr>
 		</table>
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
