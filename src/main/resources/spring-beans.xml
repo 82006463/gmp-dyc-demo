@@ -9,7 +9,7 @@
 
 	<description>Spring公共配置 </description>
 	<context:annotation-config/>
-	<context:component-scan base-package="com.snakerflow" />
+	<context:component-scan base-package="com.zhanlu" />
 
 	<!-- 定义受环境影响易变的变量 -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -53,11 +53,11 @@
 		</property>
 		<property name="packagesToScan">
 			<list>
-			    <value>com.snakerflow.framework.security.entity</value>
-                <value>com.snakerflow.framework.flow.entity</value>
-                <value>com.snakerflow.framework.config.entity</value>
-                <value>com.snakerflow.app.modules.entity</value>
-				<value>com.snakerflow.report.entity</value>
+			    <value>com.zhanlu.framework.security.entity</value>
+                <value>com.zhanlu.framework.flow.entity</value>
+                <value>com.zhanlu.framework.config.entity</value>
+                <value>com.zhanlu.app.modules.entity</value>
+				<value>com.zhanlu.report.entity</value>
 			</list>
 		</property>
 		<property name="mappingResources">
@@ -114,8 +114,8 @@
 
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice" pointcut="execution(* org.snaker.engine.core..*.*(..))
-		or execution(* com.snakerflow.app.modules.service..*.*(..))
-		or execution(* com.snakerflow.framework.*.service..*.*(..))"/>
+		or execution(* com.zhanlu.app.modules.service..*.*(..))
+		or execution(* com.zhanlu.framework.*.service..*.*(..))"/>
 	</aop:config>
 
 	<aop:aspectj-autoproxy proxy-target-class="true" />

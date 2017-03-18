@@ -13,7 +13,7 @@
                 
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler/>
-	<context:component-scan base-package="com.snakerflow" use-default-filters="false">
+	<context:component-scan base-package="com.zhanlu" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 
