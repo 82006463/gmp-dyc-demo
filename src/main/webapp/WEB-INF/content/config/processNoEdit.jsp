@@ -5,10 +5,22 @@
 	<head>
 		<title>配置管理-数据字典</title>
 		<%@ include file="/common/meta.jsp"%>
-		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+		<link type="text/css" rel="stylesheet" href="${ctx}/styles/css/style.css" media="all" />
+		<link type="text/css" rel="stylesheet" href="${ctx}/styles/plugin/css/validationEngine.jquery.css" />
+		<script type="text/javascript" src="${ctx}/styles/js/jquery-1.8.3.min.js"></script>
+		<script src="${ctx}/styles/plugin/js/jquery.validationEngine.js" type="text/javascript"></script>
+		<script src="${ctx}/styles/plugin/js/languages/jquery.validationEngine-zh_CN.js" type="text/javascript"></script>
 		<script type="text/javascript">
+			$(function() {
+				$('#inputForm').validationEngine();
+			});
 
+			function submitForm() {
+				if($('#inputForm').validationEngine('validate')) {
+					$('#inputForm').submit();
+				}
+				return false;
+			}
 		</script>
 	</head>
 
@@ -25,7 +37,12 @@
 				<tr>
 					<td class="td_table_1">流程类型：</td>
 					<td class="td_table_2">
-						<frame:dict name="type" type="select" typeCode="processType" value="${entity.type}" cssClass="input_select validate[required]"/>
+						<c:if test="${empty entity.type}">
+							<frame:dict name="type" type="select" typeCode="processType" value="${entity.type}" cssClass="input_select validate[required]"/>
+						</c:if>
+						<c:if test="${!empty entity.type}">
+							<input type="text" id="type" name="type" value="${entity.type}" class="input_240 validate[required]" readonly="readonly"/>
+						</c:if>
 					</td>
 					<td class="td_table_1">流程前缀：</td>
 					<td class="td_table_2">
@@ -48,7 +65,7 @@
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
-						<input type="submit" class="button_70px" name="submit" value="提交">
+						<input type="submit" class="button_70px" name="submit" value="提交" onclick="return submitForm();">
 						&nbsp;&nbsp;
 						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>

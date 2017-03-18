@@ -64,7 +64,8 @@ public class ProcessNoService {
         } else {
             entity.setIndexValue(entity.getIndexValue() + 1);
         }
-        String nextVal = entity.getPrefix() + entity.getTimeValue();
+        String nextVal = entity.getPrefix() == null ? "" : entity.getPrefix();
+        nextVal += entity.getTimeValue();
         int len = entity.getIndexLength() - entity.getIndexValue().toString().length();
         for (int i = 0; i < len; i++) {
             nextVal += "0";

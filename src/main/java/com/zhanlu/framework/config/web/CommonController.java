@@ -29,9 +29,8 @@ public class CommonController {
      * 分页查询配置，返回配置字典列表视图
      */
     @ResponseBody
-    @RequestMapping(value = "check")
-    public Object check(HttpServletRequest req) {
-        Map<String, Object> dataMap = new HashedMap();
+    @RequestMapping(value = "data")
+    public Object data(HttpServletRequest req) {
         Map<String, Object> paramMap = req.getParameterMap();
 
         List<Object> paramList = new ArrayList(paramMap.size());
@@ -44,9 +43,20 @@ public class CommonController {
             paramList.add(entry.getValue());
         }
         List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql.toString(), paramList.toArray());
-        dataMap.put("length", resultList == null ? 0 : resultList.size());
+        List<Map<String, Object>> dataList = new ArrayList<>(resultList.size());
+        for (Map<String, Object> map : resultList) {
+            Map<String ,Object> tmp = new HashedMap();
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                tmp.put(entry.getKey().toLowerCase(),entry.getValue());
+            }
+            dataList.add(tmp);
+        }
+
+        Map<String, Object> dataMap = new HashedMap();
+        dataMap.put("length", resultList == null ? -1 : resultList.size());
         dataMap.put("data", resultList);
-        return dataMap;
+        return dataList;
     }
+
 
 }
