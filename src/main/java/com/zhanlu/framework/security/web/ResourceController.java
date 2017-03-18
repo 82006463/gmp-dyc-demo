@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.zhanlu.common.page.Page;
-import com.zhanlu.common.page.PropertyFilter;
+import com.zhanlu.framework.common.page.Page;
+import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.Menu;
 import com.zhanlu.framework.security.entity.Resource;
 import com.zhanlu.framework.security.service.ResourceService;

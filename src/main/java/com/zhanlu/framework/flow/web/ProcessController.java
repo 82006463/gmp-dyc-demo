@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zhanlu.framework.common.utils.SnakerHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,7 +37,6 @@ import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.model.ProcessModel;
 
 import com.zhanlu.framework.security.shiro.ShiroUtils;
-import com.zhanlu.common.utils.SnakerHelper;
 import com.zhanlu.framework.flow.service.SnakerEngineFacets;
 
 import org.springframework.beans.factory.annotation.Autowired;

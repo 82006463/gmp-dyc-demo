@@ -2,8 +2,8 @@ package com.zhanlu.framework.security.service;
 
 import java.util.List;
 
-import com.zhanlu.common.page.Page;
-import com.zhanlu.common.page.PropertyFilter;
+import com.zhanlu.framework.common.page.Page;
+import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.dao.RoleDao;
 import com.zhanlu.framework.security.entity.Role;
 import com.zhanlu.framework.security.entity.User;

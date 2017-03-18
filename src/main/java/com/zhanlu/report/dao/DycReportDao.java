@@ -1,7 +1,7 @@
 package com.zhanlu.report.dao;
 
+import com.zhanlu.framework.common.dao.HibernateDao;
 import com.zhanlu.report.entity.DycReport;
-import com.zhanlu.common.dao.HibernateDao;
 import org.springframework.stereotype.Repository;
 
 /**

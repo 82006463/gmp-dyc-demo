@@ -1,6 +1,6 @@
 package com.zhanlu.report.entity;
 
-import com.zhanlu.common.entity.IdEntity;
+import com.zhanlu.framework.common.entity.IdEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;

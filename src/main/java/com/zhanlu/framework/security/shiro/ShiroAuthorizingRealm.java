@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import com.zhanlu.framework.common.utils.EncodeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authc.AccountException;
@@ -22,7 +23,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import com.zhanlu.framework.security.entity.User;
 import com.zhanlu.framework.security.service.UserService;
-import com.zhanlu.common.utils.EncodeUtils;
 
 /**
  * shiro的认证授权域

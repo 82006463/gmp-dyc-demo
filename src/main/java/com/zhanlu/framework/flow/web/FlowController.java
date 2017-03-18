@@ -1,5 +1,6 @@
 package com.zhanlu.framework.flow.web;
 
+import com.zhanlu.framework.common.utils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.snaker.engine.access.Page;
@@ -9,7 +10,6 @@ import org.snaker.engine.entity.HistoryOrder;
 
 import com.zhanlu.framework.flow.entity.Approval;
 import com.zhanlu.framework.security.shiro.ShiroUtils;
-import com.zhanlu.common.utils.ConvertUtils;
 import com.zhanlu.framework.flow.service.ApprovalService;
 import com.zhanlu.framework.flow.service.SnakerEngineFacets;
 

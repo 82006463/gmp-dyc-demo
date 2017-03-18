@@ -1,7 +1,7 @@
 package com.zhanlu.framework.config.service;
 
-import com.zhanlu.common.page.Page;
-import com.zhanlu.common.page.PropertyFilter;
+import com.zhanlu.framework.common.page.Page;
+import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.config.dao.DataDictDao;
 import com.zhanlu.framework.config.entity.DataDict;
 import org.springframework.beans.factory.annotation.Autowired;

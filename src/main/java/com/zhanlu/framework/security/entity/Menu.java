@@ -1,6 +1,6 @@
 package com.zhanlu.framework.security.entity;
 
-import com.zhanlu.common.entity.IdEntity;
+import com.zhanlu.framework.common.entity.IdEntity;
 
 import java.util.ArrayList;
 import java.util.List;

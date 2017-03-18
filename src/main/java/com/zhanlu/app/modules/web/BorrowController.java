@@ -1,5 +1,6 @@
 package com.zhanlu.app.modules.web;
 
+import com.zhanlu.framework.common.utils.DateUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.zhanlu.app.modules.entity.Borrow;
 import com.zhanlu.app.modules.service.BorrowManager;
-import com.zhanlu.common.utils.DateUtils;
 
 @Controller
 @RequestMapping(value = "/flow/borrow")

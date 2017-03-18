@@ -9,7 +9,7 @@
 	<uri></uri>
 	<tag>
 		<name>page</name>
-		<tagclass>com.zhanlu.common.taglibs.PageTag</tagclass>
+		<tagclass>com.zhanlu.framework.common.taglibs.PageTag</tagclass>
 		<attribute>
 			<name>totalRecords</name>
 			<required>true</required>
@@ -39,7 +39,7 @@
    	
 	<tag>
 		<name>select</name>
-		<tagclass>com.zhanlu.common.taglibs.SelectTag</tagclass>
+		<tagclass>com.zhanlu.framework.common.taglibs.SelectTag</tagclass>
 		<attribute>
 			<name>type</name>
 			<required>true</required>
@@ -89,7 +89,7 @@
 
 	<tag>
 		<name>dict</name>
-		<tagclass>com.zhanlu.common.taglibs.DictTag</tagclass>
+		<tagclass>com.zhanlu.framework.common.taglibs.DictTag</tagclass>
 		<attribute>
 			<name>name</name>
 			<required>true</required>
@@ -134,6 +134,6 @@
 
    	<tag>
    		<name>menu</name>
-   		<tagclass>com.zhanlu.common.taglibs.MenuTag</tagclass>
+   		<tagclass>com.zhanlu.framework.common.taglibs.MenuTag</tagclass>
    	</tag>
 </taglib>

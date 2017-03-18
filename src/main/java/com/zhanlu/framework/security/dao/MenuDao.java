@@ -1,6 +1,6 @@
 package com.zhanlu.framework.security.dao;
 
-import com.zhanlu.common.dao.HibernateDao;
+import com.zhanlu.framework.common.dao.HibernateDao;
 import com.zhanlu.framework.security.entity.Menu;
 import org.springframework.stereotype.Repository;
 

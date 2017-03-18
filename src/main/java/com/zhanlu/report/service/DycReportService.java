@@ -1,7 +1,7 @@
 package com.zhanlu.report.service;
 
-import com.zhanlu.common.page.Page;
-import com.zhanlu.common.page.PropertyFilter;
+import com.zhanlu.framework.common.page.Page;
+import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.config.service.ProcessNoService;
 import com.zhanlu.report.dao.DycReportDao;
 import com.zhanlu.report.entity.DycReport;

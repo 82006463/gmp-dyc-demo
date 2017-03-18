@@ -1,6 +1,6 @@
 package com.zhanlu.framework.config.entity;
 
-import com.zhanlu.common.entity.IdEntity;
+import com.zhanlu.framework.common.entity.IdEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
