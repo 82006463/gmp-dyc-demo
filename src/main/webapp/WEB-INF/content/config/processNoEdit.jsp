@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
 		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
 		<script type="text/javascript">
+
 		</script>
 	</head>
 
@@ -24,7 +25,7 @@
 				<tr>
 					<td class="td_table_1">流程类型：</td>
 					<td class="td_table_2">
-						<input type="text" id="type" name="type" value="${entity.type}" class="input_240 validate[required]"/>
+						<frame:dict name="type" type="select" typeCode="processType" value="${entity.type}" cssClass="input_select validate[required]"/>
 					</td>
 					<td class="td_table_1">流程前缀：</td>
 					<td class="td_table_2">
