@@ -56,7 +56,7 @@
 				</td>
 				<td class="td_table_1">关闭时间：</td>
 				<td class="td_table_2">
-					<input type="text" name="closeTime" value="<fmt:formatDate value="${entity.closeTime}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" class="input_240 validate[required]" readonly="readonly"/>
+					<input type="text" name="closeTime" value="<fmt:formatDate value="${entity.closeTime}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" class="input_240" readonly="readonly"/>
 				</td>
 			</tr>
 			<tr>

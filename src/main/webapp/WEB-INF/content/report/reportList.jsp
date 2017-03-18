@@ -100,14 +100,13 @@
 					<td class="td_list_2" align=left>${item.processName}</td>
 					<td class="td_list_2" align=left>${item.deptName}</td>
 					<td class="td_list_2" align=left>${item.level}</td>
+					<td class="td_list_2" align=left><fmt:formatDate value="${item.occurTime}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left><fmt:formatDate value="${item.closeTime}" pattern="yyyy-MM-dd"/></td>
 					<td class="td_list_2" align=left>
-						<fmt:formatDate value="${item.occurTime}" pattern="yyyy-MM-dd"/>
-					</td>
-					<td class="td_list_2" align=left>
-						<fmt:formatDate value="${item.closeTime}" pattern="yyyy-MM-dd"/>
-					</td>
-					<td class="td_list_2" align=left>
-						<a href="${ctx}/dyc/report/update/${item.id }" class="btnEdit" title="编辑">编辑</a>
+						<c:if test="${empty item.closeTime}">
+							<a href="${ctx}/dyc/report/delete/${item.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+							<a href="${ctx}/dyc/report/update/${item.id }" class="btnEdit" title="编辑">编辑</a>
+						</c:if>
 						<a href="${ctx}/dyc/report/view/${item.id }" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>

@@ -105,9 +105,10 @@ public class DycReportController {
      */
     @RequestMapping(value = "delete/{id}")
     public ModelAndView delete(RedirectAttributes attributes, @PathVariable("id") Long id) {
+        String processType = reportService.get(id).getProcessType();
         reportService.delete(id);
         ModelAndView view = new ModelAndView("redirect:/dyc/report/list");
-        attributes.addAttribute("processType", reportService.get(id).getProcessType());
+        attributes.addAttribute("processType", processType);
         return view;
     }
 
