@@ -42,11 +42,21 @@
 					${entity.processType=='dev' ? '偏差':entity.processType=='cc' ? '变更':entity.processType=='capa' ? 'CAPA':entity.processType=='oos'? 'OOS':''}编号：
 				</td>
 				<td class="td_table_2">
-					<input type="text" name="processNo" value="${entity.processNo}" class="input_240 validate[required]"/>
+					<input type="text" name="processNo" value="${entity.processNo}" class="input_240" readonly="readonly"/>
 				</td>
+				<td class="td_table_1">${entity.processType=='dev' ? '偏差':entity.processType=='cc' ? '变更':entity.processType=='capa' ? 'CAPA':entity.processType=='oos'? 'OOS':''}名称：</td>
+				<td class="td_table_2">
+					<input type="text" name="processName" value="${entity.processName}" class="input_240"/>
+				</td>
+			</tr>
+			<tr>
 				<td class="td_table_1">发现时间：</td>
 				<td class="td_table_2">
 					<input type="text" name="occurTime" value="<fmt:formatDate value="${entity.occurTime}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" class="input_240 validate[required]" readonly="readonly"/>
+				</td>
+				<td class="td_table_1">关闭时间：</td>
+				<td class="td_table_2">
+					<input type="text" name="closeTime" value="<fmt:formatDate value="${entity.closeTime}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" class="input_240 validate[required]" readonly="readonly"/>
 				</td>
 			</tr>
 			<tr>

@@ -28,9 +28,10 @@ public class DycReport extends IdEntity {
     private String deptName;
     private String level; //级别
     private Date occurTime;//发现时间
+    private Date closeTime; //流程关闭时间
     private String occurPerson;//发现人
     private Date startTime; //流程开始时间
-    private Date endTime; //流程关闭时间
+    private Date endTime; //流程结束时间
 
     private String materielCode;//物料编号
     private String materielName;//物料名称
@@ -159,5 +160,14 @@ public class DycReport extends IdEntity {
 
     public void setMaterielName(String materielName) {
         this.materielName = materielName;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public Date getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(Date closeTime) {
+        this.closeTime = closeTime;
     }
 }

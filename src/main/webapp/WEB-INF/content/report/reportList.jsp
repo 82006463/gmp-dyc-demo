@@ -74,7 +74,7 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<input type='button' onclick="addNew('${ctx}/dyc/report/create?processType=dev')" class='button_70px' value='新建'/>
+					<input type='button' onclick="addNew('${ctx}/dyc/report/create?processType=${param['processType']}')" class='button_70px' value='新建'/>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>
@@ -85,6 +85,9 @@
 				<td align="center" class="td_list_1">
 					${param['processType']=='dev' ? '偏差':param['processType']=='cc' ? '变更':param['processType']=='capa' ? 'CAPA':param['processType']=='oos'? 'OOS':''}编号
 				</td>
+				<td align="center" class="td_list_1">
+					${param['processType']=='dev' ? '偏差':param['processType']=='cc' ? '变更':param['processType']=='capa' ? 'CAPA':param['processType']=='oos'? 'OOS':''}名称
+				</td>
 				<td align="center" class="td_list_1">部门</td>
 				<td align="center" class="td_list_1">级别</td>
 				<td align="center" class="td_list_1">发现时间</td>
@@ -94,13 +97,14 @@
 			<c:forEach items="${page.result}" var="item">
 				<tr>
 					<td class="td_list_2" align=left>${item.processNo}</td>
+					<td class="td_list_2" align=left>${item.processName}</td>
 					<td class="td_list_2" align=left>${item.deptName}</td>
 					<td class="td_list_2" align=left>${item.level}</td>
 					<td class="td_list_2" align=left>
 						<fmt:formatDate value="${item.occurTime}" pattern="yyyy-MM-dd"/>
 					</td>
 					<td class="td_list_2" align=left>
-						<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd"/>
+						<fmt:formatDate value="${item.closeTime}" pattern="yyyy-MM-dd"/>
 					</td>
 					<td class="td_list_2" align=left>
 						<a href="${ctx}/dyc/report/update/${item.id }" class="btnEdit" title="编辑">编辑</a>

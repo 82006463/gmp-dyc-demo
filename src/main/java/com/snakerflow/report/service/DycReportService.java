@@ -2,13 +2,14 @@ package com.snakerflow.report.service;
 
 import com.snakerflow.common.page.Page;
 import com.snakerflow.common.page.PropertyFilter;
+import com.snakerflow.framework.config.service.ProcessNoService;
 import com.snakerflow.report.dao.DycReportDao;
 import com.snakerflow.report.entity.DycReport;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Transient;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ public class DycReportService {
 
     @Autowired
     private DycReportDao reportDao;
+    @Autowired
+    private ProcessNoService processNoService;
 
     /**
      * 保存权限实体
@@ -31,6 +34,9 @@ public class DycReportService {
      */
     @Transactional
     public void save(DycReport entity) {
+        if (entity.getId() == null && StringUtils.isBlank(entity.getProcessNo())) {
+            entity.setProcessNo(processNoService.getNextVal(entity.getProcessType()));
+        }
         reportDao.save(entity);
     }
 
@@ -57,6 +63,7 @@ public class DycReportService {
 
     /**
      * 根据主键ID删除对应的实体
+     *
      * @param id
      */
     @Transactional

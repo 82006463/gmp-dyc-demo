@@ -26,8 +26,16 @@
 					${entity.processType=='dev' ? '偏差':entity.processType=='cc' ? '变更':entity.processType=='capa' ? 'CAPA':entity.processType=='oos'? 'OOS':''}编号：
 				</td>
 				<td class="td_table_2">${entity.processNo}</td>
+				<td class="td_table_1">
+					${entity.processType=='dev' ? '偏差':entity.processType=='cc' ? '变更':entity.processType=='capa' ? 'CAPA':entity.processType=='oos'? 'OOS':''}名称：
+				</td>
+				<td class="td_table_2">${entity.processName}</td>
+			</tr>
+			<tr>
 				<td class="td_table_1">发现时间：</td>
 				<td class="td_table_2"><fmt:formatDate value="${entity.occurTime}" pattern="yyyy-MM-dd"/></td>
+				<td class="td_table_1">关闭时间：</td>
+				<td class="td_table_2"><fmt:formatDate value="${entity.closeTime}" pattern="yyyy-MM-dd"/></td>
 			</tr>
 			<tr>
 				<td class="td_table_1">部门：</td>
