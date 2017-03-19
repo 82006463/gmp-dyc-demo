@@ -1,8 +1,8 @@
 package com.zhanlu.framework.common.dao;
 
-import com.zhanlu.framework.common.page.PropertyFilter.MatchType;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.common.page.PropertyFilter.MatchType;
 import com.zhanlu.framework.common.utils.ReflectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -133,9 +133,7 @@ public class HibernateDao<T, PK extends Serializable> extends SimpleHibernateDao
      * 设置分页参数到Query对象,辅助函数.
      */
     protected Query setPageParameterToQuery(final Query q, final Page<T> page) {
-
         Assert.isTrue(page.getPageSize() > 0, "Page Size must larger than zero");
-
         //hibernate的firstResult的序号从0开始
         q.setFirstResult(page.getFirst() - 1);
         q.setMaxResults(page.getPageSize());
@@ -146,20 +144,16 @@ public class HibernateDao<T, PK extends Serializable> extends SimpleHibernateDao
      * 设置分页参数到Criteria对象,辅助函数.
      */
     protected Criteria setPageParameterToCriteria(final Criteria c, final Page<T> page) {
-
         Assert.isTrue(page.getPageSize() >= 0, "Page Size must larger than zero");
         if (page.getPageSize() > 0) {
             //hibernate的firstResult的序号从0开始
             c.setFirstResult(page.getFirst() - 1);
             c.setMaxResults(page.getPageSize());
         }
-
         if (page.isOrderBySetted()) {
             String[] orderByArray = StringUtils.split(page.getOrderBy(), ',');
             String[] orderArray = StringUtils.split(page.getOrder(), ',');
-
             Assert.isTrue(orderByArray.length == orderArray.length, "分页多重排序参数中,排序字段与排序方向的个数不相等");
-
             for (int i = 0; i < orderByArray.length; i++) {
                 if (Page.ASC.equals(orderArray[i])) {
                     c.addOrder(Order.asc(orderByArray[i]));

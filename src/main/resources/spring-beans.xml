@@ -58,6 +58,7 @@
                 <value>com.zhanlu.framework.config.entity</value>
                 <value>com.zhanlu.app.modules.entity</value>
 				<value>com.zhanlu.report.entity</value>
+				<value>com.zhanlu.bd.entity</value>
 			</list>
 		</property>
 		<property name="mappingResources">
