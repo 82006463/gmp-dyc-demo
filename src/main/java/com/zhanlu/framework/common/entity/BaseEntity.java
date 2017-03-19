@@ -1,5 +1,6 @@
 package com.zhanlu.framework.common.entity;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
@@ -10,6 +11,7 @@ public class BaseEntity extends IdEntity {
     //名称
     protected String name;
 
+    @Column(name = "code", nullable = false, length = 20)
     public String getCode() {
         return code;
     }
@@ -18,6 +20,7 @@ public class BaseEntity extends IdEntity {
         this.code = code;
     }
 
+    @Column(name = "name", nullable = false, length = 100)
     public String getName() {
         return name;
     }

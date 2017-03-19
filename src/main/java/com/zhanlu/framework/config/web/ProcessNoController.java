@@ -4,6 +4,8 @@ import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.config.entity.ProcessNo;
 import com.zhanlu.framework.config.service.ProcessNoService;
+import com.zhanlu.framework.security.entity.Org;
+import com.zhanlu.framework.security.service.OrgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,8 @@ public class ProcessNoController {
 
     @Autowired
     private ProcessNoService processNoService;
+    @Autowired
+    private OrgService orgService;
 
     /**
      * 分页查询配置，返回配置字典列表视图
@@ -57,6 +61,7 @@ public class ProcessNoController {
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
         model.addAttribute("entity", new ProcessNo());
+        model.addAttribute("orgList", orgService.getAll());
         return "config/processNoEdit";
     }
 
@@ -71,6 +76,7 @@ public class ProcessNoController {
     public String edit(@PathVariable("id") Long id, Model model) {
         ProcessNo entity = processNoService.get(id);
         model.addAttribute("entity", entity);
+        model.addAttribute("orgList", orgService.getAll());
         return "config/processNoEdit";
     }
 
@@ -94,8 +100,12 @@ public class ProcessNoController {
      * @return
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(ProcessNo dataDict) {
-        processNoService.save(dataDict);
+    public String update(ProcessNo entity) {
+        if (entity.getOrgId() != null && entity.getOrgId() > 0) {
+            Org org = orgService.get(entity.getOrgId());
+            entity.setOrgCode(org.getCode());
+        }
+        processNoService.save(entity);
         return "redirect:/config/processNo/list";
     }
 

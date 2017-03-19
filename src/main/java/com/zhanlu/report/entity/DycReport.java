@@ -24,8 +24,8 @@ public class DycReport extends IdEntity {
     private String processName; //流程名称
     private String processDesc;//描述
 
-    private Long deptId; //部门
-    private String deptName;
+    private Long orgId; //部门
+    private String orgName;
     private String level; //级别
     private Date occurTime;//发现时间
     private Date closeTime; //流程关闭时间
@@ -37,7 +37,7 @@ public class DycReport extends IdEntity {
     private String materielName;//物料名称
     private String extraJson; //流程额外的非键数据
 
-    @Column(length = 10)
+    @Column(name = "process_type", length = 10)
     public String getProcessType() {
         return processType;
     }
@@ -46,7 +46,7 @@ public class DycReport extends IdEntity {
         this.processType = processType;
     }
 
-    @Column(length = 20)
+    @Column(name = "process_no", length = 20)
     public String getProcessNo() {
         return processNo;
     }
@@ -55,7 +55,7 @@ public class DycReport extends IdEntity {
         this.processNo = processNo;
     }
 
-    @Column(length = 50)
+    @Column(name = "process_name", length = 50)
     public String getProcessName() {
         return processName;
     }
@@ -64,15 +64,7 @@ public class DycReport extends IdEntity {
         this.processName = processName;
     }
 
-    public Long getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
-    }
-
-    @Column(length = 20)
+    @Column(name = "level", length = 20)
     public String getLevel() {
         return level;
     }
@@ -81,6 +73,7 @@ public class DycReport extends IdEntity {
         this.level = level;
     }
 
+    @Column(name = "occur_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date getOccurTime() {
         return occurTime;
@@ -90,6 +83,7 @@ public class DycReport extends IdEntity {
         this.occurTime = occurTime;
     }
 
+    @Column(name = "start_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date getStartTime() {
         return startTime;
@@ -99,6 +93,7 @@ public class DycReport extends IdEntity {
         this.startTime = startTime;
     }
 
+    @Column(name = "end_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date getEndTime() {
         return endTime;
@@ -108,7 +103,7 @@ public class DycReport extends IdEntity {
         this.endTime = endTime;
     }
 
-
+    @Column(name = "extra_json", length = 500)
     public String getExtraJson() {
         return extraJson;
     }
@@ -117,16 +112,7 @@ public class DycReport extends IdEntity {
         this.extraJson = extraJson;
     }
 
-    @Column(length = 50)
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    @Column(length = 200)
+    @Column(name = "process_desc", length = 200)
     public String getProcessDesc() {
         return processDesc;
     }
@@ -135,7 +121,7 @@ public class DycReport extends IdEntity {
         this.processDesc = processDesc;
     }
 
-    @Column(length = 20)
+    @Column(name = "occur_person", length = 20)
     public String getOccurPerson() {
         return occurPerson;
     }
@@ -144,7 +130,7 @@ public class DycReport extends IdEntity {
         this.occurPerson = occurPerson;
     }
 
-    @Column(length = 50)
+    @Column(name = "materiel_code", length = 50)
     public String getMaterielCode() {
         return materielCode;
     }
@@ -153,7 +139,7 @@ public class DycReport extends IdEntity {
         this.materielCode = materielCode;
     }
 
-    @Column(length = 100)
+    @Column(name = "materiel_name", length = 100)
     public String getMaterielName() {
         return materielName;
     }
@@ -162,6 +148,7 @@ public class DycReport extends IdEntity {
         this.materielName = materielName;
     }
 
+    @Column(name = "close_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date getCloseTime() {
         return closeTime;
@@ -169,5 +156,23 @@ public class DycReport extends IdEntity {
 
     public void setCloseTime(Date closeTime) {
         this.closeTime = closeTime;
+    }
+
+    @Column(name = "org_id")
+    public Long getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Long orgId) {
+        this.orgId = orgId;
+    }
+
+    @Column(name = "org_name", length = 100)
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

@@ -35,7 +35,7 @@ public class DycReportService {
     @Transactional
     public void save(DycReport entity) {
         if (entity.getId() == null && StringUtils.isBlank(entity.getProcessNo())) {
-            entity.setProcessNo(processNoService.getNextVal(entity.getProcessType()));
+            entity.setProcessNo(processNoService.getNextVal(entity.getProcessType(), entity.getOrgId()));
         }
         reportDao.save(entity);
     }

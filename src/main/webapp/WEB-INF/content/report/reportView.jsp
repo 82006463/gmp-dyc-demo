@@ -39,7 +39,7 @@
 			</tr>
 			<tr>
 				<td class="td_table_1">部门：</td>
-				<td class="td_table_2">${entity.deptName}</td>
+				<td class="td_table_2">${entity.orgName}</td>
 				<td class="td_table_1">级别：</td>
 				<td class="td_table_2">
 					<frame:dict name="level" type="select" typeCode="devLevel" value="${entity.level}" displayType="1"/>

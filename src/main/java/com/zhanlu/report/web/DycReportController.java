@@ -80,10 +80,6 @@ public class DycReportController {
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ModelAndView update(RedirectAttributes attributes, DycReport entity) {
-        if (entity.getDeptId() != null && entity.getDeptId() > 0) {
-            Org org = orgService.get(entity.getDeptId());
-            entity.setDeptName(org.getName());
-        }
         reportService.save(entity);
         ModelAndView view = new ModelAndView("redirect:/dyc/report/list");
         attributes.addAttribute("processType", entity.getProcessType());

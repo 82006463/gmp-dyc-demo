@@ -1,5 +1,6 @@
 package com.zhanlu.framework.config.entity;
 
+import com.zhanlu.framework.common.entity.BaseEntity;
 import com.zhanlu.framework.common.entity.IdEntity;
 
 import javax.persistence.Column;
@@ -8,28 +9,25 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "wfc_process_no")
-public class ProcessNo extends IdEntity {
+public class ProcessNo extends BaseEntity {
 
-    /**
-     * 流程类型：保存之后，不可更改
-     */
-    private String type;
+    //流程前缀
     private String prefix;
+    //时间模式：yyyy | yyyyMM | yyyyMMdd
     private String timePattern;
+    //时间模式下的当前时间值
     private Integer timeValue;
+    //流水号长度
     private Integer indexLength;
+    //当前流水号
     private Integer indexValue;
+    //当前值的编码规则：年+月+日+部门编号+流水号
     private String currentValue;
-    private String deptNo;
-
-    @Column(length = 5)
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+    //是否使用部门编号：1：使用,0：不使用
+    private Integer orgState;
+    //部门ID、编号
+    private Long orgId;
+    private String orgCode;
 
     @Column(length = 5)
     public String getPrefix() {
@@ -85,12 +83,30 @@ public class ProcessNo extends IdEntity {
         this.currentValue = currentValue;
     }
 
-    @Column(length = 20)
-    public String getDeptNo() {
-        return deptNo;
+    @Column(name = "org_id")
+    public Long getOrgId() {
+        return orgId;
     }
 
-    public void setDeptNo(String deptNo) {
-        this.deptNo = deptNo;
+    public void setOrgId(Long orgId) {
+        this.orgId = orgId;
+    }
+
+    @Column(name = "org_code", length = 20)
+    public String getOrgCode() {
+        return orgCode;
+    }
+
+    public void setOrgCode(String orgCode) {
+        this.orgCode = orgCode;
+    }
+
+    @Column(name = "org_state", length = 2)
+    public Integer getOrgState() {
+        return orgState;
+    }
+
+    public void setOrgState(Integer orgState) {
+        this.orgState = orgState;
     }
 }

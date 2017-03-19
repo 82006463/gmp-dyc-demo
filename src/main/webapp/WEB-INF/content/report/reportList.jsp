@@ -41,10 +41,10 @@
 			<tr>
 				<td class="td_table_1">部门：</td>
 				<td class="td_table_2">
-					<select name="filter_EQL_deptId" class="input_select">
+					<select name="filter_EQL_orgId" class="input_select">
 						<option value="" selected="">------请选择------</option>
 						<c:forEach items="${orgList}" var="item">
-							<option value="${item.id}" ${param['filter_EQL_deptId']==item.id ? 'selected="selected"':''}>${item.name}</option>
+							<option value="${item.id}" ${param['filter_EQL_orgId']==item.id ? 'selected="selected"':''}>${item.name}</option>
 						</c:forEach>
 					</select>
 				</td>
@@ -98,7 +98,7 @@
 				<tr>
 					<td class="td_list_2" align=left>${item.processNo}</td>
 					<td class="td_list_2" align=left>${item.processName}</td>
-					<td class="td_list_2" align=left>${item.deptName}</td>
+					<td class="td_list_2" align=left>${item.orgName}</td>
 					<td class="td_list_2" align=left>${item.level}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.occurTime}" pattern="yyyy-MM-dd"/></td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.closeTime}" pattern="yyyy-MM-dd"/></td>

@@ -62,12 +62,13 @@
 			<tr>
 				<td class="td_table_1">部门：</td>
 				<td class="td_table_2">
-					<select name="deptId" class="input_select validate[required]">
+					<select name="orgId" class="input_select validate[required]" onchange="$('#orgName').val($(this).find('option:selected').text());">
 						<option value="">------请选择------</option>
 						<c:forEach items="${orgList}" var="item">
-							<option value="${item.id}" ${entity.deptId==item.id ? 'selected="selected"':''}>${item.name}</option>
+							<option value="${item.id}" ${entity.orgId==item.id ? 'selected="selected"':''}>${item.name}</option>
 						</c:forEach>
 					</select>
+					<input type="hidden" id="orgName" name="orgName" value="${entity.orgName}"/>
 				</td>
 				<td class="td_table_1">级别：</td>
 				<td class="td_table_2">
