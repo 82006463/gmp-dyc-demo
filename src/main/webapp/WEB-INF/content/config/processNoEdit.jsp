@@ -21,6 +21,14 @@
 				}
 				return false;
 			}
+
+			function checkTimePattern(thisTag) {
+				var _val = $(thisTag).val();
+				if(_val.length>0 && _val!='yyyy' && _val!='yyyyMM' && _val!='yyyyMMdd') {
+					alert('时间模式必须符合(y:年,M:月,d:日)：yyyy | yyyyMM | yyyyMMdd');
+					$(thisTag).val('');
+				}
+			}
 		</script>
 	</head>
 
@@ -46,18 +54,18 @@
 					</td>
 					<td class="td_table_1">流程前缀：</td>
 					<td class="td_table_2">
-						<input type="text" id="prefix" name="prefix" value="${entity.prefix}" class="input_240 validate[required]"/>
+						<input type="text" id="prefix" name="prefix" value="${entity.prefix}" class="input_240 validate[required,minSize[1],maxSize[8]]"/>
 					</td>
 				</tr>
 
 				<tr>
 					<td class="td_table_1">时间模式：</td>
 					<td class="td_table_2">
-						<input type="text" id="timePattern" name="timePattern" value="${entity.timePattern}" class="input_240 validate[required]"/>
+						<input type="text" id="timePattern" name="timePattern" value="${entity.timePattern}" class="input_240 validate[required,minSize[2],maxSize[8]]" onblur="checkTimePattern(this);"/>
 					</td>
-					<td class="td_table_1">流程号长度：</td>
+					<td class="td_table_1">流水号长度：</td>
 					<td class="td_table_2">
-						<input type="text" id="indexLength" name="indexLength" value="${entity.indexLength}" class="input_240 validate[required]"/>
+						<input type="text" id="indexLength" name="indexLength" value="${entity.indexLength}" class="input_240 validate[required,custom[integer],min[1]]"/>
 					</td>
 				</tr>
 			</table>

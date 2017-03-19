@@ -49,33 +49,37 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=45% class="td_list_1">部门名称</td>
-				<td align=center width=45% class="td_list_1">上级部门名称</td>
+				<td align=center class="td_list_1">部门编号</td>
+				<td align=center class="td_list_1">部门名称</td>
+				<td align=center class="td_list_1">部门层级</td>
+				<td align=center class="td_list_1">上级部门名称</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
-			<c:forEach items="${page.result}" var="org">
+			<c:forEach items="${page.result}" var="item">
 				<tr>
-					<td class="td_list_2" align=left>${org.name}</td>
-					<td class="td_list_2" align=left>${org.parentOrg.name}</td>
+					<td class="td_list_2" align=left>${item.code}</td>
+					<td class="td_list_2" align=left>${item.name}</td>
+					<td class="td_list_2" align=left>${item.level}</td>
+					<td class="td_list_2" align=left>${item.pname}</td>
 					<td class="td_list_2" align=left>
 				    <c:choose>
-				    <c:when test="${empty lookup}">
-				    <shiro:hasPermission name="ORGDELETE">
-						<a href="${ctx}/security/org/delete/${org.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-					</shiro:hasPermission>
-					<shiro:hasPermission name="ORGEDIT">
-						<a href="${ctx}/security/org/update/${org.id }" class="btnEdit" title="编辑">编辑</a>
-					</shiro:hasPermission>
-						<a href="${ctx}/security/org/view/${org.id }" class="btnView" title="查看">查看</a>
-					</c:when>
-					<c:otherwise>
-						<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${org.id}','${org.name }')">选择</a>
-					</c:otherwise>
+						<c:when test="${empty lookup}">
+							<shiro:hasPermission name="ORGDELETE">
+								<a href="${ctx}/security/org/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="ORGEDIT">
+								<a href="${ctx}/security/org/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
+							</shiro:hasPermission>
+							<a href="${ctx}/security/org/view/${item.id}" class="btnView" title="查看">查看</a>
+						</c:when>
+						<c:otherwise>
+							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>
+						</c:otherwise>
 					</c:choose>
 					</td>
 				</tr>
 			</c:forEach>
-			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup }"/>
+			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages}" totalRecords="${page.totalCount }" lookup="${lookup }"/>
 		</table>
 	</form>
 	</body>

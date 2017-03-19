@@ -30,7 +30,7 @@
 				<tr>
 					<td class="td_table_1">时间模式：</td>
 					<td class="td_table_2">${entity.timePattern}</td>
-					<td class="td_table_1">流程号长度：</td>
+					<td class="td_table_1">流水号长度：</td>
 					<td class="td_table_2">${entity.indexLength}</td>
 				</tr>
 			</table>

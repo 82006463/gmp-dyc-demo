@@ -56,7 +56,7 @@
 				<td align=center class="td_list_1">流程类型</td>
 				<td align=center class="td_list_1">流程前缀</td>
 				<td align=center class="td_list_1">时间模式</td>
-				<td align=center class="td_list_1">流程号长度</td>
+				<td align=center class="td_list_1">流水号长度</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item">

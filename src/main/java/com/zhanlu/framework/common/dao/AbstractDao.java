@@ -23,6 +23,16 @@ public class AbstractDao<T, ID extends Serializable> implements BaseDao<T, ID> {
     }
 
     @Override
+    public T save(T entity) throws SQLException {
+        if (secondHibernateTemplate != null) {
+            secondHibernateTemplate.save(entity);
+        } else {
+            firstHibernateTemplate.save(entity);
+        }
+        return entity;
+    }
+
+    @Override
     public T saveOrUpdate(T entity) throws SQLException {
         if (secondHibernateTemplate != null) {
             secondHibernateTemplate.saveOrUpdate(entity);
@@ -34,10 +44,15 @@ public class AbstractDao<T, ID extends Serializable> implements BaseDao<T, ID> {
 
     @Override
     public boolean delete(ID id) throws SQLException {
+        return this.delete(selectOne(id));
+    }
+
+    @Override
+    public boolean delete(T entity) throws SQLException {
         if (secondHibernateTemplate != null) {
-            secondHibernateTemplate.delete(selectOne(id));
+            secondHibernateTemplate.delete(entity);
         } else {
-            firstHibernateTemplate.delete(selectOne(id));
+            firstHibernateTemplate.delete(entity);
         }
         return true;
     }
@@ -73,17 +88,19 @@ public class AbstractDao<T, ID extends Serializable> implements BaseDao<T, ID> {
 
     @Override
     public List<T> selectAll() {
-        List<?> entities = secondHibernateTemplate != null ? secondHibernateTemplate.loadAll(ReflectionUtils.getSuperClassGenricType(getClass())) : firstHibernateTemplate.loadAll(ReflectionUtils.getSuperClassGenricType(getClass()));
-        return (List<T>) entities;
+        return this.selectListByMap(null);
     }
 
     private List<T> selectListByMap(Map<String, Object> whereMap) {
-        StringBuilder hql = new StringBuilder("FROM " + ReflectionUtils.getSuperClassGenricType(getClass()).getName() + " WHERE");
-        List<Object> params = new ArrayList<>(whereMap.size());
-        for (Map.Entry<String, Object> entry : whereMap.entrySet()) {
-            hql.append(" " + entry.getKey() + " = ?");
-            params.add(entry.getValue());
+        StringBuilder hql = new StringBuilder("SELECT t FROM " + ReflectionUtils.getSuperClassGenricType(getClass()).getName() + " t WHERE 1=1");
+        if (whereMap != null && whereMap.size() > 0) {
+            List<Object> params = new ArrayList<>(whereMap.size());
+            for (Map.Entry<String, Object> entry : whereMap.entrySet()) {
+                hql.append(" t." + entry.getKey() + " = ?");
+                params.add(entry.getValue());
+            }
+            return secondHibernateTemplate != null ? secondHibernateTemplate.find(hql.toString(), params.toArray()) : firstHibernateTemplate.find(hql.toString(), params.toArray());
         }
-        return secondHibernateTemplate != null ? secondHibernateTemplate.find(hql.toString(), params.toArray()) : firstHibernateTemplate.find(hql.toString(), params.toArray());
+        return secondHibernateTemplate != null ? secondHibernateTemplate.find(hql.toString()) : firstHibernateTemplate.find(hql.toString());
     }
 }

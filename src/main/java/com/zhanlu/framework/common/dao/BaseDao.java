@@ -13,6 +13,14 @@ public interface BaseDao<T, ID extends Serializable> {
      * @param entity
      * @return
      */
+    T save(final T entity) throws SQLException;
+
+    /**
+     * 新增/更新对象
+     *
+     * @param entity
+     * @return
+     */
     T saveOrUpdate(final T entity) throws SQLException;
 
     /**
@@ -22,6 +30,14 @@ public interface BaseDao<T, ID extends Serializable> {
      * @return
      */
     boolean delete(final ID id) throws SQLException;
+
+    /**
+     * 根据ID删除对象
+     *
+     * @param entity
+     * @return
+     */
+    boolean delete(final T entity) throws SQLException;
 
     /**
      * 根据ID查询单个对象

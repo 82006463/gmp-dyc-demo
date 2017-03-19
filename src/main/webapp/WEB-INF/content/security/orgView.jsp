@@ -16,15 +16,15 @@
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
 					<td class="td_table_1">部门名称：</td>
-					<td class="td_table_2" colspan="3">${org.name }</td>
+					<td class="td_table_2" colspan="3">${org.name}</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">上级部门：</td>
-					<td class="td_table_2" colspan="3">${org.parentOrg.name }</td>
+					<td class="td_table_2" colspan="3">${org.pname }</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">部门描述：</td>
-					<td class="td_table_2" colspan="3">${org.description }</td>
+					<td class="td_table_2" colspan="3">${org.description}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
