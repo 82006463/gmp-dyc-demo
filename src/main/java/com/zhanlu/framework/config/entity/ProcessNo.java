@@ -20,6 +20,7 @@ public class ProcessNo extends IdEntity {
     private Integer indexLength;
     private Integer indexValue;
     private String currentValue;
+    private String deptNo;
 
     @Column(length = 5)
     public String getType() {
@@ -82,5 +83,14 @@ public class ProcessNo extends IdEntity {
 
     public void setCurrentValue(String currentValue) {
         this.currentValue = currentValue;
+    }
+
+    @Column(length = 20)
+    public String getDeptNo() {
+        return deptNo;
+    }
+
+    public void setDeptNo(String deptNo) {
+        this.deptNo = deptNo;
     }
 }

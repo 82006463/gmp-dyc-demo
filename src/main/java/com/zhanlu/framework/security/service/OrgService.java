@@ -8,6 +8,7 @@ import com.zhanlu.framework.security.dao.OrgDao;
 import com.zhanlu.framework.security.entity.Org;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 部门管理类
@@ -24,6 +25,7 @@ public class OrgService {
 	 * 保存部门实体
 	 * @param entity
 	 */
+	@Transactional
 	public void save(Org entity) {
 		orgDao.save(entity);
 	}
@@ -32,6 +34,7 @@ public class OrgService {
 	 * 根据主键ID删除对应的部门
 	 * @param id
 	 */
+	@Transactional
 	public void delete(Long id) {
 		orgDao.delete(id);
 	}

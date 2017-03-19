@@ -23,6 +23,7 @@ import com.zhanlu.framework.flow.dao.ApprovalDao;
 import com.zhanlu.framework.flow.entity.Approval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author yuqs
@@ -36,6 +37,7 @@ public class ApprovalService {
 	 * 保存实体
 	 * @param entity
 	 */
+	@Transactional
 	public void save(Approval entity) {
 		dao.save(entity);
 	}
@@ -44,6 +46,7 @@ public class ApprovalService {
 	 * 根据主键ID删除对应的
 	 * @param id
 	 */
+	@Transactional
 	public void delete(Long id) {
 		dao.delete(id);
 	}

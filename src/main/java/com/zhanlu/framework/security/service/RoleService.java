@@ -9,6 +9,7 @@ import com.zhanlu.framework.security.entity.Role;
 import com.zhanlu.framework.security.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 角色管理类
@@ -28,6 +29,7 @@ public class RoleService {
 	 * 保存、更新角色实体
 	 * @param entity
 	 */
+	@Transactional
 	public void save(Role entity) {
 		roleDao.save(entity);
 	}
@@ -36,6 +38,7 @@ public class RoleService {
 	 * 根据主键ID删除对应的角色
 	 * @param id
 	 */
+	@Transactional
 	public void delete(Long id) {
 		List<User> users = userManager.getAll();
 		for(User user : users) {

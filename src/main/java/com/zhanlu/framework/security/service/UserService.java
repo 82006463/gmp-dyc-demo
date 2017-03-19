@@ -13,6 +13,7 @@ import com.zhanlu.framework.security.entity.Org;
 import com.zhanlu.framework.security.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 用户管理类
@@ -32,6 +33,7 @@ public class UserService {
 	 * 保存、更新用户实体
 	 * @param entity
 	 */
+	@Transactional
 	public void save(User entity) {
 		if (StringUtils.isNotBlank(entity.getPlainPassword())) {
 			entryptPassword(entity);
@@ -43,6 +45,7 @@ public class UserService {
 	 * 根据主键ID删除对应的用户实体
 	 * @param id
 	 */
+	@Transactional
 	public void delete(Long id) {
 		userDao.delete(id);
 	}

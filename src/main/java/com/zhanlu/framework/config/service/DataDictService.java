@@ -6,6 +6,7 @@ import com.zhanlu.framework.config.dao.DataDictDao;
 import com.zhanlu.framework.config.entity.DataDict;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class DataDictService {
      *
      * @param entity
      */
+    @Transactional
     public void save(DataDict entity, List<DataDict> items) {
         if (entity.getId() != null && entity.getId() > 0) {
             dataDictDao.batchExecute("delete DataDict where pid=" + entity.getId());
@@ -72,6 +74,7 @@ public class DataDictService {
      *
      * @param id
      */
+    @Transactional
     public void delete(Long id) {
         dataDictDao.delete(id);
     }

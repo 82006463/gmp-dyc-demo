@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.zhanlu.app.modules.dao.BorrowDao;
 import com.zhanlu.app.modules.entity.Borrow;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class BorrowManager {
@@ -22,6 +23,7 @@ public class BorrowManager {
     @Autowired
     private BorrowDao dao;
 
+	@Transactional
     public void save(String processId, String orderId, String taskId, Borrow model) {
         /** 流程数据构造开始 */
         Map<String, Object> params = new HashMap<String, Object>();
@@ -51,6 +53,7 @@ public class BorrowManager {
 	 * 保存实体
 	 * @param entity
 	 */
+	@Transactional
 	public void save(Borrow entity) {
 		dao.save(entity);
 	}
@@ -59,6 +62,7 @@ public class BorrowManager {
 	 * 根据主键ID删除对应的
 	 * @param id
 	 */
+	@Transactional
 	public void delete(Long id) {
 		dao.delete(id);
 	}

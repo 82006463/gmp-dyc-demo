@@ -9,6 +9,7 @@ import com.zhanlu.framework.security.entity.Authority;
 import com.zhanlu.framework.security.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 权限管理类
@@ -28,6 +29,7 @@ public class AuthorityService {
 	 * 保存权限实体
 	 * @param entity
 	 */
+	@Transactional
 	public void save(Authority entity) {
 		authorityDao.save(entity);
 	}
@@ -36,6 +38,7 @@ public class AuthorityService {
 	 * 根据主键ID删除对应的实体
 	 * @param id
 	 */
+	@Transactional
 	public void delete(Long id) {
 		List<Role> roles = roleManager.getAll();
 		for(Role role : roles) {

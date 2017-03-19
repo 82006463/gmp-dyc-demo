@@ -6,6 +6,7 @@ import com.zhanlu.framework.config.dao.ProcessNoDao;
 import com.zhanlu.framework.config.entity.ProcessNo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,6 +31,7 @@ public class ProcessNoService {
      *
      * @param entity
      */
+    @Transactional
     public ProcessNo save(ProcessNo entity) {
         processNoDao.save(entity);
         return entity;
@@ -89,6 +91,7 @@ public class ProcessNoService {
      *
      * @param id
      */
+    @Transactional
     public boolean delete(Long id) {
         processNoDao.delete(id);
         return true;

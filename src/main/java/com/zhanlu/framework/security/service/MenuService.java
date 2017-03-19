@@ -7,6 +7,7 @@ import com.zhanlu.framework.security.entity.Menu;
 import org.hibernate.SQLQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class MenuService {
      *
      * @param entity
      */
+    @Transactional
     public void save(Menu entity) {
         menuDao.save(entity);
     }
@@ -39,6 +41,7 @@ public class MenuService {
      *
      * @param id
      */
+    @Transactional
     public void delete(Long id) {
         resourceManager.updateByMenuId(id);
         menuDao.delete(id);

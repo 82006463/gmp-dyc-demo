@@ -10,6 +10,7 @@ import com.zhanlu.framework.security.entity.Authority;
 import com.zhanlu.framework.security.entity.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 资源管理类
@@ -29,6 +30,7 @@ public class ResourceService {
 	 * 保存资源实体
 	 * @param entity
 	 */
+	@Transactional
 	public void save(Resource entity) {
 		resourceDao.save(entity);
 	}
@@ -37,6 +39,7 @@ public class ResourceService {
 	 * 根据主键ID删除资源实体
 	 * @param id
 	 */
+	@Transactional
 	public void delete(Long id) {
 		List<Authority> authorities = authorityManager.getAll();
 		for(Authority auth : authorities) {
@@ -50,7 +53,8 @@ public class ResourceService {
 		}
 		resourceDao.delete(id);
 	}
-	
+
+	@Transactional
 	public void updateByMenuId(Long menuId) {
 		String hql = "from Resource as r where r.menu.id=?";
 		Resource resource = resourceDao.findUnique(hql, menuId);
