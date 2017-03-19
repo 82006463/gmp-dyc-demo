@@ -40,7 +40,7 @@ public class Page<T> {
 
 	//-- 构造函数 --//
 	public Page() {
-		this.pageSize = 10;
+		this.pageSize = 15;
 	}
 
 	public Page(int pageSize) {
