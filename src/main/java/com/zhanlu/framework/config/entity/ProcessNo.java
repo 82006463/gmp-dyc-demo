@@ -1,7 +1,6 @@
 package com.zhanlu.framework.config.entity;
 
-import com.zhanlu.framework.common.entity.BaseEntity;
-import com.zhanlu.framework.common.entity.IdEntity;
+import com.zhanlu.framework.common.entity.CodeEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "wfc_process_no")
-public class ProcessNo extends BaseEntity {
+public class ProcessNo extends CodeEntity {
 
     //流程前缀
     private String prefix;

@@ -1,6 +1,6 @@
 package com.zhanlu.bd.entity;
 
-import com.zhanlu.framework.common.entity.BaseEntity;
+import com.zhanlu.framework.common.entity.CodeEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,13 +11,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "bd_test_item")
-public class TestItem extends BaseEntity {
+public class TestItem extends CodeEntity {
 
     //测试项编号：00001开始，自动+1
     //测试项版本
     private String ver;
-    //描述
-    private String remark;
     //数据类型
     private String dataType;
     //比较符
@@ -34,15 +32,6 @@ public class TestItem extends BaseEntity {
 
     public void setVer(String ver) {
         this.ver = ver;
-    }
-
-    @Column(name = "remark", length = 200)
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
     }
 
     @Column(name = "data_type", length = 10)

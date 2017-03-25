@@ -1,6 +1,6 @@
 package com.zhanlu.bd.entity;
 
-import com.zhanlu.framework.common.entity.BaseEntity;
+import com.zhanlu.framework.common.entity.CodeEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "bd_qs")
-public class Qs extends BaseEntity {
+public class Qs extends CodeEntity {
 
     //质量标准版本
     private String ver;

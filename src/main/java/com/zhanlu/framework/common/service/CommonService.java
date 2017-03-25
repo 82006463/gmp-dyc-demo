@@ -2,6 +2,7 @@ package com.zhanlu.framework.common.service;
 
 
 import com.zhanlu.framework.common.dao.CommonDao;
+import com.zhanlu.framework.common.entity.IdEntity;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class CommonService<T, PK extends Serializable> {
+public abstract class CommonService<T extends IdEntity, PK extends Serializable> {
 
     protected CommonDao<T, PK> commonDao;
 

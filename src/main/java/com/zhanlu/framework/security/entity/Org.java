@@ -16,6 +16,7 @@ import javax.persistence.Table;
 public class Org extends TreeEntity {
     private static final long serialVersionUID = 7297765946510001885L;
 
+
     public Org() {
 
     }
@@ -23,4 +24,5 @@ public class Org extends TreeEntity {
     public Org(Long pid) {
         super.pid = pid;
     }
+
 }

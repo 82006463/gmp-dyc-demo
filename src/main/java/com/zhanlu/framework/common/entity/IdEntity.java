@@ -6,7 +6,7 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**
- * 安全实体抽象类
+ * 通用的实体类
  *
  * @author zhanlu
  * @date 2017-03-11

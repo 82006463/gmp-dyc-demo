@@ -12,10 +12,9 @@ import com.zhanlu.framework.security.entity.User;
  * @since 0.1
  */
 public class ShiroPrincipal implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1428196040744555722L;
+
 	//用户对象
 	private User user;
 	//用户权限列表

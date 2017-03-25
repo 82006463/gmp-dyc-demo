@@ -1,28 +1,23 @@
 package com.zhanlu.framework.common.entity;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
+/**
+ * 树相关实体类
+ */
 @MappedSuperclass
-public class TreeEntity extends IdEntity {
+public class TreeEntity extends CodeEntity {
 
     //树根ID
     protected Long rootId;
     //节点父ID、父编号、父名称：以冗余消除Join
     protected Long pid;
-    protected String pcode;
-    protected String pname;
+    private TreeEntity parent;
 
-    //编号
-    protected String code;
-    //名称
-    protected String name;
     //节点在树中的层级
     protected Integer level;
-    //节点的层级字符串：便于获取所有子节点
+    //节点的层级编号：便于用Like获取所有子节点
     protected String levelNo;
-    //描述
-    private String remark;
 
     @Column(name = "rootId")
     public Long getRootId() {
@@ -40,42 +35,6 @@ public class TreeEntity extends IdEntity {
 
     public void setPid(Long pid) {
         this.pid = pid;
-    }
-
-    @Column(name = "pcode", length = 20)
-    public String getPcode() {
-        return pcode;
-    }
-
-    public void setPcode(String pcode) {
-        this.pcode = pcode;
-    }
-
-    @Column(name = "pname", length = 100)
-    public String getPname() {
-        return pname;
-    }
-
-    public void setPname(String pname) {
-        this.pname = pname;
-    }
-
-    @Column(name = "code", unique = true, length = 20)
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    @Column(name = "name", length = 100)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Column(name = "level")
@@ -96,12 +55,12 @@ public class TreeEntity extends IdEntity {
         this.levelNo = levelNo;
     }
 
-    @Column(name = "remark", length = 200)
-    public String getRemark() {
-        return remark;
+    @Transient
+    public TreeEntity getParent() {
+        return parent;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setParent(TreeEntity parent) {
+        this.parent = parent;
     }
 }

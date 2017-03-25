@@ -5,10 +5,7 @@
 <html>
 	<head>
 		<title>部门管理</title>
-		<%@ include file="/common/meta.jsp"%>
-		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
-		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
+		<%@ include file="/common/common-list.jsp"%>
 	</head>
 
 	<body>
@@ -60,7 +57,7 @@
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>${item.level}</td>
-					<td class="td_list_2" align=left>${item.pname}</td>
+					<td class="td_list_2" align=left>${item.parent.name}</td>
 					<td class="td_list_2" align=left>
 				    <c:choose>
 						<c:when test="${empty lookup}">

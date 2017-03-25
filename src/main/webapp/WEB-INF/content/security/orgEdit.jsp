@@ -72,8 +72,7 @@
 				<td class="td_table_1">上级部门：</td>
 				<td class="td_table_2" colspan="3">
 					<input type="hidden" id="pid" name="pid" value="${entity.pid}">
-					<input type="hidden" id="pcode" name="pcode" value="${entity.pcode}">
-					<input type="text" id="pname" name="pname" value="${entity.pname}" class="input_240" readonly="readonly">
+					<input type="text" id="pname" value="${entity.parent.name}" class="input_240" readonly="readonly">
 					<input type='button' class='button_70px' value='上级部门' id="selectOrgBtn" onclick="openOrg();"/>
 				</td>
 			</tr>

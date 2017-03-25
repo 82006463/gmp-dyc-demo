@@ -32,12 +32,12 @@ import com.zhanlu.framework.security.service.UserService;
 public class ShiroAuthorizingRealm extends AuthorizingRealm {
 	private static Log log = LogFactory.getLog(ShiroAuthorizingRealm.class);
 
-    public void setUserManager(UserService userManager) {
-        this.userManager = userManager;
+    public void setUserManager(UserService userService) {
+        this.userService = userService;
     }
 
     //注入用户管理对象
-	private UserService userManager;
+	private UserService userService;
 	
 	/**
 	 * 构造函数，设置安全的初始化信息
@@ -61,8 +61,8 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
 		try {
 			if(!subject.isAuthorized()) {
 				//根据用户名称，获取该用户所有的权限列表
-				List<String> authorities = userManager.getAuthoritiesName(userId);
-				List<String> rolelist = userManager.getRolesName(userId);
+				List<String> authorities = userService.getAuthoritiesName(userId);
+				List<String> rolelist = userService.getRolesName(userId);
 				subject.setAuthorities(authorities);
 				subject.setRoles(rolelist);
 				subject.setAuthorized(true);
@@ -95,7 +95,7 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
 
 		User user = null;
 		try {
-			user = userManager.findUserByName(username);
+			user = userService.findUserByName(username);
 		} catch(Exception ex) {
 			log.warn("获取用户失败\n" + ex.getMessage());
 		}
@@ -110,8 +110,8 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
 		log.info("用户【" + username + "】登录成功");
 		byte[] salt = EncodeUtils.hexDecode(user.getSalt());
 		ShiroPrincipal subject = new ShiroPrincipal(user);
-		List<String> authorities = userManager.getAuthoritiesName(user.getId());
-		List<String> rolelist = userManager.getRolesName(user.getId());
+		List<String> authorities = userService.getAuthoritiesName(user.getId());
+		List<String> rolelist = userService.getRolesName(user.getId());
 		subject.setAuthorities(authorities);
 		subject.setRoles(rolelist);
 		subject.setAuthorized(true);
