@@ -47,7 +47,7 @@ public class MenuTagBuilder implements TagBuilder {
      * @return
      */
     private Map<Long, List<Menu>> buildMenuTreeMap(List<Menu> menus) {
-        Map<Long, List<Menu>> menuMap = new TreeMap<Long, List<Menu>>();
+        Map<Long, List<Menu>> menuMap = new TreeMap<>();
         for (Menu menu : menus) {
             /**
              * 判断是否有上一级菜单，如果有，则添加到上一级菜单的Map中去 如果没有上一级菜单，把该菜单作为根节点
