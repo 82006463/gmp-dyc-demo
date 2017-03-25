@@ -25,7 +25,7 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/config/processNo/update" method="post">
+		<form id="inputForm" action="${ctx }/bd/qs/update" method="post">
 			<input type="hidden" id="id" name="id" value="${entity.id}"/>
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
@@ -37,27 +37,22 @@
 				<tr>
 					<td class="td_table_1">质量标准编号：</td>
 					<td class="td_table_2">
-						<c:if test="${empty entity.code}">
-							<frame:dict name="code" type="select" typeCode="processType" value="${entity.code}" cssClass="input_select validate[required]"/>
-						</c:if>
-						<c:if test="${!empty entity.code}">
-							<input type="text" id="code" name="code" value="${entity.code}" class="input_240 validate[required]" readonly="readonly"/>
-						</c:if>
+						<input type="text" id="code" name="code" value="${entity.code}" class="input_240 validate[required,maxSize[20]]"/>
 					</td>
 					<td class="td_table_1">质量标准版本：</td>
 					<td class="td_table_2">
-						<input type="text" id="ver" name="ver" value="${entity.ver}" class="input_240 validate[required]" />
+						<input type="text" id="ver" name="ver" value="${entity.ver}" class="input_240 validate[required,maxSize[10]]"/>
 					</td>
 				</tr>
 
 				<tr>
 					<td class="td_table_1">物料产品名称：</td>
 					<td class="td_table_2">
-						<input type="text" id="materielName" name="materielName" value="${entity.materielName}" class="input_240 validate[required]"/>
+						<input type="text" id="materielName" name="materielName" value="${entity.materielName}" class="input_240 validate[required,maxSize[100]]"/>
 					</td>
 					<td class="td_table_1">物料产品代码：</td>
 					<td class="td_table_2">
-						<input type="text" id="materielCode" name="materielCode" value="${entity.materielCode}" class="input_240 validate[required]" onblur="checkTimePattern(this);"/>
+						<input type="text" id="materielCode" name="materielCode" value="${entity.materielCode}" class="input_240 validate[required,maxSize[20]]" maxlength="20"/>
 					</td>
 				</tr>
 			</table>

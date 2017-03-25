@@ -12,8 +12,7 @@ import java.util.List;
 
 public abstract class CommonService<T, PK extends Serializable> {
 
-    @Autowired
-    private CommonDao<T, PK> commonDao;
+    protected CommonDao<T, PK> commonDao;
 
     /**
      * 新增实体对象

@@ -78,6 +78,9 @@ public class QsController {
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(Qs entity) {
+        if (entity.getName()==null) {
+            entity.setName(entity.getCode());
+        }
         qsService.saveOrUpdate(entity);
         return "redirect:/bd/qs/list";
     }

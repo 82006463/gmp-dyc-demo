@@ -18,17 +18,32 @@
 
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
-					<td class="td_table_1">质量标准编号：</td>
+					<td class="td_table_1">编号：</td>
 					<td class="td_table_2">${entity.code}</td>
-					<td class="td_table_1">质量标准版本：</td>
+					<td class="td_table_1">版本：</td>
 					<td class="td_table_2">${entity.ver}</td>
 				</tr>
-
 				<tr>
-					<td class="td_table_1">物料产品名称：</td>
-					<td class="td_table_2">${entity.materielName}</td>
-					<td class="td_table_1">物料产品代码：</td>
-					<td class="td_table_2">${entity.materielCode}</td>
+					<td class="td_table_1">描述：</td>
+					<td class="td_table_2">${entity.remark}</td>
+					<td class="td_table_1">名称：</td>
+					<td class="td_table_2">${entity.name}</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">类型：</td>
+					<td class="td_table_2">
+						<frame:dict name="dataType" type="select" typeCode="dataType" value="${entity.dataType}" displayType="1"/>
+					</td>
+					<td class="td_table_1">运算符：</td>
+					<td class="td_table_2">
+						<frame:dict name="operator" type="select" typeCode="operator" value="${entity.operator}" displayType="1"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">内控标准：</td>
+					<td class="td_table_2">${entity.innerQs}</td>
+					<td class="td_table_1">法定标准：</td>
+					<td class="td_table_2">${entity.lawQs}</td>
 				</tr>
 			</table>
 			

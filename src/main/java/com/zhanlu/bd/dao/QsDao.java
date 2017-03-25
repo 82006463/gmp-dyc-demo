@@ -1,10 +1,12 @@
 package com.zhanlu.bd.dao;
 
 import com.zhanlu.bd.entity.Qs;
-import com.zhanlu.framework.common.dao.HibernateDao;
+import com.zhanlu.framework.common.dao.CommonDao;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by Administrator on 2017/3/19.
  */
-public class QsDao extends HibernateDao<Qs, Long> {
+@Repository
+public class QsDao extends CommonDao<Qs, Long> {
 }

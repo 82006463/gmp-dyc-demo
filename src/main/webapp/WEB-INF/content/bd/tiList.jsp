@@ -31,7 +31,7 @@
 				</td>
 				<td class="td_table_1">测试项名称：</td>
 				<td class="td_table_2">
-					<input type="text" name="filter_EQS_name" value="${param['filter_EQS_name']}" class="input_240"/>
+					<input type="text" name="filter_LIKES_name" value="${param['filter_EQS_name']}" class="input_240"/>
 				</td>
 			</tr>
 		</table>
@@ -53,16 +53,31 @@
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center class="td_list_1">测试项编号</td>
-				<td align=center class="td_list_1">测试项编号</td>
-				<td align=center class="td_list_1">测试项版本</td>
+				<td align=center class="td_list_1">编号</td>
+				<td align=center class="td_list_1">版本</td>
+				<td align=center class="td_list_1">名称</td>
+				<td align=center class="td_list_1">描述</td>
+				<td align=center class="td_list_1">类型</td>
+				<td align=center class="td_list_1">运算符</td>
+				<td align=center class="td_list_1">法定标准</td>
+				<td align=center class="td_list_1">内控标准</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item">
 				<tr>
 					<td class="td_list_2" align=left>${item.code}</td>
-					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>${item.ver}</td>
+					<td class="td_list_2" align=left>${item.name}</td>
+					<td class="td_list_2" align=left>${item.remark}</td>
+					<td class="td_list_2" align=left>
+						<frame:dict name="dataType" type="select" typeCode="dataType" value="${item.dataType}" displayType="1"/>
+					</td>
+					<td class="td_list_2" align=left>
+						<frame:dict name="operator" type="select" typeCode="operator" value="${item.operator}" displayType="1"/>
+					</td>
+					<td class="td_list_2" align=left>${item.innerQs}</td>
+					<td class="td_list_2" align=left>${item.lawQs}</td>
+
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<a href="${ctx}/bd/ti/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
