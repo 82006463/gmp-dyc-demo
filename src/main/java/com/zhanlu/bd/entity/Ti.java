@@ -10,8 +10,8 @@ import javax.persistence.Table;
  * 测试项实体
  */
 @Entity
-@Table(name = "bd_test_item")
-public class TestItem extends CodeEntity {
+@Table(name = "bd_ti")
+public class Ti extends CodeEntity {
 
     //测试项编号：00001开始，自动+1
     //测试项版本

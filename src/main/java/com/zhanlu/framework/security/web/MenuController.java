@@ -49,7 +49,7 @@ public class MenuController {
 	 */
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String create(Model model) {
-		model.addAttribute("menu", new Menu(null));
+		model.addAttribute("entity", new Menu(null));
 		return "security/menuEdit";
 	}
 
@@ -58,7 +58,7 @@ public class MenuController {
 	 */
 	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("menu", menuService.findById(id));
+		model.addAttribute("entity", menuService.findById(id));
 		return "security/menuEdit";
 	}
 	
@@ -67,7 +67,7 @@ public class MenuController {
 	 */
 	@RequestMapping(value = "view/{id}", method = RequestMethod.GET)
 	public String view(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("menu", menuService.findById(id));
+		model.addAttribute("entity", menuService.findById(id));
 		return "security/menuView";
 	}
 	

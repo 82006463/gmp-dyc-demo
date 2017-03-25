@@ -1,7 +1,7 @@
 package com.zhanlu.bd.web;
 
-import com.zhanlu.bd.entity.TestItem;
-import com.zhanlu.bd.service.TestItemService;
+import com.zhanlu.bd.entity.Ti;
+import com.zhanlu.bd.service.TiService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +19,23 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/bd/ti")
-public class TestItemController {
+public class TiController {
 
     @Autowired
-    private TestItemService testItemService;
+    private TiService tiService;
 
     /**
      * 分页查询配置，返回配置字典列表视图
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String list(Model model, Page<TestItem> page, HttpServletRequest request) {
+    public String list(Model model, Page<Ti> page, HttpServletRequest request) {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");
             page.setOrder(Page.ASC);
         }
-        page = testItemService.findPage(page, filters);
+        page = tiService.findPage(page, filters);
         model.addAttribute("page", page);
         return "bd/tiList";
     }
@@ -45,7 +45,7 @@ public class TestItemController {
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
-        model.addAttribute("entity", new TestItem());
+        model.addAttribute("entity", new Ti());
         return "bd/tiEdit";
     }
 
@@ -54,7 +54,7 @@ public class TestItemController {
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
-        TestItem entity = testItemService.findById(id);
+        Ti entity = tiService.findById(id);
         model.addAttribute("entity", entity);
         return "bd/tiEdit";
     }
@@ -68,7 +68,7 @@ public class TestItemController {
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
-        TestItem entity = testItemService.findById(id);
+        Ti entity = tiService.findById(id);
         model.addAttribute("entity", entity);
         return "bd/tiView";
     }
@@ -77,8 +77,8 @@ public class TestItemController {
      * 新增、编辑配置字典页面的提交处理。保存配置字典实体，并返回配置字典列表视图
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(TestItem entity) {
-        testItemService.saveOrUpdate(entity);
+    public String update(Ti entity) {
+        tiService.saveOrUpdate(entity);
         return "redirect:/bd/ti/list";
     }
 
@@ -87,7 +87,7 @@ public class TestItemController {
      */
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable("id") Long id) {
-        testItemService.delete(id);
+        tiService.delete(id);
         return "redirect:/bd/ti/list";
     }
 

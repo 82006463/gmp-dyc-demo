@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>配置管理-测试项</title>
+	<title>基础数据-测试项</title>
 	<%@ include file="/common/common-edit.jsp"%>
 </head>
 
@@ -12,7 +12,7 @@
 		<input type="hidden" id="id" name="id" value="${entity.id}"/>
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">配置管理-测试项</td>
+				<td class="td_table_top" align="center">基础数据-测试项</td>
 			</tr>
 		</table>
 

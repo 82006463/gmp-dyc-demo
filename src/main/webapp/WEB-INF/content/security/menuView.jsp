@@ -5,23 +5,20 @@
 <html lang="en">
 	<head>
 		<title>菜单管理</title>
-		<%@ include file="/common/meta.jsp"%>
-		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+		<%@ include file="/common/common-view.jsp"%>
 	</head>
 
 	<body>
 		<form id="inputForm" action="" method="post">
-			<input type="hidden" name="id" id="id" value="${id }"/>
 			<table class="table_all" align="center" border="0" cellpadding="0"
 				cellspacing="0">
 				<tr>
 					<td class="td_table_1">菜单名称：</td>
-					<td class="td_table_2" colspan="3">${menu.name }</td>
+					<td class="td_table_2" colspan="3">${entity.name}</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">上级菜单：</td>
-					<td class="td_table_2" colspan="3">${menu.parentMenu.name }</td>
+					<td class="td_table_2" colspan="3">${entity.parentMenu.name}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">

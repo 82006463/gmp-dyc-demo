@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>配置管理-质量标准</title>
+	<title>基础数据-质量标准</title>
 	<%@ include file="/common/common-list.jsp"%>
 </head>
 
@@ -16,7 +16,7 @@
 		<input type="hidden" name="order" id="order" value="${page.order}"/>
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">配置管理-质量标准</td>
+				<td class="td_table_top" align="center">基础数据-质量标准</td>
 			</tr>
 		</table>
 

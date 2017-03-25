@@ -5,10 +5,7 @@
 <html>
 	<head>
 		<title>菜单管理</title>
-		<%@ include file="/common/meta.jsp"%>
-		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
-		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
+		<%@ include file="/common/common-list.jsp"%>
 	</head>
 
 	<body>
@@ -53,23 +50,23 @@
 				<td align=center width=45% class="td_list_1">上级菜单名称</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
-			<c:forEach items="${page.result}" var="menu">
+			<c:forEach items="${page.result}" var="item">
 				<tr>
-					<td class="td_list_2" align=left>${menu.name}</td>
-					<td class="td_list_2" align=left>${menu.parentMenu.name}</td>
+					<td class="td_list_2" align=left>${item.name}</td>
+					<td class="td_list_2" align=left>${item.parentMenu.name}</td>
 					<td class="td_list_2" align=left>
 				    <c:choose>
 				    <c:when test="${empty lookup}">
 				    <shiro:hasPermission name="MENUDELETE">
-						<a href="${ctx}/security/menu/delete/${menu.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+						<a href="${ctx}/security/menu/delete/${item.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 					</shiro:hasPermission>
 					<shiro:hasPermission name="MENUEDIT">
-						<a href="${ctx}/security/menu/update/${menu.id }" class="btnEdit" title="编辑">编辑</a>
+						<a href="${ctx}/security/menu/update/${item.id }" class="btnEdit" title="编辑">编辑</a>
 					</shiro:hasPermission>
-						<a href="${ctx}/security/menu/view/${menu.id }" class="btnView" title="查看">查看</a>
+						<a href="${ctx}/security/menu/view/${item.id }" class="btnView" title="查看">查看</a>
 					</c:when>
 					<c:otherwise>
-						<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${menu.id}','${menu.name }')">选择</a>
+						<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>
 					</c:otherwise>
 					</c:choose>
 					</td>
