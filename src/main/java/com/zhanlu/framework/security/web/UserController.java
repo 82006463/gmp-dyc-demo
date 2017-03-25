@@ -63,7 +63,7 @@ public class UserController {
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
-        User entity = userService.get(id);
+        User entity = userService.findById(id);
         List<Role> roles = roleService.getAll();
         List<Role> roless = entity.getRoles();
         for (Role role : roles) {
@@ -76,7 +76,7 @@ public class UserController {
                 }
             }
         }
-        model.addAttribute("user", userService.get(id));
+        model.addAttribute("user", userService.findById(id));
         model.addAttribute("roles", roles);
         return "security/userEdit";
     }
@@ -86,7 +86,7 @@ public class UserController {
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.get(id));
+        model.addAttribute("user", userService.findById(id));
         return "security/userView";
     }
 
@@ -106,7 +106,7 @@ public class UserController {
             Org parent = new Org(parentOrgId);
             user.setOrg(parent);
         }
-        userService.save(user);
+        userService.saveOrUpdate(user);
         return "redirect:/security/user";
     }
 

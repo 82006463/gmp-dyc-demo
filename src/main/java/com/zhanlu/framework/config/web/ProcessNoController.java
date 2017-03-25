@@ -102,7 +102,7 @@ public class ProcessNoController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(ProcessNo entity) {
         if (entity.getOrgId() != null && entity.getOrgId() > 0) {
-            Org org = orgService.get(entity.getOrgId());
+            Org org = orgService.findById(entity.getOrgId());
             entity.setOrgCode(org.getCode());
         }
         processNoService.save(entity);

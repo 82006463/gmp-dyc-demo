@@ -49,7 +49,7 @@ public class OrgController {
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
-        model.addAttribute("entity", new Org(null));
+        model.addAttribute("entity", new Org());
         return "security/orgEdit";
     }
 
@@ -58,7 +58,7 @@ public class OrgController {
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("entity", orgService.get(id));
+        model.addAttribute("entity", orgService.findById(id));
         return "security/orgEdit";
     }
 
@@ -67,7 +67,7 @@ public class OrgController {
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("entity", orgService.get(id));
+        model.addAttribute("entity", orgService.findById(id));
         return "security/orgView";
     }
 
@@ -76,7 +76,7 @@ public class OrgController {
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(Org entity) {
-        orgService.save(entity);
+        orgService.saveOrUpdate(entity);
         return "redirect:/security/org";
     }
 

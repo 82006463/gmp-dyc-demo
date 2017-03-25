@@ -20,7 +20,9 @@ public class TreeEntity extends IdEntity {
     //节点在树中的层级
     protected Integer level;
     //节点的层级字符串：便于获取所有子节点
-    protected String levelStr;
+    protected String levelNo;
+    //描述
+    private String remark;
 
     @Column(name = "rootId")
     public Long getRootId() {
@@ -85,12 +87,21 @@ public class TreeEntity extends IdEntity {
         this.level = level;
     }
 
-    @Column(name = "level_str", length = 500)
-    public String getLevelStr() {
-        return levelStr;
+    @Column(name = "level_no", length = 500)
+    public String getLevelNo() {
+        return levelNo;
     }
 
-    public void setLevelStr(String levelStr) {
-        this.levelStr = levelStr;
+    public void setLevelNo(String levelNo) {
+        this.levelNo = levelNo;
+    }
+
+    @Column(name = "remark", length = 200)
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

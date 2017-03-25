@@ -51,7 +51,7 @@
 		<input type="hidden" id="id" name="id" value="${entity.id}"/>
 		<input type="hidden" id="rootId" name="rootId" value="${entity.rootId}"/>
 		<input type="hidden" id="level" name="level" value="${entity.level}"/>
-		<input type="hidden" id="levelStr" name="levelStr" value="${entity.levelStr}"/>
+		<input type="hidden" id="levelNo" name="levelNo" value="${entity.levelNo}"/>
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="center">部门管理</td>
@@ -80,7 +80,7 @@
 			<tr>
 				<td class="td_table_1">部门描述：</td>
 				<td class="td_table_2" colspan="3">
-					<input type="text" class="input_520" id="description" name="description" value="${entity.description}">
+					<input type="text" class="input_520" id="remark" name="remark" value="${entity.remark}">
 				</td>
 			</tr>
 		</table>

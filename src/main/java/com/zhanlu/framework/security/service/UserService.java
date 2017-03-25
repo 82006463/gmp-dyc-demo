@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.common.service.CommonService;
 import com.zhanlu.framework.common.utils.Digests;
 import com.zhanlu.framework.common.utils.EncodeUtils;
+import com.zhanlu.framework.security.entity.Role;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.SQLQuery;
 import com.zhanlu.framework.security.dao.UserDao;
@@ -15,50 +17,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
+
 /**
  * 用户管理类
  * @author yuqs
  * @since 0.1
  */
 @Service
-public class UserService {
+public class UserService extends CommonService<User, Long> {
 	public static final String HASH_ALGORITHM = "SHA-1";
 	public static final int HASH_INTERATIONS = 1024;
 	private static final int SALT_SIZE = 8;
-	//注入用户持久化对象
+
 	@Autowired
 	private UserDao userDao;
-	
+
+	@PostConstruct
+	@Override
+	public void initDao() {
+		super.commonDao = userDao;
+	}
+
 	/**
 	 * 保存、更新用户实体
 	 * @param entity
 	 */
 	@Transactional
-	public void save(User entity) {
+	@Override
+	public User save(User entity) {
 		if (StringUtils.isNotBlank(entity.getPlainPassword())) {
 			entryptPassword(entity);
 		}
 		userDao.save(entity);
+		return entity;
 	}
-	
-	/**
-	 * 根据主键ID删除对应的用户实体
-	 * @param id
-	 */
-	@Transactional
-	public void delete(Long id) {
-		userDao.delete(id);
-	}
-	
-	/**
-	 * 根据主键ID获取用户实体
-	 * @param id
-	 * @return
-	 */
-	public User get(Long id) {
-		return userDao.get(id);
-	}
-	
+
 	/**
 	 * 根据用户名称，获取用户实体
 	 * @param username
@@ -79,16 +73,6 @@ public class UserService {
 	}
 	
 	/**
-	 * 根据分页对象、过滤集合参数，分页查询用户列表
-	 * @param page
-	 * @param filters
-	 * @return
-	 */
-	public Page<User> findPage(final Page<User> page, final List<PropertyFilter> filters) {
-		return userDao.findPage(page, filters);
-	}
-	
-	/**
 	 * 根据分页对象、所属部门ID号，分页查询用户列表
 	 * @param page
 	 * @param orgId
@@ -100,15 +84,7 @@ public class UserService {
 		String hql = "from User user where user.org=?";
 		return userDao.findPage(page, hql, org);
 	}
-	
-	/**
-	 * 查询所有记录
-	 * @return
-	 */
-	public List<User> getAll() {
-		return userDao.getAll();
-	}
-	
+
 	/**
 	 * 根据orgId获取部门用户
 	 * @param orgId

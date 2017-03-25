@@ -1,7 +1,6 @@
 package com.zhanlu.framework.security.service;
 
-import com.zhanlu.framework.common.page.Page;
-import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.common.service.CommonService;
 import com.zhanlu.framework.security.dao.MenuDao;
 import com.zhanlu.framework.security.entity.Menu;
 import org.hibernate.SQLQuery;
@@ -18,22 +17,16 @@ import java.util.List;
  * @since 0.1
  */
 @Service
-public class MenuService {
-    //注入菜单持久化对象
+public class MenuService extends CommonService<Menu, Long> {
+
     @Autowired
     private MenuDao menuDao;
-    //注入资源管理对象
     @Autowired
-    private ResourceService resourceManager;
+    private ResourceService resourceService;
 
-    /**
-     * 保存菜单实体
-     *
-     * @param entity
-     */
-    @Transactional
-    public void save(Menu entity) {
-        menuDao.save(entity);
+    @Override
+    public void initDao() {
+        super.commonDao = menuDao;
     }
 
     /**
@@ -42,39 +35,11 @@ public class MenuService {
      * @param id
      */
     @Transactional
-    public void delete(Long id) {
-        resourceManager.updateByMenuId(id);
+    @Override
+    public boolean delete(Long id) {
+        resourceService.updateByMenuId(id);
         menuDao.delete(id);
-    }
-
-    /**
-     * 根据主键ID获取菜单实体
-     *
-     * @param id
-     * @return
-     */
-    public Menu get(Long id) {
-        return menuDao.get(id);
-    }
-
-    /**
-     * 根据分页对象、过滤集合参数，分页查询菜单列表
-     *
-     * @param page
-     * @param filters
-     * @return
-     */
-    public Page<Menu> findPage(final Page<Menu> page, final List<PropertyFilter> filters) {
-        return menuDao.findPage(page, filters);
-    }
-
-    /**
-     * 获取所有菜单
-     *
-     * @return
-     */
-    public List<Menu> getAll() {
-        return menuDao.getAll();
+        return true;
     }
 
     /**

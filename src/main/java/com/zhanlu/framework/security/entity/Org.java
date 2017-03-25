@@ -2,9 +2,7 @@ package com.zhanlu.framework.security.entity;
 
 import com.zhanlu.framework.common.entity.TreeEntity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -18,24 +16,11 @@ import javax.persistence.Table;
 public class Org extends TreeEntity {
     private static final long serialVersionUID = 7297765946510001885L;
 
-    //部门描述
-    private String description;
-
     public Org() {
 
     }
 
-    public Org(Long id) {
-        this.id = id;
+    public Org(Long pid) {
+        super.pid = pid;
     }
-
-    @Column(name = "description", length = 200)
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
 }

@@ -24,7 +24,7 @@
 				</tr>
 				<tr>
 					<td class="td_table_1">部门描述：</td>
-					<td class="td_table_2" colspan="3">${org.description}</td>
+					<td class="td_table_2" colspan="3">${org.remark}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
