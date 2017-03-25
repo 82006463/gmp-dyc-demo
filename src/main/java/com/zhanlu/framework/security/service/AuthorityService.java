@@ -39,7 +39,7 @@ public class AuthorityService extends CommonService<Authority, Long> {
     @Transactional
     @Override
     public boolean delete(Long id) {
-        List<Role> roles = roleService.getAll();
+        List<Role> roles = roleService.findAll();
         for (Role role : roles) {
             for (Authority auth : role.getAuthorities()) {
                 if (auth.getId().longValue() == id.longValue()) {

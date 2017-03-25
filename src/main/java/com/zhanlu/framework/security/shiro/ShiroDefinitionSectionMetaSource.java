@@ -38,7 +38,7 @@ public class ShiroDefinitionSectionMetaSource implements FactoryBean<Ini.Section
 		ini.load(filterChainDefinitions);
 		Ini.Section section = ini.getSection(Ini.DEFAULT_SECTION_NAME);
 		//由注入的资源管理对象获取所有资源数据，并且Resource的authorities的属性是EAGER的fetch类型
-		List<Resource> resources = resourceManager.getAll();
+		List<Resource> resources = resourceManager.findAll();
 		for(Resource resource : resources) {
 			if(StringUtils.isEmpty(resource.getSource())) {
 				continue;

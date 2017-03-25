@@ -61,7 +61,7 @@ public class ProcessNoController {
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
         model.addAttribute("entity", new ProcessNo());
-        model.addAttribute("orgList", orgService.getAll());
+        model.addAttribute("orgList", orgService.findAll());
         return "config/processNoEdit";
     }
 
@@ -76,7 +76,7 @@ public class ProcessNoController {
     public String edit(@PathVariable("id") Long id, Model model) {
         ProcessNo entity = processNoService.findById(id);
         model.addAttribute("entity", entity);
-        model.addAttribute("orgList", orgService.getAll());
+        model.addAttribute("orgList", orgService.findAll());
         return "config/processNoEdit";
     }
 

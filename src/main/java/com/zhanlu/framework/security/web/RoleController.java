@@ -53,7 +53,7 @@ public class RoleController {
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
         model.addAttribute("role", new Role());
-        model.addAttribute("authorities", authorityService.getAll());
+        model.addAttribute("authorities", authorityService.findAll());
         return "security/roleEdit";
     }
 
@@ -63,7 +63,7 @@ public class RoleController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
         Role entity = roleService.findById(id);
-        List<Authority> authorities = authorityService.getAll();
+        List<Authority> authorities = authorityService.findAll();
         List<Authority> auths = entity.getAuthorities();
         for (Authority auth : authorities) {
             for (Authority selAuth : auths) {

@@ -66,7 +66,7 @@ public abstract class CommonService<T, PK extends Serializable> {
      *
      * @return
      */
-    public List<T> getAll() {
+    public List<T> findAll() {
         return commonDao.getAll();
     }
 

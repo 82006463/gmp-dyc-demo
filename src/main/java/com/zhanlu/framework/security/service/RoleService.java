@@ -38,7 +38,7 @@ public class RoleService extends CommonService<Role, Long> {
      */
     @Transactional
     public boolean delete(Long id) {
-        List<User> users = userService.getAll();
+        List<User> users = userService.findAll();
         for (User user : users) {
             for (Role role : user.getRoles()) {
                 if (role.getId().longValue() == id.longValue()) {

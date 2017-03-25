@@ -54,7 +54,7 @@ public class UserController {
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("roles", roleService.getAll());
+        model.addAttribute("roles", roleService.findAll());
         return "security/userEdit";
     }
 
@@ -64,7 +64,7 @@ public class UserController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
         User entity = userService.findById(id);
-        List<Role> roles = roleService.getAll();
+        List<Role> roles = roleService.findAll();
         List<Role> roless = entity.getRoles();
         for (Role role : roles) {
             for (Role selRole : roless) {

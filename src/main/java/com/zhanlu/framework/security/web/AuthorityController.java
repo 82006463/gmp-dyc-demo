@@ -62,7 +62,7 @@ public class AuthorityController {
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
         model.addAttribute("authority", new Authority(null));
-        model.addAttribute("resources", resourceService.getAll());
+        model.addAttribute("resources", resourceService.findAll());
         return "security/authorityEdit";
     }
 
@@ -76,7 +76,7 @@ public class AuthorityController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
         Authority entity = authorityService.findById(id);
-        List<Resource> resources = resourceService.getAll();
+        List<Resource> resources = resourceService.findAll();
         List<Resource> resss = entity.getResources();
         for (Resource res : resources) {
             for (Resource selRes : resss) {

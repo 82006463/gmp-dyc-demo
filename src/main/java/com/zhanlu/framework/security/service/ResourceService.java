@@ -40,7 +40,7 @@ public class ResourceService extends CommonService<Resource, Long> {
     @Transactional
     @Override
     public boolean delete(Long id) {
-        List<Authority> authorities = authorityService.getAll();
+        List<Authority> authorities = authorityService.findAll();
         for (Authority auth : authorities) {
             for (Resource resource : auth.getResources()) {
                 if (resource.getId().longValue() == id.longValue()) {
