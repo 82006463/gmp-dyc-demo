@@ -13,10 +13,6 @@ import java.util.List;
 
 public abstract class CommonTreeService<T extends TreeEntity, PK extends Serializable> extends CommonService<T, PK> {
 
-    protected CommonDao<T, PK> commonDao;
-
-    public abstract void initDao();
-
     /**
      * 新增实体对象
      *
