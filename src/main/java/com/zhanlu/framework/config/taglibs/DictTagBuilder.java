@@ -110,7 +110,7 @@ public class DictTagBuilder implements TagBuilder {
             items = dictMap.get(typeCode);
         } else {
             DataDictService dataDictService = springContext.getBean(DataDictService.class);
-            items = dataDictService.findItems(typeCode);
+            items = dataDictService.findItems("wfc_data_dict", typeCode);
             dictMap.put(typeCode, items);
         }
     }

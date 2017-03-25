@@ -5,6 +5,8 @@ import com.zhanlu.framework.common.entity.TreeEntity;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.common.utils.ReflectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.SQLQuery;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
@@ -38,6 +40,19 @@ public abstract class CommonTreeService<T extends TreeEntity, PK extends Seriali
         return entity;
     }
 
+    @Transactional
+    public T saveOrUpdate(T entity, List<T> items) {
+        if (entity.getId() != null && entity.getId() > 0) {
+            commonDao.batchExecute("DELETE FROM " + entity.getClass().getName() + " WHERE pid=" + entity.getId());
+        }
+        super.saveOrUpdate(getTreeEntity(entity));
+        for (T item : items) {
+            item.setPid(entity.getId());
+            super.save(getTreeEntity(item));
+        }
+        return entity;
+    }
+
     @Override
     public T findById(PK id) {
         T entity = super.findById(id);
@@ -58,9 +73,28 @@ public abstract class CommonTreeService<T extends TreeEntity, PK extends Seriali
         return pageResult;
     }
 
+    /**
+     * 根据父ID查询对象列表
+     * @param pid 父ID
+     * @return
+     */
     public List<T> findItems(Long pid) {
         String entityName = ReflectionUtils.getSuperClassGenricType(getClass()).getName();
         return commonDao.find("FROM " + entityName + " WHERE pid=?", pid == null ? 0 : pid);
+    }
+
+    /**
+     * 根据父编号查询对象列表
+     *
+     * @param tableName 表名
+     * @param pcode 父编号
+     * @return
+     */
+    public List<T> findItems(String tableName, String pcode) {
+        String hql = "SELECT tb1.* FROM " + tableName + " tb1 LEFT JOIN " + tableName + " as tb2 ON tb1.pid=tb2.id WHERE tb2.code=?";
+        SQLQuery sqlQuery = commonDao.createSQLQuery(hql, pcode);
+        sqlQuery.addEntity(ReflectionUtils.getSuperClassGenricType(getClass()));
+        return sqlQuery.list();
     }
 
     private T getTreeEntity(T entity) {
@@ -77,6 +111,11 @@ public abstract class CommonTreeService<T extends TreeEntity, PK extends Seriali
         }
         levelNo += entity.getId();
         entity.setLevelNo(levelNo);
+        if (StringUtils.isBlank(entity.getCode())) {
+            entity.setCode(entity.getName());
+        } else if (StringUtils.isBlank(entity.getName())) {
+            entity.setName(entity.getCode());
+        }
         return entity;
     }
 }

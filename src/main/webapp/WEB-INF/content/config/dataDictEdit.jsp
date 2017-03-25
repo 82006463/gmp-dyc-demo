@@ -10,6 +10,10 @@
 	<body>
 		<form id="inputForm" action="${ctx }/config/dictionary/update" method="post">
 			<input type="hidden" name="id" id="id" value="${entity.id}"/>
+			<input type="hidden" id="rootId" name="rootId" value="${entity.rootId}"/>
+			<input type="hidden" id="pid" name="pid" value="${entity.pid}">
+			<input type="hidden" id="level" name="level" value="${entity.level}"/>
+			<input type="hidden" id="levelNo" name="levelNo" value="${entity.levelNo}"/>
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
 					<td class="td_table_top" align="center">配置管理-数据字典</td>
