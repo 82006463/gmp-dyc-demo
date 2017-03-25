@@ -4,8 +4,7 @@
 <html>
 	<head>
 		<title>配置管理-测试项</title>
-		<%@ include file="/common/meta.jsp"%>
-		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
+		<%@ include file="/common/common-view.jsp"%>
 	</head>
 
 	<body>

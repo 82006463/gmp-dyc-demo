@@ -3,15 +3,12 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-	<head>
-		<title>配置管理-质量标准</title>
-		<%@ include file="/common/meta.jsp"%>
-		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
-		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
-	</head>
+<head>
+	<title>配置管理-质量标准</title>
+	<%@ include file="/common/common-list.jsp"%>
+</head>
 
-	<body>
+<body>
 	<form id="mainForm" action="${ctx}/bd/qs/list?lookup=${lookup }" method="get">
 		<input type="hidden" name="lookup" value="${lookup}" />
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
@@ -80,5 +77,5 @@
 			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages}" totalRecords="${page.totalCount}" lookup="${lookup}"/>
 		</table>
 	</form>
-	</body>
+</body>
 </html>

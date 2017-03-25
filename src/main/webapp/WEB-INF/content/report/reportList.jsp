@@ -5,11 +5,7 @@
 <html>
 <head>
 	<title>报表管理</title>
-	<%@ include file="/common/meta.jsp"%>
-	<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-	<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
-	<script src="${ctx}/styles/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
-	<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
+	<%@ include file="/common/common-list.jsp"%>
 </head>
 
 <body>

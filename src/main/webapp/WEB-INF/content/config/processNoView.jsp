@@ -4,11 +4,7 @@
 <html>
 	<head>
 		<title>配置管理-流程编号</title>
-		<%@ include file="/common/meta.jsp"%>
-		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
-		<script type="text/javascript">
-		</script>
+		<%@ include file="/common/common-view.jsp"%>
 	</head>
 
 	<body>

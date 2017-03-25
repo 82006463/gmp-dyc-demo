@@ -5,25 +5,7 @@
 <html>
 <head>
 	<title>报表管理</title>
-	<%@ include file="/common/meta.jsp"%>
-	<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-	<link rel="stylesheet" href="${ctx}/styles/plugin/css/validationEngine.jquery.css" type="text/css" />
-	<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
-	<script src="${ctx}/styles/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
-	<script src="${ctx}/styles/plugin/js/jquery.validationEngine.js" type="text/javascript"></script>
-	<script src="${ctx}/styles/plugin/js/languages/jquery.validationEngine-zh_CN.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		$(function() {
-			$('#inputForm').validationEngine();
-		});
-
-		function submitForm() {
-			if($('#inputForm').validationEngine('validate')) {
-				$('#inputForm').submit();
-			}
-			return false;
-		}
-	</script>
+	<%@ include file="/common/common-edit.jsp"%>
 </head>
 
 <body>

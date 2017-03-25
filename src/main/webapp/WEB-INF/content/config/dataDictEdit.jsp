@@ -4,9 +4,7 @@
 <html>
 	<head>
 		<title>配置管理-数据字典</title>
-		<%@ include file="/common/meta.jsp"%>
-		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+		<%@ include file="/common/common-edit.jsp"%>
 	</head>
 
 	<body>
