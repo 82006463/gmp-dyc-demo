@@ -2,6 +2,7 @@ package com.zhanlu.framework.config.service;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.common.service.CommonService;
 import com.zhanlu.framework.config.dao.ProcessNoDao;
 import com.zhanlu.framework.config.entity.ProcessNo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.PostConstruct;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,30 +24,15 @@ import java.util.List;
  * @since 0.1
  */
 @Service
-public class ProcessNoService {
+public class ProcessNoService extends CommonService<ProcessNo, Long> {
 
     @Autowired
     private ProcessNoDao processNoDao;
 
-    /**
-     * 保存配置字典实体
-     *
-     * @param entity
-     */
-    @Transactional
-    public ProcessNo save(ProcessNo entity) {
-        processNoDao.save(entity);
-        return entity;
-    }
-
-    /**
-     * 根据主键ID获取配置字典实体
-     *
-     * @param id
-     * @return
-     */
-    public ProcessNo get(Long id) {
-        return processNoDao.get(id);
+    @PostConstruct
+    @Override
+    public void initDao() {
+        super.commonDao = processNoDao;
     }
 
     /**
@@ -87,37 +74,6 @@ public class ProcessNoService {
         nextVal += entity.getIndexValue();
         entity.setCurrentValue(nextVal);
         return entity.getCurrentValue();
-    }
-
-    /**
-     * 获取所有的字典实体
-     *
-     * @return
-     */
-    public List<ProcessNo> getAll() {
-        return processNoDao.getAll();
-    }
-
-    /**
-     * 根据主键ID删除对应的配置字典实体
-     *
-     * @param id
-     */
-    @Transactional
-    public boolean delete(Long id) {
-        processNoDao.delete(id);
-        return true;
-    }
-
-    /**
-     * 根据分页对象、过滤集合参数，分页查询配置字典列表
-     *
-     * @param page
-     * @param filters
-     * @return
-     */
-    public Page<ProcessNo> findPage(final Page<ProcessNo> page, final List<PropertyFilter> filters) {
-        return processNoDao.findPage(page, filters);
     }
 
 }

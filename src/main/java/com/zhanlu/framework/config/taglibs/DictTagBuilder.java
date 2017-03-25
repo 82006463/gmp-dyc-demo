@@ -1,4 +1,4 @@
-package com.zhanlu.framework.common.taglibs;
+package com.zhanlu.framework.config.taglibs;
 
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.service.DataDictService;

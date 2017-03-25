@@ -1,4 +1,4 @@
-package com.zhanlu.framework.common.taglibs;
+package com.zhanlu.framework.config.taglibs;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;

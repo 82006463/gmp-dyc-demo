@@ -1,13 +1,14 @@
 package com.zhanlu.framework.config.service;
 
-import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.common.service.CommonService;
 import com.zhanlu.framework.config.dao.DataDictDao;
 import com.zhanlu.framework.config.entity.DataDict;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,18 +19,15 @@ import java.util.List;
  * @since 0.1
  */
 @Service
-public class DataDictService {
+public class DataDictService extends CommonService<DataDict, Long> {
 
     @Autowired
     private DataDictDao dataDictDao;
 
-    /**
-     * 保存配置字典实体
-     *
-     * @param entity
-     */
-    public void save(DataDict entity) {
-        dataDictDao.save(entity);
+    @PostConstruct
+    @Override
+    public void initDao() {
+        super.commonDao = dataDictDao;
     }
 
     /**
@@ -38,56 +36,17 @@ public class DataDictService {
      * @param entity
      */
     @Transactional
-    public void save(DataDict entity, List<DataDict> items) {
+    public DataDict saveOrUpdate(DataDict entity, List<DataDict> items) {
         if (entity.getId() != null && entity.getId() > 0) {
-            dataDictDao.batchExecute("delete DataDict where pid=" + entity.getId());
+            dataDictDao.batchExecute("DELETE FROM " + DataDict.class.getName() + " WHERE pid=" + entity.getId());
         }
-        dataDictDao.save(entity);
+        dataDictDao.saveOrUpdate(entity);
         for (DataDict item : items) {
             item.setPid(entity.getId());
             item.setPcode(entity.getCode());
-            dataDictDao.getSession().save(item);
+            dataDictDao.save(item);
         }
-    }
-
-    /**
-     * 根据主键ID获取配置字典实体
-     *
-     * @param id
-     * @return
-     */
-    public DataDict get(Long id) {
-        return dataDictDao.get(id);
-    }
-
-    /**
-     * 获取所有的字典实体
-     *
-     * @return
-     */
-    public List<DataDict> getAll() {
-        return dataDictDao.getAll();
-    }
-
-    /**
-     * 根据主键ID删除对应的配置字典实体
-     *
-     * @param id
-     */
-    @Transactional
-    public void delete(Long id) {
-        dataDictDao.delete(id);
-    }
-
-    /**
-     * 根据分页对象、过滤集合参数，分页查询配置字典列表
-     *
-     * @param page
-     * @param filters
-     * @return
-     */
-    public Page<DataDict> findPage(final Page<DataDict> page, final List<PropertyFilter> filters) {
-        return dataDictDao.findPage(page, filters);
+        return entity;
     }
 
     public List<DataDict> findItems(final String pcode) {

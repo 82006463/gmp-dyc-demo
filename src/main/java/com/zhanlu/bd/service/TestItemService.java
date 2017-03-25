@@ -20,6 +20,7 @@ public class TestItemService extends CommonService<TestItem, Long> {
     private TestItemDao testItemDao;
 
     @PostConstruct
+    @Override
     public void initDao() {
         super.commonDao = testItemDao;
     }

@@ -14,6 +14,9 @@ public abstract class CommonService<T, PK extends Serializable> {
 
     protected CommonDao<T, PK> commonDao;
 
+    public abstract void initDao();
+
+
     /**
      * 新增实体对象
      *

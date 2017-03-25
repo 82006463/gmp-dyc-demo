@@ -18,6 +18,7 @@ public class QsService extends CommonService<Qs, Long> {
     private QsDao qsDao;
 
     @PostConstruct
+    @Override
     public void initDao() {
         super.commonDao = qsDao;
     }

@@ -73,7 +73,7 @@ public class DictionaryController {
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
-        DataDict entity = dataDictService.get(id);
+        DataDict entity = dataDictService.findById(id);
         entity.setItems(dataDictService.findItems(entity.getCode()));
         model.addAttribute("entity", entity);
         return "config/dataDictEdit";
@@ -88,7 +88,7 @@ public class DictionaryController {
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
-        DataDict entity = dataDictService.get(id);
+        DataDict entity = dataDictService.findById(id);
         entity.setItems(dataDictService.findItems(entity.getCode()));
         model.addAttribute("entity", entity);
         return "config/dataDictView";
@@ -109,7 +109,7 @@ public class DictionaryController {
             item.setName(itemNames[i]);
             items.add(item);
         }
-        dataDictService.save(dataDict, items);
+        dataDictService.saveOrUpdate(dataDict, items);
         return "redirect:/config/dictionary";
     }
 

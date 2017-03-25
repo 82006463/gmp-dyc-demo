@@ -1,4 +1,4 @@
-package com.zhanlu.framework.common.taglibs;
+package com.zhanlu.framework.config.taglibs;
 
 /**
  * 标签构建接口

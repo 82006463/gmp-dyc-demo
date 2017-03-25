@@ -1,4 +1,4 @@
-package com.zhanlu.framework.common.taglibs;
+package com.zhanlu.framework.config.taglibs;
 
 import com.zhanlu.framework.security.entity.Menu;
 import com.zhanlu.framework.security.service.MenuService;

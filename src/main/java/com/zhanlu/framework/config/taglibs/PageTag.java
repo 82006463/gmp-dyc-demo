@@ -1,4 +1,4 @@
-package com.zhanlu.framework.common.taglibs;
+package com.zhanlu.framework.config.taglibs;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.tags.RequestContextAwareTag;

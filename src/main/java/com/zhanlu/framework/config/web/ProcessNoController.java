@@ -74,7 +74,7 @@ public class ProcessNoController {
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
-        ProcessNo entity = processNoService.get(id);
+        ProcessNo entity = processNoService.findById(id);
         model.addAttribute("entity", entity);
         model.addAttribute("orgList", orgService.getAll());
         return "config/processNoEdit";
@@ -89,7 +89,7 @@ public class ProcessNoController {
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
-        ProcessNo entity = processNoService.get(id);
+        ProcessNo entity = processNoService.findById(id);
         model.addAttribute("entity", entity);
         return "config/processNoView";
     }
