@@ -110,4 +110,16 @@ public abstract class CommonService<T extends IdEntity, PK extends Serializable>
         sqlQuery.addEntity(ReflectionUtils.getSuperClassGenricType(getClass()));
         return sqlQuery.list();
     }
+
+    /**
+     * 根据SQL语句查询数据
+     *
+     * @param sql
+     * @param params
+     * @return
+     */
+    public List<?> findBySQL(String sql, Object... params) {
+        SQLQuery sqlQuery = commonDao.createSQLQuery(sql, params);
+        return sqlQuery.list();
+    }
 }

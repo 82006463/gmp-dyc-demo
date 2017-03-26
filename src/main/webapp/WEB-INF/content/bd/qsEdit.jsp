@@ -8,7 +8,7 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/bd/qs/update" method="post">
+		<form id="inputForm" action="${ctx}/bd/qs/update" method="post">
 			<input type="hidden" id="id" name="id" value="${entity.id}"/>
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
@@ -20,7 +20,7 @@
 				<tr>
 					<td class="td_table_1">质量标准编号：</td>
 					<td class="td_table_2">
-						<input type="text" id="code" name="code" value="${entity.code}" class="input_240 validate[required,maxSize[20]]"/>
+						<input type="text" id="code" name="code" value="${entity.code}" class="input_240 validate[required,maxSize[20],ajax[ajaxCodeCheck]]"/>
 					</td>
 					<td class="td_table_1">质量标准版本：</td>
 					<td class="td_table_2">

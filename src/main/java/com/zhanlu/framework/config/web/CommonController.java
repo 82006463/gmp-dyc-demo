@@ -1,6 +1,8 @@
 package com.zhanlu.framework.config.web;
 
+import com.zhanlu.framework.config.service.DataDictService;
 import org.apache.commons.collections.map.HashedMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +21,37 @@ import java.util.Map;
  * @since 0.1
  */
 @Controller
-@RequestMapping(value = "/common")
+@RequestMapping(value = "/wfc/common")
 public class CommonController {
 
     @Resource(name = "jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private DataDictService dataDictService;
+
+    /**
+     * 分页查询配置，返回配置字典列表视图
+     */
+    @ResponseBody
+    @RequestMapping(value = "check")
+    public Object check(HttpServletRequest req) {
+        Map<String, String[]> paramMap = req.getParameterMap();
+        String fieldId = paramMap.get("fieldId")[0];
+        String fieldValue = paramMap.get("fieldValue")[0];
+        String[] dtArr = paramMap.get("dt")[0].split("/");
+        String tabName = dtArr[0] + "_" + dtArr[1];
+        boolean exist = false;
+        List<?> list = dataDictService.findBySQL("SELECT id FROM " + tabName + " WHERE code=?", fieldValue);
+        if (list != null && list.size() > 0) {
+            exist = list.size() != 1 || !list.get(0).toString().equals(dtArr[2]);
+        }
+        List resultList = new ArrayList<>(3);
+        if (!exist) {
+            resultList.add(fieldId);
+            resultList.add(!exist);
+        }
+        return resultList;
+    }
 
     /**
      * 分页查询配置，返回配置字典列表视图
@@ -45,9 +73,9 @@ public class CommonController {
         List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql.toString(), paramList.toArray());
         List<Map<String, Object>> dataList = new ArrayList<>(resultList.size());
         for (Map<String, Object> map : resultList) {
-            Map<String ,Object> tmp = new HashedMap();
+            Map<String, Object> tmp = new HashedMap();
             for (Map.Entry<String, Object> entry : map.entrySet()) {
-                tmp.put(entry.getKey().toLowerCase(),entry.getValue());
+                tmp.put(entry.getKey().toLowerCase(), entry.getValue());
             }
             dataList.add(tmp);
         }
@@ -57,6 +85,5 @@ public class CommonController {
         dataMap.put("data", resultList);
         return dataList;
     }
-
 
 }
