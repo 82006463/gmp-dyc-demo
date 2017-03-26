@@ -5,38 +5,30 @@ import com.zhanlu.framework.common.entity.TreeEntity;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.common.utils.ReflectionUtils;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.SQLQuery;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public abstract class CommonTreeService<T extends TreeEntity, PK extends Serializable> extends CommonService<T, PK> {
 
-    /**
-     * 新增实体对象
-     *
-     * @param entity
-     * @return
-     */
     @Transactional
     @Override
     public T save(T entity) {
-        commonDao.save(getTreeEntity(entity));
+        commonDao.save(entity);
+        processTreeEntity(entity);
         return entity;
     }
 
-    /**
-     * 新增或修改实体对象
-     *
-     * @param entity
-     * @return
-     */
     @Transactional
     @Override
     public T saveOrUpdate(T entity) {
-        commonDao.saveOrUpdate(getTreeEntity(entity));
+        commonDao.saveOrUpdate(entity);
+        processTreeEntity(entity);
         return entity;
     }
 
@@ -45,10 +37,10 @@ public abstract class CommonTreeService<T extends TreeEntity, PK extends Seriali
         if (entity.getId() != null && entity.getId() > 0) {
             commonDao.batchExecute("DELETE FROM " + entity.getClass().getName() + " WHERE pid=" + entity.getId());
         }
-        super.saveOrUpdate(getTreeEntity(entity));
+        this.saveOrUpdate(entity);
         for (T item : items) {
             item.setPid(entity.getId());
-            super.save(getTreeEntity(item));
+            this.save(item);
         }
         return entity;
     }
@@ -75,29 +67,30 @@ public abstract class CommonTreeService<T extends TreeEntity, PK extends Seriali
 
     /**
      * 根据父ID查询对象列表
+     *
      * @param pid 父ID
      * @return
      */
     public List<T> findItems(Long pid) {
-        String entityName = ReflectionUtils.getSuperClassGenricType(getClass()).getName();
-        return commonDao.find("FROM " + entityName + " WHERE pid=?", pid == null ? 0 : pid);
+        Map<String, Object> params = new HashedMap(4);
+        params.put("pid", pid);
+        return super.findList(params);
     }
 
     /**
      * 根据父编号查询对象列表
      *
-     * @param tableName 表名
      * @param pcode 父编号
      * @return
      */
-    public List<T> findItems(String tableName, String pcode) {
+    public List<T> findItems(String pcode) {
+        Table table = ReflectionUtils.getSuperClassGenricType(getClass()).getAnnotation(Table.class);
+        String tableName = table.name();
         String hql = "SELECT tb1.* FROM " + tableName + " tb1 LEFT JOIN " + tableName + " as tb2 ON tb1.pid=tb2.id WHERE tb2.code=?";
-        SQLQuery sqlQuery = commonDao.createSQLQuery(hql, pcode);
-        sqlQuery.addEntity(ReflectionUtils.getSuperClassGenricType(getClass()));
-        return sqlQuery.list();
+        return super.findListBySQL(hql, pcode);
     }
 
-    private T getTreeEntity(T entity) {
+    private T processTreeEntity(T entity) {
         T parent = null;
         if (entity.getPid() != null && entity.getPid() > 0) {
             parent = commonDao.get((PK) entity.getPid());

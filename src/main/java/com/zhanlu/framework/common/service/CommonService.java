@@ -5,18 +5,19 @@ import com.zhanlu.framework.common.dao.CommonDao;
 import com.zhanlu.framework.common.entity.IdEntity;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zhanlu.framework.common.utils.ReflectionUtils;
+import org.hibernate.SQLQuery;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public abstract class CommonService<T extends IdEntity, PK extends Serializable> {
 
     protected CommonDao<T, PK> commonDao;
 
     public abstract void initDao();
-
 
     /**
      * 新增实体对象
@@ -80,5 +81,33 @@ public abstract class CommonService<T extends IdEntity, PK extends Serializable>
      */
     public Page<T> findPage(final Page<T> page, final List<PropertyFilter> filters) {
         return commonDao.findPage(page, filters);
+    }
+
+    /**
+     * @param params 参数列表
+     * @return
+     */
+    public List<T> findList(Map<String, Object> params) {
+        Class<?> entityClass = ReflectionUtils.getSuperClassGenricType(getClass());
+        String hql = "FROM " + entityClass.getName() + " WHERE 1=1";
+        if (params != null && params.size() > 0) {
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
+                hql += " AND " + entry.getKey() + "=:" + entry.getKey();
+            }
+        }
+        return this.commonDao.find(hql, params);
+    }
+
+    /**
+     * 获取entity列表
+     *
+     * @param sql    SQL语句
+     * @param params 参数列表
+     * @return
+     */
+    public List<T> findListBySQL(String sql, Object... params) {
+        SQLQuery sqlQuery = commonDao.createSQLQuery(sql, params);
+        sqlQuery.addEntity(ReflectionUtils.getSuperClassGenricType(getClass()));
+        return sqlQuery.list();
     }
 }
