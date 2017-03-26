@@ -1,7 +1,6 @@
 package com.zhanlu.report.service;
 
-import com.zhanlu.framework.common.page.Page;
-import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.common.service.CommonService;
 import com.zhanlu.framework.config.service.ProcessNoService;
 import com.zhanlu.report.dao.DycReportDao;
 import com.zhanlu.report.entity.DycReport;
@@ -10,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import javax.annotation.PostConstruct;
 
 /**
  * 报表Service
@@ -20,12 +19,18 @@ import java.util.List;
  * @since 0.1
  */
 @Service
-public class DycReportService {
+public class DycReportService extends CommonService<DycReport, Long> {
 
     @Autowired
     private DycReportDao reportDao;
     @Autowired
     private ProcessNoService processNoService;
+
+    @PostConstruct
+    @Override
+    public void initDao() {
+        super.commonDao = reportDao;
+    }
 
     /**
      * 保存权限实体
@@ -33,41 +38,11 @@ public class DycReportService {
      * @param entity
      */
     @Transactional
-    public void save(DycReport entity) {
+    @Override
+    public DycReport saveOrUpdate(DycReport entity) {
         if (entity.getId() == null && StringUtils.isBlank(entity.getProcessNo())) {
             entity.setProcessNo(processNoService.getNextVal(entity.getProcessType(), entity.getOrgId()));
         }
-        reportDao.save(entity);
-    }
-
-    /**
-     * 根据主键ID获取权限实体
-     *
-     * @param id
-     * @return
-     */
-    public DycReport get(Long id) {
-        return reportDao.get(id);
-    }
-
-    /**
-     * 根据分页对象、过滤集合参数，分页查询权限列表
-     *
-     * @param page
-     * @param filters
-     * @return
-     */
-    public Page<DycReport> findPage(final Page<DycReport> page, final List<PropertyFilter> filters) {
-        return reportDao.findPage(page, filters);
-    }
-
-    /**
-     * 根据主键ID删除对应的实体
-     *
-     * @param id
-     */
-    @Transactional
-    public void delete(Long id) {
-        reportDao.delete(id);
+        return super.saveOrUpdate(entity);
     }
 }

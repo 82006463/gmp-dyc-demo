@@ -1,6 +1,6 @@
 package com.zhanlu.report.dao;
 
-import com.zhanlu.framework.common.dao.HibernateDao;
+import com.zhanlu.framework.common.dao.CommonDao;
 import com.zhanlu.report.entity.DycReport;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
  * @since 0.1
  */
 @Repository
-public class DycReportDao extends HibernateDao<DycReport, Long> {
+public class DycReportDao extends CommonDao<DycReport, Long> {
 }
