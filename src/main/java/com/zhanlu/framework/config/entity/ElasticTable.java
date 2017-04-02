@@ -15,6 +15,9 @@ public class ElasticTable extends CodeEntity {
 
     @Column(name = "ext_attr", length = 1500)
     public String getExtAttr() {
+        if (extAttr == null || extAttr.trim().isEmpty()) {
+            extAttr = "{}";
+        }
         return extAttr;
     }
 
