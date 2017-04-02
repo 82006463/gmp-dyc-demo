@@ -40,9 +40,9 @@ public class DycReportService extends CommonService<DycReport, Long> {
     @Transactional
     @Override
     public DycReport saveOrUpdate(DycReport entity) {
-        if (entity.getId() == null && StringUtils.isBlank(entity.getProcessNo())) {
+       /* if (entity.getId() == null && StringUtils.isBlank(entity.getProcessNo())) {
             entity.setProcessNo(processNoService.getNextVal(entity.getProcessType(), entity.getOrgId()));
-        }
+        }*/
         return super.saveOrUpdate(entity);
     }
 }

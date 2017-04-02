@@ -101,13 +101,14 @@ public class ElasticTableController {
      * @return
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(ElasticTable entity, String[] itemCodes, String[] itemNames, String[] itemDataTypes, String[] itemTagTypes) {
+    public String update(ElasticTable entity, String[] itemCodes, String[] itemNames, String[] itemRequireds, String[] itemDataTypes, String[] itemTagTypes) {
         List<Map<String, Object>> extAttr = new ArrayList<>(itemCodes == null ? 0 : itemCodes.length);
         if (itemCodes != null) {
             for (int i = 0; i < itemCodes.length; i++) {
                 Map<String, Object> itemMap = new LinkedHashMap<>(8);
                 itemMap.put("code", itemCodes[i]);
                 itemMap.put("name", itemNames[i]);
+                itemMap.put("required", itemRequireds[i]);
                 itemMap.put("dataType", itemDataTypes[i]);
                 itemMap.put("tagType", itemTagTypes[i]);
                 extAttr.add(itemMap);

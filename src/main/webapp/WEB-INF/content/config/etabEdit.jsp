@@ -52,6 +52,7 @@
 							<tr>
 								<td align=center class="td_list_1">编号</td>
 								<td align=center class="td_list_1">名称</td>
+								<td align=center class="td_list_1">是否必填</td>
 								<td align=center class="td_list_1">数据类型</td>
 								<td align=center class="td_list_1">渲染标签</td>
 								<td align=center width=5% class="td_list_1">操作</td>
@@ -59,10 +60,13 @@
 							<c:forEach items="${extAttrMap}" var="item" varStatus="itemIndex">
 								<tr>
 									<td class="td_list_2">
-										<input type="text" name='itemCodes' value='${item.code}' class='input_240 validate[required]'>
+										<input type="text" name='itemCodes' value='${item.code}' class='input_120 validate[required]'>
 									</td>
 									<td class="td_list_2">
-										<input type="text" name='itemNames' value='${item.name}' class='input_240 validate[required]'>
+										<input type="text" name='itemNames' value='${item.name}' class='input_120 validate[required]'>
+									</td>
+									<td class="td_list_2">
+										<frame:dict name="itemRequireds" type="select" typeCode="yesNo" value="${item.required}" cssClass="input_select validate[required]"/>
 									</td>
 									<td class="td_list_2">
 										<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="${item.dataType}" cssClass="input_select validate[required]"/>

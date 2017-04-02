@@ -106,13 +106,13 @@ public class DictTagBuilder implements TagBuilder {
                 values.add(value);
             }
         }
-        if (dictMap.containsKey(typeCode)) {
+        /*if (dictMap.containsKey(typeCode)) {
             items = dictMap.get(typeCode);
-        } else {
+        } else {*/
             DataDictService dataDictService = springContext.getBean(DataDictService.class);
             items = dataDictService.findItems(typeCode);
             dictMap.put(typeCode, items);
-        }
+        //}
     }
 
     /**
