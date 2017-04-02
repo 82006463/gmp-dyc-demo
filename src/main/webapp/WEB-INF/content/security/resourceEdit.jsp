@@ -48,7 +48,7 @@
 					</td>
 					<td class="td_table_1">资源值：</td>
 					<td class="td_table_2">
-						<input type="text" class="input_240" id="source" name="source" value="${resource.source }" />
+						<input type="text" class="input_520" id="source" name="source" value="${resource.source }" />
 					</td>
 				</tr>
  				<tr>

@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/config/dictionary")
-public class DictionaryController {
+public class DataDictController {
 
     /*@Autowired
     private DictionaryService dictionaryService;*/

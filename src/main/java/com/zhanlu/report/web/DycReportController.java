@@ -1,8 +1,10 @@
 package com.zhanlu.report.web;
 
+import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
-import com.zhanlu.framework.security.entity.Org;
+import com.zhanlu.framework.config.entity.ElasticTable;
+import com.zhanlu.framework.config.service.ElastictTableService;
 import com.zhanlu.framework.security.service.OrgService;
 import com.zhanlu.report.entity.DycReport;
 import com.zhanlu.report.service.DycReportService;
@@ -32,6 +34,8 @@ public class DycReportController {
     private DycReportService reportService;
     @Autowired
     private OrgService orgService;
+    @Autowired
+    private ElastictTableService wfcReportService;
 
     /**
      * 分页列表
@@ -56,10 +60,12 @@ public class DycReportController {
      * 新建页面
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public ModelAndView create(DycReport entity) {
+    public ModelAndView create(DycReport entity) throws Exception {
         ModelAndView view = new ModelAndView("report/reportEdit");
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
+        ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
+        view.addObject("extAttrMap", JSON.parseObject(etab.getExtAttr(), List.class));
         return view;
     }
 
@@ -67,10 +73,13 @@ public class DycReportController {
      * 编辑页面
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") Long id) {
+    public ModelAndView edit(@PathVariable("id") Long id) throws Exception {
         ModelAndView view = new ModelAndView("/report/reportEdit");
-        view.addObject("entity", reportService.findById(id));
+        DycReport dycReport = reportService.findById(id);
+        view.addObject("entity", dycReport);
         view.addObject("orgList", orgService.findAll());
+        ElasticTable etab = wfcReportService.findByCode(dycReport.getProcessType());
+        view.addObject("extAttrMap", JSON.parseObject(etab.getExtAttr(), List.class));
         return view;
     }
 

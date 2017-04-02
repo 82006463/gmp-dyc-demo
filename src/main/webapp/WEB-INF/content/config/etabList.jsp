@@ -4,19 +4,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-		<title>配置管理-台账结构</title>
+		<title>配置管理-伸缩表</title>
 		<%@ include file="/common/common-list.jsp"%>
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/config/report/list?lookup=${lookup }" method="get">
+	<form id="mainForm" action="${ctx}/wfc/report/list?lookup=${lookup }" method="get">
 		<input type="hidden" name="lookup" value="${lookup}" />
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="order" id="order" value="${page.order}"/>
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">配置管理-台账结构</td>
+				<td class="td_table_top" align="center">配置管理-伸缩表</td>
 			</tr>
 		</table>
 
@@ -24,7 +24,7 @@
 			<tr>
 				<td class="td_table_1">流程类型：</td>
 				<td class="td_table_2">
-					<frame:dict name="filter_EQS_code" type="select" typeCode="processType" value="${param['filter_EQS_type']}" cssClass="select"/>
+					<frame:dict name="filter_EQS_code" type="select" typeCode="reportType" value="${param['filter_EQS_type']}" cssClass="input_select"/>
 				</td>
 				<td class="td_table_1">流程前缀：</td>
 				<td class="td_table_2">
@@ -37,7 +37,7 @@
 				<td align="left">
 				<c:choose>
 					<c:when test="${empty lookup}">
-						<input type='button' onclick="addNew('${ctx}/config/report/create')" class='button_70px' value='新建'/>
+						<input type='button' onclick="addNew('${ctx}/wfc/report/create')" class='button_70px' value='新建'/>
 					</c:when>
 					<c:otherwise>
 						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
@@ -60,9 +60,9 @@
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
-							<a href="${ctx}/config/report/delete/${item.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-							<a href="${ctx}/config/report/update/${item.id }" class="btnEdit" title="编辑">编辑</a>
-							<a href="${ctx}/config/report/view/${item.id }" class="btnView" title="查看">查看</a>
+							<a href="${ctx}/wfc/report/delete/${item.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+							<a href="${ctx}/wfc/report/update/${item.id }" class="btnEdit" title="编辑">编辑</a>
+							<a href="${ctx}/wfc/report/view/${item.id }" class="btnView" title="查看">查看</a>
 						</c:if>
 						<c:if test="${!empty lookup}">
 							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>

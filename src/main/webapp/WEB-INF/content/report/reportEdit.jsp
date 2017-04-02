@@ -73,6 +73,16 @@
 					<textarea class="input_textarea_600" name="processDesc">${entity.processDesc}</textarea>
 				</td>
 			</tr>
+
+		<c:forEach items="${extAttrMap}" var="item" varStatus="itemIndex">
+			<tr>
+				<td class="td_list_2">${item.name}
+				</td>
+				<td class="td_list_2" colspan="3">
+					<input type="text" name="${item.code}" value="" class="input_240 validate[required]"/>
+				</td>
+			</tr>
+		</c:forEach>
 		</table>
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
