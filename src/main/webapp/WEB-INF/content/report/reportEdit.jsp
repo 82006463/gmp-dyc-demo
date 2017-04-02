@@ -67,22 +67,27 @@
 					<input type="text" name="occurPerson" value="${entity.occurPerson}" class="input_240 validate[required]"/>
 				</td>
 			</tr>
+			<c:set var="row" value="0"></c:set>
+			<c:set var="rowCount" value="${fn:length(extAttrMap)}"></c:set>
+			<c:forEach items="${extAttrMap}" var="item" varStatus="itemIndex">
+				<c:if test="${row==2 || itemIndex.count==rowCount}">
+					<c:set var="row" value="0"></c:set>
+					<tr>
+				</c:if>
+				<td class="td_table_1">${item.name}:${rowCount}</td>
+				<td class="td_table_2" <c:if test="${row==0 && itemIndex.count==rowCount}">colspan="3"</c:if>>
+					<input type="text" name="${item.code}" value="" class="input_240 validate[required]"/>
+				</td>
+				<c:if test="${row==2 || itemIndex.count==rowCount}">
+					</tr></c:if>
+				<c:set var="row" value="${row+1}"></c:set>
+			</c:forEach>
 			<tr>
 				<td class="td_table_1">描述：</td>
 				<td class="td_table_2" colspan="3">
 					<textarea class="input_textarea_600" name="processDesc">${entity.processDesc}</textarea>
 				</td>
 			</tr>
-
-		<c:forEach items="${extAttrMap}" var="item" varStatus="itemIndex">
-			<tr>
-				<td class="td_list_2">${item.name}
-				</td>
-				<td class="td_list_2" colspan="3">
-					<input type="text" name="${item.code}" value="" class="input_240 validate[required]"/>
-				</td>
-			</tr>
-		</c:forEach>
 		</table>
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0">

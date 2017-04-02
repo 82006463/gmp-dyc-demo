@@ -17,7 +17,7 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/wfc/report/update" method="post">
+		<form id="inputForm" action="${ctx }/wfc/etab/update" method="post">
 			<input type="hidden" id="id" name="id" value="${entity.id}"/>
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>

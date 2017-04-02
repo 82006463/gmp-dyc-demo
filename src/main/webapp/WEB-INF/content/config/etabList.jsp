@@ -9,7 +9,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/wfc/report/list?lookup=${lookup }" method="get">
+	<form id="mainForm" action="${ctx}/wfc/etab/list?lookup=${lookup }" method="get">
 		<input type="hidden" name="lookup" value="${lookup}" />
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
@@ -37,7 +37,7 @@
 				<td align="left">
 				<c:choose>
 					<c:when test="${empty lookup}">
-						<input type='button' onclick="addNew('${ctx}/wfc/report/create')" class='button_70px' value='新建'/>
+						<input type='button' onclick="addNew('${ctx}/wfc/etab/create')" class='button_70px' value='新建'/>
 					</c:when>
 					<c:otherwise>
 						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
@@ -60,9 +60,9 @@
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
-							<a href="${ctx}/wfc/report/delete/${item.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-							<a href="${ctx}/wfc/report/update/${item.id }" class="btnEdit" title="编辑">编辑</a>
-							<a href="${ctx}/wfc/report/view/${item.id }" class="btnView" title="查看">查看</a>
+							<a href="${ctx}/wfc/etab/delete/${item.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+							<a href="${ctx}/wfc/etab/update/${item.id }" class="btnEdit" title="编辑">编辑</a>
+							<a href="${ctx}/wfc/etab/view/${item.id }" class="btnView" title="查看">查看</a>
 						</c:if>
 						<c:if test="${!empty lookup}">
 							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>
