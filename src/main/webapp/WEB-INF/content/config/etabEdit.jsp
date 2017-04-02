@@ -55,6 +55,8 @@
 								<td align=center class="td_list_1">是否必填</td>
 								<td align=center class="td_list_1">数据类型</td>
 								<td align=center class="td_list_1">渲染标签</td>
+								<td align=center class="td_list_1">是否搜索</td>
+								<td align=center class="td_list_1">是否列表</td>
 								<td align=center width=5% class="td_list_1">操作</td>
 							</tr>
 							<c:forEach items="${extAttrMap}" var="item" varStatus="itemIndex">
@@ -66,13 +68,19 @@
 										<input type="text" name='itemNames' value='${item.name}' class='input_120 validate[required]'>
 									</td>
 									<td class="td_list_2">
-										<frame:dict name="itemRequireds" type="select" typeCode="yesNo" value="${item.required}" cssClass="input_select validate[required]"/>
+										<frame:dict name="itemRequireds" type="select" typeCode="yesNo" value="${item.required}" cssClass="validate[required]"/>
 									</td>
 									<td class="td_list_2">
-										<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="${item.dataType}" cssClass="input_select validate[required]"/>
+										<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="${item.dataType}" cssClass="validate[required]"/>
 									</td>
 									<td class="td_list_2">
-										<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${item.tagType}" cssClass="input_select validate[required]"/>
+										<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${item.tagType}" cssClass="validate[required]"/>
+									</td>
+									<td class="td_list_2">
+										<frame:dict name="itemInSearchs" type="select" typeCode="yesNo" value="${item.inSearch}" cssClass="validate[required]"/>
+									</td>
+									<td class="td_list_2">
+										<frame:dict name="itemInLists" type="select" typeCode="yesNo" value="${item.inList}" cssClass="input_select_120 validate[required]"/>
 									</td>
 									<td class="td_list_2">
 										<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a>
