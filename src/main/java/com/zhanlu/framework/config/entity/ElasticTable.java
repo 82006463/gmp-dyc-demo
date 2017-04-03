@@ -11,17 +11,17 @@ import javax.persistence.Table;
 public class ElasticTable extends CodeEntity {
 
     //报表的扩展属性：存为JSON
-    private String extAttr;
+    private String jsonStruct;
 
-    @Column(name = "ext_attr", length = 1500)
-    public String getExtAttr() {
-        if (extAttr == null || extAttr.trim().isEmpty()) {
-            extAttr = "{}";
+    @Column(name = "json_struct", length = 1500)
+    public String getJsonStruct() {
+        if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
+            jsonStruct = "{}";
         }
-        return extAttr;
+        return jsonStruct;
     }
 
-    public void setExtAttr(String extAttr) {
-        this.extAttr = extAttr;
+    public void setJsonStruct(String jsonStruct) {
+        this.jsonStruct = jsonStruct;
     }
 }

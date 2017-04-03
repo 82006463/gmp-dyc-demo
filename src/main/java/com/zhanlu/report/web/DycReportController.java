@@ -1,8 +1,8 @@
 package com.zhanlu.report.web;
 
-import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.common.utils.HTMLUtils;
 import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.ElastictTableService;
 import com.zhanlu.framework.security.service.OrgService;
@@ -66,7 +66,7 @@ public class DycReportController {
         view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
         view.addObject("etab", etab);
-        view.addObject("extAttrMap", JSON.parseObject(etab.getExtAttr(), List.class));
+        view.addObject("extAttr", HTMLUtils.json2HTML(etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }
 
@@ -76,12 +76,12 @@ public class DycReportController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("id") Long id) throws Exception {
         ModelAndView view = new ModelAndView("/report/reportEdit");
-        DycReport dycReport = reportService.findById(id);
-        view.addObject("entity", dycReport);
+        DycReport entity = reportService.findById(id);
+        view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
-        ElasticTable etab = wfcReportService.findByCode(dycReport.getProcessType());
+        ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
         view.addObject("etab", etab);
-        view.addObject("extAttrMap", JSON.parseObject(etab.getExtAttr(), List.class));
+        view.addObject("extAttr", HTMLUtils.json2HTML(etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }
 

@@ -103,7 +103,7 @@ public class DycReport extends IdEntity {
         this.endTime = endTime;
     }
 
-    @Column(name = "extra_json", length = 500)
+    @Column(name = "extra_json", length = 1000)
     public String getExtraJson() {
         return extraJson;
     }

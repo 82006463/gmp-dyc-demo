@@ -67,20 +67,7 @@
 					<input type="text" name="occurPerson" value="${entity.occurPerson}" class="input_240 validate[required]"/>
 				</td>
 			</tr>
-
-			<c:set var="row" value="0"></c:set>
-			<c:set var="rowCount" value="${fn:length(extAttrMap)}"></c:set>
-			<c:forEach items="${extAttrMap}" var="item" varStatus="itemIndex">
-				<c:if test="${row==2 || itemIndex.count==rowCount}">
-					<c:set var="row" value="0"></c:set><tr>
-				</c:if>
-				<td class="td_table_1">${item.name}</td>
-				<td class="td_table_2" <c:if test="${row==0 && itemIndex.count==rowCount}">colspan="3"</c:if>>
-					<input type="text" name="${item.code}" value="" class="input_240 <c:if test="${item.required=='yes'}"> validate[required]</c:if>"/>
-				</td>
-				<c:if test="${row==2 || itemIndex.count==rowCount}"></tr></c:if>
-				<c:set var="row" value="${row+1}"></c:set>
-			</c:forEach>
+			${extAttr}
 
 			<tr>
 				<td class="td_table_1">描述：</td>

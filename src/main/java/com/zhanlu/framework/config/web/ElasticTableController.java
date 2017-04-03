@@ -76,7 +76,7 @@ public class ElasticTableController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
         ElasticTable entity = elastictTableService.findById(id);
-        model.addAttribute("extAttrMap", StringUtils.isBlank(entity.getExtAttr()) ? null : JSON.parseObject(entity.getExtAttr(), List.class));
+        model.addAttribute("extAttrMap", StringUtils.isBlank(entity.getJsonStruct()) ? null : JSON.parseObject(entity.getJsonStruct(), List.class));
         model.addAttribute("entity", entity);
         return "config/etabEdit";
     }
@@ -116,7 +116,7 @@ public class ElasticTableController {
                 itemMap.put("inList", itemInLists[i]);
                 extAttr.add(itemMap);
             }
-            entity.setExtAttr(JSON.toJSONString(extAttr));
+            entity.setJsonStruct(JSON.toJSONString(extAttr));
         }
         elastictTableService.saveOrUpdate(entity);
         return "redirect:/wfc/etab/list";
