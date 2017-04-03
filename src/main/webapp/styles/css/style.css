@@ -317,6 +317,28 @@ a:hover {
 	cursor:hand;
 }
 
+a.btnUp {
+	background:url(../images/delete.png) no-repeat;
+	display:block;
+	width:22px;
+	height:20px;
+	text-indent:-1000px;
+	overflow:hidden;
+	float:left;
+	margin-right: 3px;
+}
+
+a.btnDown {
+	background:url(../images/delete.png) no-repeat;
+	display:block;
+	width:22px;
+	height:20px;
+	text-indent:-1000px;
+	overflow:hidden;
+	float:left;
+	margin-right: 3px;
+}
+
 a.btnDel {
 	background:url(../images/delete.png) no-repeat; 
 	display:block; 
