@@ -60,10 +60,10 @@
 										<input type="text" value='${item.name}' name='itemNames' class='input_240'>
 									</td>
 									<td class="td_list_2">
-										<c:if test="${fn:contains(entity.code,'DS')}">
+										<c:if test="${(fn:contains(item.code, 'select_') || fn:contains(item.code, 'radio_') || fn:contains(item.code, 'checkbox_'))}">
 											<textarea class="input_textarea_600" name="itemDataSources">${item.dataSource}</textarea>
 										</c:if>
-										<c:if test="${!fn:contains(entity.code,'DS')}">
+										<c:if test="${!(fn:contains(item.code, 'select_') || fn:contains(item.code, 'radio_') || fn:contains(item.code, 'checkbox_'))}">
 											<input type="text" value='${item.dataSource}' name='itemDataSources' class='input_520'>
 										</c:if>
 									</td>

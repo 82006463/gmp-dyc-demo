@@ -24,7 +24,7 @@
 			<tr>
 				<td class="td_table_1">流程类型：</td>
 				<td class="td_table_2">
-					<frame:dict name="filter_EQS_code" type="select" typeCode="reportType" value="${param['filter_EQS_type']}" cssClass="input_select"/>
+					<frame:dict name="filter_EQS_code" type="select" typeCode="etabType" value="${param['filter_EQS_type']}" cssClass="input_select"/>
 				</td>
 				<td class="td_table_1">流程前缀：</td>
 				<td class="td_table_2">

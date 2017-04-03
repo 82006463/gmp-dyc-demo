@@ -1,5 +1,6 @@
 package com.zhanlu.report.web;
 
+import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.common.utils.HTMLUtils;
@@ -8,7 +9,9 @@ import com.zhanlu.framework.config.service.ElastictTableService;
 import com.zhanlu.framework.security.service.OrgService;
 import com.zhanlu.report.entity.DycReport;
 import com.zhanlu.report.service.DycReportService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 报表Controller
@@ -29,6 +34,9 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/dyc/report")
 public class DycReportController {
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Autowired
     private DycReportService reportService;
@@ -66,7 +74,7 @@ public class DycReportController {
         view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
         view.addObject("etab", etab);
-        view.addObject("extAttr", HTMLUtils.json2HTML(etab.getJsonStruct(), entity.getExtraJson()));
+        view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }
 
@@ -81,7 +89,7 @@ public class DycReportController {
         view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
         view.addObject("etab", etab);
-        view.addObject("extAttr", HTMLUtils.json2HTML(etab.getJsonStruct(), entity.getExtraJson()));
+        view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }
 
@@ -89,7 +97,33 @@ public class DycReportController {
      * 新增、编辑的提交处理。保存实体，并返回列表视图
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ModelAndView update(RedirectAttributes attributes, DycReport entity) {
+    public ModelAndView update(RedirectAttributes attributes, HttpServletRequest req, DycReport entity) throws Exception {
+        Map<String, String[]> paramMap = req.getParameterMap();
+        Map<String, Object> dataMap = new LinkedHashMap<>(paramMap.size());
+        ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
+        List<Map<String, Object>> structList = JSON.parseObject(etab.getJsonStruct(), List.class);
+        for (Map<String, Object> struct : structList) {
+            String code = struct.get("code").toString();
+            if (!paramMap.containsKey(code)) {
+                continue;
+            }
+            String tmpData = paramMap.get(code)[0];
+            String dataType = struct.get("dataType").toString();
+            if (StringUtils.isNotBlank(tmpData)) {
+                if (dataType.equals("dt_int")) {
+                    dataMap.put(code, Integer.parseInt(tmpData));
+                } else if (dataType.equals("dt_long")) {
+                    dataMap.put(code, Long.parseLong(tmpData));
+                } else if (dataType.equals("dt_float")) {
+                    dataMap.put(code, Float.parseFloat(tmpData));
+                } else if (dataType.equals("dt_double")) {
+                    dataMap.put(code, Double.parseDouble(tmpData));
+                } else {
+                    dataMap.put(code, tmpData);
+                }
+            }
+        }
+        entity.setExtraJson(JSON.toJSONString(dataMap));
         reportService.saveOrUpdate(entity);
         ModelAndView view = new ModelAndView("redirect:/dyc/report/list");
         attributes.addAttribute("processType", entity.getProcessType());

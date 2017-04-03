@@ -1,7 +1,12 @@
 package com.zhanlu.framework.common.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.zhanlu.framework.config.entity.DataDict;
+import com.zhanlu.framework.config.service.DataDictService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,12 +15,18 @@ import java.util.Map;
  */
 public class HTMLUtils {
 
-    public static String json2HTML(String jsonStruct, String jsonData) {
+    public static String json2HTML(ApplicationContext applicationContext, String jsonStruct, String jsonData) {
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             jsonStruct = "[]";
         }
         if (jsonData == null || jsonData.trim().isEmpty()) {
             jsonData = "{}";
+        }
+        JdbcTemplate jdbcTemplate = null;
+        DataDictService dataDictService = null;
+        if (applicationContext.containsBean("jdbcTemplate")) {
+            jdbcTemplate = applicationContext.getBean("jdbcTemplate", JdbcTemplate.class);
+            dataDictService = applicationContext.getBean(DataDictService.class);
         }
         List<Map<String, Object>> structList = JSON.parseObject(jsonStruct, List.class);
         Map<String, Object> dataMap = JSON.parseObject(jsonData, Map.class);
@@ -24,6 +35,7 @@ public class HTMLUtils {
         String html = "<tr>";
         for (Map<String, Object> entry : structList) {
             String tagType = entry.get("tagType").toString();
+            String required = entry.get("required").toString();
             String code = entry.get("code").toString();
             String name = entry.get("name").toString();
             String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
@@ -37,11 +49,32 @@ public class HTMLUtils {
             }
             html += "<td class='td_table_1'>" + name + "</td><td class='td_table_2' ${" + itemIndex + "}>";
             if (tagType.equals("textarea")) {
-                html += "<textarea name='" + code + "' class='input_textarea_600" + (entry.get("required").equals("yes") ? " validate[required]" : "") + "'>" + val + "</textarea>";
-            } else if (tagType.equals("select")) {
-                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (entry.get("required").equals("yes") ? " validate[required]" : "") + "'/>";
+                html += "<textarea name='" + code + "' class='input_textarea_600" + (required.equals("yes") ? " validate[required]" : "") + "'>" + val + "</textarea>";
+            } else if (tagType.startsWith("select_") || tagType.startsWith("radio_") || tagType.startsWith("checkbox_")) {
+                DataDict dataDict = dataDictService.findByCode(tagType);
+                if (dataDict != null) {
+                    List<Map<String, Object>> itemList = jdbcTemplate.queryForList(dataDict.getDataSource());
+                    if (tagType.startsWith("select_")) {
+                        html += "<select name='" + code + "' class='input_select" + (required.equals("yes") ? " validate[required]" : "") + "'>";
+                        html += "<option value='' selected>--请选择--</option>";
+                        for (Map<String, Object> item : itemList) {
+                            html += "<option value='" + item.get("code") + "'" + (item.get("code").toString().equals(val) ? " selected='selected'" : "") + ">" + item.get("name") + "</option>";
+                        }
+                        html += "</select>";
+                    } else if (tagType.startsWith("radio_")) {
+                        for (Map<String, Object> item : itemList) {
+                            html += "<input type='radio' name='" + code + "' value='" + val + "' class='input_radio" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
+                        }
+                    } else if (tagType.startsWith("checkbox_")) {
+                        for (Map<String, Object> item : itemList) {
+                            html += "<input type='text' name='" + item.get("code") + "' value='" + val + "' class='input_checkbox" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
+                        }
+                    }
+                } else {
+                    html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "'/>";
+                }
             } else {
-                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (entry.get("required").equals("yes") ? " validate[required]" : "") + "'/>";
+                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "'/>";
             }
             html += "</td>";
 
