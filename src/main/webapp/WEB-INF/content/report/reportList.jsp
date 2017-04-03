@@ -34,7 +34,7 @@
 					<input type="text" class="input_240" name="filter_LIKES_processName" value="${param['filter_LIKES_processName']}"/>
 				</td>
 			</tr>
-			<tr>
+			<%--<tr>
 				<td class="td_table_1">部门：</td>
 				<td class="td_table_2">
 					<select name="filter_EQL_orgId" class="input_select">
@@ -64,7 +64,7 @@
 				<td class="td_table_2" colspan="3">
 					<input type="text" class="input_240" name="filter_LIKES_backup1" value="${param['filter_LIKES_backup1']}"/>
 				</td>
-			</tr>
+			</tr>--%>
 		</table>
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
