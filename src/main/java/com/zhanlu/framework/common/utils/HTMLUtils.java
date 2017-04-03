@@ -63,7 +63,7 @@ public class HTMLUtils {
                         html += "</select>";
                     } else if (tagType.startsWith("radio_")) {
                         for (Map<String, Object> item : itemList) {
-                            html += "<input type='radio' name='" + code + "' value='" + val + "' class='input_radio" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
+                            html += "<input type='radio' name='" + code + "' value='" + item.get("code") + "' class='input_radio" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
                         }
                     } else if (tagType.startsWith("checkbox_")) {
                         for (Map<String, Object> item : itemList) {

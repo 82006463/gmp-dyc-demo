@@ -109,6 +109,7 @@ public class DycReportController {
             }
             String tmpData = paramMap.get(code)[0];
             String dataType = struct.get("dataType").toString();
+            String tagType = struct.get("tagType").toString();
             if (StringUtils.isNotBlank(tmpData)) {
                 if (dataType.equals("dt_int")) {
                     dataMap.put(code, Integer.parseInt(tmpData));
