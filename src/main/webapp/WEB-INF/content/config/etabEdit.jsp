@@ -60,10 +60,11 @@
 								<td align=center class="td_list_1">名称</td>
 								<td align=center class="td_list_1">是否必填</td>
 								<td align=center class="td_list_1">数据类型</td>
-								<td align=center class="td_list_1">渲染标签</td>
-								<td align=center class="td_list_1">是否搜索</td>
-								<td align=center class="td_list_1">是否列表</td>
-								<td align=center width=5% class="td_list_1">操作</td>
+								<td align=center class="td_list_1">标签类型</td>
+								<td align=center class="td_list_1">列表搜索</td>
+								<td align=center class="td_list_1">列表显示</td>
+                                <td align=center class="td_list_1">模糊搜索</td>
+								<td align=center width=6% class="td_list_1">操作</td>
 							</tr>
 							<c:forEach items="${extAttrMap}" var="item" varStatus="itemIndex">
 								<tr>
@@ -86,10 +87,15 @@
 										<frame:dict name="itemInSearchs" type="select" typeCode="yesNo" value="${item.inSearch}" cssClass="validate[required]"/>
 									</td>
 									<td class="td_list_2">
-										<frame:dict name="itemInLists" type="select" typeCode="yesNo" value="${item.inList}" cssClass="input_select_120 validate[required]"/>
+										<frame:dict name="itemInLists" type="select" typeCode="yesNo" value="${item.inList}" cssClass="validate[required]"/>
 									</td>
+                                    <td class="td_list_2">
+                                        <frame:dict name="itemFuzzys" type="select" typeCode="yesNo" value="${item.fuzzy}" cssClass="validate[required]"/>
+                                    </td>
 									<td class="td_list_2">
 										<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a>
+                                        <a onclick='return opsUp(this);' title='上移'>上</a>
+                                        <a onclick='return opsDown(this);' title='下移'>下</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -113,25 +119,47 @@
 				var table = document.getElementById("itemTable");
 				var row = table.insertRow(-1);
 				var cell = row.insertCell(-1);
-				cell.innerHTML = "<input type='text' name='itemCodes' value='' class='input_240 validate[required]'>";
+				cell.innerHTML = "<input type='text' name='itemCodes' value='' class='input_120 validate[required]'>";
 				cell.className = "td_list_2";
+				cell = row.insertCell(-1);
+				cell.innerHTML = "<input type='text' name='itemNames' value='' class='input_120 validate[required]'>";
+				cell.className = "td_list_2";
+                cell = row.insertCell(-1);
+                cell.innerHTML = "<frame:dict name="itemRequireds" type="select" typeCode="yesNo" value="" cssClass="validate[required]"/>";
+                cell.className = "td_list_2";
 
 				cell = row.insertCell(-1);
-				cell.innerHTML = "<input type='text' name='itemNames' value='' class='input_240 validate[required]'>";
+				cell.innerHTML = "<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="${item.dataType}" cssClass="validate[required]"/>";
+				cell.className = "td_list_2";
+				cell = row.insertCell(-1);
+				cell.innerHTML = "<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${item.tagType}" cssClass="validate[required]"/>";
 				cell.className = "td_list_2";
 
-				cell = row.insertCell(-1);
-				cell.innerHTML = "<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="${item.dataType}" cssClass="input_select validate[required]"/>";
-				cell.className = "td_list_2";
+                cell = row.insertCell(-1);
+                cell.innerHTML = "<frame:dict name="itemInSearchs" type="select" typeCode="yesNo" value="" cssClass="validate[required]"/>";
+                cell.className = "td_list_2";
+                cell = row.insertCell(-1);
+                cell.innerHTML = "<frame:dict name="itemInLists" type="select" typeCode="yesNo" value="" cssClass="validate[required]"/>";
+                cell.className = "td_list_2";
+                cell = row.insertCell(-1);
+                cell.innerHTML = "<frame:dict name="itemFuzzys" type="select" typeCode="yesNo" value="" cssClass="validate[required]"/>";
+                cell.className = "td_list_2";
 
 				cell = row.insertCell(-1);
-				cell.innerHTML = "<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${item.tagType}" cssClass="input_select validate[required]"/>";
-				cell.className = "td_list_2";
-
-				cell = row.insertCell(-1);
-				cell.innerHTML = "<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a>";
+				cell.innerHTML = "<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a><a onclick='return opsUp(this);' title='上移'>上</a><a onclick='return opsDown(this);' title='下移'>下</a>";
 				cell.className = "td_list_2";
 			}
+
+             function opsUp(thisTag) {
+                var _tr = $(thisTag).parent().parent();
+                 _tr.pre().before(_tr);
+                 return false;
+            }
+            function opsDown(thisTag) {
+                var _tr = $(thisTag).parent().parent();
+                _tr.next().after(_tr);
+                return false;
+            }
 		</script>
 	</body>
 </html>

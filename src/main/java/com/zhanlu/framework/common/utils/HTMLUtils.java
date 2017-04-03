@@ -39,14 +39,19 @@ public class HTMLUtils {
             if (tagType.equals("textarea")) {
                 html += "<textarea name='" + code + "' class='input_textarea_600" + (entry.get("required").equals("yes") ? " validate[required]" : "") + "'>" + val + "</textarea>";
             } else if (tagType.equals("select")) {
-
+                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (entry.get("required").equals("yes") ? " validate[required]" : "") + "'/>";
             } else {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (entry.get("required").equals("yes") ? " validate[required]" : "") + "'/>";
             }
             html += "</td>";
 
             if (tagType.equals("textarea")) {
-                html = html.replace("${" + (itemIndex - 1) + "}", " colspan='3'");
+                if (tmpIndex == 1) {
+                    html = html.replace("${" + itemIndex + "}", " colspan='3'");
+                } else if (tmpIndex == 2) {
+                    html = html.replace("${" + (itemIndex - 1) + "}", " colspan='3'");
+                    html = html.replace("${" + itemIndex + "}", " colspan='3'");
+                }
             } else if (tmpIndex == 1 && itemIndex == structList.size()) {
                 html = html.replace("${" + itemIndex + "}", " colspan='3'");
             }

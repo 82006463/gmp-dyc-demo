@@ -156,7 +156,7 @@ public class DictTagBuilder implements TagBuilder {
                 buffer.append("readonly disabled ");
             }
             buffer.append(">");
-            buffer.append("<option value='' selected>------请选择------</option>");
+            buffer.append("<option value='' selected>--请选择--</option>");
 
             if (items != null && !items.isEmpty()) {
                 for (DataDict item : items) {
