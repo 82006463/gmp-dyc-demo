@@ -28,4 +28,16 @@
         }
         return false;
     }
+
+    var Ops = {};
+    Ops.up = function (thisTag) {
+        var _tr = $(thisTag).parent().parent();
+        _tr.prev().before(_tr);
+        return false;
+    }
+    Ops.down = function (thisTag) {
+        var _tr = $(thisTag).parent().parent();
+        _tr.next().after(_tr);
+        return false;
+    }
 </script>

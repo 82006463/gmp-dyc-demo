@@ -38,9 +38,11 @@ public abstract class CommonTreeService<T extends TreeEntity, PK extends Seriali
             commonDao.batchExecute("DELETE FROM " + entity.getClass().getName() + " WHERE pid=" + entity.getId());
         }
         this.saveOrUpdate(entity);
-        for (T item : items) {
-            item.setPid(entity.getId());
-            this.save(item);
+        if (items != null && items.size() > 0) {
+            for (T item : items) {
+                item.setPid(entity.getId());
+                this.save(item);
+            }
         }
         return entity;
     }

@@ -5,15 +5,6 @@
 	<head>
 		<title>配置管理-伸缩表</title>
 		<%@ include file="/common/common-edit.jsp"%>
-		<script type="text/javascript">
-			function checkTimePattern(thisTag) {
-				var _val = $(thisTag).val();
-				if(_val.length>0 && _val!='yyyy' && _val!='yyyyMM' && _val!='yyyyMMdd') {
-					alert('时间模式必须符合(y:年,M:月,d:日)：yyyy | yyyyMM | yyyyMMdd');
-					$(thisTag).val('');
-				}
-			}
-		</script>
 	</head>
 
 	<body>
@@ -94,8 +85,8 @@
                                     </td>
 									<td class="td_list_2">
 										<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a>
-                                        <a onclick='return opsUp(this);' title='上移'>上</a>
-                                        <a onclick='return opsDown(this);' title='下移'>下</a>
+                                        <a onclick='return Ops.up(this);' title='上移'>上</a>
+                                        <a onclick='return Ops.down(this);' title='下移'>下</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -149,17 +140,6 @@
 				cell.innerHTML = "<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a><a onclick='return opsUp(this);' title='上移'>上</a><a onclick='return opsDown(this);' title='下移'>下</a>";
 				cell.className = "td_list_2";
 			}
-
-             function opsUp(thisTag) {
-                var _tr = $(thisTag).parent().parent();
-                 _tr.prev().before(_tr);
-                 return false;
-            }
-            function opsDown(thisTag) {
-                var _tr = $(thisTag).parent().parent();
-                _tr.next().after(_tr);
-                return false;
-            }
 		</script>
 	</body>
 </html>

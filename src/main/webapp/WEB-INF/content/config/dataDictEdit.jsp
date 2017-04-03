@@ -45,21 +45,31 @@
 					<td class="td_table_2" colspan="3">
 						<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" id="itemTable" style="margin: 0">
 							<tr>
-								<td align=center width=25% class="td_list_1">选项编号</td>
-								<td align=center width=60% class="td_list_1">选项名称</td>
-								<td align=center width=10% class="td_list_1">操作</td>
+								<td align=center width=20% class="td_list_1">选项编号</td>
+								<td align=center width=30% class="td_list_1">选项名称</td>
+								<td align=center width=42% class="td_list_1">数据源</td>
+								<td align=center width=8% class="td_list_1">操作</td>
 							</tr>
 							<c:forEach items="${entity.items}" var="item" varStatus="itemIndex">
 								<tr>
 									<td class="td_list_2">
 										<input type="hidden" value='${item.id}' name='itemIds' class='input_50'>
-										<input type="text" value='${item.code}' name='itemCodes' class='input_520'>
+										<input type="text" value='${item.code}' name='itemCodes' class='input_120'>
 									</td>
 									<td class="td_list_2">
-										<input type="text" value='${item.name}' name='itemNames' class='input_520'>
+										<input type="text" value='${item.name}' name='itemNames' class='input_240'>
+									</td>
+									<td class="td_list_2">
+										<c:if test="${fn:contains(entity.code,'DS')}">
+											<textarea class="input_textarea_600" name="itemDataSources">${item.dataSource}</textarea>
+										</c:if>
+										<c:if test="${!fn:contains(entity.code,'DS')}">
+											<input type="text" value='${item.dataSource}' name='itemDataSources' class='input_520'>
+										</c:if>
 									</td>
 									<td class="td_list_2">
 										<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a>
+										<a onclick='return Ops.up(this);' title='上移'>上</a><a onclick='return Ops.down(this);' title='下移'>下</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -70,8 +80,7 @@
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
-						<input type="submit" class="button_70px" name="submit" value="提交">
-						&nbsp;&nbsp;
+						<input type="submit" class="button_70px" name="submit" value="提交">&nbsp;&nbsp;
 						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>
@@ -82,36 +91,40 @@
 				var table = document.getElementById("itemTable");
 				var row = table.insertRow(-1);
 				var cell = row.insertCell(-1);
-				cell.innerHTML = "<input type='hidden' name='itemIds' value='' class='input_50'><input type='text' name='itemCodes' value='' class='input_520'>";
+				cell.innerHTML = "<input type='hidden' name='itemIds' value='' class='input_50'><input type='text' name='itemCodes' value='' class='input_120'>";
 				cell.className = "td_list_2";
 				
 				cell = row.insertCell(-1);
-				cell.innerHTML = "<input type='text' name='itemNames' value='' class='input_520'>";
+				cell.innerHTML = "<input type='text' name='itemNames' value='' class='input_240'>";
+				cell.className = "td_list_2";
+
+				cell = row.insertCell(-1);
+				cell.innerHTML = "<input type='text' name='itemDataSources' value='' class='input_520'>";
 				cell.className = "td_list_2";
 				
 				cell = row.insertCell(-1);
-				cell.innerHTML = "<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a>";
+				cell.innerHTML = "<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a><a onclick='return Ops.up(this);' title='上移'>上</a><a onclick='return Ops.down(this);' title='下移'>下</a>";
 				cell.className = "td_list_2";
 			}
 			
 			function validateInput(){
-					var table = document.getElementById("itemTable");
-					var rowLen = table.rows.length;
-					if(rowLen == 0) {
-						alert("请添加选项");
-						return false;
+				var table = document.getElementById("itemTable");
+				var rowLen = table.rows.length;
+				if(rowLen == 0) {
+					alert("请添加选项");
+					return false;
+				}
+				var warning = "";
+				$("input[name='itemNames']").each(function(){
+					var item = $(this).val();
+					if(item == '') {
+						warning = "选项列表 不能为空";
 					}
-					var warning = "";
-					$("input[name='itemNames']").each(function(){
-						var item = $(this).val();
-						if(item == '') {
-							warning = "选项列表 不能为空";
-						}
-					});
-					if(warning != '') {
-						alert(warning);
-						return false;
-					}
+				});
+				if(warning != '') {
+					alert(warning);
+					return false;
+				}
 			}
 		</script>
 		</form>

@@ -100,14 +100,17 @@ public class DataDictController {
      * @return
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(DataDict dataDict, Long[] itemIds, String[] itemCodes, String[] itemNames) {
+    public String update(DataDict dataDict, Long[] itemIds, String[] itemCodes, String[] itemNames, String[] itemDataSources) {
         List<DataDict> items = new ArrayList<>();
-        for (int i = 0; i < itemNames.length; i++) {
-            DataDict item = new DataDict();
-            item.setId(itemIds[i]);
-            item.setCode(itemCodes[i]);
-            item.setName(itemNames[i]);
-            items.add(item);
+        if (itemCodes != null && itemCodes.length > 0) {
+            for (int i = 0; i < itemCodes.length; i++) {
+                DataDict item = new DataDict();
+                item.setId(itemIds.length == 0 ? null : itemIds[i]);
+                item.setCode(itemCodes[i]);
+                item.setName(itemNames[i]);
+                item.setDataSource(itemDataSources.length == 0 ? null : itemDataSources[i]);
+                items.add(item);
+            }
         }
         dataDictService.saveOrUpdate(dataDict, items);
         return "redirect:/config/dictionary";
