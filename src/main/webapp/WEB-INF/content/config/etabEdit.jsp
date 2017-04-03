@@ -152,7 +152,7 @@
 
              function opsUp(thisTag) {
                 var _tr = $(thisTag).parent().parent();
-                 _tr.pre().before(_tr);
+                 _tr.prev().before(_tr);
                  return false;
             }
             function opsDown(thisTag) {
