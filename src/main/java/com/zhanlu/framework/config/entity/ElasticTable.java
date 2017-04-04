@@ -18,7 +18,7 @@ public class ElasticTable extends CodeEntity {
     @Column(name = "json_struct")
     public String getJsonStruct() {
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
-            jsonStruct = "{}";
+            jsonStruct = "[]";
         }
         return jsonStruct;
     }
