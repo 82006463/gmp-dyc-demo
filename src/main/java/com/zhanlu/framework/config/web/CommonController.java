@@ -70,10 +70,10 @@ public class CommonController {
         }
         List<String> params = new ArrayList<>();
         String sql = dataDict.getDataSource();
-        sql = sql.replace("LIKE ?", "LIKE '%" + keyword + "%'");
+        sql = sql.replace("LIKE ?", "LIKE '%" + keyword + "%'").replace("like ?", "like '%" + keyword + "%'");
         String[] orArr = sql.toUpperCase().split("WHERE")[1].trim().toUpperCase().split("OR");
         for (String or : orArr) {
-            if (or.contains("=?"))
+            if (or.contains("=?") || or.contains("= ?"))
                 params.add(keyword);
         }
         List<Map<String, Object>> tmpMaps = jdbcTemplate.queryForList(sql, params.toArray());
