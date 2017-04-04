@@ -6,7 +6,6 @@ import com.zhanlu.framework.config.service.DataDictService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,6 +72,10 @@ public class HTMLUtils {
                 } else {
                     html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "'/>";
                 }
+            } else if (tagType.equals("date")) {
+                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
+            } else if (tagType.equals("timestamp")) {
+                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
             } else {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "'/>";
             }
