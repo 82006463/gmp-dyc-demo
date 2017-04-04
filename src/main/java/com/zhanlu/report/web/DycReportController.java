@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.common.utils.HTMLUtils;
+import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.entity.ElasticTable;
+import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.config.service.ElastictTableService;
 import com.zhanlu.framework.security.service.OrgService;
 import com.zhanlu.report.entity.DycReport;
@@ -37,6 +39,8 @@ public class DycReportController {
 
     @Autowired
     private ApplicationContext applicationContext;
+    @Autowired
+    private DataDictService dataDictService;
 
     @Autowired
     private DycReportService reportService;
@@ -98,24 +102,30 @@ public class DycReportController {
     public ModelAndView update(RedirectAttributes attributes, HttpServletRequest req, DycReport entity) throws Exception {
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> dataMap = new LinkedHashMap<>(paramMap.size());
-        ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
+        ElasticTable etab = wfcReportService.findByCode("etabType_" + entity.getProcessType());
         List<Map<String, Object>> structList = JSON.parseObject(etab.getJsonStruct(), List.class);
         for (Map<String, Object> struct : structList) {
             String code = struct.get("code").toString();
-            if (!paramMap.containsKey(code)) {
-                continue;
-            }
-            String tmpData = paramMap.get(code)[0];
-            String dataType = struct.get("dataType").toString();
-            String tagType = struct.get("tagType").toString();
-            if (StringUtils.isNotBlank(tmpData)) {
-                if (dataType.equals("dt_int")) {
+            String dataType = struct.get("dataType").toString().replace("dataType_", "");
+            String tagType = struct.get("tagType").toString().replace("tagType_", "");
+            if (tagType.equalsIgnoreCase("subForm")) {
+                DataDict dataDict = dataDictService.findByCode(struct.get("subForm").toString());
+                if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {
+                    String[] fieldArr = dataDict.getDataSource().split(",");
+                    for (String field : fieldArr) {
+                        String[] tmpField = field.split(":");
+                        dataMap.put(tmpField[0], paramMap.get(tmpField[0]));
+                    }
+                }
+            } else if (paramMap.containsKey(code) && StringUtils.isNotBlank(paramMap.get(code)[0])) {
+                String tmpData = paramMap.get(code)[0];
+                if (dataType.equals("int")) {
                     dataMap.put(code, Integer.parseInt(tmpData));
-                } else if (dataType.equals("dt_long")) {
+                } else if (dataType.equals("long")) {
                     dataMap.put(code, Long.parseLong(tmpData));
-                } else if (dataType.equals("dt_float")) {
+                } else if (dataType.equals("float")) {
                     dataMap.put(code, Float.parseFloat(tmpData));
-                } else if (dataType.equals("dt_double")) {
+                } else if (dataType.equals("double")) {
                     dataMap.put(code, Double.parseDouble(tmpData));
                 } else {
                     dataMap.put(code, tmpData);

@@ -7,6 +7,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +44,7 @@ public class HTMLUtils {
         int itemIndex = 0;
         String html = "<tr>";
         for (Map<String, Object> entry : structList) {
-            String tagType = entry.get("tagType").toString();
+            String tagType = entry.get("tagType").toString().replace("tagType_", "");
             String required = entry.get("required").toString();
             String fuzzy = entry.get("fuzzy").toString();
             String code = entry.get("code").toString();
@@ -51,34 +53,90 @@ public class HTMLUtils {
 
             itemIndex++;
             tmpIndex++;
-            if (tmpIndex == 3 || (tmpIndex == 1 && tagType.equals("tagType_textarea"))) {
+            if (tmpIndex == 3 || (tmpIndex == 1 && (tagType.equals("textarea") || tagType.equals("subForm")))) {
                 html += "<tr>";
-            } else if (tmpIndex == 2 && tagType.equals("tagType_textarea")) {
+            } else if (tmpIndex == 2 && (tagType.equals("textarea") || tagType.equals("subForm"))) {
                 html += "</tr><tr>";
             }
             html += "<td class='td_table_1'>" + name + "</td><td class='td_table_2' ${" + itemIndex + "}>";
-            if (tagType.equals("tagType_textarea")) {
+            if (tagType.equals("textarea")) {
                 html += "<textarea name='" + code + "' class='input_textarea_600" + (required.equals("yes") ? " validate[required]" : "") + "'>" + val + "</textarea>";
-            } else if (tagType.equals("tagType_date")) {
+            } else if (tagType.equals("date")) {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
-            } else if (tagType.equals("tagType_timestamp")) {
+            } else if (tagType.equals("timestamp")) {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
-            } else if (tagType.startsWith("tagType_select_") || tagType.startsWith("tagType_radio_") || tagType.startsWith("tagType_checkbox_")) {
-                DataDict dataDict = dataDictService.findByCode(tagType);
+            } else if (tagType.equals("subForm")) {
+                DataDict dataDict = dataDictService.findByCode(entry.get("subForm").toString());
+                if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {
+                    String[] fieldArr = dataDict.getDataSource().split(",");
+                    List<String> titles = new ArrayList<>(fieldArr.length);
+                    List<String> tagTypes = new ArrayList<>(fieldArr.length);
+                    List<String> tagNames = new ArrayList<>(fieldArr.length);
+                    for (String field : fieldArr) {
+                        String[] tmpField = field.split(":");
+                        tagNames.add(tmpField[0]);
+                        tagTypes.add(tmpField[1]);
+                        titles.add(tmpField[2]);
+                    }
+                    Map<String, List<String>> valMap = new HashMap<>();
+                    int rowCount = 0;
+                    for (String tagName : tagNames) {
+                        List<String> tmpVals = null;
+                        if (dataMap.get(tagName) == null) {
+                            tmpVals = new ArrayList<>(1);
+                            tmpVals.add("");
+                        } else {
+                            tmpVals = (List) dataMap.get(tagName);
+                        }
+                        rowCount = rowCount == 0 ? tmpVals.size() : rowCount;
+                        valMap.put(tagName, tmpVals);
+                    }
+                    html += "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' id='" + code + "' style='margin: 0'>";
+                    html += "<tr>";
+                    for (String title : titles) {
+                        html += "<td align=center class='td_list_1'>" + title + "</td>";
+                    }
+                    html += "<td align=center width=6% class='td_list_1'></td>";
+                    html += "</tr>";
+
+                    for (int row = 0; row < rowCount; row++) {
+                        html += "<tr>";
+                        for (int i = 0; i < tagNames.size(); i++) {
+                            String tmpName = tagNames.get(i);
+                            String tmpType = tagTypes.get(i);
+                            if (tmpType.equals("date")) {
+                                html += "<td class='td_list_2'><input type='text' name='" + tmpName + "' value='" + valMap.get(tmpName).get(row) + "' class='input_240 validate[required]' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/></td>";
+                            } else if (tmpType.equals("timestamp")) {
+                                html += "<td class='td_list_2'><input type='text' name='" + tmpName + "' value='" + valMap.get(tmpName).get(row) + "' class='input_240 validate[required]' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/></td>";
+                            } else if (tmpType.equals("textarea")) {
+                                html += "<td class='td_list_2'><textarea name='" + tmpName + "' class='input_textarea_600 validate[required]'>" + valMap.get(tmpName).get(row) + "</textarea></td>";
+                            } else {
+                                html += "<td class='td_list_2'><input type='text' name='" + tmpName + "' value='" + valMap.get(tmpName).get(row) + "' class='input_240 validate[required]'/></td>";
+                            }
+                        }
+                        html += "<td class='td_list_2'></td>";
+                        html += "</tr>";
+                    }
+                    html += "</table>";
+                } else {
+                    html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' fuzzy='" + fuzzy + "'/>";
+                }
+            } else if (tagType.startsWith("select_") || tagType.startsWith("radio_") || tagType.startsWith("checkbox_")) {
+                DataDict dataDict = dataDictService.findByCode("tagType_" + tagType);
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource()) && dataDict.getDataSource().trim().toUpperCase().startsWith("SELECT ")) {
                     List<Map<String, Object>> itemList = jdbcTemplate.queryForList(dataDict.getDataSource());
-                    if (tagType.startsWith("tagType_select_")) {
+                    if (tagType.startsWith("select_")) {
                         html += "<select name='" + code + "' class='input_select" + (required.equals("yes") ? " validate[required]" : "") + "' fuzzy='" + fuzzy + "'>";
                         html += "<option value='' selected>--请选择--</option>";
                         for (Map<String, Object> item : itemList) {
                             html += "<option value='" + item.get("code") + "'" + (item.get("code").toString().equals(val) ? " selected='selected'" : "") + ">" + item.get("name") + "</option>";
                         }
                         html += "</select>";
-                    } else if (tagType.startsWith("tagType_radio_")) {
+                    } else if (tagType.startsWith("radio_")) {
                         for (Map<String, Object> item : itemList) {
                             html += "<input type='radio' name='" + code + "' value='" + item.get("code") + "' class='input_radio" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
                         }
-                    } else if (tagType.startsWith("tagType_checkbox_")) {
+                    } else if (tagType.startsWith("checkbox_")) {
                         for (Map<String, Object> item : itemList) {
                             html += "<input type='text' name='" + item.get("code") + "' value='" + val + "' class='input_checkbox" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
                         }
@@ -91,7 +149,7 @@ public class HTMLUtils {
             }
             html += "</td>";
 
-            if (tagType.equals("tagType_textarea")) {
+            if (tagType.equals("textarea") || tagType.equals("subForm")) {
                 if (tmpIndex == 1) {
                     html = html.replace("${" + itemIndex + "}", " colspan='3'");
                 } else if (tmpIndex == 2) {
@@ -101,7 +159,8 @@ public class HTMLUtils {
             } else if (tmpIndex == 1 && itemIndex == structList.size()) {
                 html = html.replace("${" + itemIndex + "}", " colspan='3'");
             }
-            if (tmpIndex == 2 || (tmpIndex == 1 && tagType.equals("tagType_textarea")) || itemIndex == structList.size()) {
+            if (tmpIndex == 2 || itemIndex == structList.size() ||
+                    (tmpIndex == 1 && (tagType.equals("textarea") || tagType.equals("subForm")))) {
                 html += "</tr>";
                 tmpIndex = 0;
             }

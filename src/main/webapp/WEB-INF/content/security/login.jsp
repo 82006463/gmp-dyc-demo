@@ -20,10 +20,10 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse"
-					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="./">Snaker</a>
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span><span class="icon-bar"></span> <span class="icon-bar"></span>
+				</a>
+				<a class="brand" href="./">Snaker</a>
 				<div class="nav-collapse">
 					<!-- 
 				<ul class="nav pull-right">
@@ -48,7 +48,7 @@
 					<div class="control-group">
 						<label class="control-label" for="username">账号：</label>
 						<div class="controls">
-							<input type="text" class="" id="username" name="username" value="admin" autocomplete="off"/>
+							<input type="text" class="" id="username" name="username" value="superadmin" autocomplete="off"/>
 						</div>
 					</div>
 					<div class="control-group">
