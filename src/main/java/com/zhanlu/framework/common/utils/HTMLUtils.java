@@ -68,7 +68,7 @@ public class HTMLUtils {
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {
                     List<Map<String, Object>> itemList = jdbcTemplate.queryForList(dataDict.getDataSource());
                     if (tagType.startsWith("select_")) {
-                        html += "<select name='" + code + "' class='input_select" + (required.equals("yes") ? " validate[required]" : "") + "'>";
+                        html += "<select name='" + code + "' class='input_select" + (required.equals("yes") ? " validate[required]" : "") + "' fuzzy='" + fuzzy + "'>";
                         html += "<option value='' selected>--请选择--</option>";
                         for (Map<String, Object> item : itemList) {
                             html += "<option value='" + item.get("code") + "'" + (item.get("code").toString().equals(val) ? " selected='selected'" : "") + ">" + item.get("name") + "</option>";
@@ -84,10 +84,10 @@ public class HTMLUtils {
                         }
                     }
                 } else {
-                    html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "'/>";
+                    html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' fuzzy='" + fuzzy + "'/>";
                 }
             } else {
-                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "'/>";
+                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' fuzzy='" + fuzzy + "'/>";
             }
             html += "</td>";
 

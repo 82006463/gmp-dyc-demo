@@ -6,19 +6,6 @@
 <head>
 	<title>报表管理</title>
 	<%@ include file="/common/common-edit.jsp"%>
-	<script type="text/javascript">
-		$(function(){
-			$('#operator').AutoComplete({
-				'data': "${ctx}/wfc/common/select/auto",
-				'ajaxDataType': 'json',
-				'ajaxParams': {table:'wfs_user'},
-				'width': 'auto',
-				'maxHeight': 300,
-				'maxItems': 100,
-				'async': true
-			}).AutoComplete('show');
-		});
-	</script>
 </head>
 
 <body>

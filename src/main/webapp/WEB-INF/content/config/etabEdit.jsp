@@ -51,8 +51,7 @@
 								<td align=center class="td_list_1">是否必填</td>
 								<td align=center class="td_list_1">数据类型</td>
 								<td align=center class="td_list_1">标签类型</td>
-								<td align=center class="td_list_1">列表搜索</td>
-								<td align=center class="td_list_1">列表显示</td>
+								<td align=center class="td_list_1">列表属性</td>
                                 <td align=center class="td_list_1">模糊搜索</td>
 								<td align=center width=6% class="td_list_1">操作</td>
 							</tr>
@@ -74,10 +73,7 @@
 										<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${item.tagType}" cssClass="validate[required]"/>
 									</td>
 									<td class="td_list_2">
-										<frame:dict name="itemInSearchs" type="select" typeCode="yesNo" value="${item.inSearch}" cssClass="validate[required]"/>
-									</td>
-									<td class="td_list_2">
-										<frame:dict name="itemInLists" type="select" typeCode="yesNo" value="${item.inList}" cssClass="validate[required]"/>
+										<frame:dict name="itemListAttrs" type="select" typeCode="listAttr" value="${item.listAttr}" cssClass="validate[required]"/>
 									</td>
                                     <td class="td_list_2">
                                         <frame:dict name="itemFuzzys" type="select" typeCode="fuzzySearch" value="${item.fuzzy}" cssClass="validate[required]"/>
@@ -126,10 +122,7 @@
 				cell.className = "td_list_2";
 
                 cell = row.insertCell(-1);
-                cell.innerHTML = "<frame:dict name="itemInSearchs" type="select" typeCode="yesNo" value="" cssClass="validate[required]"/>";
-                cell.className = "td_list_2";
-                cell = row.insertCell(-1);
-                cell.innerHTML = "<frame:dict name="itemInLists" type="select" typeCode="yesNo" value="" cssClass="validate[required]"/>";
+                cell.innerHTML = "<frame:dict name="itemListAttrs" type="select" typeCode="listAttr" value="" cssClass="validate[required]"/>";
                 cell.className = "td_list_2";
                 cell = row.insertCell(-1);
                 cell.innerHTML = "<frame:dict name="itemFuzzys" type="select" typeCode="fuzzySearch" value="" cssClass="validate[required]"/>";

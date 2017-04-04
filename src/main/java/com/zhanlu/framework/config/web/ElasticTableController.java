@@ -102,7 +102,7 @@ public class ElasticTableController {
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(ElasticTable entity, String[] itemCodes, String[] itemNames, String[] itemRequireds, String[] itemDataTypes,
-                         String[] itemTagTypes, String[] itemInSearchs, String[] itemInLists, String[] itemFuzzys) {
+                         String[] itemTagTypes, String[] itemListAttrs, String[] itemFuzzys) {
         List<Map<String, Object>> extAttr = new ArrayList<>(itemCodes == null ? 0 : itemCodes.length);
         if (itemCodes != null) {
             for (int i = 0; i < itemCodes.length; i++) {
@@ -112,8 +112,7 @@ public class ElasticTableController {
                 itemMap.put("required", itemRequireds[i]);
                 itemMap.put("dataType", itemDataTypes[i]);
                 itemMap.put("tagType", itemTagTypes[i]);
-                itemMap.put("inSearch", itemInSearchs[i]);
-                itemMap.put("inList", itemInLists[i]);
+                itemMap.put("listAttr", itemListAttrs[i]);
                 itemMap.put("fuzzy", itemFuzzys[i]);
                 extAttr.add(itemMap);
             }

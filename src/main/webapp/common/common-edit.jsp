@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="${ctx}/styles/plugin/css/validationEngine.jquery.css" />
 <script type="text/javascript" src="${ctx}/styles/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="${ctx}/styles/plugin/js/jquery.autocomplete.min.js"></script>
+<script type="text/javascript" src="${ctx}/styles/plugin/js/jquery.autocomplete.js"></script>
 <script type="text/javascript" src="${ctx}/styles/plugin/js/jquery.validationEngine.js"></script>
 <script type="text/javascript" src="${ctx}/styles/plugin/js/languages/jquery.validationEngine-zh_CN.js"></script>
 <script type="text/javascript" charset="UTF-8">
@@ -21,6 +21,27 @@
             "alertTextLoad": "* &#x6B63;&#x5728;&#x786E;&#x8BA4;&#x7F16;&#x53F7;&#x662F;&#x5426;&#x5DF2;&#x88AB;&#x4F7F;&#x7528;&#xFF0C;&#x8BF7;&#x7A0D;&#x7B49;&#x3002;"}
         });
         //$('#inputForm').validationEngine();
+
+        //模糊搜索
+        $('input[fuzzy]').each(function () {
+            var _fuzzy = $(this).attr('fuzzy');
+            if(!_fuzzy) {
+                _fuzzy = $(this).prop('fuzzy');
+            }
+            if(_fuzzy) {
+                var _param = {};
+                _param.code = _fuzzy;
+                $(this).AutoComplete({
+                    'data': "${ctx}/wfc/common/select",
+                    'ajaxDataType': 'json',
+                    'ajaxParams': _param,
+                    'width': 'auto',
+                    'maxHeight': 300,
+                    'maxItems': 20,
+                    'async': true
+                }).AutoComplete('show');
+            }
+        });
     });
 
     var Ops = {};

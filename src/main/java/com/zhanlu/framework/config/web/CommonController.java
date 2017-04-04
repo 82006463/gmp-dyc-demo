@@ -2,12 +2,10 @@ package com.zhanlu.framework.config.web;
 
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.service.DataDictService;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -60,19 +58,33 @@ public class CommonController {
      * 分页查询配置，返回配置字典列表视图
      */
     @ResponseBody
-    @RequestMapping(value = "select/{code}")
-    public Object data(@PathVariable("code") String code, String paramVal) {
-        DataDict dataDict = dataDictService.findByCode(paramVal);
-        if (dataDict == null || StringUtils.isBlank(dataDict.getDataSource()) || StringUtils.isBlank(paramVal)) {
-            return null;
+    @RequestMapping(value = "select")
+    public Object data(String code, String keyword) {
+        List<String> dataList = new ArrayList<>();
+        if (StringUtils.isBlank(code) || StringUtils.isBlank(keyword)) {
+            return dataList;
         }
-        List<Map<String, Object>> tmpMaps = jdbcTemplate.queryForList(dataDict.getDataSource(), paramVal);
-        List<Map<String, Object>> resultList = new ArrayList<>(tmpMaps.size());
-        resultList.addAll(tmpMaps);
-        Map<String, Object> resultMap = new HashedMap();
-        resultMap.put("length", resultList == null ? -1 : resultList.size());
-        resultMap.put("data", resultList);
-        return resultMap;
+        DataDict dataDict = dataDictService.findByCode(code);
+        if (dataDict == null || StringUtils.isBlank(dataDict.getDataSource())) {
+            return dataList;
+        }
+        List<String> params = new ArrayList<>();
+        String sql = dataDict.getDataSource();
+        sql = sql.replace("LIKE ?", "LIKE '%" + keyword + "%'");
+        String[] orArr = sql.toUpperCase().split("WHERE")[1].trim().toUpperCase().split("OR");
+        for (String or : orArr) {
+            if (or.contains("=?"))
+                params.add(keyword);
+        }
+        List<Map<String, Object>> tmpMaps = jdbcTemplate.queryForList(sql, params.toArray());
+        for (Map<String, Object> map : tmpMaps) {
+            String tmpVal = "";
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                tmpVal += tmpVal.length() == 0 ? entry.getValue() : ":" + entry.getValue();
+            }
+            dataList.add(tmpVal);
+        }
+        return dataList;
     }
 
 }
