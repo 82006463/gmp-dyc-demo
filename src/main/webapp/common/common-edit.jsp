@@ -21,15 +21,14 @@
         //$('#inputForm').validationEngine();
     });
 
-    function submitForm() {
+    var Ops = {};
+    Ops.submit = function () {
         if ($('#inputForm').validationEngine('validate')) {
-            $('#inputForm').submit();
             return true;
         }
         return false;
     }
 
-    var Ops = {};
     Ops.up = function (thisTag) {
         var _tr = $(thisTag).parent().parent();
         _tr.prev().before(_tr);

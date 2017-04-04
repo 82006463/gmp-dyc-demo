@@ -5,15 +5,8 @@
 <html lang="en">
 <head>
 	<title>部门管理</title>
-	<%@ include file="/common/meta.jsp"%>
-	<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-	<link rel="stylesheet" href="${ctx}/styles/plugin/css/validationEngine.jquery.css" type="text/css" />
-	<link rel="stylesheet" type="text/css" href="${ctx}/styles/wbox/wbox/wbox.css" />
-	<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
-	<script src="${ctx}/styles/plugin/js/jquery.validationEngine.js" type="text/javascript"></script>
-	<script src="${ctx}/styles/plugin/js/languages/jquery.validationEngine-zh_CN.js" type="text/javascript"></script>
-	<script type="text/javascript" src="${ctx}/styles/wbox/wbox.js"></script>
-	<script>
+	<%@ include file="/common/common-edit.jsp"%>
+	<script type="text/javascript">
 		var iframewbox;
 		function openOrg() {
 			iframewbox = $("#selectOrgBtn").wBox({
@@ -31,17 +24,6 @@
 				document.getElementById("pname").value = name;
 				iframewbox.close();
 			}
-		}
-
-		$(function() {
-			$('#inputForm').validationEngine();
-		});
-
-		function submitForm() {
-			if($('#inputForm').validationEngine('validate')) {
-				$('#inputForm').submit();
-			}
-			return false;
 		}
 	</script>
 </head>
@@ -86,7 +68,7 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr align="left">
 				<td colspan="1">
-					<input type="submit" class="button_70px" name="submit" value="提交" onclick="return submitForm();">
+					<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">
 					&nbsp;&nbsp;
 					<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 				</td>
