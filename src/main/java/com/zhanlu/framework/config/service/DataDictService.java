@@ -5,6 +5,7 @@ import com.zhanlu.framework.config.dao.DataDictDao;
 import com.zhanlu.framework.config.entity.DataDict;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.LinkedHashMap;
@@ -27,6 +28,23 @@ public class DataDictService extends CommonTreeService<DataDict, Long> {
     @Override
     public void initDao() {
         super.commonDao = dataDictDao;
+    }
+
+    @Transactional
+    @Override
+    public DataDict saveOrUpdate(DataDict entity, List<DataDict> items) {
+        if (entity.getId() != null && entity.getId() > 0) {
+            commonDao.batchExecute("DELETE FROM " + entity.getClass().getName() + " WHERE pid=" + entity.getId());
+        }
+        this.saveOrUpdate(entity);
+        if (items != null && items.size() > 0) {
+            for (DataDict item : items) {
+                item.setPid(entity.getId());
+                item.setPcode(entity.getCode());
+                this.save(item);
+            }
+        }
+        return entity;
     }
 
     public DataDict findByCode(String code) {

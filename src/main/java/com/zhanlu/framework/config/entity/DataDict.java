@@ -19,6 +19,8 @@ import java.util.List;
 @Table(name = "wfc_data_dict")
 public class DataDict extends TreeEntity {
 
+    //父编号
+    private String pcode;
     //数据源
     private String dataSource;
 
@@ -31,6 +33,15 @@ public class DataDict extends TreeEntity {
 
     public void setItems(List<DataDict> items) {
         this.items = items;
+    }
+
+    @Column(name = "pcode", length = 50)
+    public String getPcode() {
+        return pcode;
+    }
+
+    public void setPcode(String pcode) {
+        this.pcode = pcode;
     }
 
     @Column(name = "data_source", length = 200)

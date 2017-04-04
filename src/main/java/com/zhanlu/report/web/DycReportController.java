@@ -73,7 +73,6 @@ public class DycReportController {
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
-        view.addObject("etab", etab);
         view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }
@@ -88,7 +87,6 @@ public class DycReportController {
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
-        view.addObject("etab", etab);
         view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }
@@ -135,9 +133,12 @@ public class DycReportController {
      * 查看页面
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
-    public ModelAndView view(@PathVariable("id") Long id) {
+    public ModelAndView view(@PathVariable("id") Long id) throws Exception {
         ModelAndView view = new ModelAndView("report/reportView");
+        DycReport entity = reportService.findById(id);
         view.addObject("entity", reportService.findById(id));
+        ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
+        view.addObject("extAttr", HTMLUtils.json2HTML(etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }
 

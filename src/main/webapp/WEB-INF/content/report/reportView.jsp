@@ -20,40 +20,12 @@
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td class="td_table_1">
-					${entity.processType=='dev' ? '偏差':entity.processType=='cc' ? '变更':entity.processType=='capa' ? 'CAPA':entity.processType=='oos'? 'OOS':''}编号：
-				</td>
+				<td class="td_table_1">编号：</td>
 				<td class="td_table_2">${entity.processNo}</td>
-				<td class="td_table_1">
-					${entity.processType=='dev' ? '偏差':entity.processType=='cc' ? '变更':entity.processType=='capa' ? 'CAPA':entity.processType=='oos'? 'OOS':''}名称：
-				</td>
+				<td class="td_table_1">名称：</td>
 				<td class="td_table_2">${entity.processName}</td>
 			</tr>
-			<tr>
-				<td class="td_table_1">发现时间：</td>
-				<td class="td_table_2"><fmt:formatDate value="${entity.occurTime}" pattern="yyyy-MM-dd"/></td>
-				<td class="td_table_1">关闭时间：</td>
-				<td class="td_table_2"><fmt:formatDate value="${entity.closeTime}" pattern="yyyy-MM-dd"/></td>
-			</tr>
-			<tr>
-				<td class="td_table_1">部门：</td>
-				<td class="td_table_2">${entity.orgName}</td>
-				<td class="td_table_1">级别：</td>
-				<td class="td_table_2">
-					<frame:dict name="level" type="select" typeCode="devLevel" value="${entity.level}" displayType="1"/>
-				</td>
-			</tr>
-			<tr>
-				<td class="td_table_1">物料产品名称：</td>
-				<td class="td_table_2">${entity.materielName}
-				</td>
-				<td class="td_table_1">发现人：</td>
-				<td class="td_table_2">${entity.occurPerson}</td>
-			</tr>
-			<tr>
-				<td class="td_table_1">描述：</td>
-				<td class="td_table_2" colspan="3">${entity.processDesc}</td>
-			</tr>
+			${extAttr}
 		</table>
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0">

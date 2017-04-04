@@ -20,59 +20,16 @@
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td class="td_table_1">${etab.name}编号：</td>
+				<td class="td_table_1">编号：</td>
 				<td class="td_table_2">
 					<input type="text" name="processNo" value="${entity.processNo}" class="input_240 validate[required]" />
 				</td>
-				<td class="td_table_1">${etab.name}名称：</td>
+				<td class="td_table_1">名称：</td>
 				<td class="td_table_2">
 					<input type="text" name="processName" value="${entity.processName}" class="input_240"/>
 				</td>
 			</tr>
-			<tr>
-				<td class="td_table_1">发现时间：</td>
-				<td class="td_table_2">
-					<input type="text" name="occurTime" value="<fmt:formatDate value="${entity.occurTime}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" class="input_240 validate[required]" readonly="readonly"/>
-				</td>
-				<td class="td_table_1">关闭时间：</td>
-				<td class="td_table_2">
-					<input type="text" name="closeTime" value="<fmt:formatDate value="${entity.closeTime}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" class="input_240" readonly="readonly"/>
-				</td>
-			</tr>
-			<tr>
-				<td class="td_table_1">部门：</td>
-				<td class="td_table_2">
-					<select name="orgId" class="input_select validate[required]" onchange="$('#orgName').val($(this).find('option:selected').text());">
-						<option value="">------请选择------</option>
-						<c:forEach items="${orgList}" var="item">
-							<option value="${item.id}" ${entity.orgId==item.id ? 'selected="selected"':''}>${item.name}</option>
-						</c:forEach>
-					</select>
-					<input type="hidden" id="orgName" name="orgName" value="${entity.orgName}"/>
-				</td>
-				<td class="td_table_1">级别：</td>
-				<td class="td_table_2">
-					<frame:dict name="level" type="select" typeCode="devLevel" value="${entity.level}" cssClass="input_select validate[required]"/>
-				</td>
-			</tr>
-			<tr>
-				<td class="td_table_1">物料产品名称：</td>
-				<td class="td_table_2">
-					<input type="text" name="materielName" value="${entity.materielName}" class="input_240 validate[required]"/>
-				</td>
-				<td class="td_table_1">发现人：</td>
-				<td class="td_table_2">
-					<input type="text" name="occurPerson" value="${entity.occurPerson}" class="input_240 validate[required]"/>
-				</td>
-			</tr>
 			${extAttr}
-
-			<tr>
-				<td class="td_table_1">描述：</td>
-				<td class="td_table_2" colspan="3">
-					<textarea class="input_textarea_600" name="processDesc">${entity.processDesc}</textarea>
-				</td>
-			</tr>
 		</table>
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0">

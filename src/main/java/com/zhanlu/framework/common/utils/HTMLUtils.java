@@ -107,4 +107,58 @@ public class HTMLUtils {
         return html;
     }
 
+    /**
+     * 将JSON转成HTML串
+     *
+     * @param jsonStruct
+     * @param jsonData
+     * @return
+     */
+    public static String json2HTML(String jsonStruct, String jsonData) {
+        if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
+            return "";
+        }
+        if (jsonData == null || jsonData.trim().isEmpty()) {
+            jsonData = "{}";
+        }
+        List<Map<String, Object>> structList = JSON.parseObject(jsonStruct, List.class);
+        Map<String, Object> dataMap = JSON.parseObject(jsonData, Map.class);
+        int tmpIndex = 0;
+        int itemIndex = 0;
+        String html = "<tr>";
+        for (Map<String, Object> entry : structList) {
+            String tagType = entry.get("tagType").toString();
+            String required = entry.get("required").toString();
+            String code = entry.get("code").toString();
+            String name = entry.get("name").toString();
+            String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
+
+            itemIndex++;
+            tmpIndex++;
+            if (tmpIndex == 3 || (tmpIndex == 1 && tagType.equals("textarea"))) {
+                html += "<tr>";
+            } else if (tmpIndex == 2 && tagType.equals("textarea")) {
+                html += "</tr><tr>";
+            }
+            html += "<td class='td_table_1'>" + name + "</td><td class='td_table_2' ${" + itemIndex + "}>";
+            html += val + "</td>";
+
+            if (tagType.equals("textarea")) {
+                if (tmpIndex == 1) {
+                    html = html.replace("${" + itemIndex + "}", " colspan='3'");
+                } else if (tmpIndex == 2) {
+                    html = html.replace("${" + (itemIndex - 1) + "}", " colspan='3'");
+                    html = html.replace("${" + itemIndex + "}", " colspan='3'");
+                }
+            } else if (tmpIndex == 1 && itemIndex == structList.size()) {
+                html = html.replace("${" + itemIndex + "}", " colspan='3'");
+            }
+            if (tmpIndex == 2 || (tmpIndex == 1 && tagType.equals("textarea")) || itemIndex == structList.size()) {
+                html += "</tr>";
+                tmpIndex = 0;
+            }
+        }
+        return html;
+    }
+
 }
