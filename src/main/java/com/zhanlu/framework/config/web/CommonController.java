@@ -1,10 +1,13 @@
 package com.zhanlu.framework.config.web;
 
+import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.service.DataDictService;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -57,33 +60,19 @@ public class CommonController {
      * 分页查询配置，返回配置字典列表视图
      */
     @ResponseBody
-    @RequestMapping(value = "data")
-    public Object data(HttpServletRequest req) {
-        Map<String, Object> paramMap = req.getParameterMap();
-
-        List<Object> paramList = new ArrayList(paramMap.size());
-        StringBuilder sql = new StringBuilder("SELECT * FROM " + paramMap.get("tb") + " WHERE 1=1");
-        for (Map.Entry<String, Object> entry : paramMap.entrySet()) {
-            if (entry.getKey().equals("tb")) {
-                continue;
-            }
-            sql.append(" " + entry.getKey() + "=?");
-            paramList.add(entry.getValue());
+    @RequestMapping(value = "select/{code}")
+    public Object data(@PathVariable("code") String code, String paramVal) {
+        DataDict dataDict = dataDictService.findByCode(paramVal);
+        if (dataDict == null || StringUtils.isBlank(dataDict.getDataSource()) || StringUtils.isBlank(paramVal)) {
+            return null;
         }
-        List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql.toString(), paramList.toArray());
-        List<Map<String, Object>> dataList = new ArrayList<>(resultList.size());
-        for (Map<String, Object> map : resultList) {
-            Map<String, Object> tmp = new HashedMap();
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                tmp.put(entry.getKey().toLowerCase(), entry.getValue());
-            }
-            dataList.add(tmp);
-        }
-
-        Map<String, Object> dataMap = new HashedMap();
-        dataMap.put("length", resultList == null ? -1 : resultList.size());
-        dataMap.put("data", resultList);
-        return dataList;
+        List<Map<String, Object>> tmpMaps = jdbcTemplate.queryForList(dataDict.getDataSource(), paramVal);
+        List<Map<String, Object>> resultList = new ArrayList<>(tmpMaps.size());
+        resultList.addAll(tmpMaps);
+        Map<String, Object> resultMap = new HashedMap();
+        resultMap.put("length", resultList == null ? -1 : resultList.size());
+        resultMap.put("data", resultList);
+        return resultMap;
     }
 
 }

@@ -80,7 +80,7 @@
 										<frame:dict name="itemInLists" type="select" typeCode="yesNo" value="${item.inList}" cssClass="validate[required]"/>
 									</td>
                                     <td class="td_list_2">
-                                        <frame:dict name="itemFuzzys" type="select" typeCode="yesNo" value="${item.fuzzy}" cssClass="validate[required]"/>
+                                        <frame:dict name="itemFuzzys" type="select" typeCode="fuzzySearch" value="${item.fuzzy}" cssClass="validate[required]"/>
                                     </td>
 									<td class="td_list_2">
 										<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a>
@@ -132,7 +132,7 @@
                 cell.innerHTML = "<frame:dict name="itemInLists" type="select" typeCode="yesNo" value="" cssClass="validate[required]"/>";
                 cell.className = "td_list_2";
                 cell = row.insertCell(-1);
-                cell.innerHTML = "<frame:dict name="itemFuzzys" type="select" typeCode="yesNo" value="" cssClass="validate[required]"/>";
+                cell.innerHTML = "<frame:dict name="itemFuzzys" type="select" typeCode="fuzzySearch" value="" cssClass="validate[required]"/>";
                 cell.className = "td_list_2";
 
 				cell = row.insertCell(-1);

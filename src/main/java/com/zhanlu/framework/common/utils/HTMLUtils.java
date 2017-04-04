@@ -44,6 +44,7 @@ public class HTMLUtils {
         for (Map<String, Object> entry : structList) {
             String tagType = entry.get("tagType").toString();
             String required = entry.get("required").toString();
+            String fuzzy = entry.get("fuzzy").toString();
             String code = entry.get("code").toString();
             String name = entry.get("name").toString();
             String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();

@@ -3,6 +3,7 @@ package com.zhanlu.framework.config.service;
 import com.zhanlu.framework.common.service.CommonTreeService;
 import com.zhanlu.framework.config.dao.DataDictDao;
 import com.zhanlu.framework.config.entity.DataDict;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,17 +34,28 @@ public class DataDictService extends CommonTreeService<DataDict, Long> {
     @Transactional
     @Override
     public DataDict saveOrUpdate(DataDict entity, List<DataDict> items) {
-        if (entity.getId() != null && entity.getId() > 0) {
-            commonDao.batchExecute("DELETE FROM " + entity.getClass().getName() + " WHERE pid=" + entity.getId());
-        }
         this.saveOrUpdate(entity);
+        Map<Long, DataDict> oldMap = new LinkedHashMap<>();
+        List<DataDict> oldList = super.findItems(entity.getId());
+        if (oldList != null && oldList.size() > 0) {
+            for (DataDict item : oldList)
+                oldMap.put(item.getId(), item);
+        }
         if (items != null && items.size() > 0) {
             for (DataDict item : items) {
                 item.setPid(entity.getId());
                 item.setPcode(entity.getCode());
-                this.save(item);
+                if (oldMap.containsKey(item.getId())) {
+                    DataDict old = oldMap.get(item.getId());
+                    BeanUtils.copyProperties(item, old);
+                    oldMap.remove(item.getId());
+                }
+                if (item.getId() == null || item.getId() <= 0)
+                    this.save(item);
             }
         }
+        for (Map.Entry<Long, DataDict> item : oldMap.entrySet())
+            commonDao.delete(item.getValue());
         return entity;
     }
 
