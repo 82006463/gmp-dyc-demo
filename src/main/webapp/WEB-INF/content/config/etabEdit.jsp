@@ -24,8 +24,7 @@
 						    <frame:dict name="code" type="select" typeCode="etabType" value="${entity.code}" cssClass="input_select validate[required]"/>
                         </c:if>
                         <c:if test="${!empty entity.code}">
-                            <input type="hidden" id="code" name="code" value="${entity.code}" class="input_240" />
-                            <frame:dict name="code" type="select" typeCode="etabType" value="${entity.code}" cssClass="input_select validate[required]" displayType="1"/>
+                            <input type="hidden" id="code" name="code" value="${entity.code}" class="input_240" />${entity.code}
                         </c:if>
 					</td>
 					<td class="td_table_1">名称：</td>

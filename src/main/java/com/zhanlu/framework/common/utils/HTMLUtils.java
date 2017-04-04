@@ -14,9 +14,17 @@ import java.util.Map;
  */
 public class HTMLUtils {
 
+    /**
+     * 将JSON转成HTML串
+     *
+     * @param applicationContext
+     * @param jsonStruct
+     * @param jsonData
+     * @return
+     */
     public static String json2HTML(ApplicationContext applicationContext, String jsonStruct, String jsonData) {
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
-            jsonStruct = "[]";
+            return "";
         }
         if (jsonData == null || jsonData.trim().isEmpty()) {
             jsonData = "{}";
@@ -49,6 +57,10 @@ public class HTMLUtils {
             html += "<td class='td_table_1'>" + name + "</td><td class='td_table_2' ${" + itemIndex + "}>";
             if (tagType.equals("textarea")) {
                 html += "<textarea name='" + code + "' class='input_textarea_600" + (required.equals("yes") ? " validate[required]" : "") + "'>" + val + "</textarea>";
+            } else if (tagType.equals("date")) {
+                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
+            } else if (tagType.equals("timestamp")) {
+                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
             } else if (tagType.startsWith("select_") || tagType.startsWith("radio_") || tagType.startsWith("checkbox_")) {
                 DataDict dataDict = dataDictService.findByCode(tagType);
                 if (dataDict != null) {
@@ -72,10 +84,6 @@ public class HTMLUtils {
                 } else {
                     html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "'/>";
                 }
-            } else if (tagType.equals("date")) {
-                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
-            } else if (tagType.equals("timestamp")) {
-                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
             } else {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "'/>";
             }
@@ -96,7 +104,7 @@ public class HTMLUtils {
                 tmpIndex = 0;
             }
         }
-        return html.toString();
+        return html;
     }
 
 }

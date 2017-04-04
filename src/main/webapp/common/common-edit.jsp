@@ -3,11 +3,13 @@
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/styles/css/style.css" media="all" />
+<link type="text/css" rel="stylesheet" href="${ctx}/styles/plugin/css/jquery.autocomplete.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/styles/plugin/css/validationEngine.jquery.css" />
 <script type="text/javascript" src="${ctx}/styles/js/jquery-1.8.3.min.js"></script>
-<script src="${ctx}/styles/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
-<script src="${ctx}/styles/plugin/js/jquery.validationEngine.js" type="text/javascript"></script>
-<script src="${ctx}/styles/plugin/js/languages/jquery.validationEngine-zh_CN.js" type="text/javascript"></script>
+<script type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${ctx}/styles/plugin/js/jquery.autocomplete.min.js"></script>
+<script type="text/javascript" src="${ctx}/styles/plugin/js/jquery.validationEngine.js"></script>
+<script type="text/javascript" src="${ctx}/styles/plugin/js/languages/jquery.validationEngine-zh_CN.js"></script>
 <script type="text/javascript" charset="UTF-8">
     $(function() {
         var _action = $('#inputForm').prop('action');
