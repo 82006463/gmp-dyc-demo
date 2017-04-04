@@ -124,7 +124,10 @@ public class DataDictController {
      */
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable("id") Long id) {
-        dataDictService.delete(id);
+        List<DataDict> items = dataDictService.findItems(id);
+        if (items == null || items.isEmpty()) {
+            dataDictService.delete(id);
+        }
         return "redirect:/config/dictionary";
     }
 

@@ -88,7 +88,12 @@ public abstract class CommonTreeService<T extends TreeEntity, PK extends Seriali
     public List<T> findItems(String pcode) {
         Table table = ReflectionUtils.getSuperClassGenricType(getClass()).getAnnotation(Table.class);
         String tableName = table.name();
-        String hql = "SELECT tb1.* FROM " + tableName + " tb1 LEFT JOIN " + tableName + " as tb2 ON tb1.pid=tb2.id WHERE tb2.code=?";
+        String hql = "";
+        if (tableName.equals("wfc_data_dict")) {
+            hql = "SELECT * FROM " + tableName + " WHERE pcode=?";
+        } else {
+            hql = "SELECT tb1.* FROM " + tableName + " tb1 LEFT JOIN " + tableName + " as tb2 ON tb1.pid=tb2.id WHERE tb2.code=?";
+        }
         return super.findListBySQL(hql, pcode);
     }
 
