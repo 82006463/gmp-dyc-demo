@@ -72,7 +72,7 @@ public class DycReportController {
         ModelAndView view = new ModelAndView("report/reportEdit");
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
-        ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
+        ElasticTable etab = wfcReportService.findByCode("etabType_" + entity.getProcessType());
         view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }
@@ -86,7 +86,7 @@ public class DycReportController {
         DycReport entity = reportService.findById(id);
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
-        ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
+        ElasticTable etab = wfcReportService.findByCode("etabType_" + entity.getProcessType());
         view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }

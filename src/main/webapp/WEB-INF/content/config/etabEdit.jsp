@@ -51,6 +51,7 @@
 								<td align=center class="td_list_1">是否必填</td>
 								<td align=center class="td_list_1">数据类型</td>
 								<td align=center class="td_list_1">标签类型</td>
+								<td align=center class="td_list_1">子表单</td>
 								<td align=center class="td_list_1">列表属性</td>
                                 <td align=center class="td_list_1">模糊搜索</td>
 								<td align=center width=6% class="td_list_1">操作</td>
@@ -71,6 +72,9 @@
 									</td>
 									<td class="td_list_2">
 										<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${item.tagType}" cssClass="validate[required]"/>
+									</td>
+									<td class="td_list_2">
+										<frame:dict name="itemSubForms" type="select" typeCode="subForm" value="${item.subForm}" cssClass="validate[required]"/>
 									</td>
 									<td class="td_list_2">
 										<frame:dict name="itemListAttrs" type="select" typeCode="listAttr" value="${item.listAttr}" cssClass="validate[required]"/>

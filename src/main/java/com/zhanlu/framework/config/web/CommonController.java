@@ -68,10 +68,14 @@ public class CommonController {
         if (dataDict == null || StringUtils.isBlank(dataDict.getDataSource())) {
             return dataList;
         }
-        List<String> params = new ArrayList<>();
         String sql = dataDict.getDataSource();
+        if (!sql.trim().toUpperCase().startsWith("SELECT ")) {
+            return dataList;
+        }
+
         sql = sql.replace("LIKE ?", "LIKE '%" + keyword + "%'").replace("like ?", "like '%" + keyword + "%'");
         String[] orArr = sql.toUpperCase().split("WHERE")[1].trim().toUpperCase().split("OR");
+        List<String> params = new ArrayList<>();
         for (String or : orArr) {
             if (or.contains("=?") || or.contains("= ?"))
                 params.add(keyword);

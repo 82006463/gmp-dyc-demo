@@ -51,34 +51,34 @@ public class HTMLUtils {
 
             itemIndex++;
             tmpIndex++;
-            if (tmpIndex == 3 || (tmpIndex == 1 && tagType.equals("textarea"))) {
+            if (tmpIndex == 3 || (tmpIndex == 1 && tagType.equals("tagType_textarea"))) {
                 html += "<tr>";
-            } else if (tmpIndex == 2 && tagType.equals("textarea")) {
+            } else if (tmpIndex == 2 && tagType.equals("tagType_textarea")) {
                 html += "</tr><tr>";
             }
             html += "<td class='td_table_1'>" + name + "</td><td class='td_table_2' ${" + itemIndex + "}>";
-            if (tagType.equals("textarea")) {
+            if (tagType.equals("tagType_textarea")) {
                 html += "<textarea name='" + code + "' class='input_textarea_600" + (required.equals("yes") ? " validate[required]" : "") + "'>" + val + "</textarea>";
-            } else if (tagType.equals("date")) {
+            } else if (tagType.equals("tagType_date")) {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
-            } else if (tagType.equals("timestamp")) {
+            } else if (tagType.equals("tagType_timestamp")) {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
-            } else if (tagType.startsWith("select_") || tagType.startsWith("radio_") || tagType.startsWith("checkbox_")) {
+            } else if (tagType.startsWith("tagType_select_") || tagType.startsWith("tagType_radio_") || tagType.startsWith("tagType_checkbox_")) {
                 DataDict dataDict = dataDictService.findByCode(tagType);
-                if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {
+                if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource()) && dataDict.getDataSource().trim().toUpperCase().startsWith("SELECT ")) {
                     List<Map<String, Object>> itemList = jdbcTemplate.queryForList(dataDict.getDataSource());
-                    if (tagType.startsWith("select_")) {
+                    if (tagType.startsWith("tagType_select_")) {
                         html += "<select name='" + code + "' class='input_select" + (required.equals("yes") ? " validate[required]" : "") + "' fuzzy='" + fuzzy + "'>";
                         html += "<option value='' selected>--请选择--</option>";
                         for (Map<String, Object> item : itemList) {
                             html += "<option value='" + item.get("code") + "'" + (item.get("code").toString().equals(val) ? " selected='selected'" : "") + ">" + item.get("name") + "</option>";
                         }
                         html += "</select>";
-                    } else if (tagType.startsWith("radio_")) {
+                    } else if (tagType.startsWith("tagType_radio_")) {
                         for (Map<String, Object> item : itemList) {
                             html += "<input type='radio' name='" + code + "' value='" + item.get("code") + "' class='input_radio" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
                         }
-                    } else if (tagType.startsWith("checkbox_")) {
+                    } else if (tagType.startsWith("tagType_checkbox_")) {
                         for (Map<String, Object> item : itemList) {
                             html += "<input type='text' name='" + item.get("code") + "' value='" + val + "' class='input_checkbox" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
                         }
@@ -91,7 +91,7 @@ public class HTMLUtils {
             }
             html += "</td>";
 
-            if (tagType.equals("textarea")) {
+            if (tagType.equals("tagType_textarea")) {
                 if (tmpIndex == 1) {
                     html = html.replace("${" + itemIndex + "}", " colspan='3'");
                 } else if (tmpIndex == 2) {
@@ -101,7 +101,7 @@ public class HTMLUtils {
             } else if (tmpIndex == 1 && itemIndex == structList.size()) {
                 html = html.replace("${" + itemIndex + "}", " colspan='3'");
             }
-            if (tmpIndex == 2 || (tmpIndex == 1 && tagType.equals("textarea")) || itemIndex == structList.size()) {
+            if (tmpIndex == 2 || (tmpIndex == 1 && tagType.equals("tagType_textarea")) || itemIndex == structList.size()) {
                 html += "</tr>";
                 tmpIndex = 0;
             }
