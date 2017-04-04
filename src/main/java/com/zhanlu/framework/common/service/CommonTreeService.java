@@ -7,10 +7,12 @@ import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.common.utils.ReflectionUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,16 +36,27 @@ public abstract class CommonTreeService<T extends TreeEntity, PK extends Seriali
 
     @Transactional
     public T saveOrUpdate(T entity, List<T> items) {
-        if (entity.getId() != null && entity.getId() > 0) {
-            commonDao.batchExecute("DELETE FROM " + entity.getClass().getName() + " WHERE pid=" + entity.getId());
-        }
         this.saveOrUpdate(entity);
+        Map<Long, T> oldMap = new LinkedHashMap<>();
+        List<T> oldList = this.findItems(entity.getId());
+        if (oldList != null && oldList.size() > 0) {
+            for (T item : oldList)
+                oldMap.put(item.getId(), item);
+        }
         if (items != null && items.size() > 0) {
             for (T item : items) {
                 item.setPid(entity.getId());
-                this.save(item);
+                if (oldMap.containsKey(item.getId())) {
+                    T old = oldMap.get(item.getId());
+                    BeanUtils.copyProperties(item, old);
+                    oldMap.remove(item.getId());
+                }
+                if (item.getId() == null || item.getId() <= 0)
+                    this.save(item);
             }
         }
+        for (Map.Entry<Long, T> item : oldMap.entrySet())
+            commonDao.delete(item.getValue());
         return entity;
     }
 
