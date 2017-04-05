@@ -62,4 +62,24 @@
         _tr.next().after(_tr);
         return false;
     }
+
+    //添加表中的行
+    Ops.addTr = function (thisObj) {
+        var _table = $(thisObj).parent().parent().parent().parent();
+        var _tr = _table.find('tr:eq(1)').clone(true);
+        _tr.find(':input').removeAttr('readonly').val('');
+        _tr.find('td:eq(' + (_tr.find('td').length - 1) + ')').append('<a class="btnDel" onclick="return Ops.removeTr(this,1);"></a>');
+        _table.append(_tr);
+        return false;
+    }
+
+    //删除tr1
+    Ops.removeTr = function (thisObj, level) {
+        var _parent = $(thisObj).parent();
+        for(var i=0; i<level; i++) {
+            _parent = _parent.parent();
+        }
+        _parent.remove();
+        return false;
+    }
 </script>

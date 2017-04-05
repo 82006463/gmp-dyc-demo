@@ -94,9 +94,9 @@ public class HTMLUtils {
                     html += "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' id='" + code + "' style='margin: 0'>";
                     html += "<tr>";
                     for (String title : titles) {
-                        html += "<td align=center class='td_list_1'>" + title + "</td>";
+                        html += "<td align='center' class='td_list_1'>" + title + "</td>";
                     }
-                    html += "<td align=center width=6% class='td_list_1'></td>";
+                    html += "<td align='center' width='3%' class='td_list_1'><a class='btnAdd' onclick='return Ops.addTr(this,1);'></a></td>";
                     html += "</tr>";
 
                     for (int row = 0; row < rowCount; row++) {
@@ -114,7 +114,7 @@ public class HTMLUtils {
                                 html += "<td class='td_list_2'><input type='text' name='" + tmpName + "' value='" + valMap.get(tmpName).get(row) + "' class='input_240 validate[required]'/></td>";
                             }
                         }
-                        html += "<td class='td_list_2'></td>";
+                        html += "<td class='td_list_2'>" + (row > 0 ? "<a class='btnDel' onclick='return Ops.removeTr(this,1);'></a>" : "") + "</td>";
                         html += "</tr>";
                     }
                     html += "</table>";
