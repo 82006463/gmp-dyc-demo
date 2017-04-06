@@ -126,6 +126,9 @@
 				cell.className = "td_list_2";
 
                 cell = row.insertCell(-1);
+                cell.innerHTML = "<frame:dict name="itemSubForms" type="select" typeCode="subForm" value="${item.subForm}" cssClass="validate[required]"/>";
+                cell.className = "td_list_2";
+                cell = row.insertCell(-1);
                 cell.innerHTML = "<frame:dict name="itemListAttrs" type="select" typeCode="listAttr" value="" cssClass="validate[required]"/>";
                 cell.className = "td_list_2";
                 cell = row.insertCell(-1);
