@@ -51,4 +51,5 @@ public class ElasticTable extends CodeEntity {
     public void setJsonEdit(String jsonEdit) {
         this.jsonEdit = jsonEdit;
     }
+
 }

@@ -3,7 +3,7 @@ package com.zhanlu.report.web;
 import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
-import com.zhanlu.framework.common.utils.HTMLUtils;
+import com.zhanlu.framework.common.utils.ETab2HTMLUtils;
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
@@ -77,7 +77,7 @@ public class DycReportController {
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
-        view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonEdit(), entity.getExtraJson()));
+        view.addObject("extAttr", ETab2HTMLUtils.jsonEdit(applicationContext, etab.getJsonEdit(), entity.getExtraJson()));
         return view;
     }
 
@@ -91,7 +91,7 @@ public class DycReportController {
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
-        view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonEdit(), entity.getExtraJson()));
+        view.addObject("extAttr", ETab2HTMLUtils.jsonEdit(applicationContext, etab.getJsonEdit(), entity.getExtraJson()));
         return view;
     }
 
@@ -148,7 +148,7 @@ public class DycReportController {
         DycReport entity = reportService.findById(id);
         view.addObject("entity", entity);
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
-        view.addObject("extAttr", HTMLUtils.json2HTMLView(applicationContext, etab.getJsonEdit(), entity.getExtraJson()));
+        view.addObject("extAttr", ETab2HTMLUtils.jsonView(applicationContext, etab.getJsonEdit(), entity.getExtraJson()));
         return view;
     }
 

@@ -6,6 +6,7 @@ import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.ElastictTableService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -74,9 +75,16 @@ public class ElasticTableController {
      * @return
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable("id") Long id, Model model) {
+    public String edit(@PathVariable("id") Long id, String type, Model model) throws Exception {
+        model.addAttribute("type", type);
         ElasticTable entity = elastictTableService.findById(id);
-        model.addAttribute("extAttrMap", StringUtils.isBlank(entity.getJsonEdit()) ? null : JSON.parseObject(entity.getJsonEdit(), List.class));
+        if (type.equals("search")) {
+            model.addAttribute("jsonSearchMap", StringUtils.isBlank(entity.getJsonSearch()) ? null : JSON.parseObject(entity.getJsonSearch(), List.class));
+        } else if (type.equals("list")) {
+            model.addAttribute("jsonListMap", StringUtils.isBlank(entity.getJsonList()) ? null : JSON.parseObject(entity.getJsonList(), List.class));
+        } else {
+            model.addAttribute("jsonEditMap", StringUtils.isBlank(entity.getJsonEdit()) ? null : JSON.parseObject(entity.getJsonEdit(), List.class));
+        }
         model.addAttribute("entity", entity);
         return "config/etabEdit";
     }
@@ -91,6 +99,9 @@ public class ElasticTableController {
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
         ElasticTable entity = elastictTableService.findById(id);
+        model.addAttribute("jsonEditMap", StringUtils.isBlank(entity.getJsonEdit()) ? null : JSON.parseObject(entity.getJsonEdit(), List.class));
+        model.addAttribute("jsonSearchMap", StringUtils.isBlank(entity.getJsonSearch()) ? null : JSON.parseObject(entity.getJsonSearch(), List.class));
+        model.addAttribute("jsonListMap", StringUtils.isBlank(entity.getJsonList()) ? null : JSON.parseObject(entity.getJsonList(), List.class));
         model.addAttribute("entity", entity);
         return "config/etabView";
     }
@@ -101,25 +112,54 @@ public class ElasticTableController {
      * @return
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(ElasticTable entity, String[] itemCodes, String[] itemNames, String[] itemRequireds, String[] itemDataTypes,
-                         String[] itemTagTypes, String[] itemListAttrs, String[] itemFuzzys, String[] itemSubForms) {
-        List<Map<String, Object>> extAttr = new ArrayList<>(itemCodes == null ? 0 : itemCodes.length);
-        if (itemCodes != null) {
-            for (int i = 0; i < itemCodes.length; i++) {
-                Map<String, Object> itemMap = new LinkedHashMap<>(8);
-                itemMap.put("code", itemCodes[i]);
-                itemMap.put("name", itemNames[i]);
-                itemMap.put("required", itemRequireds[i]);
-                itemMap.put("dataType", itemDataTypes[i]);
-                itemMap.put("tagType", itemTagTypes[i]);
-                itemMap.put("listAttr", itemListAttrs[i]);
-                itemMap.put("fuzzy", itemFuzzys[i]);
-                itemMap.put("subForm", itemSubForms[i]);
-                extAttr.add(itemMap);
+    public String update(ElasticTable entity, HttpServletRequest req, String type, String[] itemCodes, String[] itemNames, String[] itemDataTypes) {
+        ElasticTable tmp = entity.getId() == null ? new ElasticTable() : elastictTableService.findById(entity.getId());
+        tmp.setCode(entity.getCode());
+        tmp.setName(entity.getName());
+        tmp.setRemark(entity.getRemark());
+        if (itemCodes != null && itemCodes.length > 0) {
+            List<Map<String, Object>> items = new ArrayList<>(itemCodes == null ? 0 : itemCodes.length);
+            Map<String, String[]> paramMap = req.getParameterMap();
+            if (type.equals("search")) {
+                String[] itemTagTypes = paramMap.get("itemTagTypes");
+                for (int i = 0; i < itemCodes.length; i++) {
+                    Map<String, Object> itemMap = new LinkedHashMap<>(8);
+                    itemMap.put("code", itemCodes[i]);
+                    itemMap.put("name", itemNames[i]);
+                    itemMap.put("dataType", itemDataTypes[i]);
+                    itemMap.put("tagType", itemTagTypes[i]);
+                    items.add(itemMap);
+                }
+                tmp.setJsonSearch(JSON.toJSONString(items));
+            } else if (type.equals("list")) {
+                for (int i = 0; i < itemCodes.length; i++) {
+                    Map<String, Object> itemMap = new LinkedHashMap<>(8);
+                    itemMap.put("code", itemCodes[i]);
+                    itemMap.put("name", itemNames[i]);
+                    itemMap.put("dataType", itemDataTypes[i]);
+                    items.add(itemMap);
+                }
+                tmp.setJsonList(JSON.toJSONString(items));
+            } else if (type.equals("edit")) {
+                String[] itemRequireds = paramMap.get("itemRequireds");
+                String[] itemSubForms = paramMap.get("itemSubForms");
+                String[] itemFuzzys = paramMap.get("itemFuzzys");
+                String[] itemTagTypes = paramMap.get("itemTagTypes");
+                for (int i = 0; i < itemCodes.length; i++) {
+                    Map<String, Object> itemMap = new LinkedHashMap<>(8);
+                    itemMap.put("code", itemCodes[i]);
+                    itemMap.put("name", itemNames[i]);
+                    itemMap.put("required", itemRequireds[i]);
+                    itemMap.put("dataType", itemDataTypes[i]);
+                    itemMap.put("tagType", itemTagTypes[i]);
+                    itemMap.put("fuzzy", itemFuzzys[i]);
+                    itemMap.put("subForm", itemSubForms[i]);
+                    items.add(itemMap);
+                }
+                tmp.setJsonEdit(JSON.toJSONString(items));
             }
-            entity.setJsonEdit(JSON.toJSONString(extAttr));
         }
-        elastictTableService.saveOrUpdate(entity);
+        elastictTableService.saveOrUpdate(tmp);
         return "redirect:/wfc/etab/list";
     }
 

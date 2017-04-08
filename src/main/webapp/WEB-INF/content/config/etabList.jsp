@@ -22,13 +22,13 @@
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td class="td_table_1">流程类型：</td>
+				<td class="td_table_1">类型：</td>
 				<td class="td_table_2">
-					<frame:dict name="filter_EQS_code" type="select" typeCode="etabType" value="${param['filter_EQS_type']}" cssClass="input_select"/>
+					<frame:dict name="filter_EQS_code" type="select" typeCode="etabType" value="${param['filter_EQS_code']}" cssClass="input_select"/>
 				</td>
-				<td class="td_table_1">流程前缀：</td>
+				<td class="td_table_1">名称：</td>
 				<td class="td_table_2">
-					<input type="text" name="filter_EQS_prefix" value="${param['filter_EQS_prefix']}" class="input_240"/>
+					<input type="text" name="filter_LIKES_name" value="${param['filter_LIKES_name']}" class="input_240"/>
 				</td>
 			</tr>
 		</table>
@@ -60,9 +60,11 @@
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
-							<a href="${ctx}/wfc/etab/delete/${item.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-							<a href="${ctx}/wfc/etab/update/${item.id }" class="btnEdit" title="编辑">编辑</a>
-							<a href="${ctx}/wfc/etab/view/${item.id }" class="btnView" title="查看">查看</a>
+							<a href="${ctx}/wfc/etab/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+							<a href="${ctx}/wfc/etab/update/${item.id}?type=edit" class="btnEdit" title="编辑">编辑</a>
+							<a href="${ctx}/wfc/etab/update/${item.id}?type=search" class="btnEdit" title="编辑搜索">编辑搜索项</a>
+							<a href="${ctx}/wfc/etab/update/${item.id}?type=list" class="btnEdit" title="编辑列表">编辑列表项</a>
+							<a href="${ctx}/wfc/etab/view/${item.id}" class="btnView" title="查看">查看</a>
 						</c:if>
 						<c:if test="${!empty lookup}">
 							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>

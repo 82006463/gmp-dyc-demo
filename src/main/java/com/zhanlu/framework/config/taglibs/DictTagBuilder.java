@@ -29,6 +29,7 @@ public class DictTagBuilder implements TagBuilder {
     private static final String TYPE_CHECKBOX = "checkbox";
     public static final String NAME = "name";
     public static final String VALUE = "value";
+    public static final String DEFAULT_VAL = "defaultVal";
     public static final String TYPE = "type"; //select、radio、checkbox
     public static final String TYPE_CODE = "typeCode";
     public static final String READ_ONLY = "readonly";
@@ -41,6 +42,8 @@ public class DictTagBuilder implements TagBuilder {
     private String name;
     //对象已选择的值
     private String value;
+    //为空时的默认值
+    private String defaultVal;
     //控件类型
     private String type;
     //配置实体名称
@@ -90,6 +93,7 @@ public class DictTagBuilder implements TagBuilder {
         this.values.clear();
         this.name = dto.getProperty(NAME);
         this.value = dto.getProperty(VALUE);
+        this.defaultVal = dto.getProperty(DEFAULT_VAL);
         this.type = dto.getProperty(TYPE);
         this.typeCode = dto.getProperty(TYPE_CODE);
         this.readonly = dto.getProperty(READ_ONLY);
@@ -105,6 +109,8 @@ public class DictTagBuilder implements TagBuilder {
             } else {
                 values.add(value);
             }
+        } else {
+            values.add(defaultVal);
         }
         if (dictMap.containsKey(typeCode)) {
             items = dictMap.get(typeCode);

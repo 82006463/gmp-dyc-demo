@@ -3,16 +3,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-		<title>配置管理-伸缩表</title>
+		<title>配置管理-伸缩表-${type=='search' ? '搜索项':type=='list' ? '列表项':'编辑页'}</title>
 		<%@ include file="/common/common-edit.jsp"%>
 	</head>
 
 	<body>
 		<form id="inputForm" action="${ctx }/wfc/etab/update" method="post">
 			<input type="hidden" id="id" name="id" value="${entity.id}"/>
+			<input type="hidden" id="type" name="type" value="${type}"/>
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
-					<td class="td_table_top" align="center">配置管理-伸缩表</td>
+					<td class="td_table_top" align="center">配置管理-伸缩表-${type=='search' ? '搜索项':type=='list' ? '列表项':'编辑页'}</td>
 				</tr>
 			</table>
 
@@ -38,7 +39,7 @@
 				<tr>
 					<td class="td_table_1">添加选项：</td>
 					<td class="td_table_2" colspan="3">
-						<input type="button" class="button_70px" value="添加选项" onclick="addItem()">
+						<input type="button" class="button_70px" value="添加选项" onclick="addItem();">
 					</td>
 				</tr>
 				<tr>
@@ -48,15 +49,18 @@
 							<tr>
 								<td align=center class="td_list_1">编号</td>
 								<td align=center class="td_list_1">名称</td>
-								<td align=center class="td_list_1">是否必填</td>
 								<td align=center class="td_list_1">数据类型</td>
-								<td align=center class="td_list_1">标签类型</td>
-								<td align=center class="td_list_1">子表单</td>
-								<td align=center class="td_list_1">列表属性</td>
-                                <td align=center class="td_list_1">模糊搜索</td>
+								<c:if test="${type == 'search' || type == 'edit'}">
+									<td align=center class="td_list_1">标签类型</td>
+								</c:if>
+								<c:if test="${type == 'edit'}">
+									<td align=center class="td_list_1">是否必填</td>
+									<td align=center class="td_list_1">子表单</td>
+									<td align=center class="td_list_1">模糊搜索</td>
+								</c:if>
 								<td align=center width=6% class="td_list_1">操作</td>
 							</tr>
-							<c:forEach items="${extAttrMap}" var="item" varStatus="itemIndex">
+							<c:forEach items="${type=='search' ? jsonSearchMap : type=='list' ? jsonListMap : jsonEditMap}" var="item" varStatus="itemIndex">
 								<tr>
 									<td class="td_list_2">
 										<input type="text" name='itemCodes' value='${item.code}' class='input_120 validate[required]'>
@@ -65,27 +69,28 @@
 										<input type="text" name='itemNames' value='${item.name}' class='input_120 validate[required]'>
 									</td>
 									<td class="td_list_2">
-										<frame:dict name="itemRequireds" type="select" typeCode="yesNo" value="${item.required}" cssClass="validate[required]"/>
+										<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="${item.dataType}" defaultVal="dataType_varchar" cssClass="validate[required]"/>
+									</td>
+								<c:if test="${type == 'search' || type == 'edit'}">
+									<td class="td_list_2">
+										<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${item.tagType}" defaultVal="tagType_input" cssClass="validate[required]"/>
+									</td>
+								</c:if>
+								<c:if test="${type == 'edit'}">
+									<td class="td_list_2">
+										<frame:dict name="itemRequireds" type="select" typeCode="yesNo" value="${item.required}" defaultVal="yesNo_yes" cssClass="validate[required]"/>
+									</td>
+
+									<td class="td_list_2">
+										<frame:dict name="itemSubForms" type="select" typeCode="subForm" value="${item.subForm}" defaultVal="subForm_no" cssClass="validate[required]"/>
 									</td>
 									<td class="td_list_2">
-										<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="${item.dataType}" cssClass="validate[required]"/>
+										<frame:dict name="itemFuzzys" type="select" typeCode="fuzzySearch" value="${item.fuzzy}" defaultVal="fuzzySearch_no" cssClass="validate[required]"/>
 									</td>
-									<td class="td_list_2">
-										<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${item.tagType}" cssClass="validate[required]"/>
-									</td>
-									<td class="td_list_2">
-										<frame:dict name="itemSubForms" type="select" typeCode="subForm" value="${item.subForm}" cssClass="validate[required]"/>
-									</td>
-									<td class="td_list_2">
-										<frame:dict name="itemListAttrs" type="select" typeCode="listAttr" value="${item.listAttr}" cssClass="validate[required]"/>
-									</td>
-                                    <td class="td_list_2">
-                                        <frame:dict name="itemFuzzys" type="select" typeCode="fuzzySearch" value="${item.fuzzy}" cssClass="validate[required]"/>
-                                    </td>
+								</c:if>
 									<td class="td_list_2">
 										<a href='javascript:void(0)' onclick='Ops.removeTr(this,1);' class='btnDel' title='删除'>删除</a>
-                                        <a onclick='return Ops.up(this);' title='上移'>上</a>
-                                        <a onclick='return Ops.down(this);' title='下移'>下</a>
+                                        <a onclick='return Ops.up(this);' title='上移'>上</a><a onclick='return Ops.down(this);' title='下移'>下</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -114,27 +119,26 @@
 				cell = row.insertCell(-1);
 				cell.innerHTML = "<input type='text' name='itemNames' value='' class='input_120 validate[required]'>";
 				cell.className = "td_list_2";
-                cell = row.insertCell(-1);
-                cell.innerHTML = "<frame:dict name="itemRequireds" type="select" typeCode="yesNo" value="" cssClass="validate[required]"/>";
-                cell.className = "td_list_2";
-
 				cell = row.insertCell(-1);
-				cell.innerHTML = "<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="${item.dataType}" cssClass="validate[required]"/>";
-				cell.className = "td_list_2";
-				cell = row.insertCell(-1);
-				cell.innerHTML = "<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${item.tagType}" cssClass="validate[required]"/>";
+				cell.innerHTML = "<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="" defaultVal="dataType_varchar" cssClass="validate[required]"/>";
 				cell.className = "td_list_2";
 
-                cell = row.insertCell(-1);
-                cell.innerHTML = "<frame:dict name="itemSubForms" type="select" typeCode="subForm" value="${item.subForm}" cssClass="validate[required]"/>";
-                cell.className = "td_list_2";
-                cell = row.insertCell(-1);
-                cell.innerHTML = "<frame:dict name="itemListAttrs" type="select" typeCode="listAttr" value="" cssClass="validate[required]"/>";
-                cell.className = "td_list_2";
-                cell = row.insertCell(-1);
-                cell.innerHTML = "<frame:dict name="itemFuzzys" type="select" typeCode="fuzzySearch" value="" cssClass="validate[required]"/>";
-                cell.className = "td_list_2";
-
+				if('${type}' == 'search' || '${type}' == 'edit') {
+					cell = row.insertCell(-1);
+					cell.innerHTML = "<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="" defaultVal="tagType_input" cssClass="validate[required]"/>";
+					cell.className = "td_list_2";
+				}
+				if('${type}' == 'edit') {
+					cell = row.insertCell(-1);
+					cell.innerHTML = "<frame:dict name="itemRequireds" type="select" typeCode="yesNo" value="" defaultVal="yesNo_yes" cssClass="validate[required]"/>";
+					cell.className = "td_list_2";
+					cell = row.insertCell(-1);
+					cell.innerHTML = "<frame:dict name="itemSubForms" type="select" typeCode="subForm" value="" defaultVal="subForm_no" cssClass="validate[required]"/>";
+					cell.className = "td_list_2";
+					cell = row.insertCell(-1);
+					cell.innerHTML = "<frame:dict name="itemFuzzys" type="select" typeCode="fuzzySearch" value="" defaultVal="fuzzySearch_no" cssClass="validate[required]"/>";
+					cell.className = "td_list_2";
+				}
 				cell = row.insertCell(-1);
 				cell.innerHTML = "<a href='javascript:void(0)' onclick='Ops.removeTr(this,1);' class='btnDel' title='删除'>删除</a><a onclick='return Ops.up(this);' title='上移'>上</a><a onclick='return Ops.down(this);' title='下移'>下</a>";
 				cell.className = "td_list_2";

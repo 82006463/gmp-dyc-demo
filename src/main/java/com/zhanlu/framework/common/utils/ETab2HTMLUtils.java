@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2017/4/3.
  */
-public class HTMLUtils {
+public class ETab2HTMLUtils {
 
     /**
      * 将JSON转成HTML串
@@ -25,7 +25,7 @@ public class HTMLUtils {
      * @param jsonData
      * @return
      */
-    public static String json2HTML(ApplicationContext applicationContext, String jsonStruct, String jsonData) {
+    public static String jsonEdit(ApplicationContext applicationContext, String jsonStruct, String jsonData) {
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
         }
@@ -175,7 +175,7 @@ public class HTMLUtils {
      * @param jsonData
      * @return
      */
-    public static String json2HTMLView(ApplicationContext applicationContext, String jsonStruct, String jsonData) {
+    public static String jsonView(ApplicationContext applicationContext, String jsonStruct, String jsonData) {
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
         }

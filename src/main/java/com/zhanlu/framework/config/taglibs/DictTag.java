@@ -22,6 +22,8 @@ public class DictTag extends RequestContextAwareTag {
     private String name;
     //对象已选择的值
     private String value;
+    //为空时的默认值
+    private String defaultVal;
     //选择类型：select/radio/checkbox
     private String type;
     //类型编号：数据字典中pcode的值
@@ -53,6 +55,7 @@ public class DictTag extends RequestContextAwareTag {
             TagDTO dto = new TagDTO(servletContext);
             dto.setProperty(DictTagBuilder.NAME, this.name);
             dto.setProperty(DictTagBuilder.VALUE, value);
+            dto.setProperty(DictTagBuilder.DEFAULT_VAL, defaultVal);
             dto.setProperty(DictTagBuilder.TYPE, this.type);
             dto.setProperty(DictTagBuilder.TYPE_CODE, this.typeCode);
             dto.setProperty(DictTagBuilder.READ_ONLY, this.readOnly);
@@ -130,5 +133,13 @@ public class DictTag extends RequestContextAwareTag {
 
     public void setDisplayType(String displayType) {
         this.displayType = displayType;
+    }
+
+    public String getDefaultVal() {
+        return defaultVal;
+    }
+
+    public void setDefaultVal(String defaultVal) {
+        this.defaultVal = defaultVal;
     }
 }
