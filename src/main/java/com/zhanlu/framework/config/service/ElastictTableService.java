@@ -30,9 +30,6 @@ public class ElastictTableService extends CommonService<ElasticTable, Long> {
     }
 
     public ElasticTable findByCode(String code) throws Exception {
-        if (!code.startsWith("reportType_")) {
-            code = "reportType_" + code;
-        }
         Map<String, Object> params = new HashedMap(4);
         params.put("code", code);
         List<ElasticTable> list = super.findList(params);
