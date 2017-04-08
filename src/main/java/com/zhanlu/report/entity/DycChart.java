@@ -5,6 +5,7 @@ import com.zhanlu.framework.common.entity.IdEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 图表
@@ -21,6 +22,9 @@ public class DycChart extends IdEntity {
     private String chartNo; //流程编号
     private String chartName; //流程名称
     private String chartDesc;//描述
+
+    //显示类型
+    private String view;
 
     @Column(name = "type_", length = 10)
     public String getType() {
@@ -56,5 +60,14 @@ public class DycChart extends IdEntity {
 
     public void setChartDesc(String chartDesc) {
         this.chartDesc = chartDesc;
+    }
+
+    @Transient
+    public String getView() {
+        return view;
+    }
+
+    public void setView(String view) {
+        this.view = view;
     }
 }
