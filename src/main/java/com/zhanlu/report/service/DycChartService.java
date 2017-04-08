@@ -1,6 +1,8 @@
 package com.zhanlu.report.service;
 
 import com.zhanlu.framework.common.service.CommonService;
+import com.zhanlu.framework.config.entity.DataDict;
+import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.report.dao.DycChartDao;
 import com.zhanlu.report.entity.DycChart;
 import org.springframework.beans.factory.annotation.Autowired;

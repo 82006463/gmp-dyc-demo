@@ -2,6 +2,7 @@ package com.zhanlu.report.web;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.report.entity.DycChart;
 import com.zhanlu.report.service.DycChartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class DycChartController {
 
     @Autowired
     private DycChartService chartService;
+    @Autowired
+    private DataDictService dataDictService;
 
     /**
      * 分页列表
@@ -48,6 +51,7 @@ public class DycChartController {
         page = chartService.findPage(page, filters);
         ModelAndView view = new ModelAndView("report/chartList");
         view.addObject("page", page);
+        view.addObject("chartType", dataDictService.findByCode("chartType_" + entity.getType()));
         return view;
     }
 
@@ -58,6 +62,7 @@ public class DycChartController {
     public ModelAndView create(DycChart entity) throws Exception {
         ModelAndView view = new ModelAndView("report/chartEdit");
         view.addObject("entity", entity);
+        view.addObject("chartType", dataDictService.findByCode("chartType_" + entity.getType()));
         return view;
     }
 
@@ -66,9 +71,10 @@ public class DycChartController {
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("id") Long id) throws Exception {
-        ModelAndView view = new ModelAndView("/chart/chartEdit");
+        ModelAndView view = new ModelAndView("report/chartEdit");
         DycChart entity = chartService.findById(id);
         view.addObject("entity", entity);
+        view.addObject("chartType", dataDictService.findByCode("chartType_" + entity.getType()));
         return view;
     }
 
@@ -76,8 +82,9 @@ public class DycChartController {
      * 新增、编辑的提交处理。保存实体，并返回列表视图
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ModelAndView update(RedirectAttributes attributes, HttpServletRequest req, DycChart entity) throws Exception {
+    public ModelAndView update(RedirectAttributes attributes, DycChart entity) throws Exception {
         chartService.saveOrUpdate(entity);
+        attributes.addAttribute("type", entity.getType());
         ModelAndView view = new ModelAndView("redirect:/dyc/chart/list");
         return view;
     }
@@ -90,6 +97,7 @@ public class DycChartController {
         ModelAndView view = new ModelAndView("report/chartView");
         DycChart entity = chartService.findById(id);
         view.addObject("entity", entity);
+        view.addObject("chartType", dataDictService.findByCode("chartType_" + entity.getType()));
         return view;
     }
 

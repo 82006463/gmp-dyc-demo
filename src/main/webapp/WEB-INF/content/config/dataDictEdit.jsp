@@ -46,26 +46,21 @@
 						<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" id="itemTable" style="margin: 0">
 							<tr>
 								<td align=center width=20% class="td_list_1">选项编号</td>
-								<td align=center width=30% class="td_list_1">选项名称</td>
-								<td align=center width=42% class="td_list_1">数据源</td>
+								<td align=center width=20% class="td_list_1">选项名称</td>
+								<td align=center width=52% class="td_list_1">数据源</td>
 								<td align=center width=8% class="td_list_1">操作</td>
 							</tr>
 							<c:forEach items="${entity.items}" var="item" varStatus="itemIndex">
 								<tr>
 									<td class="td_list_2">
 										<input type="hidden" value='${item.id}' name='itemIds' class='input_50'>
-										<input type="text" value='${item.code}' name='itemCodes' class='input_120'>
+										<input type="text" value='${item.code}' name='itemCodes' class='input_240'>
 									</td>
 									<td class="td_list_2">
 										<input type="text" value='${item.name}' name='itemNames' class='input_240'>
 									</td>
 									<td class="td_list_2">
-										<c:if test="${(fn:contains(item.code, 'select_') || fn:contains(item.code, 'radio_') || fn:contains(item.code, 'checkbox_') || fn:contains(item.code, 'fuzzySearch_'))}">
-											<textarea class="input_textarea_600" name="itemDataSources">${item.dataSource}</textarea>
-										</c:if>
-										<c:if test="${!(fn:contains(item.code, 'select_') || fn:contains(item.code, 'radio_') || fn:contains(item.code, 'checkbox_') || fn:contains(item.code, 'fuzzySearch_'))}">
-											<input type="text" value='${item.dataSource}' name='itemDataSources' class='input_520'>
-										</c:if>
+										<textarea class="input_textarea_600" name="itemDataSources" style="width: 560px; height: 40px;">${item.dataSource}</textarea>
 									</td>
 									<td class="td_list_2">
 										<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a>
@@ -91,7 +86,7 @@
 				var table = document.getElementById("itemTable");
 				var row = table.insertRow(-1);
 				var cell = row.insertCell(-1);
-				cell.innerHTML = "<input type='hidden' name='itemIds' value='' class='input_50'><input type='text' name='itemCodes' value='' class='input_120'>";
+				cell.innerHTML = "<input type='hidden' name='itemIds' value='' class='input_50'><input type='text' name='itemCodes' value='' class='input_240'>";
 				cell.className = "td_list_2";
 				
 				cell = row.insertCell(-1);
@@ -99,7 +94,7 @@
 				cell.className = "td_list_2";
 
 				cell = row.insertCell(-1);
-				cell.innerHTML = "<input type='text' name='itemDataSources' value='' class='input_520'>";
+				cell.innerHTML = "<textarea class='input_textarea_600' name='itemDataSources' style='width: 560px; height: 40px;'></textarea>";
 				cell.className = "td_list_2";
 				
 				cell = row.insertCell(-1);
