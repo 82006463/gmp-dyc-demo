@@ -13,7 +13,7 @@ import com.zhanlu.report.entity.DycReport;
 import com.zhanlu.report.service.DycReportService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,8 +38,8 @@ import java.util.Map;
 @RequestMapping(value = "/dyc/report")
 public class DycReportController {
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    @Resource(name = "jdbcTemplate")
+    private JdbcTemplate jdbcTemplate;
     @Autowired
     private DataDictService dataDictService;
 
@@ -77,7 +78,7 @@ public class DycReportController {
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
-        view.addObject("extAttr", ETab2HTMLUtils.jsonEdit(applicationContext, etab.getJsonEdit(), entity.getExtraJson()));
+        view.addObject("extAttr", ETab2HTMLUtils.jsonEdit(jdbcTemplate, dataDictService, etab.getJsonEdit(), entity.getExtraJson()));
         return view;
     }
 
@@ -91,7 +92,7 @@ public class DycReportController {
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
-        view.addObject("extAttr", ETab2HTMLUtils.jsonEdit(applicationContext, etab.getJsonEdit(), entity.getExtraJson()));
+        view.addObject("extAttr", ETab2HTMLUtils.jsonEdit(jdbcTemplate, dataDictService, etab.getJsonEdit(), entity.getExtraJson()));
         return view;
     }
 
@@ -148,7 +149,7 @@ public class DycReportController {
         DycReport entity = reportService.findById(id);
         view.addObject("entity", entity);
         ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
-        view.addObject("extAttr", ETab2HTMLUtils.jsonView(applicationContext, etab.getJsonEdit(), entity.getExtraJson()));
+        view.addObject("extAttr", ETab2HTMLUtils.jsonView(dataDictService, etab.getJsonEdit(), entity.getExtraJson()));
         return view;
     }
 

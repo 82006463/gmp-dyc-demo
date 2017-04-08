@@ -2,11 +2,15 @@ package com.zhanlu.report.web;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.common.utils.ETab2HTMLUtils;
+import com.zhanlu.framework.config.entity.DataDict;
+import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
+import com.zhanlu.framework.config.service.ElastictTableService;
 import com.zhanlu.report.entity.DycChart;
 import com.zhanlu.report.service.DycChartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 报表Controller
@@ -28,20 +34,22 @@ import java.util.List;
 @RequestMapping(value = "/dyc/chart")
 public class DycChartController {
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    @Resource(name = "jdbcTemplate")
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     private DycChartService chartService;
     @Autowired
     private DataDictService dataDictService;
+    @Autowired
+    private ElastictTableService elastictTableService;
 
     /**
      * 分页列表
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list(DycChart entity, Page<DycChart> page, HttpServletRequest request) {
-        List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
+    public ModelAndView list(DycChart entity, Page<DycChart> page, HttpServletRequest req) throws Exception {
+        List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(req);
         filters.add(new PropertyFilter("EQS_type", entity.getType()));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
@@ -51,7 +59,12 @@ public class DycChartController {
         page = chartService.findPage(page, filters);
         ModelAndView view = new ModelAndView("report/chartList");
         view.addObject("page", page);
-        view.addObject("chartType", dataDictService.findByCode("chartType_" + entity.getType()));
+
+        Map<String, String[]> paramMap = req.getParameterMap();
+        DataDict chartType = dataDictService.findByCode("chartType_" + entity.getType());
+        ElasticTable etab = elastictTableService.findByCode("chartType_" + entity.getType());
+        view.addObject("jsonSearch", ETab2HTMLUtils.jsonSearch(jdbcTemplate, dataDictService, etab.getJsonSearch(), paramMap));
+        view.addObject("jsonList", ETab2HTMLUtils.jsonList(jdbcTemplate, dataDictService, etab.getJsonList()));
         return view;
     }
 

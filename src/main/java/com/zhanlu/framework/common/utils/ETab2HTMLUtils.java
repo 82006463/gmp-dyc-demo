@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.service.DataDictService;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
@@ -19,24 +18,78 @@ public class ETab2HTMLUtils {
 
     /**
      * 将JSON转成HTML串
-     *
-     * @param applicationContext
-     * @param jsonStruct
-     * @param jsonData
-     * @return
      */
-    public static String jsonEdit(ApplicationContext applicationContext, String jsonStruct, String jsonData) {
+    public static String jsonSearch(JdbcTemplate jdbcTemplate, DataDictService dataDictService, String jsonStruct, Map<String, String[]> paramMap) {
+        if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
+            return "";
+        }
+        Map<String, String> dataMap = new HashMap<>();
+        List<Map<String, Object>> structList = JSON.parseObject(jsonStruct, List.class);
+        int tmpIndex = 0;
+        int itemIndex = 0;
+        String html = "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' style='margin-top: 0px'><tr>";
+        for (Map<String, Object> entry : structList) {
+            String tagType = entry.get("tagType").toString().replace("tagType_", "");
+            String code = entry.get("code").toString();
+            String name = entry.get("name").toString();
+            String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
+
+            itemIndex++;
+            tmpIndex++;
+            if (tmpIndex == 3) {
+                html += "<tr>";
+            }
+            html += "<td class='td_table_1'>" + name + "</td><td class='td_table_2'>";
+            if (tagType.equals("date")) {
+                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
+            } else if (tagType.equals("timestamp")) {
+                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
+            } else if (tagType.startsWith("select_")) {
+                DataDict dataDict = dataDictService.findByCode("tagType_" + tagType);
+                if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource()) && dataDict.getDataSource().trim().toUpperCase().startsWith("SELECT ")) {
+                    List<Map<String, Object>> itemList = jdbcTemplate.queryForList(dataDict.getDataSource());
+                    html += "<select name='" + code + "' class='input_select'>";
+                    html += "<option value='' selected>--请选择--</option>";
+                    for (Map<String, Object> item : itemList) {
+                        html += "<option value='" + item.get("code") + "'" + (item.get("code").toString().equals(val) ? " selected='selected'" : "") + ">" + item.get("name") + "</option>";
+                    }
+                    html += "</select>";
+                }
+            } else {
+                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240'/>";
+            }
+            html += "</td>";
+            if (tmpIndex == 2 || itemIndex == structList.size()) {
+                html += "</tr>";
+                tmpIndex = 0;
+            }
+        }
+        html += "</table>";
+        return html;
+    }
+
+    /**
+     * 将JSON转成HTML串
+     */
+    public static String jsonList(JdbcTemplate jdbcTemplate, DataDictService dataDictService, String jsonStruct) {
+        if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
+            return "";
+        }
+
+        String html = "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' style='margin-top: 0px'><tr>";
+        html += "</table>";
+        return html;
+    }
+
+    /**
+     * 将JSON转成HTML串
+     */
+    public static String jsonEdit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, String jsonStruct, String jsonData) {
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
         }
         if (jsonData == null || jsonData.trim().isEmpty()) {
             jsonData = "{}";
-        }
-        JdbcTemplate jdbcTemplate = null;
-        DataDictService dataDictService = null;
-        if (applicationContext.containsBean("jdbcTemplate")) {
-            jdbcTemplate = applicationContext.getBean("jdbcTemplate", JdbcTemplate.class);
-            dataDictService = applicationContext.getBean(DataDictService.class);
         }
         List<Map<String, Object>> structList = JSON.parseObject(jsonStruct, List.class);
         Map<String, Object> dataMap = JSON.parseObject(jsonData, Map.class);
@@ -170,21 +223,13 @@ public class ETab2HTMLUtils {
 
     /**
      * 将JSON转成HTML串
-     *
-     * @param jsonStruct
-     * @param jsonData
-     * @return
      */
-    public static String jsonView(ApplicationContext applicationContext, String jsonStruct, String jsonData) {
+    public static String jsonView(DataDictService dataDictService, String jsonStruct, String jsonData) {
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
         }
         if (jsonData == null || jsonData.trim().isEmpty()) {
             jsonData = "{}";
-        }
-        DataDictService dataDictService = null;
-        if (applicationContext.containsBean("dataDictService")) {
-            dataDictService = applicationContext.getBean(DataDictService.class);
         }
         List<Map<String, Object>> structList = JSON.parseObject(jsonStruct, List.class);
         Map<String, Object> dataMap = JSON.parseObject(jsonData, Map.class);

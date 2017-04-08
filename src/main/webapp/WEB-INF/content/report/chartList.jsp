@@ -20,6 +20,7 @@
 				<td class="td_table_top" align="center">图表管理-${chartType.name}</td>
 			</tr>
 		</table>
+		${jsonSearch}
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
