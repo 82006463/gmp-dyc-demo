@@ -40,6 +40,7 @@ public class LoginController {
             }
             subject.login(token);
             return "redirect:/index";
+            //return "redirect:/snaker/task/active";
         } catch (UnknownAccountException ue) {
             token.clear();
             model.addAttribute("error", "登录失败，您输入的账号不存在");

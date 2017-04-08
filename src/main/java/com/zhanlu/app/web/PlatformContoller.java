@@ -59,6 +59,7 @@ public class PlatformContoller {
 	 */
 	@RequestMapping(value = "/right" ,method=RequestMethod.GET)
 	public String right(Model model) {
-		return "system/right";
+		//return "system/right";
+		return "redirect:/snaker/task/active";
 	}
 }

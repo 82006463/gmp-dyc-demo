@@ -148,7 +148,7 @@ public class DycReportController {
         DycReport entity = reportService.findById(id);
         view.addObject("entity", reportService.findById(id));
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
-        view.addObject("extAttr", HTMLUtils.json2HTMLView(etab.getJsonStruct(), entity.getExtraJson()));
+        view.addObject("extAttr", HTMLUtils.json2HTMLView(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }
 

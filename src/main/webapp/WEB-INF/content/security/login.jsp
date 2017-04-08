@@ -12,26 +12,26 @@
 		<script src="${ctx}/styles/bootstrap/2.2.2/js/bootstrap.min.js" type="text/javascript"></script>
 	</head>
 	<script type="text/javascript">
-	if(window != top) {
-		top.location.href = location.href;
-	}
+		if(window != top) {
+			top.location.href = location.href;
+		}
 	</script>
 	<body>
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-					<span class="icon-bar"></span><span class="icon-bar"></span> <span class="icon-bar"></span>
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="./">Snaker</a>
+				<a class="brand" href="./">德亦诚全面质量管理系统</a>
 				<div class="nav-collapse">
 					<!-- 
-				<ul class="nav pull-right">
-					<li class="">
-						<a href="javascript:;"><i class="icon-chevron-left"></i> </a>
-					</li>
-				</ul>
-				 -->
+						<ul class="nav pull-right">
+							<li class="">
+								<a href="javascript:;"><i class="icon-chevron-left"></i> </a>
+							</li>
+						</ul>
+						 -->
 				</div>
 			</div>
 		</div>
@@ -59,8 +59,8 @@
 					</div>
 				</fieldset>
 
-				<div id="remember-me" class="pull-left">
-					<input type="checkbox" name="remember" id="remember" />
+				<div id="remember-me" class="pull-left" style="display: none;">
+					<input type="checkbox" name="remember" id="remember" value="on"/>
 					<label id="remember-label" for="remember">记住我</label>
 					<label>[admin/123456;snaker/123456;test/123456]</label>
 				</div>
@@ -72,7 +72,7 @@
 		</div>
 
 		<div id="login-extra">
-<!-- 			<p>
+<!-- 	<p>
 				没有账号? <a href="javascript:;">注册</a>
 			</p> -->
 			<p>

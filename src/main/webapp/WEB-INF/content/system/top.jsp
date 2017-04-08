@@ -10,7 +10,10 @@
 </head>
 <body>
     <div id="header">
-        <div class="logo"><img src="${ctx }/styles/images/snaker.png" alt="Snaker"/></div>
+        <div class="logo">
+            <%--<img src="${ctx }/styles/images/snaker.png" alt="Snaker"/>--%>
+                <img src="${ctx }/styles/images/logo_dyc.gif" alt="DYC"/>
+        </div>
         <ul class="qj">
             <li style="width: 100px;"><span><shiro:principal/></span></li>
             <li></li>
@@ -22,7 +25,7 @@
     <div id="admin-nav-wrap">
         <div class="admin-nav">
             <ul>
-                <li><a href="http://snakerflow.com/" target="_blank">官网首页</a></li>
+                <li><a href="#">德亦诚全面质量管理系统</a></li>
             </ul>
         </div>
     </div>
