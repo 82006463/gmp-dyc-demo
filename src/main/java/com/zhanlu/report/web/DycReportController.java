@@ -76,7 +76,7 @@ public class DycReportController {
         ModelAndView view = new ModelAndView("report/reportEdit");
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
-        ElasticTable etab = wfcReportService.findByCode("etabType_" + entity.getProcessType());
+        ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
         view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }
@@ -90,7 +90,7 @@ public class DycReportController {
         DycReport entity = reportService.findById(id);
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
-        ElasticTable etab = wfcReportService.findByCode("etabType_" + entity.getProcessType());
+        ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
         view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }
@@ -102,7 +102,7 @@ public class DycReportController {
     public ModelAndView update(RedirectAttributes attributes, HttpServletRequest req, DycReport entity) throws Exception {
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> dataMap = new LinkedHashMap<>(paramMap.size());
-        ElasticTable etab = wfcReportService.findByCode("etabType_" + entity.getProcessType());
+        ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
         List<Map<String, Object>> structList = JSON.parseObject(etab.getJsonStruct(), List.class);
         for (Map<String, Object> struct : structList) {
             String code = struct.get("code").toString();
@@ -148,7 +148,7 @@ public class DycReportController {
         DycReport entity = reportService.findById(id);
         view.addObject("entity", reportService.findById(id));
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
-        view.addObject("extAttr", HTMLUtils.json2HTML(etab.getJsonStruct(), entity.getExtraJson()));
+        view.addObject("extAttr", HTMLUtils.json2HTMLView(etab.getJsonStruct(), entity.getExtraJson()));
         return view;
     }
 

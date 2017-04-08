@@ -175,12 +175,16 @@ public class HTMLUtils {
      * @param jsonData
      * @return
      */
-    public static String json2HTML(String jsonStruct, String jsonData) {
+    public static String json2HTMLView(ApplicationContext applicationContext, String jsonStruct, String jsonData) {
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
         }
         if (jsonData == null || jsonData.trim().isEmpty()) {
             jsonData = "{}";
+        }
+        DataDictService dataDictService = null;
+        if (applicationContext.containsBean("dataDictService")) {
+            dataDictService = applicationContext.getBean(DataDictService.class);
         }
         List<Map<String, Object>> structList = JSON.parseObject(jsonStruct, List.class);
         Map<String, Object> dataMap = JSON.parseObject(jsonData, Map.class);
@@ -188,23 +192,34 @@ public class HTMLUtils {
         int itemIndex = 0;
         String html = "<tr>";
         for (Map<String, Object> entry : structList) {
-            String tagType = entry.get("tagType").toString();
-            String required = entry.get("required").toString();
+            String tagType = entry.get("tagType").toString().replace("tagType_", "");
             String code = entry.get("code").toString();
             String name = entry.get("name").toString();
             String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
 
             itemIndex++;
             tmpIndex++;
-            if (tmpIndex == 3 || (tmpIndex == 1 && tagType.equals("textarea"))) {
+            if (tmpIndex == 3 || (tmpIndex == 1 && (tagType.equals("textarea") || tagType.equals("subForm")))) {
                 html += "<tr>";
-            } else if (tmpIndex == 2 && tagType.equals("textarea")) {
+            } else if (tmpIndex == 2 && (tagType.equals("textarea") || tagType.equals("subForm"))) {
                 html += "</tr><tr>";
             }
             html += "<td class='td_table_1'>" + name + "</td><td class='td_table_2' ${" + itemIndex + "}>";
-            html += val + "</td>";
+            if (tagType.equals("subForm")) {
+                html += "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' style='margin: 0'>";
+                html += "<tr>";
+                DataDict dataDict = dataDictService.findByCode(entry.get("subForm").toString());
+                if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {
 
-            if (tagType.equals("textarea")) {
+                }
+                html += "</tr>";
+                html += "</table>";
+            } else {
+                html += val;
+            }
+            html += "</td>";
+
+            if (tagType.equals("textarea") || tagType.equals("subForm")) {
                 if (tmpIndex == 1) {
                     html = html.replace("${" + itemIndex + "}", " colspan='3'");
                 } else if (tmpIndex == 2) {
@@ -214,7 +229,8 @@ public class HTMLUtils {
             } else if (tmpIndex == 1 && itemIndex == structList.size()) {
                 html = html.replace("${" + itemIndex + "}", " colspan='3'");
             }
-            if (tmpIndex == 2 || (tmpIndex == 1 && tagType.equals("textarea")) || itemIndex == structList.size()) {
+            if (tmpIndex == 2 || itemIndex == structList.size() ||
+                    (tmpIndex == 1 && (tagType.equals("textarea") || tagType.equals("subForm")))) {
                 html += "</tr>";
                 tmpIndex = 0;
             }
