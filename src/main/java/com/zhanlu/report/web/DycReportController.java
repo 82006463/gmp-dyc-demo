@@ -146,7 +146,7 @@ public class DycReportController {
     public ModelAndView view(@PathVariable("id") Long id) throws Exception {
         ModelAndView view = new ModelAndView("report/reportView");
         DycReport entity = reportService.findById(id);
-        view.addObject("entity", reportService.findById(id));
+        view.addObject("entity", entity);
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
         view.addObject("extAttr", HTMLUtils.json2HTMLView(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
         return view;

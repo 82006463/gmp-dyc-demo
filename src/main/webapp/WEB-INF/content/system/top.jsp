@@ -10,9 +10,9 @@
 </head>
 <body>
     <div id="header">
-        <div class="logo">
+        <div class="logo" style="margin-bottom: 25px;">
             <%--<img src="${ctx }/styles/images/snaker.png" alt="Snaker"/>--%>
-                <img src="${ctx }/styles/images/logo_dyc.gif" alt="DYC"/>
+                <img src="${ctx }/styles/images/logo_dyc.gif" alt="DYC" style="height: 80px;"/>
         </div>
         <ul class="qj">
             <li style="width: 100px;"><span><shiro:principal/></span></li>

@@ -46,7 +46,7 @@ public class DycReport extends IdEntity {
         this.processType = processType;
     }
 
-    @Column(name = "process_no", length = 20)
+    @Column(name = "process_no", length = 50)
     public String getProcessNo() {
         return processNo;
     }
@@ -55,7 +55,7 @@ public class DycReport extends IdEntity {
         this.processNo = processNo;
     }
 
-    @Column(name = "process_name", length = 50)
+    @Column(name = "process_name", length = 100)
     public String getProcessName() {
         return processName;
     }
