@@ -83,7 +83,7 @@
                                         <frame:dict name="itemFuzzys" type="select" typeCode="fuzzySearch" value="${item.fuzzy}" cssClass="validate[required]"/>
                                     </td>
 									<td class="td_list_2">
-										<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a>
+										<a href='javascript:void(0)' onclick='Ops.removeTr(this,1);' class='btnDel' title='删除'>删除</a>
                                         <a onclick='return Ops.up(this);' title='上移'>上</a>
                                         <a onclick='return Ops.down(this);' title='下移'>下</a>
 									</td>
@@ -136,7 +136,7 @@
                 cell.className = "td_list_2";
 
 				cell = row.insertCell(-1);
-				cell.innerHTML = "<a href='javascript:void(0)' onclick='$(this).parent().parent().remove();' class='btnDel' title='删除'>删除</a><a onclick='return opsUp(this);' title='上移'>上</a><a onclick='return opsDown(this);' title='下移'>下</a>";
+				cell.innerHTML = "<a href='javascript:void(0)' onclick='Ops.removeTr(this,1);' class='btnDel' title='删除'>删除</a><a onclick='return Ops.up(this);' title='上移'>上</a><a onclick='return Ops.down(this);' title='下移'>下</a>";
 				cell.className = "td_list_2";
 			}
 		</script>
