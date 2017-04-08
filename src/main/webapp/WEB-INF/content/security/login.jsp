@@ -23,7 +23,7 @@
 				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="./">德亦诚全面质量管理系统</a>
+				<a class="brand" href="./" style="font-weight: bold; ">德亦诚全面质量管理系统</a>
 				<div class="nav-collapse">
 					<!-- 
 						<ul class="nav pull-right">

@@ -77,7 +77,7 @@ public class DycReportController {
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
-        view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
+        view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonEdit(), entity.getExtraJson()));
         return view;
     }
 
@@ -91,7 +91,7 @@ public class DycReportController {
         view.addObject("entity", entity);
         view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
-        view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
+        view.addObject("extAttr", HTMLUtils.json2HTML(applicationContext, etab.getJsonEdit(), entity.getExtraJson()));
         return view;
     }
 
@@ -103,7 +103,7 @@ public class DycReportController {
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> dataMap = new LinkedHashMap<>(paramMap.size());
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
-        List<Map<String, Object>> structList = JSON.parseObject(etab.getJsonStruct(), List.class);
+        List<Map<String, Object>> structList = JSON.parseObject(etab.getJsonEdit(), List.class);
         for (Map<String, Object> struct : structList) {
             String code = struct.get("code").toString();
             String dataType = struct.get("dataType").toString().replace("dataType_", "");
@@ -148,7 +148,7 @@ public class DycReportController {
         DycReport entity = reportService.findById(id);
         view.addObject("entity", entity);
         ElasticTable etab = wfcReportService.findByCode(entity.getProcessType());
-        view.addObject("extAttr", HTMLUtils.json2HTMLView(applicationContext, etab.getJsonStruct(), entity.getExtraJson()));
+        view.addObject("extAttr", HTMLUtils.json2HTMLView(applicationContext, etab.getJsonEdit(), entity.getExtraJson()));
         return view;
     }
 

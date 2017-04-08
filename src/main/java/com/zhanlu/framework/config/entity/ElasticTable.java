@@ -11,19 +11,44 @@ import javax.persistence.Table;
 @Table(name = "wfc_elastic_table")
 public class ElasticTable extends CodeEntity {
 
-    //报表的扩展属性：存为JSON
-    private String jsonStruct;
+    private String jsonSearch; //列表页面的搜索属性：JSON
+    private String jsonList; //列表页面的显示属性：JSON
+    private String jsonEdit; //编辑页面：JSON
 
-    @Lob
-    @Column(name = "json_struct")
-    public String getJsonStruct() {
-        if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
-            jsonStruct = "[]";
+    @Column(name = "json_search", length = 300)
+    public String getJsonSearch() {
+        if (jsonSearch == null || jsonSearch.trim().isEmpty()) {
+            jsonSearch = "[]";
         }
-        return jsonStruct;
+        return jsonSearch;
     }
 
-    public void setJsonStruct(String jsonStruct) {
-        this.jsonStruct = jsonStruct;
+    public void setJsonSearch(String jsonSearch) {
+        this.jsonSearch = jsonSearch;
+    }
+
+    @Column(name = "json_list", length = 500)
+    public String getJsonList() {
+        if (jsonList == null || jsonList.trim().isEmpty()) {
+            jsonList = "[]";
+        }
+        return jsonList;
+    }
+
+    public void setJsonList(String jsonList) {
+        this.jsonList = jsonList;
+    }
+
+    @Lob
+    @Column(name = "json_edit")
+    public String getJsonEdit() {
+        if (jsonEdit == null || jsonEdit.trim().isEmpty()) {
+            jsonEdit = "[]";
+        }
+        return jsonEdit;
+    }
+
+    public void setJsonEdit(String jsonEdit) {
+        this.jsonEdit = jsonEdit;
     }
 }
