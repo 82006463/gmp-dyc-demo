@@ -47,8 +47,9 @@
 					<td class="td_table_2" colspan="3">
 						<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" id="itemTable" style="margin: 0">
 							<tr>
-								<td align=center class="td_list_1">编号</td>
-								<td align=center class="td_list_1">名称</td>
+								<td align=center class="td_list_1">字段</td>
+								<td align=center class="td_list_1">类属性</td>
+								<td align=center class="td_list_1">描述</td>
 								<td align=center class="td_list_1">数据类型</td>
 								<c:if test="${type == 'search'}">
                                     <td align=center class="td_list_1">比较条件</td>
@@ -69,6 +70,9 @@
 									</td>
 									<td class="td_list_2">
 										<input type="text" name='itemNames' value='${item.name}' class='input_120 validate[required]'>
+									</td>
+									<td class="td_list_2">
+										<input type="text" name='itemDescs' value='${item.desc}' class='input_120 validate[required]'>
 									</td>
 									<td class="td_list_2">
 										<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="${item.dataType}" defaultVal="dataType_varchar" cssClass="validate[required]"/>
@@ -125,6 +129,9 @@
 				cell.className = "td_list_2";
 				cell = row.insertCell(-1);
 				cell.innerHTML = "<input type='text' name='itemNames' value='' class='input_120 validate[required]'>";
+				cell.className = "td_list_2";
+				cell = row.insertCell(-1);
+				cell.innerHTML = "<input type='text' name='itemDescs' value='' class='input_120 validate[required]'>";
 				cell.className = "td_list_2";
 				cell = row.insertCell(-1);
 				cell.innerHTML = "<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="" defaultVal="dataType_varchar" cssClass="validate[required]"/>";

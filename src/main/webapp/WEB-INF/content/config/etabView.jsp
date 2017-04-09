@@ -22,27 +22,53 @@
 					<td class="td_table_1">名称：</td>
 					<td class="td_table_2">${entity.name}</td>
 				</tr>
+			</table>
 
+			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="td_table_1">流程前缀：</td>
-					<td class="td_table_2">${entity.prefix}</td>
-					<td class="td_table_1">时间模式：</td>
-					<td class="td_table_2">${entity.timePattern}</td>
-				</tr>
-
-				<tr>
-					<td class="td_table_1">部门状态：</td>
-					<td class="td_table_2">${entity.orgState==1 ? '启用':'停用'}</td>
-					<td class="td_table_1">部门编号：</td>
-					<td class="td_table_2">${entity.orgCode}</td>
-				</tr>
-
-				<tr>
-					<td class="td_table_1">流水号长度：</td>
-					<td class="td_table_2" colspan="3">${entity.indexLength}</td>
+					<td class="td_table_1">选项列表：</td>
+					<td class="td_table_2" colspan="3">
+						<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" id="itemTable" style="margin: 0">
+							<tr>
+								<td align=center class="td_list_1">字段</td>
+								<td align=center class="td_list_1">类属性</td>
+								<td align=center class="td_list_1">描述</td>
+								<td align=center class="td_list_1">数据类型</td>
+								<c:if test="${type == 'search'}">
+									<td align=center class="td_list_1">比较条件</td>
+									<td align=center class="td_list_1">标签类型</td>
+								</c:if>
+								<c:if test="${type == 'edit'}">
+									<td align=center class="td_list_1">标签类型</td>
+									<td align=center class="td_list_1">是否必填</td>
+									<td align=center class="td_list_1">子表单</td>
+									<td align=center class="td_list_1">模糊搜索</td>
+								</c:if>
+								<td align=center width=6% class="td_list_1">操作</td>
+							</tr>
+							<c:forEach items="${type=='search' ? jsonSearchMap : type=='list' ? jsonListMap : jsonEditMap}" var="item" varStatus="itemIndex">
+								<tr>
+									<td class="td_list_2">${item.code}</td>
+									<td class="td_list_2">${item.name}</td>
+									<td class="td_list_2">${item.desc}</td>
+									<td class="td_list_2">${item.dataType}</td>
+									<c:if test="${type == 'search'}">
+										<td class="td_list_2">${item.compare}</td>
+										<td class="td_list_2">${item.tagType}</td>
+									</c:if>
+									<c:if test="${type == 'edit'}">
+										<td class="td_list_2">${item.tagType}</td>
+										<td class="td_list_2">${item.required}</td>
+										<td class="td_list_2">${item.subForm}</td>
+										<td class="td_list_2">${item.fuzzy}</td>
+									</c:if>
+								</tr>
+							</c:forEach>
+						</table>
+					</td>
 				</tr>
 			</table>
-			
+
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">

@@ -112,7 +112,7 @@ public class ElasticTableController {
      * @return
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(ElasticTable entity, HttpServletRequest req, String type, String[] itemCodes, String[] itemNames, String[] itemDataTypes) {
+    public String update(ElasticTable entity, HttpServletRequest req, String type, String[] itemCodes, String[] itemNames, String[] itemDescs, String[] itemDataTypes) {
         ElasticTable tmp = entity.getId() == null ? new ElasticTable() : elastictTableService.findById(entity.getId());
         tmp.setCode(entity.getCode());
         tmp.setName(entity.getName());
@@ -127,6 +127,7 @@ public class ElasticTableController {
                     Map<String, Object> itemMap = new LinkedHashMap<>(8);
                     itemMap.put("code", itemCodes[i]);
                     itemMap.put("name", itemNames[i]);
+                    itemMap.put("desc", itemDescs[i]);
                     itemMap.put("dataType", itemDataTypes[i]);
                     itemMap.put("compare", itemCompares[i]);
                     itemMap.put("tagType", itemTagTypes[i]);
@@ -138,6 +139,7 @@ public class ElasticTableController {
                     Map<String, Object> itemMap = new LinkedHashMap<>(8);
                     itemMap.put("code", itemCodes[i]);
                     itemMap.put("name", itemNames[i]);
+                    itemMap.put("desc", itemDescs[i]);
                     itemMap.put("dataType", itemDataTypes[i]);
                     items.add(itemMap);
                 }
@@ -151,6 +153,7 @@ public class ElasticTableController {
                     Map<String, Object> itemMap = new LinkedHashMap<>(8);
                     itemMap.put("code", itemCodes[i]);
                     itemMap.put("name", itemNames[i]);
+                    itemMap.put("desc", itemDescs[i]);
                     itemMap.put("required", itemRequireds[i]);
                     itemMap.put("dataType", itemDataTypes[i]);
                     itemMap.put("tagType", itemTagTypes[i]);

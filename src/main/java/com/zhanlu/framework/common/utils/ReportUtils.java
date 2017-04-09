@@ -37,6 +37,7 @@ public class ReportUtils {
             String compare = entry.get("compare").toString().replace("compare_", "filter_");
             String code = entry.get("code").toString();
             String name = entry.get("name").toString();
+            String desc = entry.get("desc").toString();
             code = compare + (dataType.equals("int") ? "I" : dataType.equals("long") ? "L" : dataType.equals("date") ? "D" : dataType.equals("double") ? "N" : "S") + "_" + code;
             String val = paramMap.get(code) == null ? "" : paramMap.get(code)[0];
 
@@ -45,7 +46,7 @@ public class ReportUtils {
             if (tmpIndex == 3) {
                 html += "<tr>";
             }
-            html += "<td class='td_table_1'>" + name + "：</td><td class='td_table_2'>";
+            html += "<td class='td_table_1'>" + desc + "：</td><td class='td_table_2'>";
             if (tagType.equals("date")) {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
             } else if (tagType.equals("timestamp")) {
@@ -110,6 +111,7 @@ public class ReportUtils {
             String fuzzy = entry.get("fuzzy").toString();
             String code = entry.get("code").toString();
             String name = entry.get("name").toString();
+            String desc = entry.get("desc").toString();
             String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
 
             itemIndex++;
@@ -119,7 +121,7 @@ public class ReportUtils {
             } else if (tmpIndex == 2 && (tagType.equals("textarea") || tagType.equals("subForm"))) {
                 html += "</tr><tr>";
             }
-            html += "<td class='td_table_1'>" + name + "</td><td class='td_table_2' ${" + itemIndex + "}>";
+            html += "<td class='td_table_1'>" + desc + "</td><td class='td_table_2' ${" + itemIndex + "}>";
             if (tagType.equals("textarea")) {
                 html += "<textarea name='" + code + "' class='input_textarea_600" + (required.equals("yes") ? " validate[required]" : "") + "'>" + val + "</textarea>";
             } else if (tagType.equals("date")) {
@@ -249,6 +251,7 @@ public class ReportUtils {
             String tagType = entry.get("tagType").toString().replace("tagType_", "");
             String code = entry.get("code").toString();
             String name = entry.get("name").toString();
+            String desc = entry.get("desc").toString();
             String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
 
             itemIndex++;
@@ -258,7 +261,7 @@ public class ReportUtils {
             } else if (tmpIndex == 2 && (tagType.equals("textarea") || tagType.equals("subForm"))) {
                 html += "</tr><tr>";
             }
-            html += "<td class='td_table_1'>" + name + "</td><td class='td_table_2' ${" + itemIndex + "}>";
+            html += "<td class='td_table_1'>" + desc + "</td><td class='td_table_2' ${" + itemIndex + "}>";
             if (tagType.equals("subForm")) {
                 html += "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' style='margin: 0'>";
                 html += "<tr>";

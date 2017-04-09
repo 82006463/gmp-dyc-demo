@@ -17,12 +17,6 @@
 		</table>
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
-			<tr>
-				<td class="td_table_1">编号：</td>
-				<td class="td_table_2">${entity.processNo}</td>
-				<td class="td_table_1">名称：</td>
-				<td class="td_table_2">${entity.processName}</td>
-			</tr>
 			${jsonEdit}
 		</table>
 
