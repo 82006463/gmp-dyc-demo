@@ -7,6 +7,7 @@ import com.zhanlu.framework.config.service.DataDictService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,8 @@ public class ChartUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonSearch(JdbcTemplate jdbcTemplate, DataDictService dataDictService, ElasticTable etab, Map<String, String[]> paramMap) {
+    public static String jsonSearch(JdbcTemplate jdbcTemplate, DataDictService dataDictService, ElasticTable etab, HttpServletRequest req) {
+        Map<String, String[]> paramMap = req.getParameterMap();
         String jsonStruct = etab.getJsonSearch();
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
@@ -72,7 +74,7 @@ public class ChartUtils {
         }
         html += "</table>";
         html += "<table align='center' border='0' cellpadding='0' cellspacing='0'><tr><td align='left'>";
-        html += "<input type='button' onclick='addNew('/dyc/chart/create?type=" + (paramMap.get("type") == null ? "" : paramMap.get("type")[0]) + "')' class='button_70px' value='新建'/>";
+        html += "<input type='button' onclick=addNew('" + req.getContextPath() + "/dyc/chart/create?type=" + (paramMap.get("type") == null ? "" : paramMap.get("type")[0]) + "') class='button_70px' value='新建'/>";
         html += "<input type='submit' class='button_70px' value='查询'/></td></tr></table>";
         return html;
     }

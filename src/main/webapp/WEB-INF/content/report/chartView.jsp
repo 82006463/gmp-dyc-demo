@@ -12,20 +12,20 @@
 	<form id="inputForm" action="${ctx}/dyc/chart/list" method="get">
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">图表管理-${chartType.name}</td>
+				<td class="td_table_top" align="center">图表管理-${etab.name}</td>
 			</tr>
 		</table>
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td class="td_table_1">${chartType.name}编号：</td>
-				<td class="td_table_2">${entity.chartNo}</td>
-				<td class="td_table_1">${chartType.name}名称：</td>
-				<td class="td_table_2">${entity.chartName}</td>
+				<td class="td_table_1">编号：</td>
+				<td class="td_table_2">${entity.code}</td>
+				<td class="td_table_1">名称：</td>
+				<td class="td_table_2">${entity.name}</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">${chartType.name}描述：</td>
-				<td class="td_table_2" colspan="3">${entity.chartDesc}</td>
+				<td class="td_table_1">描述：</td>
+				<td class="td_table_2" colspan="3">${entity.remark}</td>
 			</tr>
 		</table>
 

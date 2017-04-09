@@ -22,17 +22,17 @@
 			<tr>
 				<td class="td_table_1">${chartType.name}编号：</td>
 				<td class="td_table_2">
-					<input type="text" name="chartNo" value="${entity.chartNo}" class="input_240 validate[required]" />
+					<input type="text" name="code" value="${entity.code}" class="input_240 validate[required]" />
 				</td>
 				<td class="td_table_1">${chartType.name}名称：</td>
 				<td class="td_table_2">
-					<input type="text" name="chartName" value="${entity.chartName}" class="input_240 validate[required]"/>
+					<input type="text" name="name" value="${entity.name}" class="input_240 validate[required]"/>
 				</td>
 			</tr>
 			<tr>
 				<td class="td_table_1">${chartType.name}描述：</td>
 				<td class="td_table_2" colspan="3">
-					<textarea class="input_textarea_600" name="chartDesc">${entity.chartDesc}</textarea>
+					<textarea class="input_textarea_600" name="remark">${entity.remark}</textarea>
 				</td>
 			</tr>
 		</table>

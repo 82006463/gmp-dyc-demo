@@ -96,14 +96,9 @@ public class MenuTagBuilder implements TagBuilder {
                 continue;
             }
             buffer.append("<dl>");
-            buffer.append("<dt id='sidebar_goods_manage'><i class='pngFix'></i>");
-            buffer.append(menu.getName());
-            buffer.append("</dt>");
+            buffer.append("<dt id='sidebar_goods_manage'><i class='pngFix'></i>" + menu.getName() + "</dt>");
             buffer.append("<dd>");
             buffer.append("<ul>");
-            /**
-             * 有子菜单时，将子菜单添加到当前节点上
-             */
             buildMenuTreeNode(buffer, treeNodes);
             buffer.append("</ul>");
             buffer.append("</dd>");
@@ -118,19 +113,12 @@ public class MenuTagBuilder implements TagBuilder {
      * @param treeNodes
      */
     private void buildMenuTreeNode(StringBuffer buffer, List<Menu> treeNodes) {
-        if (treeNodes == null) {
-            return;
-        }
-        for (Menu menu : treeNodes) {
-            buffer.append("<li>");
-            buffer.append("<a href='");
-            buffer.append(servletContext.getContextPath());
-            buffer.append(menu.getDescription());
-            buffer.append("' target='mainFrame' ");
-            buffer.append(">");
-            buffer.append(menu.getName());
-            buffer.append("</a>");
-            buffer.append("</li>");
+        if (treeNodes != null) {
+            for (Menu menu : treeNodes) {
+                buffer.append("<li>");
+                buffer.append("<a href='" + servletContext.getContextPath() + menu.getDescription() + "' target='mainFrame'>" + menu.getName() + "</a>");
+                buffer.append("</li>");
+            }
         }
     }
 }

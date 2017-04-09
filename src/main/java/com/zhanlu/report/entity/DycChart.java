@@ -20,7 +20,6 @@ import javax.persistence.Transient;
 public class DycChart extends CodeEntity {
 
     private String type; //流程类型
-    private String chartDesc;//描述
 
     //显示类型
     private String view;
@@ -32,15 +31,6 @@ public class DycChart extends CodeEntity {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    @Column(name = "chart_desc", length = 200)
-    public String getChartDesc() {
-        return chartDesc;
-    }
-
-    public void setChartDesc(String chartDesc) {
-        this.chartDesc = chartDesc;
     }
 
     @Transient
