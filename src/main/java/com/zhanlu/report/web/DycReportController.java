@@ -51,7 +51,7 @@ public class DycReportController {
      * 分页列表
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list(DycReport entity, Page<DycReport> page, HttpServletRequest request) {
+    public ModelAndView list(DycReport entity, Page<DycReport> page, HttpServletRequest request) throws Exception {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         filters.add(new PropertyFilter("EQS_processType", entity.getProcessType()));
         //设置默认排序方式
@@ -62,6 +62,7 @@ public class DycReportController {
         page = reportService.findPage(page, filters);
         ModelAndView view = new ModelAndView("report/reportList");
         view.addObject("page", page);
+        view.addObject("etab", wfcReportService.findByCode("reportType_" + entity.getProcessType()));
         return view;
     }
 
@@ -74,6 +75,7 @@ public class DycReportController {
         view.addObject("entity", entity);
         ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
         view.addObject("jsonEdit", ReportUtils.jsonEdit(jdbcTemplate, dataDictService, etab, entity.getExtraJson()));
+        view.addObject("etab", etab);
         return view;
     }
 
@@ -87,6 +89,7 @@ public class DycReportController {
         view.addObject("entity", entity);
         ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
         view.addObject("jsonEdit", ReportUtils.jsonEdit(jdbcTemplate, dataDictService, etab, entity.getExtraJson()));
+        view.addObject("etab", etab);
         return view;
     }
 
@@ -144,6 +147,7 @@ public class DycReportController {
         view.addObject("entity", entity);
         ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
         view.addObject("jsonEdit", ReportUtils.jsonView(dataDictService, etab, entity.getExtraJson()));
+        view.addObject("etab", etab);
         return view;
     }
 

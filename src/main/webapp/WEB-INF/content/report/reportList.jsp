@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>报表管理</title>
+	<title>报表管理-${etab.name}</title>
 	<%@ include file="/common/common-list.jsp"%>
 </head>
 
@@ -17,7 +17,7 @@
 
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">报表管理</td>
+				<td class="td_table_top" align="center">报表管理-${etab.name}</td>
 			</tr>
 		</table>
 
@@ -78,12 +78,8 @@
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align="center" class="td_list_1">
-					${param['processType']=='dev' ? '偏差':param['processType']=='cc' ? '变更':param['processType']=='capa' ? 'CAPA':param['processType']=='oos'? 'OOS':''}编号
-				</td>
-				<td align="center" class="td_list_1">
-					${param['processType']=='dev' ? '偏差':param['processType']=='cc' ? '变更':param['processType']=='capa' ? 'CAPA':param['processType']=='oos'? 'OOS':''}名称
-				</td>
+				<td align="center" class="td_list_1">${etab.name}编号</td>
+				<td align="center" class="td_list_1">${etab.name}名称</td>
 				<td align="center" class="td_list_1">部门</td>
 				<td align="center" class="td_list_1">级别</td>
 				<td align="center" class="td_list_1">发现时间</td>
@@ -92,8 +88,8 @@
 			</tr>
 			<c:forEach items="${page.result}" var="item">
 				<tr>
-					<td class="td_list_2" align=left>${item.processNo}</td>
-					<td class="td_list_2" align=left>${item.processName}</td>
+					<td class="td_list_2" align=left>${item.code}</td>
+					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>${item.orgName}</td>
 					<td class="td_list_2" align=left>${item.level}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.occurTime}" pattern="yyyy-MM-dd"/></td>

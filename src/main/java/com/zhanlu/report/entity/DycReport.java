@@ -44,22 +44,19 @@ public class DycReport extends CodeEntity {
     private String str54;
     private String str55;
 
-    private Integer int1;
-    private Integer int2;
-    private Integer int3;
-    private Integer int4;
-    private Integer int5;
-
-    private Long long1;
-    private Long long2;
-    private Long long3;
+    private Integer num1;
+    private Integer num2;
+    private Integer num3;
+    private Integer num4;
+    private Integer num5;
+    private Long num21;
+    private Long num22;
 
     private Date date1;
     private Date date2;
     private Date date3;
     private Date date4;
     private Date date5;
-
     private Date time1;
     private Date time2;
     private Date time3;
@@ -176,78 +173,6 @@ public class DycReport extends CodeEntity {
 
     public void setType2(String type2) {
         this.type2 = type2;
-    }
-
-    @Column(name = "int1")
-    public Integer getInt1() {
-        return int1;
-    }
-
-    public void setInt1(Integer int1) {
-        this.int1 = int1;
-    }
-
-    @Column(name = "int2")
-    public Integer getInt2() {
-        return int2;
-    }
-
-    public void setInt2(Integer int2) {
-        this.int2 = int2;
-    }
-
-    @Column(name = "int3")
-    public Integer getInt3() {
-        return int3;
-    }
-
-    public void setInt3(Integer int3) {
-        this.int3 = int3;
-    }
-
-    @Column(name = "int4")
-    public Integer getInt4() {
-        return int4;
-    }
-
-    public void setInt4(Integer int4) {
-        this.int4 = int4;
-    }
-
-    @Column(name = "int5")
-    public Integer getInt5() {
-        return int5;
-    }
-
-    public void setInt5(Integer int5) {
-        this.int5 = int5;
-    }
-
-    @Column(name = "long1")
-    public Long getLong1() {
-        return long1;
-    }
-
-    public void setLong1(Long long1) {
-        this.long1 = long1;
-    }
-
-    @Column(name = "long2")
-    public Long getLong2() {
-        return long2;
-    }
-
-    public void setLong2(Long long2) {
-        this.long2 = long2;
-    }
-
-    @Column(name = "long3")
-    public Long getLong3() {
-        return long3;
-    }
-
-    public void setLong3(Long long3) {
-        this.long3 = long3;
     }
 
     @Column(name = "date1")
@@ -418,5 +343,68 @@ public class DycReport extends CodeEntity {
 
     public void setStr55(String str55) {
         this.str55 = str55;
+    }
+
+    @Column(name = "num1")
+    public Integer getNum1() {
+        return num1;
+    }
+
+    public void setNum1(Integer num1) {
+        this.num1 = num1;
+    }
+
+    @Column(name = "num2")
+    public Integer getNum2() {
+        return num2;
+    }
+
+    public void setNum2(Integer num2) {
+        this.num2 = num2;
+    }
+
+    @Column(name = "num3")
+    public Integer getNum3() {
+        return num3;
+    }
+
+    public void setNum3(Integer num3) {
+        this.num3 = num3;
+    }
+
+    @Column(name = "num4")
+    public Integer getNum4() {
+        return num4;
+    }
+
+    public void setNum4(Integer num4) {
+        this.num4 = num4;
+    }
+
+    @Column(name = "num5")
+    public Integer getNum5() {
+        return num5;
+    }
+
+    public void setNum5(Integer num5) {
+        this.num5 = num5;
+    }
+
+    @Column(name = "num21")
+    public Long getNum21() {
+        return num21;
+    }
+
+    public void setNum21(Long num21) {
+        this.num21 = num21;
+    }
+
+    @Column(name = "num22")
+    public Long getNum22() {
+        return num22;
+    }
+
+    public void setNum22(Long num22) {
+        this.num22 = num22;
     }
 }
