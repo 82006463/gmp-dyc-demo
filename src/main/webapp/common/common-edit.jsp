@@ -70,7 +70,7 @@
         var _table = $(thisObj).parent().parent().parent().parent();
         var _tr = _table.find('tr:eq(1)').clone(true);
         _tr.find(':input').removeAttr('readonly').val('');
-        _tr.find('td:eq(' + (_tr.find('td').length - 1) + ')').append("<a class='btnDel' onclick='return Ops.removeTr(this,1);'></a><a onclick='return Ops.up(this);' title='上移'>上</a><a onclick='return Ops.down(this);' title='下移'>下</a>");
+        _tr.find('td:eq(' + (_tr.find('td').length - 1) + ')').append("<a class='btnDel' onclick='return Ops.removeTr(this,1);'></a><a onclick='return Ops.up(this);' title='&#x4E0A;&#x79FB;'>&#x4E0A;</a><a onclick='return Ops.down(this);' title='&#x4E0B;&#x79FB;'>&#x4E0B;</a>");
         _table.append(_tr);
         return false;
     }

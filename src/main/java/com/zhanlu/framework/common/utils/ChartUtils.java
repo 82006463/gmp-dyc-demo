@@ -31,7 +31,7 @@ public class ChartUtils {
         int tmpIndex = 0;
         int itemIndex = 0;
         String html = "<table width='100%' border='0' align='center' cellpadding='0' class='table_all_border' cellspacing='0' style='margin-bottom: 0px;border-bottom: 0px'>";
-        html += "<tr><td class='td_table_top' align='center'>图表管理-" + etab.getName() + "</td></tr></table>";
+        html += "<tr><td class='td_table_top' align='center'>图表管理-" + (etab.getName() == null ? "伸缩表中未配置" : etab.getName()) + "</td></tr></table>";
         html += "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' style='margin-top: 0px'><tr>";
         for (Map<String, Object> entry : structList) {
             String tagType = entry.get("tagType").toString().replace("tagType_", "");
@@ -74,7 +74,7 @@ public class ChartUtils {
         }
         html += "</table>";
         html += "<table align='center' border='0' cellpadding='0' cellspacing='0'><tr><td align='left'>";
-        html += "<input type='button' onclick=addNew('" + req.getContextPath() + "/dyc/chart/create?type=" + (paramMap.get("type") == null ? "" : paramMap.get("type")[0]) + "') class='button_70px' value='新建'/>";
+        //html += "<input type='button' onclick=addNew('" + req.getContextPath() + "/dyc/chart/create?type=" + (paramMap.get("type") == null ? "" : paramMap.get("type")[0]) + "') class='button_70px' value='新建'/>";
         html += "<input type='submit' class='button_70px' value='查询'/></td></tr></table>";
         return html;
     }
@@ -82,14 +82,62 @@ public class ChartUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonList(JdbcTemplate jdbcTemplate, DataDictService dataDictService, ElasticTable etab) {
-        String jsonStruct = etab.getJsonList();
-        if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
+    public static String jsonList(JdbcTemplate jdbcTemplate, DataDictService dataDictService, ElasticTable etab, HttpServletRequest req) {
+        String jsonSearch = etab.getJsonSearch();
+        String jsonList = etab.getJsonList();
+        if (jsonSearch == null || jsonSearch.trim().isEmpty() || jsonList == null || jsonList.trim().isEmpty()) {
             return "";
         }
 
-        String html = "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' style='margin-top: 0px'><tr>";
-        html += "</table>";
+        Map<String, String[]> paramMap = req.getParameterMap();
+        List<Map<String, Object>> jsonListList = JSON.parseObject(jsonList, List.class);
+        List<Map<String, Object>> jsonSearchList = JSON.parseObject(jsonSearch, List.class);
+        String html = "<tr>";
+        for (Map<String, Object> entry : jsonListList) {
+            html += "<td align='center' class='td_list_1'>" + entry.get("name") + "</td>";
+        }
+        html += "<td align='center' width=10% class='td_list_1'>操作</td>";
+        html += "</tr>";
+        DataDict dataDict = dataDictService.findByCode(etab.getCode());
+        if (StringUtils.isBlank(dataDict.getDataSource())) {
+            return html;
+        }
+        String sql = dataDict.getDataSource();
+        List<Object> paramList = new ArrayList<>();
+        for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
+            for (Map<String, Object> struct : jsonSearchList) {
+                String dataType = struct.get("dataType").toString().replace("dataType_", "");
+                String compare = struct.get("compare").toString().replace("compare_", "filter_");
+                String code = struct.get("code").toString();
+                String tmpCode = compare + (dataType.equals("int") ? "I" : dataType.equals("long") ? "L" : dataType.equals("date") ? "D" : dataType.equals("double") ? "N" : "S") + "_" + code;
+                if (entry.getKey().equals(tmpCode) && entry.getValue() != null) {
+                    sql += " AND ";
+                    if (compare.contains("LIKE")) {
+                        sql += code + " LIKE '%" + entry.getValue()[0] + "%'";
+                    } else if (code.contains("EQ") && dataType.equals("varchar")) {
+                        sql += code + "='" + entry.getValue()[0] + "'";
+                    } else if (compare.contains("LT")) {
+                        sql += code + "< " + entry.getValue()[0];
+                    } else if (compare.contains("LE")) {
+                        sql += code + "<= " + entry.getValue()[0];
+                    } else if (compare.contains("GT")) {
+                        sql += code + "> " + entry.getValue()[0];
+                    } else if (compare.contains("GE")) {
+                        sql += code + ">= " + entry.getValue()[0];
+                    } else {
+                        sql += code + "=" + entry.getValue()[0];
+                    }
+                }
+            }
+        }
+        List<Map<String, Object>> resultList = ResultSetUtils.convertList(jdbcTemplate.queryForList(sql, paramList.toArray()));
+        for (Map<String, Object> entryMap : resultList) {
+            html += "<tr>";
+            for (Map<String, Object> entryList : jsonListList) {
+                html += "<td class='td_list_2' align='left'>" + entryMap.get(entryList.get("code").toString()) + "</td>";
+            }
+            html += "</tr>";
+        }
         return html;
     }
 

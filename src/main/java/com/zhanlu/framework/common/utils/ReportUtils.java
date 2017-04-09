@@ -185,8 +185,7 @@ public class ReportUtils {
             } else if (tagType.startsWith("select_") || tagType.startsWith("radio_") || tagType.startsWith("checkbox_")) {
                 DataDict dataDict = dataDictService.findByCode("tagType_" + tagType);
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource()) && dataDict.getDataSource().trim().toUpperCase().startsWith("SELECT ")) {
-                    List<Map<String, Object>> itemList = jdbcTemplate.queryForList(dataDict.getDataSource());
-                    itemList = ResultSetUtils.convertList(itemList);
+                    List<Map<String, Object>> itemList = ResultSetUtils.convertList(jdbcTemplate.queryForList(dataDict.getDataSource()));
                     if (tagType.startsWith("select_")) {
                         html += "<select name='" + code + "' class='input_select" + (required.equals("yes") ? " validate[required]" : "") + "' fuzzy='" + fuzzy + "'>";
                         html += "<option value='' selected>--请选择--</option>";

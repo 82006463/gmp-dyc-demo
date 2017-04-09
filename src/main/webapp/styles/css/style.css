@@ -318,7 +318,7 @@ a:hover {
 }
 
 a.btnUp {
-	background:url(../images/delete.png) no-repeat;
+	background:url(../images/sorting-asc.png) no-repeat;
 	display:block;
 	width:22px;
 	height:20px;
@@ -329,7 +329,7 @@ a.btnUp {
 }
 
 a.btnDown {
-	background:url(../images/delete.png) no-repeat;
+	background:url(../images/sorting-desc.png) no-repeat;
 	display:block;
 	width:22px;
 	height:20px;

@@ -60,7 +60,7 @@ public class DycChartController {
 
         ElasticTable etab = elastictTableService.findByCode("chartType_" + entity.getType());
         view.addObject("jsonSearch", ChartUtils.jsonSearch(jdbcTemplate, dataDictService, etab, req));
-        view.addObject("jsonList", ChartUtils.jsonList(jdbcTemplate, dataDictService, etab));
+        view.addObject("jsonList", ChartUtils.jsonList(jdbcTemplate, dataDictService, etab, req));
         return view;
     }
 
