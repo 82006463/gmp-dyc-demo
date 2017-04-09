@@ -7,19 +7,15 @@ function sort(orderBy, defaultOrder) {
 	if ($("#orderBy").val() == orderBy) {
 		if ($("#order").val() == "") {
 			$("#order").val(defaultOrder);
-		}
-		else if ($("#order").val() == "desc") {
+		} else if ($("#order").val() == "desc") {
 			$("#order").val("asc");
-		}
-		else if ($("#order").val() == "asc") {
+		} else if ($("#order").val() == "asc") {
 			$("#order").val("desc");
 		}
-	}
-	else {
+	} else {
 		$("#orderBy").val(orderBy);
 		$("#order").val(defaultOrder);
 	}
-
 	$("#mainForm").submit();
 }
 
@@ -31,7 +27,7 @@ function search() {
 }
 
 function addNew(url) {
-	window.location.href=url;
+	window.location.href = url;
 }
 
 function gotoPage() {
@@ -57,11 +53,11 @@ function exportExcel(url) {
 }
 
 function confirmDel() {
-	if(confirm("请确定是否删除?")) { 
+	if(confirm("请确定是否删除?")) {
 		return true;
 	} else {
 		return false;
-	} 
+	}
 }
 
 function bringback(id, name) {

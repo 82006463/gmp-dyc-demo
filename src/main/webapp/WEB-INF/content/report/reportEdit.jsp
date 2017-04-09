@@ -29,7 +29,7 @@
 					<input type="text" name="processName" value="${entity.processName}" class="input_240"/>
 				</td>
 			</tr>
-			${extAttr}
+			${jsonEdit}
 		</table>
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0">

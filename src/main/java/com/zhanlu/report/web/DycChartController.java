@@ -2,8 +2,7 @@ package com.zhanlu.report.web;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
-import com.zhanlu.framework.common.utils.ETab2HTMLUtils;
-import com.zhanlu.framework.config.entity.DataDict;
+import com.zhanlu.framework.common.utils.ChartUtils;
 import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.config.service.ElastictTableService;
@@ -21,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 报表Controller
@@ -61,8 +59,8 @@ public class DycChartController {
         view.addObject("page", page);
 
         ElasticTable etab = elastictTableService.findByCode("chartType_" + entity.getType());
-        view.addObject("jsonSearch", ETab2HTMLUtils.jsonSearch(jdbcTemplate, dataDictService, etab, req.getParameterMap()));
-        view.addObject("jsonList", ETab2HTMLUtils.jsonList(jdbcTemplate, dataDictService, etab));
+        view.addObject("jsonSearch", ChartUtils.jsonSearch(jdbcTemplate, dataDictService, etab, req.getParameterMap()));
+        view.addObject("jsonList", ChartUtils.jsonList(jdbcTemplate, dataDictService, etab));
         return view;
     }
 

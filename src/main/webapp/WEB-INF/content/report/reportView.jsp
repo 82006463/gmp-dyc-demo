@@ -23,7 +23,7 @@
 				<td class="td_table_1">名称：</td>
 				<td class="td_table_2">${entity.processName}</td>
 			</tr>
-			${extAttr}
+			${jsonEdit}
 		</table>
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0">

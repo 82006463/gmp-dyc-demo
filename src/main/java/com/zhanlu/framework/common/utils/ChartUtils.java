@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2017/4/3.
  */
-public class ETab2HTMLUtils {
+public class ChartUtils {
 
     /**
      * 将JSON转成HTML串
@@ -71,6 +71,9 @@ public class ETab2HTMLUtils {
             }
         }
         html += "</table>";
+        html += "<table align='center' border='0' cellpadding='0' cellspacing='0'><tr><td align='left'>";
+        html += "<input type='button' onclick='addNew('/dyc/chart/create?type=" + (paramMap.get("type") == null ? "" : paramMap.get("type")[0]) + "')' class='button_70px' value='新建'/>";
+        html += "<input type='submit' class='button_70px' value='查询'/></td></tr></table>";
         return html;
     }
 
@@ -91,7 +94,8 @@ public class ETab2HTMLUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonEdit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, String jsonStruct, String jsonData) {
+    public static String jsonEdit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, ElasticTable etab, String jsonData) {
+        String jsonStruct = etab.getJsonEdit();
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
         }
@@ -185,6 +189,7 @@ public class ETab2HTMLUtils {
                 DataDict dataDict = dataDictService.findByCode("tagType_" + tagType);
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource()) && dataDict.getDataSource().trim().toUpperCase().startsWith("SELECT ")) {
                     List<Map<String, Object>> itemList = jdbcTemplate.queryForList(dataDict.getDataSource());
+                    itemList = ResultSetUtils.convertList(itemList);
                     if (tagType.startsWith("select_")) {
                         html += "<select name='" + code + "' class='input_select" + (required.equals("yes") ? " validate[required]" : "") + "' fuzzy='" + fuzzy + "'>";
                         html += "<option value='' selected>--请选择--</option>";
@@ -231,7 +236,8 @@ public class ETab2HTMLUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonView(DataDictService dataDictService, String jsonStruct, String jsonData) {
+    public static String jsonView(DataDictService dataDictService, ElasticTable etab, String jsonData) {
+        String jsonStruct = etab.getJsonEdit();
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
         }

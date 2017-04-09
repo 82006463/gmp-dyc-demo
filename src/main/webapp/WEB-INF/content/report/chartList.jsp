@@ -15,15 +15,6 @@
 		<input type="hidden" class="input_240" name="type" value="${param['type']}"/>
 		<input type="hidden" class="input_240" name="view" value="${param['view']}"/>
 		${jsonSearch}
-		<table align="center" border="0" cellpadding="0" cellspacing="0">
-			<tr>
-				<td align="left">
-					<input type='button' onclick="addNew('${ctx}/dyc/chart/create?type=${param['type']}')" class='button_70px' value='新建'/>
-					<input type='submit' class='button_70px' value='查询'/>
-				</td>
-			</tr>
-		</table>
-
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="center" class="td_list_1">编号</td>

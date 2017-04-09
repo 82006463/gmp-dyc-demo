@@ -3,12 +3,11 @@ package com.zhanlu.report.web;
 import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
-import com.zhanlu.framework.common.utils.ETab2HTMLUtils;
+import com.zhanlu.framework.common.utils.ReportUtils;
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.config.service.ElastictTableService;
-import com.zhanlu.framework.security.service.OrgService;
 import com.zhanlu.report.entity.DycReport;
 import com.zhanlu.report.service.DycReportService;
 import org.apache.commons.lang.StringUtils;
@@ -46,8 +45,6 @@ public class DycReportController {
     @Autowired
     private DycReportService reportService;
     @Autowired
-    private OrgService orgService;
-    @Autowired
     private ElastictTableService wfcReportService;
 
     /**
@@ -65,7 +62,6 @@ public class DycReportController {
         page = reportService.findPage(page, filters);
         ModelAndView view = new ModelAndView("report/reportList");
         view.addObject("page", page);
-        view.addObject("orgList", orgService.findAll());
         return view;
     }
 
@@ -76,9 +72,8 @@ public class DycReportController {
     public ModelAndView create(DycReport entity) throws Exception {
         ModelAndView view = new ModelAndView("report/reportEdit");
         view.addObject("entity", entity);
-        view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
-        view.addObject("extAttr", ETab2HTMLUtils.jsonEdit(jdbcTemplate, dataDictService, etab.getJsonEdit(), entity.getExtraJson()));
+        view.addObject("jsonEdit", ReportUtils.jsonEdit(jdbcTemplate, dataDictService, etab, entity.getExtraJson()));
         return view;
     }
 
@@ -90,9 +85,8 @@ public class DycReportController {
         ModelAndView view = new ModelAndView("/report/reportEdit");
         DycReport entity = reportService.findById(id);
         view.addObject("entity", entity);
-        view.addObject("orgList", orgService.findAll());
         ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
-        view.addObject("extAttr", ETab2HTMLUtils.jsonEdit(jdbcTemplate, dataDictService, etab.getJsonEdit(), entity.getExtraJson()));
+        view.addObject("jsonEdit", ReportUtils.jsonEdit(jdbcTemplate, dataDictService, etab, entity.getExtraJson()));
         return view;
     }
 
@@ -149,7 +143,7 @@ public class DycReportController {
         DycReport entity = reportService.findById(id);
         view.addObject("entity", entity);
         ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
-        view.addObject("extAttr", ETab2HTMLUtils.jsonView(dataDictService, etab.getJsonEdit(), entity.getExtraJson()));
+        view.addObject("jsonEdit", ReportUtils.jsonView(dataDictService, etab, entity.getExtraJson()));
         return view;
     }
 
