@@ -1,5 +1,6 @@
 package com.zhanlu.report.entity;
 
+import com.zhanlu.framework.common.entity.CodeEntity;
 import com.zhanlu.framework.common.entity.IdEntity;
 
 import javax.persistence.Column;
@@ -16,11 +17,9 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "dyc_chart")
-public class DycChart extends IdEntity {
+public class DycChart extends CodeEntity {
 
     private String type; //流程类型
-    private String chartNo; //流程编号
-    private String chartName; //流程名称
     private String chartDesc;//描述
 
     //显示类型
@@ -33,24 +32,6 @@ public class DycChart extends IdEntity {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    @Column(name = "chart_no", length = 50)
-    public String getChartNo() {
-        return chartNo;
-    }
-
-    public void setChartNo(String chartNo) {
-        this.chartNo = chartNo;
-    }
-
-    @Column(name = "chart_name", length = 100)
-    public String getChartName() {
-        return chartName;
-    }
-
-    public void setChartName(String chartName) {
-        this.chartName = chartName;
     }
 
     @Column(name = "chart_desc", length = 200)

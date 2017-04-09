@@ -121,12 +121,14 @@ public class ElasticTableController {
             List<Map<String, Object>> items = new ArrayList<>(itemCodes == null ? 0 : itemCodes.length);
             Map<String, String[]> paramMap = req.getParameterMap();
             if (type.equals("search")) {
+                String[] itemCompares = paramMap.get("itemCompares");
                 String[] itemTagTypes = paramMap.get("itemTagTypes");
                 for (int i = 0; i < itemCodes.length; i++) {
                     Map<String, Object> itemMap = new LinkedHashMap<>(8);
                     itemMap.put("code", itemCodes[i]);
                     itemMap.put("name", itemNames[i]);
                     itemMap.put("dataType", itemDataTypes[i]);
+                    itemMap.put("compare", itemCompares[i]);
                     itemMap.put("tagType", itemTagTypes[i]);
                     items.add(itemMap);
                 }

@@ -50,10 +50,12 @@
 								<td align=center class="td_list_1">编号</td>
 								<td align=center class="td_list_1">名称</td>
 								<td align=center class="td_list_1">数据类型</td>
-								<c:if test="${type == 'search' || type == 'edit'}">
+								<c:if test="${type == 'search'}">
+                                    <td align=center class="td_list_1">比较条件</td>
 									<td align=center class="td_list_1">标签类型</td>
 								</c:if>
 								<c:if test="${type == 'edit'}">
+                                    <td align=center class="td_list_1">标签类型</td>
 									<td align=center class="td_list_1">是否必填</td>
 									<td align=center class="td_list_1">子表单</td>
 									<td align=center class="td_list_1">模糊搜索</td>
@@ -71,16 +73,21 @@
 									<td class="td_list_2">
 										<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="${item.dataType}" defaultVal="dataType_varchar" cssClass="validate[required]"/>
 									</td>
-								<c:if test="${type == 'search' || type == 'edit'}">
+								<c:if test="${type == 'search'}">
 									<td class="td_list_2">
-										<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${item.tagType}" defaultVal="tagType_input" cssClass="validate[required]"/>
+										<frame:dict name="itemCompares" type="select" typeCode="compare" value="${item.compare}" defaultVal="compare_EQ" cssClass="validate[required]"/>
 									</td>
+                                    <td class="td_list_2">
+                                        <frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${item.tagType}" defaultVal="tagType_input" cssClass="validate[required]"/>
+                                    </td>
 								</c:if>
 								<c:if test="${type == 'edit'}">
+                                    <td class="td_list_2">
+                                        <frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${item.tagType}" defaultVal="tagType_input" cssClass="validate[required]"/>
+                                    </td>
 									<td class="td_list_2">
 										<frame:dict name="itemRequireds" type="select" typeCode="yesNo" value="${item.required}" defaultVal="yesNo_yes" cssClass="validate[required]"/>
 									</td>
-
 									<td class="td_list_2">
 										<frame:dict name="itemSubForms" type="select" typeCode="subForm" value="${item.subForm}" defaultVal="subForm_no" cssClass="validate[required]"/>
 									</td>
@@ -123,12 +130,18 @@
 				cell.innerHTML = "<frame:dict name="itemDataTypes" type="select" typeCode="dataType" value="" defaultVal="dataType_varchar" cssClass="validate[required]"/>";
 				cell.className = "td_list_2";
 
-				if('${type}' == 'search' || '${type}' == 'edit') {
+				if('${type}' == 'search') {
 					cell = row.insertCell(-1);
-					cell.innerHTML = "<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="" defaultVal="tagType_input" cssClass="validate[required]"/>";
+					cell.innerHTML = "<frame:dict name="itemCompares" type="select" typeCode="compare" value="" defaultVal="compare_EQ" cssClass="validate[required]"/>";
 					cell.className = "td_list_2";
+                    cell = row.insertCell(-1);
+                    cell.innerHTML = "<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="" defaultVal="tagType_input" cssClass="validate[required]"/>";
+                    cell.className = "td_list_2";
 				}
 				if('${type}' == 'edit') {
+                    cell = row.insertCell(-1);
+                    cell.innerHTML = "<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="" defaultVal="tagType_input" cssClass="validate[required]"/>";
+                    cell.className = "td_list_2";
 					cell = row.insertCell(-1);
 					cell.innerHTML = "<frame:dict name="itemRequireds" type="select" typeCode="yesNo" value="" defaultVal="yesNo_yes" cssClass="validate[required]"/>";
 					cell.className = "td_list_2";

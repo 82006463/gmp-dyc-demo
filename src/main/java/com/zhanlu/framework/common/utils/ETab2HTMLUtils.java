@@ -2,6 +2,7 @@ package com.zhanlu.framework.common.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.config.entity.DataDict;
+import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,27 +20,32 @@ public class ETab2HTMLUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonSearch(JdbcTemplate jdbcTemplate, DataDictService dataDictService, String jsonStruct, Map<String, String[]> paramMap) {
+    public static String jsonSearch(JdbcTemplate jdbcTemplate, DataDictService dataDictService, ElasticTable etab, Map<String, String[]> paramMap) {
+        String jsonStruct = etab.getJsonSearch();
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
         }
-        Map<String, String> dataMap = new HashMap<>();
         List<Map<String, Object>> structList = JSON.parseObject(jsonStruct, List.class);
         int tmpIndex = 0;
         int itemIndex = 0;
-        String html = "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' style='margin-top: 0px'><tr>";
+        String html = "<table width='100%' border='0' align='center' cellpadding='0' class='table_all_border' cellspacing='0' style='margin-bottom: 0px;border-bottom: 0px'>";
+        html += "<tr><td class='td_table_top' align='center'>图表管理-" + etab.getName() + "</td></tr></table>";
+        html += "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' style='margin-top: 0px'><tr>";
         for (Map<String, Object> entry : structList) {
             String tagType = entry.get("tagType").toString().replace("tagType_", "");
+            String dataType = entry.get("dataType").toString().replace("dataType_", "");
+            String compare = entry.get("compare").toString().replace("compare_", "filter_");
             String code = entry.get("code").toString();
             String name = entry.get("name").toString();
-            String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
+            code = compare + (dataType.equals("int") ? "I" : dataType.equals("long") ? "L" : dataType.equals("date") ? "D" : dataType.equals("double") ? "N" : "S") + "_" + code;
+            String val = paramMap.get(code) == null ? "" : paramMap.get(code)[0];
 
             itemIndex++;
             tmpIndex++;
             if (tmpIndex == 3) {
                 html += "<tr>";
             }
-            html += "<td class='td_table_1'>" + name + "</td><td class='td_table_2'>";
+            html += "<td class='td_table_1'>" + name + "：</td><td class='td_table_2'>";
             if (tagType.equals("date")) {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
             } else if (tagType.equals("timestamp")) {
@@ -71,7 +77,8 @@ public class ETab2HTMLUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonList(JdbcTemplate jdbcTemplate, DataDictService dataDictService, String jsonStruct) {
+    public static String jsonList(JdbcTemplate jdbcTemplate, DataDictService dataDictService, ElasticTable etab) {
+        String jsonStruct = etab.getJsonList();
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
         }

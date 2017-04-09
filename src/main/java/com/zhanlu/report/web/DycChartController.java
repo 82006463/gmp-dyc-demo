@@ -60,11 +60,9 @@ public class DycChartController {
         ModelAndView view = new ModelAndView("report/chartList");
         view.addObject("page", page);
 
-        Map<String, String[]> paramMap = req.getParameterMap();
-        DataDict chartType = dataDictService.findByCode("chartType_" + entity.getType());
         ElasticTable etab = elastictTableService.findByCode("chartType_" + entity.getType());
-        view.addObject("jsonSearch", ETab2HTMLUtils.jsonSearch(jdbcTemplate, dataDictService, etab.getJsonSearch(), paramMap));
-        view.addObject("jsonList", ETab2HTMLUtils.jsonList(jdbcTemplate, dataDictService, etab.getJsonList()));
+        view.addObject("jsonSearch", ETab2HTMLUtils.jsonSearch(jdbcTemplate, dataDictService, etab, req.getParameterMap()));
+        view.addObject("jsonList", ETab2HTMLUtils.jsonList(jdbcTemplate, dataDictService, etab));
         return view;
     }
 
