@@ -20,17 +20,17 @@
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td class="td_table_1">${chartType.name}编号：</td>
+				<td class="td_table_1">编号：</td>
 				<td class="td_table_2">
 					<input type="text" name="code" value="${entity.code}" class="input_240 validate[required]" />
 				</td>
-				<td class="td_table_1">${chartType.name}名称：</td>
+				<td class="td_table_1">名称：</td>
 				<td class="td_table_2">
 					<input type="text" name="name" value="${entity.name}" class="input_240 validate[required]"/>
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">${chartType.name}描述：</td>
+				<td class="td_table_1">描述：</td>
 				<td class="td_table_2" colspan="3">
 					<textarea class="input_textarea_600" name="remark">${entity.remark}</textarea>
 				</td>

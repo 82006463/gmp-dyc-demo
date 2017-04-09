@@ -32,7 +32,6 @@
 					</td>
 				</tr>
 			</c:forEach>
-			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup}"/>
 		</table>
 	</form>
 </body>
