@@ -15,7 +15,7 @@ public class ElasticTable extends CodeEntity {
     private String jsonList; //列表页面的显示属性：JSON
     private String jsonEdit; //编辑页面：JSON
 
-    @Column(name = "json_search", length = 300)
+    @Column(name = "json_search", length = 600)
     public String getJsonSearch() {
         if (jsonSearch == null || jsonSearch.trim().isEmpty()) {
             jsonSearch = "[]";
@@ -27,7 +27,7 @@ public class ElasticTable extends CodeEntity {
         this.jsonSearch = jsonSearch;
     }
 
-    @Column(name = "json_list", length = 500)
+    @Column(name = "json_list", length = 800)
     public String getJsonList() {
         if (jsonList == null || jsonList.trim().isEmpty()) {
             jsonList = "[]";
