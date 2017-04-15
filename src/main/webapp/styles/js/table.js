@@ -27,10 +27,6 @@ function search() {
 }
 
 function addNew(url) {
-    var _path = window.location.pathname;
-    if (url.indexOf(_path) == -1) {
-        url = _path + url;
-    }
     window.location.href = url;
 }
 
