@@ -11,6 +11,7 @@
 			classpath*:/spring-beans.xml
 			classpath*:/spring-security.xml
 			classpath*:/spring-snaker.xml
+			classpath*:/spring-nosql.xml
 		</param-value>
 	</context-param>
 	<filter>
