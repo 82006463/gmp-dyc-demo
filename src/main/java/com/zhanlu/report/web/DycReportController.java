@@ -106,7 +106,7 @@ public class DycReportController {
     public ModelAndView update(RedirectAttributes attributes, HttpServletRequest req) throws Exception {
         String processType = req.getParameter("processType");
         ElasticTable etab = wfcReportService.findByCode("reportType_" + processType);
-        Map<String, Object> entity = EditItem.toMap(JSON.parseObject(etab.getJsonEdit(), List.class), req.getParameterMap());
+        Map<String, Object> entity = EditItem.toMap(dataDictService, JSON.parseObject(etab.getJsonEdit(), List.class), req.getParameterMap());
         entity.put("processType", processType);
         mongoService.saveOrUpdate("dyc_report", req.getParameter("id"), entity);
         ModelAndView view = new ModelAndView("redirect:/dyc/report/list");
@@ -132,11 +132,11 @@ public class DycReportController {
      * 根据主键ID删除实体，并返回列表视图
      */
     @RequestMapping(value = "delete/{id}")
-    public ModelAndView delete(RedirectAttributes attributes, @PathVariable("id") Long id) {
-        String processType = reportService.findById(id).getProcessType();
-        reportService.delete(id);
+    public ModelAndView delete(RedirectAttributes attributes, @PathVariable("id") String id) {
+        Map<String, Object> entity = mongoService.findOne("dyc_report", id);
+        mongoService.removeOne("dyc_report", id);
         ModelAndView view = new ModelAndView("redirect:/dyc/report/list");
-        attributes.addAttribute("processType", processType);
+        attributes.addAttribute("processType", entity.get("processType"));
         return view;
     }
 

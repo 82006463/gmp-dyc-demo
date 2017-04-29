@@ -1,5 +1,9 @@
 package com.zhanlu.framework.nosql.util;
 
+import com.zhanlu.framework.config.entity.DataDict;
+import com.zhanlu.framework.config.service.DataDictService;
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,7 +14,7 @@ import java.util.Map;
  */
 public class EditItem {
 
-    private static Map<String, Class<?>> DATA_TYPE_MAP = DataTypeEnum.getMap();
+    //private static Map<String, Class<?>> DATA_TYPE_MAP = DataTypeEnum.getMap();
 
     private String dataType;
     private String fieldName;
@@ -52,21 +56,35 @@ public class EditItem {
         return new EditItem(dataType, tagType, attrName, attrValArr);
     }
 
-    public static List<EditItem> buildEditItems(List<Map<String, String>> structList, Map<String, String[]> paramMap) {
+    public static List<EditItem> buildEditItems(DataDictService dataDictService, List<Map<String, String>> structList, Map<String, String[]> paramMap) {
         Map<String, String> dataTypeMap = new LinkedHashMap<>(paramMap.size());
         Map<String, String> tagTypeMap = new LinkedHashMap<>(paramMap.size());
         for (Map<String, String> struct : structList) {
-            dataTypeMap.put(struct.get("code"), struct.get("dataType").replace("dataType_", ""));
-            tagTypeMap.put(struct.get("code"), struct.get("tagType").replace("tagType_", ""));
+            String tagType = struct.get("tagType").replace("tagType_", "");
+            if (tagType.equals("subForm")) {
+                DataDict dataDict = dataDictService.findByCode(struct.get("subForm"));
+                if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {
+                    String[] fieldArr = dataDict.getDataSource().split(",");
+                    for (String field : fieldArr) {
+                        String[] tmpField = field.split(":");
+                        tagTypeMap.put(tmpField[0], "subForm");
+                        dataTypeMap.put(tmpField[0], "String");
+                    }
+                }
+            } else {
+                tagTypeMap.put(struct.get("code"), tagType);
+                dataTypeMap.put(struct.get("code"), struct.get("dataType").replace("dataType_", ""));
+            }
         }
         List<EditItem> items = new ArrayList<>(paramMap.size());
         for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
             if (!dataTypeMap.containsKey(entry.getKey())) {
                 continue;
             }
+            String tagType = tagTypeMap.get(entry.getKey());
             String dataType = dataTypeMap.get(entry.getKey()).replace("varchar", "String");
             dataType = dataType.replace("int", "Int").replace("date", "Date");
-            EditItem editItem = EditItem.buildEditItem(dataType, tagTypeMap.get(entry.getKey()), entry.getKey(), entry.getValue());
+            EditItem editItem = EditItem.buildEditItem(dataType, tagType, entry.getKey(), entry.getValue());
             if (editItem == null) {
                 continue;
             }
@@ -75,8 +93,8 @@ public class EditItem {
         return items;
     }
 
-    public static Map<String, Object> toMap(List<Map<String, String>> structList, Map<String, String[]> paramMap) {
-        List<EditItem> editItems = EditItem.buildEditItems(structList, paramMap);
+    public static Map<String, Object> toMap(DataDictService dataDictService, List<Map<String, String>> structList, Map<String, String[]> paramMap) {
+        List<EditItem> editItems = EditItem.buildEditItems(dataDictService, structList, paramMap);
         Map<String, Object> resultMap = new LinkedHashMap<>(editItems.size());
         for (EditItem item : editItems) {
             resultMap.put(item.getFieldName(), item.getFieldVal());
