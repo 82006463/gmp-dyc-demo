@@ -4,6 +4,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.nosql.dao.MongoDao;
+import com.zhanlu.framework.nosql.util.QueryItem;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,14 +47,18 @@ public class MongoServiceImpl implements MongoService {
     }
 
     @Override
-    public List<Map<String, Object>> findByProp(String collectionName, Map<String, Object> queryMap) {
-        return this.findByPage(collectionName, queryMap, null);
+    public List<Map<String, Object>> findByProp(String collectionName, List<QueryItem> queryItems) {
+        return this.findByPage(collectionName, queryItems, null);
     }
 
     @Override
-    public List<Map<String, Object>> findByPage(String collectionName, Map<String, Object> queryMap, Page page) {
+    public List<Map<String, Object>> findByPage(String collectionName, List<QueryItem> queryItems, Page page) {
         DBObject query = new BasicDBObject();
-        query.putAll(queryMap);
+        if (queryItems != null && queryItems.size() > 0) {
+            for (QueryItem item : queryItems) {
+                query.put(item.getFieldName(), new Document("$" + item.getOpsType().toLowerCase(), item.getFieldVal()));
+            }
+        }
         List<DBObject> docList = mongoDao.findByPage(collectionName, query, page);
         List<Map<String, Object>> resultList = new ArrayList<>(docList.size());
         for (DBObject doc : docList) {

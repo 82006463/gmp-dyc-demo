@@ -1,7 +1,7 @@
 package com.zhanlu.framework.nosql.service;
 
-import com.mongodb.DBObject;
 import com.zhanlu.framework.common.page.Page;
+import com.zhanlu.framework.nosql.util.QueryItem;
 
 import java.util.List;
 import java.util.Map;
@@ -37,13 +37,13 @@ public interface MongoService {
      * @param collectionName 集合名称
      * @return 所有文档
      */
-    public List<Map<String, Object>> findByProp(String collectionName, Map<String, Object> queryMap);
+    public List<Map<String, Object>> findByProp(String collectionName, List<QueryItem> queryItems);
 
     /**
      * @param collectionName 集合名称
      * @return 分页文档
      */
-    public List<Map<String, Object>> findByPage(String collectionName, Map<String, Object> queryMap, Page page);
+    public List<Map<String, Object>> findByPage(String collectionName, List<QueryItem> queryItems, Page page);
 
     /**
      * @param collectionName 集合名称

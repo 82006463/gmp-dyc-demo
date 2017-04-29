@@ -9,6 +9,7 @@ import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.config.service.ElastictTableService;
 import com.zhanlu.framework.nosql.service.MongoService;
+import com.zhanlu.framework.nosql.util.QueryItem;
 import com.zhanlu.report.entity.DycReport;
 import com.zhanlu.report.service.DycReportService;
 import org.apache.commons.lang.StringUtils;
@@ -23,7 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,11 +65,9 @@ public class DycReportController {
         List<Map<String, String>> searchItems = JSON.parseObject(etab.getJsonSearch(), List.class);
         List<Map<String, String>> listItems = JSON.parseObject(etab.getJsonList(), List.class);
 
-        Map<String, Object> queryMap = new HashMap<>();
-        Map<String, String[]> paramMap = req.getParameterMap();
-
-        queryMap.put("processType", processType);
-        List<Map<String, Object>> entityList = mongoService.findByPage("dyc_report", queryMap, page);
+        List<QueryItem> queryItems = QueryItem.buildSearchItems(req.getParameterMap());
+        queryItems.add(new QueryItem("Eq_String_processType", processType));
+        List<Map<String, Object>> entityList = mongoService.findByPage("dyc_report", queryItems, page);
         page = reportService.findPage(page, filters);
         ModelAndView view = new ModelAndView("report/reportList");
         view.addObject("page", page);
