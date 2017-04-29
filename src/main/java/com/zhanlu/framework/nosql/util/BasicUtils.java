@@ -65,7 +65,7 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonList(List<Map<String, String>> structList, List<Map<String, Object>> entityList) {
+    public static String jsonList(String contextPath, List<Map<String, String>> structList, List<Map<String, Object>> entityList) {
         Map<String, String> fieldMap = new LinkedHashMap<>(structList.size());
         String html = "<tr>";
         for (Map<String, String> entry : structList) {
@@ -79,9 +79,9 @@ public class BasicUtils {
                 html += "<td class='td_list_2' align=left>" + entry.get(field.getKey()) + "</td>";
             }
             html += "<td class='td_list_2' align=left>";
-            html += "<a href='/dyc/report/delete/" + entry.get("_id") + "' class='btnDel' title='删除' onclick='return confirmDel();'>删除</a>";
-            html += "<a href='/dyc/report/update/" + entry.get("_id") + "' class='btnEdit'' title='编辑'>编辑</a>";
-            html += "<a href='/dyc/report/view/" + entry.get("_id") + "' class='btnView'' title='查看'>查看</a>";
+            html += "<a href='" + contextPath + "/dyc/report/delete/" + entry.get("_id") + "' class='btnDel' title='删除' onclick='return confirmDel();'>删除</a>";
+            html += "<a href='" + contextPath + "/dyc/report/update/" + entry.get("_id") + "' class='btnEdit'' title='编辑'>编辑</a>";
+            html += "<a href='" + contextPath + "/dyc/report/view/" + entry.get("_id") + "' class='btnView'' title='查看'>查看</a>";
             html += "</td></tr>";
         }
         return html;
@@ -90,7 +90,7 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonEdit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, ElasticTable etab,  Map<String, Object> dataMap) {
+    public static String jsonEdit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, ElasticTable etab, Map<String, Object> dataMap) {
         String jsonStruct = etab.getJsonEdit();
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
@@ -227,7 +227,7 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonView(DataDictService dataDictService, ElasticTable etab,  Map<String, Object> dataMap) {
+    public static String jsonView(DataDictService dataDictService, ElasticTable etab, Map<String, Object> dataMap) {
         String jsonStruct = etab.getJsonEdit();
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";

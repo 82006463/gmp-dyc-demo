@@ -67,7 +67,7 @@ public class DycReportController {
         List<Map<String, Object>> entityList = mongoService.findByPage("dyc_report", queryItems, page);
         ModelAndView view = new ModelAndView("report/reportList");
         view.addObject("jsonSearch", BasicUtils.jsonSearch(dataDictService, jdbcTemplate, searchItems, paramMap));
-        view.addObject("jsonList", BasicUtils.jsonList(listItems, entityList));
+        view.addObject("jsonList", BasicUtils.jsonList(req.getContextPath(), listItems, entityList));
         view.addObject("page", page);
         return view;
     }
@@ -89,10 +89,10 @@ public class DycReportController {
     /**
      * 编辑页面
      */
-    @RequestMapping(value = "update/{_id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("_id") String _id) throws Exception {
+    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable("id") String id) throws Exception {
         ModelAndView view = new ModelAndView("/report/reportEdit");
-        Map<String, Object> entity = mongoService.findOne("dyc_report", _id);
+        Map<String, Object> entity = mongoService.findOne("dyc_report", id);
         ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.get("processType"));
         view.addObject("jsonEdit", BasicUtils.jsonEdit(jdbcTemplate, dataDictService, etab, entity));
         view.addObject("entity", entity);
@@ -108,7 +108,7 @@ public class DycReportController {
         ElasticTable etab = wfcReportService.findByCode("reportType_" + processType);
         Map<String, Object> entity = EditItem.toMap(JSON.parseObject(etab.getJsonEdit(), List.class), req.getParameterMap());
         entity.put("processType", processType);
-        mongoService.saveOrUpdate("dyc_report", req.getParameter("_id"), entity);
+        mongoService.saveOrUpdate("dyc_report", req.getParameter("id"), entity);
         ModelAndView view = new ModelAndView("redirect:/dyc/report/list");
         attributes.addAttribute("processType", processType);
         return view;
@@ -117,10 +117,10 @@ public class DycReportController {
     /**
      * 查看页面
      */
-    @RequestMapping(value = "view/{_id}", method = RequestMethod.GET)
-    public ModelAndView view(@PathVariable("_id") String _id) throws Exception {
+    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
+    public ModelAndView view(@PathVariable("id") String id) throws Exception {
         ModelAndView view = new ModelAndView("report/reportView");
-        Map<String, Object> report = mongoService.findOne("dyc_report", _id);
+        Map<String, Object> report = mongoService.findOne("dyc_report", id);
         view.addObject("entity", report);
         ElasticTable etab = wfcReportService.findByCode("reportType_" + report.get("processType"));
         view.addObject("jsonEdit", BasicUtils.jsonView(dataDictService, etab, report));

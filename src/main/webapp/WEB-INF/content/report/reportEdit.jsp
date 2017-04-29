@@ -10,7 +10,7 @@
 
 <body>
 	<form id="inputForm" action="${ctx}/dyc/report/update" method="post">
-		<input type="hidden" name="_id" value="${entity._id}"/>
+		<input type="hidden" name="id" value="${entity._id}"/>
 		<input type="hidden" name="processType" value="${entity.processType}"/>
 
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
