@@ -1,6 +1,7 @@
-package com.zhanlu.framework.common.dao;
+package com.zhanlu.framework.nosql.dao;
 
 import com.mongodb.*;
+import com.zhanlu.framework.common.page.Page;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.MongoDbFactory;
@@ -36,9 +37,9 @@ public class MongoDao {
      * @param document       文档
      * @return 是否成功
      */
-    public DBObject update(String collectionName, DBObject document) {
+    public DBObject update(String collectionName, String id, DBObject document) {
         DBObject query = new BasicDBObject();
-        query.put("id", document.get("id"));
+        query.put("_id", new ObjectId(id));
         mongoDbFactory.getDb().getCollection(collectionName).update(query, document);
         return document;
     }
@@ -49,9 +50,8 @@ public class MongoDao {
      * @return 单个文档
      */
     public DBObject findOne(String collectionName, String id) {
-        DBObject query = new BasicDBObject();
-        query.put("_id", new ObjectId(id));
-        return mongoDbFactory.getDb().getCollection(collectionName).findOne(query);
+        DBCollection collection = mongoDbFactory.getDb().getCollection(collectionName);
+        return collection.findOne(new ObjectId(id));
     }
 
     /**
@@ -59,9 +59,7 @@ public class MongoDao {
      * @return 所有文档
      */
     public List<DBObject> findAll(String collectionName) {
-        DBCollection collection = mongoDbFactory.getDb().getCollection(collectionName);
-        DBCursor dbObjects = collection.find();
-        return dbObjects.toArray();
+        return this.findByPage(collectionName, null, null);
     }
 
     /**
@@ -69,20 +67,24 @@ public class MongoDao {
      * @return 所有文档
      */
     public List<DBObject> findByProp(String collectionName, DBObject query) {
-        DBCollection collection = mongoDbFactory.getDb().getCollection(collectionName);
-        DBCursor dbObjects = collection.find(query);
-        return dbObjects.toArray();
+        return this.findByPage(collectionName, query, null);
     }
 
     /**
      * @param collectionName 集合名称
-     * @param regex          正则表达式
      * @return 分页文档
      */
-    public List<DBObject> findByPage(String collectionName, String regex) {
+    public List<DBObject> findByPage(String collectionName, DBObject query, Page page) {
         DBCollection collection = mongoDbFactory.getDb().getCollection(collectionName);
-        collection.findOne();
-        return null;
+        DBCursor cursor = null;
+        if (page != null) {
+            cursor = collection.find(query).skip((page.getPageNo() - 1) * page.getPageSize()).limit(page.getPageSize());
+        } else if (query != null) {
+            cursor = collection.find(query);
+        } else {
+            cursor = collection.find();
+        }
+        return cursor.toArray();
     }
 
     /**
