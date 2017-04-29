@@ -64,6 +64,7 @@ public class ElasticTableController {
     public String create(Model model) {
         ElasticTable entity = new ElasticTable();
         model.addAttribute("entity", entity);
+        model.addAttribute("type", "edit");
         return "config/etabEdit";
     }
 

@@ -8,6 +8,7 @@ import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.config.service.ElastictTableService;
+import com.zhanlu.framework.nosql.service.MongoService;
 import com.zhanlu.report.entity.DycReport;
 import com.zhanlu.report.service.DycReportService;
 import org.apache.commons.lang.StringUtils;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,22 +49,32 @@ public class DycReportController {
     @Autowired
     private ElastictTableService wfcReportService;
 
+    @Autowired
+    private MongoService mongoService;
+
     /**
      * 分页列表
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list(DycReport entity, Page<DycReport> page, HttpServletRequest request) throws Exception {
-        List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
-        filters.add(new PropertyFilter("EQS_processType", entity.getProcessType()));
-        //设置默认排序方式
-        if (!page.isOrderBySetted()) {
-            page.setOrderBy("id");
-            page.setOrder(Page.ASC);
-        }
+    public ModelAndView list(DycReport entity, Page<DycReport> page, HttpServletRequest req) throws Exception {
+        String processType = req.getParameter("processType");
+        List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(req);
+        filters.add(new PropertyFilter("EQS_processType", processType));
+
+        ElasticTable etab = wfcReportService.findByCode("reportType_" + processType);
+        List<Map<String, String>> searchItems = JSON.parseObject(etab.getJsonSearch(), List.class);
+        List<Map<String, String>> listItems = JSON.parseObject(etab.getJsonList(), List.class);
+
+        Map<String, Object> queryMap = new HashMap<>();
+        Map<String, String[]> paramMap = req.getParameterMap();
+
+        queryMap.put("processType", processType);
+        List<Map<String, Object>> entityList = mongoService.findByPage("dyc_report", queryMap, page);
         page = reportService.findPage(page, filters);
         ModelAndView view = new ModelAndView("report/reportList");
         view.addObject("page", page);
-        view.addObject("etab", wfcReportService.findByCode("reportType_" + entity.getProcessType()));
+        view.addObject("entityList", entityList);
+        view.addObject("etab", etab);
         return view;
     }
 

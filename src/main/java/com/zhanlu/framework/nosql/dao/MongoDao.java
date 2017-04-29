@@ -78,6 +78,7 @@ public class MongoDao {
         DBCollection collection = mongoDbFactory.getDb().getCollection(collectionName);
         DBCursor cursor = null;
         if (page != null) {
+            page.setTotalCount(collection.count(query));
             cursor = collection.find(query).skip((page.getPageNo() - 1) * page.getPageSize()).limit(page.getPageSize());
         } else if (query != null) {
             cursor = collection.find(query);
