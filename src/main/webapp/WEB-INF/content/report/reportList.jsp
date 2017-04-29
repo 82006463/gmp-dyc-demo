@@ -21,7 +21,7 @@
 			</tr>
 		</table>
 
-		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
+		<%--<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
 				<td class="td_table_1">
 					${param['processType']=='dev' ? '偏差':param['processType']=='cc' ? '变更':param['processType']=='capa' ? 'CAPA':param['processType']=='oos'? 'OOS':''}编号：
@@ -34,7 +34,7 @@
 					<input type="text" class="input_240" name="filter_LIKES_processName" value="${param['filter_LIKES_processName']}"/>
 				</td>
 			</tr>
-			<%--<tr>
+			<tr>
 				<td class="td_table_1">部门：</td>
 				<td class="td_table_2">
 					<select name="filter_EQL_orgId" class="input_select">
@@ -64,9 +64,9 @@
 				<td class="td_table_2" colspan="3">
 					<input type="text" class="input_240" name="filter_LIKES_backup1" value="${param['filter_LIKES_backup1']}"/>
 				</td>
-			</tr>--%>
-		</table>
-
+			</tr>
+		</table>--%>
+		${jsonSearch}
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
@@ -75,9 +75,9 @@
 				</td>
 			</tr>
 		</table>
-
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
-			<tr>
+			${jsonList}
+			<%--<tr>
 				<td align="center" class="td_list_1">${etab.name}编号</td>
 				<td align="center" class="td_list_1">${etab.name}名称</td>
 				<td align="center" class="td_list_1">部门</td>
@@ -102,8 +102,8 @@
 						<a href="${ctx}/dyc/report/view/${item.id }" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>
-			</c:forEach>
-			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup}"/>
+			</c:forEach>--%>
+			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages}" totalRecords="${page.totalCount}" lookup="${lookup}"/>
 		</table>
 	</form>
 </body>

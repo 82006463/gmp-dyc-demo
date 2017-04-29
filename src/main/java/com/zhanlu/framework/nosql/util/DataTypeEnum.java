@@ -1,5 +1,6 @@
 package com.zhanlu.framework.nosql.util;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.Map;
  */
 public enum DataTypeEnum {
 
-    Byte(byte.class), Char(char.class), Int(int.class), Long(long.class), String(String.class), Float(float.class), Double(float.class), Boolean(boolean.class);
+    Byte(byte.class), Char(char.class), Int(int.class), Long(long.class), String(String.class), Float(float.class), Double(float.class),
+    Boolean(boolean.class), Date(java.util.Date.class), Timestamp(Timestamp.class);
 
     private Class<?> clazz;
 

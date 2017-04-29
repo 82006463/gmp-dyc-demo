@@ -56,6 +56,9 @@ public class MongoServiceImpl implements MongoService {
         DBObject query = new BasicDBObject();
         if (queryItems != null && queryItems.size() > 0) {
             for (QueryItem item : queryItems) {
+                if (item.getFieldVal() == null) {
+                    continue;
+                }
                 query.put(item.getFieldName(), new Document("$" + item.getOpsType().toLowerCase(), item.getFieldVal()));
             }
         }

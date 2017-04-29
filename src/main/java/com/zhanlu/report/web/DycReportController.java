@@ -2,13 +2,13 @@ package com.zhanlu.report.web;
 
 import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.page.Page;
-import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.common.utils.ReportUtils;
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.config.service.ElastictTableService;
 import com.zhanlu.framework.nosql.service.MongoService;
+import com.zhanlu.framework.nosql.util.BasicUtils;
 import com.zhanlu.framework.nosql.util.QueryItem;
 import com.zhanlu.report.entity.DycReport;
 import com.zhanlu.report.service.DycReportService;
@@ -56,23 +56,21 @@ public class DycReportController {
      * 分页列表
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list(DycReport entity, Page<DycReport> page, HttpServletRequest req) throws Exception {
+    public ModelAndView list(Page<DycReport> page, HttpServletRequest req) throws Exception {
         String processType = req.getParameter("processType");
-        List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(req);
-        filters.add(new PropertyFilter("EQS_processType", processType));
+        Map<String, String[]> paramMap = req.getParameterMap();
 
         ElasticTable etab = wfcReportService.findByCode("reportType_" + processType);
         List<Map<String, String>> searchItems = JSON.parseObject(etab.getJsonSearch(), List.class);
         List<Map<String, String>> listItems = JSON.parseObject(etab.getJsonList(), List.class);
 
-        List<QueryItem> queryItems = QueryItem.buildSearchItems(req.getParameterMap());
+        List<QueryItem> queryItems = QueryItem.buildSearchItems(paramMap);
         queryItems.add(new QueryItem("Eq_String_processType", processType));
         List<Map<String, Object>> entityList = mongoService.findByPage("dyc_report", queryItems, page);
-        page = reportService.findPage(page, filters);
         ModelAndView view = new ModelAndView("report/reportList");
+        view.addObject("jsonSearch", BasicUtils.jsonSearch(dataDictService, jdbcTemplate, searchItems, paramMap));
+        view.addObject("jsonList", BasicUtils.jsonList(listItems, entityList));
         view.addObject("page", page);
-        view.addObject("entityList", entityList);
-        view.addObject("etab", etab);
         return view;
     }
 

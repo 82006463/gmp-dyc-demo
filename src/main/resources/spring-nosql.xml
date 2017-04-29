@@ -16,9 +16,9 @@
     <mongo:db-factory dbname="dyc_uc" mongo-ref="mongoClient"/>
 
     <!-- mongodb的主要操作对象，所有对mongodb的增删改查的操作都是通过它完成 -->
-    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+    <!--<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
-    </bean>
+    </bean>-->
 
     <!-- 映射转换器，扫描base-package目录下的文件，根据注释，把它们作为mongodb的一个collection的映射 -->
     <!--<mongo:mapping-converter base-package="com.zhanlu.bd.entity" />-->

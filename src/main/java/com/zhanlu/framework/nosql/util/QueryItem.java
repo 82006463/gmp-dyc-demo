@@ -9,8 +9,8 @@ import java.util.Map;
  */
 public class QueryItem {
 
-    private static Map<String, Class<?>> oteMap = OpsTypeEnum.getMap();
-    private static Map<String, Class<?>> dteMap = DataTypeEnum.getMap();
+    private static Map<String, Class<?>> OPS_TYPE_MAP = OpsTypeEnum.getMap();
+    private static Map<String, Class<?>> DATA_TYPE_MAP = DataTypeEnum.getMap();
 
     private String dataType;
     private String opsType;
@@ -22,26 +22,28 @@ public class QueryItem {
         fieldName = attrName.replace(attrNameArr[0] + "_" + attrNameArr[1] + "_", "");
         opsType = attrNameArr[0];
         dataType = attrNameArr[1];
-        if (dataType.equals("Byte")) {
-            fieldVal = Byte.parseByte(attrVal);
-        } else if (dataType.equals("Int")) {
-            fieldVal = Integer.parseInt(attrVal);
-        } else if (dataType.equals("Long")) {
-            fieldVal = Long.parseLong(attrVal);
-        } else if (dataType.equals("Float")) {
-            fieldVal = Float.parseFloat(attrVal);
-        } else if (dataType.equals("Double")) {
-            fieldVal = Double.parseDouble(attrVal);
-        } else if (dataType.equals("Boolean")) {
-            fieldVal = Boolean.parseBoolean(attrVal);
-        } else {
-            fieldVal = attrVal;
+        if (attrVal != null && attrVal.trim().length() > 0) {
+            if (dataType.equals("Byte")) {
+                fieldVal = Byte.parseByte(attrVal);
+            } else if (dataType.equals("Int")) {
+                fieldVal = Integer.parseInt(attrVal);
+            } else if (dataType.equals("Long")) {
+                fieldVal = Long.parseLong(attrVal);
+            } else if (dataType.equals("Float")) {
+                fieldVal = Float.parseFloat(attrVal);
+            } else if (dataType.equals("Double")) {
+                fieldVal = Double.parseDouble(attrVal);
+            } else if (dataType.equals("Boolean")) {
+                fieldVal = Boolean.parseBoolean(attrVal);
+            } else {
+                fieldVal = attrVal;
+            }
         }
     }
 
     public static QueryItem buildSearchItem(String attrName, String attrVal) {
         String[] attrNameArr = attrName.split("_");
-        if (!dteMap.containsKey(attrNameArr[0]) || !oteMap.containsKey(attrNameArr[1])) {
+        if (!OPS_TYPE_MAP.containsKey(attrNameArr[0]) || !DATA_TYPE_MAP.containsKey(attrNameArr[1])) {
             return null;
         }
         return new QueryItem(attrName, attrVal);
