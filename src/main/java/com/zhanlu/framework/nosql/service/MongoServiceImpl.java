@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 2017/4/29.
@@ -59,7 +60,12 @@ public class MongoServiceImpl implements MongoService {
                 if (item.getFieldVal() == null) {
                     continue;
                 }
-                query.put(item.getFieldName(), new Document("$" + item.getOpsType().toLowerCase(), item.getFieldVal()));
+                if (item.getOpsType().equalsIgnoreCase("like")) {
+                    Pattern pattern = Pattern.compile("^.*" + item.getFieldVal() + ".*$", Pattern.CASE_INSENSITIVE);
+                    query.put(item.getFieldName(), pattern);
+                } else {
+                    query.put(item.getFieldName(), new Document("$" + item.getOpsType().toLowerCase(), item.getFieldVal()));
+                }
             }
         }
         List<DBObject> docList = mongoDao.findByPage(collectionName, query, page);

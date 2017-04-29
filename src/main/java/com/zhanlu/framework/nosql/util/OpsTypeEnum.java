@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public enum OpsTypeEnum {
 
-    Eq, Like, Gt, Gte, Lt, Lte;
+    Eq, Like, Gt, Gte, Lt, Lte, Ne, In, And, Or;
 
     public static List<String> getNames() {
         OpsTypeEnum[] values = OpsTypeEnum.values();

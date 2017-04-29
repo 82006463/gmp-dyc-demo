@@ -2,17 +2,15 @@ package com.zhanlu.report.web;
 
 import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.page.Page;
-import com.zhanlu.framework.common.utils.ReportUtils;
-import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.config.service.ElastictTableService;
 import com.zhanlu.framework.nosql.service.MongoService;
 import com.zhanlu.framework.nosql.util.BasicUtils;
+import com.zhanlu.framework.nosql.util.EditItem;
 import com.zhanlu.framework.nosql.util.QueryItem;
 import com.zhanlu.report.entity.DycReport;
 import com.zhanlu.report.service.DycReportService;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -24,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,26 +76,26 @@ public class DycReportController {
      * 新建页面
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public ModelAndView create(DycReport entity) throws Exception {
+    public ModelAndView create(String processType) throws Exception {
         ModelAndView view = new ModelAndView("report/reportEdit");
+        Map<String, Object> entity = new HashMap<>();
+        ElasticTable etab = wfcReportService.findByCode("reportType_" + processType);
+        entity.put("processType", processType);
+        view.addObject("jsonEdit", BasicUtils.jsonEdit(jdbcTemplate, dataDictService, etab, entity));
         view.addObject("entity", entity);
-        ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
-        view.addObject("jsonEdit", ReportUtils.jsonEdit(jdbcTemplate, dataDictService, etab, entity.getExtraJson()));
-        view.addObject("etab", etab);
         return view;
     }
 
     /**
      * 编辑页面
      */
-    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") Long id) throws Exception {
+    @RequestMapping(value = "update/{_id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable("_id") String _id) throws Exception {
         ModelAndView view = new ModelAndView("/report/reportEdit");
-        DycReport entity = reportService.findById(id);
+        Map<String, Object> entity = mongoService.findOne("dyc_report", _id);
+        ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.get("processType"));
+        view.addObject("jsonEdit", BasicUtils.jsonEdit(jdbcTemplate, dataDictService, etab, entity));
         view.addObject("entity", entity);
-        ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
-        view.addObject("jsonEdit", ReportUtils.jsonEdit(jdbcTemplate, dataDictService, etab, entity.getExtraJson()));
-        view.addObject("etab", etab);
         return view;
     }
 
@@ -105,56 +103,27 @@ public class DycReportController {
      * 新增、编辑的提交处理。保存实体，并返回列表视图
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ModelAndView update(RedirectAttributes attributes, HttpServletRequest req, DycReport entity) throws Exception {
-        Map<String, String[]> paramMap = req.getParameterMap();
-        Map<String, Object> dataMap = new LinkedHashMap<>(paramMap.size());
-        ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
-        List<Map<String, Object>> structList = JSON.parseObject(etab.getJsonEdit(), List.class);
-        for (Map<String, Object> struct : structList) {
-            String code = struct.get("code").toString();
-            String dataType = struct.get("dataType").toString().replace("dataType_", "");
-            String tagType = struct.get("tagType").toString().replace("tagType_", "");
-            if (tagType.equalsIgnoreCase("subForm")) {
-                DataDict dataDict = dataDictService.findByCode(struct.get("subForm").toString());
-                if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {
-                    String[] fieldArr = dataDict.getDataSource().split(",");
-                    for (String field : fieldArr) {
-                        String[] tmpField = field.split(":");
-                        dataMap.put(tmpField[0], paramMap.get(tmpField[0]));
-                    }
-                }
-            } else if (paramMap.containsKey(code) && StringUtils.isNotBlank(paramMap.get(code)[0])) {
-                String tmpData = paramMap.get(code)[0];
-                if (dataType.equals("int")) {
-                    dataMap.put(code, Integer.parseInt(tmpData));
-                } else if (dataType.equals("long")) {
-                    dataMap.put(code, Long.parseLong(tmpData));
-                } else if (dataType.equals("float")) {
-                    dataMap.put(code, Float.parseFloat(tmpData));
-                } else if (dataType.equals("double")) {
-                    dataMap.put(code, Double.parseDouble(tmpData));
-                } else {
-                    dataMap.put(code, tmpData);
-                }
-            }
-        }
-        entity.setExtraJson(JSON.toJSONString(dataMap));
-        reportService.saveOrUpdate(entity);
+    public ModelAndView update(RedirectAttributes attributes, HttpServletRequest req) throws Exception {
+        String processType = req.getParameter("processType");
+        ElasticTable etab = wfcReportService.findByCode("reportType_" + processType);
+        Map<String, Object> entity = EditItem.toMap(JSON.parseObject(etab.getJsonEdit(), List.class), req.getParameterMap());
+        entity.put("processType", processType);
+        mongoService.saveOrUpdate("dyc_report", req.getParameter("_id"), entity);
         ModelAndView view = new ModelAndView("redirect:/dyc/report/list");
-        attributes.addAttribute("processType", entity.getProcessType());
+        attributes.addAttribute("processType", processType);
         return view;
     }
 
     /**
      * 查看页面
      */
-    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
-    public ModelAndView view(@PathVariable("id") Long id) throws Exception {
+    @RequestMapping(value = "view/{_id}", method = RequestMethod.GET)
+    public ModelAndView view(@PathVariable("_id") String _id) throws Exception {
         ModelAndView view = new ModelAndView("report/reportView");
-        DycReport entity = reportService.findById(id);
-        view.addObject("entity", entity);
-        ElasticTable etab = wfcReportService.findByCode("reportType_" + entity.getProcessType());
-        view.addObject("jsonEdit", ReportUtils.jsonView(dataDictService, etab, entity.getExtraJson()));
+        Map<String, Object> report = mongoService.findOne("dyc_report", _id);
+        view.addObject("entity", report);
+        ElasticTable etab = wfcReportService.findByCode("reportType_" + report.get("processType"));
+        view.addObject("jsonEdit", BasicUtils.jsonView(dataDictService, etab, report));
         view.addObject("etab", etab);
         return view;
     }

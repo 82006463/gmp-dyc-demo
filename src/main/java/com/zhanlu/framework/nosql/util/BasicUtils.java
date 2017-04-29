@@ -78,8 +78,11 @@ public class BasicUtils {
             for (Map.Entry<String, String> field : fieldMap.entrySet()) {
                 html += "<td class='td_list_2' align=left>" + entry.get(field.getKey()) + "</td>";
             }
-            html += "<td class='td_list_2' align=left></td>";
-            html += "</tr>";
+            html += "<td class='td_list_2' align=left>";
+            html += "<a href='/dyc/report/delete/" + entry.get("_id") + "' class='btnDel' title='删除' onclick='return confirmDel();'>删除</a>";
+            html += "<a href='/dyc/report/update/" + entry.get("_id") + "' class='btnEdit'' title='编辑'>编辑</a>";
+            html += "<a href='/dyc/report/view/" + entry.get("_id") + "' class='btnView'' title='查看'>查看</a>";
+            html += "</td></tr>";
         }
         return html;
     }
@@ -87,16 +90,12 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonEdit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, ElasticTable etab, String jsonData) {
+    public static String jsonEdit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, ElasticTable etab,  Map<String, Object> dataMap) {
         String jsonStruct = etab.getJsonEdit();
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
         }
-        if (jsonData == null || jsonData.trim().isEmpty()) {
-            jsonData = "{}";
-        }
         List<Map<String, Object>> structList = JSON.parseObject(jsonStruct, List.class);
-        Map<String, Object> dataMap = JSON.parseObject(jsonData, Map.class);
         int tmpIndex = 0;
         int itemIndex = 0;
         String html = "<tr>";
@@ -105,7 +104,6 @@ public class BasicUtils {
             String required = entry.get("required").toString();
             String fuzzy = entry.get("fuzzy").toString();
             String code = entry.get("code").toString();
-            String name = entry.get("name").toString();
             String desc = entry.get("desc").toString();
             String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
 
@@ -229,23 +227,18 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonView(DataDictService dataDictService, ElasticTable etab, String jsonData) {
+    public static String jsonView(DataDictService dataDictService, ElasticTable etab,  Map<String, Object> dataMap) {
         String jsonStruct = etab.getJsonEdit();
         if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
             return "";
         }
-        if (jsonData == null || jsonData.trim().isEmpty()) {
-            jsonData = "{}";
-        }
         List<Map<String, Object>> structList = JSON.parseObject(jsonStruct, List.class);
-        Map<String, Object> dataMap = JSON.parseObject(jsonData, Map.class);
         int tmpIndex = 0;
         int itemIndex = 0;
         String html = "<tr>";
         for (Map<String, Object> entry : structList) {
             String tagType = entry.get("tagType").toString().replace("tagType_", "");
             String code = entry.get("code").toString();
-            String name = entry.get("name").toString();
             String desc = entry.get("desc").toString();
             String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
 
@@ -281,8 +274,7 @@ public class BasicUtils {
             } else if (tmpIndex == 1 && itemIndex == structList.size()) {
                 html = html.replace("${" + itemIndex + "}", " colspan='3'");
             }
-            if (tmpIndex == 2 || itemIndex == structList.size() ||
-                    (tmpIndex == 1 && (tagType.equals("textarea") || tagType.equals("subForm")))) {
+            if (tmpIndex == 2 || itemIndex == structList.size() || (tmpIndex == 1 && (tagType.equals("textarea") || tagType.equals("subForm")))) {
                 html += "</tr>";
                 tmpIndex = 0;
             }
