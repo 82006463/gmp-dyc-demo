@@ -1,7 +1,10 @@
 package com.zhanlu.meta.web;
 
+import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.page.Page;
+import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
+import com.zhanlu.framework.config.service.ElastictTableService;
 import com.zhanlu.framework.nosql.service.MongoService;
 import com.zhanlu.framework.nosql.util.BasicUtils;
 import com.zhanlu.framework.nosql.util.EditItem;
@@ -17,10 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 报表Controller
