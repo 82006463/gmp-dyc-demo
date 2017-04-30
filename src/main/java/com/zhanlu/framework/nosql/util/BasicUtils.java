@@ -38,7 +38,7 @@ public class BasicUtils {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
             } else if (tagType.equalsIgnoreCase("timestamp")) {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
-            } else if (tagType.startsWith("select_")) {
+            } else if (tagType.startsWith("Select_")) {
                 DataDict dataDict = dataDictService.findByCode("tagType_" + tagType);
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource()) && dataDict.getDataSource().trim().toUpperCase().startsWith("SELECT ")) {
                     List<Map<String, Object>> itemList = jdbcTemplate.queryForList(dataDict.getDataSource());
@@ -69,8 +69,8 @@ public class BasicUtils {
         Map<String, String> fieldMap = new LinkedHashMap<>(structList.size());
         String html = "<tr>";
         for (Map<String, String> entry : structList) {
-            html += "<td align=center class='td_list_1'>" + entry.get("name") + "</td>";
-            fieldMap.put(entry.get("code"), entry.get("name"));
+            html += "<td align=center class='td_list_1'>" + entry.get("desc") + "</td>";
+            fieldMap.put(entry.get("code"), entry.get("desc"));
         }
         html += "<td align=center width=10% class='td_list_1'>操作</td></tr>";
         for (Map<String, Object> entry : entityList) {
@@ -96,28 +96,27 @@ public class BasicUtils {
         int itemIndex = 0;
         String html = "<tr>";
         for (Map<String, String> entry : structList) {
-            String tagType = entry.get("tagType").toString().replace("tagType_", "");
-            String required = entry.get("required").toString();
-            String fuzzy = entry.get("fuzzy").toString();
-            String code = entry.get("code").toString();
-            String desc = entry.get("desc").toString();
+            String tagType = entry.get("tagType").replace("tagType_", "");
+            String required = entry.get("required");
+            String fuzzy = entry.get("fuzzy");
+            String code = entry.get("code");
             String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
 
             itemIndex++;
             tmpIndex++;
-            if (tmpIndex == 3 || (tmpIndex == 1 && (tagType.equals("textarea") || tagType.equals("subForm")))) {
+            if (tmpIndex == 3 || (tmpIndex == 1 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm")))) {
                 html += "<tr>";
-            } else if (tmpIndex == 2 && (tagType.equals("textarea") || tagType.equals("subForm"))) {
+            } else if (tmpIndex == 2 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm"))) {
                 html += "</tr><tr>";
             }
-            html += "<td class='td_table_1'>" + desc + "</td><td class='td_table_2' ${" + itemIndex + "}>";
-            if (tagType.equals("textarea")) {
+            html += "<td class='td_table_1'>" + entry.get("desc") + "</td><td class='td_table_2' ${" + itemIndex + "}>";
+            if (tagType.equalsIgnoreCase("textarea")) {
                 html += "<textarea name='" + code + "' class='input_textarea_600" + (required.equals("yes") ? " validate[required]" : "") + "'>" + val + "</textarea>";
-            } else if (tagType.equals("date")) {
+            } else if (tagType.equalsIgnoreCase("date")) {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
-            } else if (tagType.equals("timestamp")) {
+            } else if (tagType.equalsIgnoreCase("timestamp")) {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
-            } else if (tagType.equals("subForm")) {
+            } else if (tagType.equalsIgnoreCase("subForm")) {
                 DataDict dataDict = dataDictService.findByCode(entry.get("subForm").toString());
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {
                     String[] fieldArr = dataDict.getDataSource().split(",");
@@ -173,22 +172,22 @@ public class BasicUtils {
                 } else {
                     html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' fuzzy='" + fuzzy + "'/>";
                 }
-            } else if (tagType.startsWith("select_") || tagType.startsWith("radio_") || tagType.startsWith("checkbox_")) {
+            } else if (tagType.startsWith("Select_") || tagType.startsWith("Radio_") || tagType.startsWith("Checkbox_")) {
                 DataDict dataDict = dataDictService.findByCode("tagType_" + tagType);
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource()) && dataDict.getDataSource().trim().toUpperCase().startsWith("SELECT ")) {
                     List<Map<String, Object>> itemList = ResultSetUtils.convertList(jdbcTemplate.queryForList(dataDict.getDataSource()));
-                    if (tagType.startsWith("select_")) {
+                    if (tagType.startsWith("Select_")) {
                         html += "<select name='" + code + "' class='input_select" + (required.equals("yes") ? " validate[required]" : "") + "' fuzzy='" + fuzzy + "'>";
                         html += "<option value='' selected>--请选择--</option>";
                         for (Map<String, Object> item : itemList) {
                             html += "<option value='" + item.get("code") + "'" + (item.get("code").toString().equals(val) ? " selected='selected'" : "") + ">" + item.get("name") + "</option>";
                         }
                         html += "</select>";
-                    } else if (tagType.startsWith("radio_")) {
+                    } else if (tagType.startsWith("Radio_")) {
                         for (Map<String, Object> item : itemList) {
                             html += "<input type='radio' name='" + code + "' value='" + item.get("code") + "' class='input_radio" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
                         }
-                    } else if (tagType.startsWith("checkbox_")) {
+                    } else if (tagType.startsWith("Checkbox_")) {
                         for (Map<String, Object> item : itemList) {
                             html += "<input type='text' name='" + item.get("code") + "' value='" + val + "' class='input_checkbox" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
                         }
@@ -201,7 +200,7 @@ public class BasicUtils {
             }
             html += "</td>";
 
-            if (tagType.equals("textarea") || tagType.equals("subForm")) {
+            if (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm")) {
                 if (tmpIndex == 1) {
                     html = html.replace("${" + itemIndex + "}", " colspan='3'");
                 } else if (tmpIndex == 2) {
@@ -212,7 +211,7 @@ public class BasicUtils {
                 html = html.replace("${" + itemIndex + "}", " colspan='3'");
             }
             if (tmpIndex == 2 || itemIndex == structList.size() ||
-                    (tmpIndex == 1 && (tagType.equals("textarea") || tagType.equals("subForm")))) {
+                    (tmpIndex == 1 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm")))) {
                 html += "</tr>";
                 tmpIndex = 0;
             }
@@ -236,9 +235,9 @@ public class BasicUtils {
 
             itemIndex++;
             tmpIndex++;
-            if (tmpIndex == 3 || (tmpIndex == 1 && (tagType.equals("textarea") || tagType.equals("subForm")))) {
+            if (tmpIndex == 3 || (tmpIndex == 1 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm")))) {
                 html += "<tr>";
-            } else if (tmpIndex == 2 && (tagType.equals("textarea") || tagType.equals("subForm"))) {
+            } else if (tmpIndex == 2 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm"))) {
                 html += "</tr><tr>";
             }
             html += "<td class='td_table_1'>" + desc + "</td><td class='td_table_2' ${" + itemIndex + "}>";
@@ -256,7 +255,7 @@ public class BasicUtils {
             }
             html += "</td>";
 
-            if (tagType.equals("textarea") || tagType.equals("subForm")) {
+            if (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm")) {
                 if (tmpIndex == 1) {
                     html = html.replace("${" + itemIndex + "}", " colspan='3'");
                 } else if (tmpIndex == 2) {
@@ -266,7 +265,7 @@ public class BasicUtils {
             } else if (tmpIndex == 1 && itemIndex == structList.size()) {
                 html = html.replace("${" + itemIndex + "}", " colspan='3'");
             }
-            if (tmpIndex == 2 || itemIndex == structList.size() || (tmpIndex == 1 && (tagType.equals("textarea") || tagType.equals("subForm")))) {
+            if (tmpIndex == 2 || itemIndex == structList.size() || (tmpIndex == 1 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm")))) {
                 html += "</tr>";
                 tmpIndex = 0;
             }
