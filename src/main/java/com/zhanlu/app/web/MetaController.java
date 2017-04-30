@@ -1,4 +1,4 @@
-package com.zhanlu.meta.web;
+package com.zhanlu.app.web;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.config.service.DataDictService;
