@@ -9,8 +9,8 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/wfc/etab/list?lookup=${lookup }" method="get">
-		<input type="hidden" name="lookup" value="${lookup}" />
+	<form id="mainForm" action="${ctx}/config/meta/tag" method="get">
+		<input type="hidden" name="type" value="${type}" />
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="order" id="order" value="${page.order}"/>
@@ -24,25 +24,18 @@
 			<tr>
 				<td class="td_table_1">类型：</td>
 				<td class="td_table_2">
-					<frame:dict name="filter_EQS_code" type="select" typeCode="etabType" value="${param['filter_EQS_code']}" cssClass="input_select"/>
+					<frame:dict name="Eq_String_code" type="select" typeCode="${type}" value="${param['Eq_String_code']}" cssClass="input_select"/>
 				</td>
 				<td class="td_table_1">名称：</td>
 				<td class="td_table_2">
-					<input type="text" name="filter_LIKES_name" value="${param['filter_LIKES_name']}" class="input_240"/>
+					<input type="text" name="Like_String_name" value="${param['Like_String_name']}" class="input_240"/>
 				</td>
 			</tr>
 		</table>
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-				<c:choose>
-					<c:when test="${empty lookup}">
-						<input type='button' onclick="addNew('${ctx}/wfc/etab/create')" class='button_70px' value='新建'/>
-					</c:when>
-					<c:otherwise>
-						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
-					</c:otherwise>
-				</c:choose>
+					<input type='button' onclick="addNew('${ctx}/config/meta/tag/create?type=${type}&item=edit')" class='button_70px' value='新建'/>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>
@@ -54,17 +47,17 @@
 				<td align=center class="td_list_1">名称</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
-			<c:forEach items="${page.result}" var="item">
+			<c:forEach items="${entityList}" var="item">
 				<tr>
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
-							<a href="${ctx}/wfc/etab/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-							<a href="${ctx}/wfc/etab/update/${item.id}?type=edit" title="编辑">编辑</a>
-							<a href="${ctx}/wfc/etab/update/${item.id}?type=search" title="编辑搜索">搜索</a>
-							<a href="${ctx}/wfc/etab/update/${item.id}?type=list" title="编辑列表">列表</a>
-							<a href="${ctx}/wfc/etab/view/${item.id}" class="btnView" title="查看">查看</a>
+							<a href="${ctx}/config/meta/tag/delete/${item._id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+							<a href="${ctx}/config/meta/tag/update/${item._id}?item=edit" title="编辑">编辑</a>
+							<a href="${ctx}/config/meta/tag/update/${item._id}?item=search" title="编辑搜索">搜索</a>
+							<a href="${ctx}/config/meta/tag/update/${item._id}?item=list" title="编辑列表">列表</a>
+							<a href="${ctx}/config/meta/tag/view/${item._id}" class="btnView" title="查看">查看</a>
 						</c:if>
 						<c:if test="${!empty lookup}">
 							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>
@@ -72,7 +65,7 @@
 					</td>
 				</tr>
 			</c:forEach>
-			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup }"/>
+			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages}" totalRecords="${page.totalCount}" lookup="${lookup} "/>
 		</table>
 	</form>
 	</body>

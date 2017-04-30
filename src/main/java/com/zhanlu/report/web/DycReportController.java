@@ -43,8 +43,6 @@ public class DycReportController {
     private DataDictService dataDictService;
 
     @Autowired
-    private DycReportService reportService;
-    @Autowired
     private ElastictTableService wfcReportService;
 
     @Autowired

@@ -29,6 +29,13 @@ public interface MongoService {
 
     /**
      * @param collectionName 集合名称
+     * @param queryItems             对象ID
+     * @return 单个文档
+     */
+    public Map<String, Object> findOne(String collectionName, List<QueryItem> queryItems);
+
+    /**
+     * @param collectionName 集合名称
      * @return 所有文档
      */
     public List<Map<String, Object>> findAll(String collectionName);

@@ -3,7 +3,6 @@ package com.zhanlu.framework.nosql.util;
 import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.utils.ResultSetUtils;
 import com.zhanlu.framework.config.entity.DataDict;
-import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -90,16 +89,11 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonEdit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, ElasticTable etab, Map<String, Object> dataMap) {
-        String jsonStruct = etab.getJsonEdit();
-        if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
-            return "";
-        }
-        List<Map<String, Object>> structList = JSON.parseObject(jsonStruct, List.class);
+    public static String jsonEdit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, List<Map<String, String>> structList, Map<String, Object> dataMap) {
         int tmpIndex = 0;
         int itemIndex = 0;
         String html = "<tr>";
-        for (Map<String, Object> entry : structList) {
+        for (Map<String, String> entry : structList) {
             String tagType = entry.get("tagType").toString().replace("tagType_", "");
             String required = entry.get("required").toString();
             String fuzzy = entry.get("fuzzy").toString();
@@ -227,16 +221,11 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonView(DataDictService dataDictService, ElasticTable etab, Map<String, Object> dataMap) {
-        String jsonStruct = etab.getJsonEdit();
-        if (jsonStruct == null || jsonStruct.trim().isEmpty()) {
-            return "";
-        }
-        List<Map<String, Object>> structList = JSON.parseObject(jsonStruct, List.class);
+    public static String jsonView(DataDictService dataDictService, List<Map<String, String>> structList, Map<String, Object> dataMap) {
         int tmpIndex = 0;
         int itemIndex = 0;
         String html = "<tr>";
-        for (Map<String, Object> entry : structList) {
+        for (Map<String, String> entry : structList) {
             String tagType = entry.get("tagType").toString().replace("tagType_", "");
             String code = entry.get("code").toString();
             String desc = entry.get("desc").toString();

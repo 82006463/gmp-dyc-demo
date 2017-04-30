@@ -10,11 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2017/4/29.
+ * 编辑页面项
  */
 public class EditItem {
-
-    //private static Map<String, Class<?>> DATA_TYPE_MAP = DataTypeEnum.getMap();
 
     private String dataType;
     private String fieldName;

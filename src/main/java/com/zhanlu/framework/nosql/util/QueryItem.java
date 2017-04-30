@@ -1,16 +1,18 @@
 package com.zhanlu.framework.nosql.util;
 
+import com.zhanlu.framework.common.utils.ConvertUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2017/4/29.
+ * 列表页面搜索项
  */
 public class QueryItem {
 
-    private static Map<String, Class<?>> OPS_TYPE_MAP = OpsTypeEnum.getMap();
-    private static Map<String, Class<?>> DATA_TYPE_MAP = DataTypeEnum.getMap();
+    private static Map<String, String> COMPARE_TYPE_MAP = PageEnum.CompareType.namesMap();
+    private static Map<String, Class<?>> DATA_TYPE_MAP = PageEnum.DataType.namesMap();
 
     private String dataType;
     private String opsType;
@@ -23,27 +25,13 @@ public class QueryItem {
         opsType = attrNameArr[0];
         dataType = attrNameArr[1];
         if (attrVal != null && attrVal.trim().length() > 0) {
-            if (dataType.equals("Byte")) {
-                fieldVal = Byte.parseByte(attrVal);
-            } else if (dataType.equals("Int")) {
-                fieldVal = Integer.parseInt(attrVal);
-            } else if (dataType.equals("Long")) {
-                fieldVal = Long.parseLong(attrVal);
-            } else if (dataType.equals("Float")) {
-                fieldVal = Float.parseFloat(attrVal);
-            } else if (dataType.equals("Double")) {
-                fieldVal = Double.parseDouble(attrVal);
-            } else if (dataType.equals("Boolean")) {
-                fieldVal = Boolean.parseBoolean(attrVal);
-            } else {
-                fieldVal = attrVal;
-            }
+            fieldVal = ConvertUtils.convertStringToObject(attrVal, PageEnum.DataType.valueOf(dataType).getClazz());
         }
     }
 
     public static QueryItem buildSearchItem(String attrName, String attrVal) {
         String[] attrNameArr = attrName.split("_");
-        if (!OPS_TYPE_MAP.containsKey(attrNameArr[0]) || !DATA_TYPE_MAP.containsKey(attrNameArr[1])) {
+        if (!COMPARE_TYPE_MAP.containsKey(attrNameArr[0]) || !DATA_TYPE_MAP.containsKey(attrNameArr[1])) {
             return null;
         }
         return new QueryItem(attrName, attrVal);

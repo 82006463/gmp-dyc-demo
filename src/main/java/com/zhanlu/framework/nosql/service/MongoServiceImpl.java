@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -40,6 +41,15 @@ public class MongoServiceImpl implements MongoService {
     public Map<String, Object> findOne(String collectionName, String id) {
         DBObject one = mongoDao.findOne(collectionName, id);
         return (Map<String, Object>) one.toMap();
+    }
+
+    @Override
+    public Map<String, Object> findOne(String collectionName, List<QueryItem> queryItems) {
+        List<Map<String, Object>> docList = this.findByProp(collectionName, queryItems);
+        if (docList == null || docList.isEmpty()) {
+            return new HashMap<>();
+        }
+        return docList.get(0);
     }
 
     @Override
