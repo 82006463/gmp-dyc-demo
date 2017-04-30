@@ -1,6 +1,5 @@
 package com.zhanlu.framework.nosql.util;
 
-import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.utils.ResultSetUtils;
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.service.DataDictService;
@@ -17,7 +16,8 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonSearch(DataDictService dataDictService, JdbcTemplate jdbcTemplate, List<Map<String, String>> structList, Map<String, String[]> paramMap) {
+    public static String jsonSearch(DataDictService dataDictService, JdbcTemplate jdbcTemplate, Map<String, Object> metaTag, Map<String, String[]> paramMap) {
+        List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("queryItems");
         int itemIndex = 0;
         String html = "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' style='margin-top: 0px'><tr>";
         for (Map<String, String> entry : structList) {
@@ -64,7 +64,8 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonList(String contextPath, List<Map<String, String>> structList, List<Map<String, Object>> entityList) {
+    public static String jsonList(String contextPath, Map<String, Object> metaTag, List<Map<String, Object>> entityList) {
+        List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("listItems");
         Map<String, String> fieldMap = new LinkedHashMap<>(structList.size());
         String html = "<tr>";
         for (Map<String, String> entry : structList) {
@@ -78,9 +79,9 @@ public class BasicUtils {
                 html += "<td class='td_list_2' align=left>" + entry.get(field.getKey()) + "</td>";
             }
             html += "<td class='td_list_2' align=left>";
-            html += "<a href='" + contextPath + "/dyc/report/delete/" + entry.get("_id") + "' class='btnDel' title='删除' onclick='return confirmDel();'>删除</a>";
-            html += "<a href='" + contextPath + "/dyc/report/update/" + entry.get("_id") + "' class='btnEdit'' title='编辑'>编辑</a>";
-            html += "<a href='" + contextPath + "/dyc/report/view/" + entry.get("_id") + "' class='btnView'' title='查看'>查看</a>";
+            html += "<a href='" + contextPath + metaTag.get("list_delete_url") + "' class='btnDel' title='删除' onclick='return confirmDel();'>删除</a>";
+            html += "<a href='" + contextPath + metaTag.get("list_edit_url") + "/" + entry.get("_id") + "' class='btnEdit'' title='编辑'>编辑</a>";
+            html += "<a href='" + contextPath + metaTag.get("list_delete_url") + "/" + entry.get("_id") + "' class='btnView'' title='查看'>查看</a>";
             html += "</td></tr>";
         }
         return html;
@@ -89,7 +90,8 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonEdit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, List<Map<String, String>> structList, Map<String, Object> dataMap) {
+    public static String jsonEdit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, Map<String, Object> metaTag, Map<String, Object> dataMap) {
+        List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("editItems");
         int tmpIndex = 0;
         int itemIndex = 0;
         String html = "<tr>";
@@ -221,7 +223,8 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonView(DataDictService dataDictService, List<Map<String, String>> structList, Map<String, Object> dataMap) {
+    public static String jsonView(DataDictService dataDictService, Map<String, Object> metaTag, Map<String, Object> dataMap) {
+        List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("editItems");
         int tmpIndex = 0;
         int itemIndex = 0;
         String html = "<tr>";

@@ -1,8 +1,6 @@
 package com.zhanlu.meta.web;
 
-import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.page.Page;
-import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.nosql.service.MongoService;
 import com.zhanlu.framework.nosql.util.BasicUtils;
@@ -52,7 +50,7 @@ public class LogBookController {
     public ModelAndView list(Page<?> page, @PathVariable("type") String type, HttpServletRequest req) throws Exception {
         Map<String, String[]> paramMap = req.getParameterMap();
         List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("code", "logBook_" + type));
+        queryItems.add(new QueryItem("Eq_String_code", "logBook_" + type));
         Map<String, Object> metaTag = mongoService.findOne(metaTagTable, queryItems);
 
         queryItems = QueryItem.buildSearchItems(paramMap);
@@ -60,9 +58,10 @@ public class LogBookController {
         List<Map<String, Object>> entityList = mongoService.findByPage(this.tableName, queryItems, page);
 
         ModelAndView view = new ModelAndView("meta/logBookList");
-        view.addObject("jsonSearch", BasicUtils.jsonSearch(dataDictService, jdbcTemplate, (List<Map<String, String>>) metaTag.get("queryItems"), paramMap));
-        view.addObject("jsonList", BasicUtils.jsonList(req.getContextPath(), (List<Map<String, String>>) metaTag.get("listItems"), entityList));
+        view.addObject("jsonSearch", BasicUtils.jsonSearch(dataDictService, jdbcTemplate, metaTag, paramMap));
+        view.addObject("jsonList", BasicUtils.jsonList(req.getContextPath(), metaTag, entityList));
         view.addObject("page", page);
+        view.addObject("metaTag", metaTag);
         return view;
     }
 
@@ -72,14 +71,15 @@ public class LogBookController {
     @RequestMapping(value = "{type}/create", method = RequestMethod.GET)
     public ModelAndView create(@PathVariable("type") String type) throws Exception {
         List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("code", "logBook_" + type));
+        queryItems.add(new QueryItem("Eq_String_code", "logBook_" + type));
         Map<String, Object> metaTag = mongoService.findOne(metaTagTable, queryItems);
 
         ModelAndView view = new ModelAndView("meta/logBookEdit");
         Map<String, Object> entity = new HashMap<>();
         entity.put("type", type);
-        view.addObject("jsonEdit", BasicUtils.jsonEdit(jdbcTemplate, dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), entity));
+        view.addObject("jsonEdit", BasicUtils.jsonEdit(jdbcTemplate, dataDictService, metaTag, entity));
         view.addObject("entity", entity);
+        view.addObject("metaTag", metaTag);
         return view;
     }
 
@@ -89,13 +89,14 @@ public class LogBookController {
     @RequestMapping(value = "{type}/update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("type") String type, @PathVariable("id") String id) throws Exception {
         List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("code", "logBook_" + type));
+        queryItems.add(new QueryItem("Eq_String_code", "logBook_" + type));
         Map<String, Object> metaTag = mongoService.findOne(metaTagTable, queryItems);
 
-        ModelAndView view = new ModelAndView("/report/reportEdit");
+        ModelAndView view = new ModelAndView("/meta/logBookEdit");
         Map<String, Object> entity = mongoService.findOne(this.tableName, id);
-        view.addObject("jsonEdit", BasicUtils.jsonEdit(jdbcTemplate, dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), entity));
+        view.addObject("jsonEdit", BasicUtils.jsonEdit(jdbcTemplate, dataDictService, metaTag, entity));
         view.addObject("entity", entity);
+        view.addObject("metaTag", metaTag);
         return view;
     }
 
@@ -105,12 +106,12 @@ public class LogBookController {
     @RequestMapping(value = "{type}/update", method = RequestMethod.POST)
     public ModelAndView update(RedirectAttributes attributes, @PathVariable("type") String type, HttpServletRequest req) throws Exception {
         List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("code", "logBook_" + type));
+        queryItems.add(new QueryItem("Eq_String_code", "logBook_" + type));
         Map<String, Object> metaTag = mongoService.findOne(metaTagTable, queryItems);
 
-        Map<String, Object> entity = EditItem.toMap(dataDictService,(List<Map<String, String>>) metaTag.get("editItems"), req.getParameterMap());
+        Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), req.getParameterMap());
         mongoService.saveOrUpdate("dyc_report", req.getParameter("id"), entity);
-        ModelAndView view = new ModelAndView("redirect:/dyc/report/list");
+        ModelAndView view = new ModelAndView("redirect:/meta/logBook/" + type + "/list");
         attributes.addAttribute("type", type);
         return view;
     }
@@ -121,25 +122,25 @@ public class LogBookController {
     @RequestMapping(value = "{type}/view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("type") String type, @PathVariable("id") String id) throws Exception {
         List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("code", "logBook_" + type));
+        queryItems.add(new QueryItem("Eq_String_code", "logBook_" + type));
         Map<String, Object> metaTag = mongoService.findOne(metaTagTable, queryItems);
 
-        ModelAndView view = new ModelAndView("report/reportView");
+        ModelAndView view = new ModelAndView("meta/logBookView");
         Map<String, Object> entity = mongoService.findOne(this.tableName, id);
         view.addObject("entity", entity);
-        view.addObject("jsonEdit", BasicUtils.jsonView(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), entity));
+        view.addObject("jsonEdit", BasicUtils.jsonView(dataDictService, metaTag, entity));
+        view.addObject("metaTag", metaTag);
         return view;
     }
 
     /**
      * 根据主键ID删除实体，并返回列表视图
      */
-    @RequestMapping(value = "delete/{id}")
-    public ModelAndView delete(RedirectAttributes attributes, @PathVariable("id") String id) {
-        Map<String, Object> entity = mongoService.findOne("dyc_report", id);
-        mongoService.removeOne("dyc_report", id);
-        ModelAndView view = new ModelAndView("redirect:/dyc/report/list");
-        attributes.addAttribute("processType", entity.get("processType"));
+    @RequestMapping(value = "{type}/delete/{id}")
+    public ModelAndView delete(RedirectAttributes attributes, @PathVariable("type") String type, @PathVariable("id") String id) {
+        mongoService.removeOne(this.tableName, id);
+        ModelAndView view = new ModelAndView("redirect:/meta/logBook/" + type + "/list");
+        attributes.addAttribute("type", type);
         return view;
     }
 

@@ -90,14 +90,18 @@ public class MetaTagController {
         entity.put("type", paramMap.get("type")[0]);
         entity.put("code", paramMap.get("code")[0]);
         entity.put("name", paramMap.get("name")[0]);
-        entity.put("remark", paramMap.get("remark") == null ? null : paramMap.get("remark")[0]);
+        entity.put("list_url", paramMap.get("list_url")[0]);
+        entity.put("list_edit_url", paramMap.get("list_edit_url")[0]);
+        entity.put("list_view_url", paramMap.get("list_view_url")[0]);
+        entity.put("list_delete_url", paramMap.get("list_delete_url")[0]);
+        entity.put("edit_submit_url", paramMap.get("edit_submit_url")[0]);
         if (itemCodes != null && itemCodes.length > 0) {
             String[] itemNames = paramMap.get("itemNames");
             String[] itemDescs = paramMap.get("itemDescs");
             String[] itemDataTypes = paramMap.get("itemDataTypes");
             List<Map<String, Object>> items = new ArrayList<>(itemCodes == null ? 0 : itemCodes.length);
             if (item.equals("search")) {
-                String[] itemCompares = paramMap.get("itemCompares");
+                String[] itemCompareTypes = paramMap.get("itemCompareTypes");
                 String[] itemTagTypes = paramMap.get("itemTagTypes");
                 for (int i = 0; i < itemCodes.length; i++) {
                     Map<String, Object> itemMap = new LinkedHashMap<>(8);
@@ -105,7 +109,7 @@ public class MetaTagController {
                     itemMap.put("name", itemNames[i]);
                     itemMap.put("desc", itemDescs[i]);
                     itemMap.put("dataType", itemDataTypes[i]);
-                    itemMap.put("compare", itemCompares[i]);
+                    itemMap.put("compareType", itemCompareTypes[i]);
                     itemMap.put("tagType", itemTagTypes[i]);
                     items.add(itemMap);
                 }
@@ -121,6 +125,7 @@ public class MetaTagController {
                 }
                 entity.put("listItems", items);
             } else if (item.equals("edit")) {
+                Map<String, String> itemsMap = new LinkedHashMap<>(itemCodes.length);
                 String[] itemRequireds = paramMap.get("itemRequireds");
                 String[] itemSubForms = paramMap.get("itemSubForms");
                 String[] itemFuzzys = paramMap.get("itemFuzzys");
@@ -136,7 +141,9 @@ public class MetaTagController {
                     itemMap.put("fuzzy", itemFuzzys[i]);
                     itemMap.put("subForm", itemSubForms[i]);
                     items.add(itemMap);
+                    itemsMap.put(itemCodes[i], itemDescs[i]);
                 }
+                entity.put("itemsMap", itemsMap);
                 entity.put("editItems", items);
             }
         }

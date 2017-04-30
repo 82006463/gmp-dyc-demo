@@ -107,7 +107,7 @@
 									</td>
 								<c:if test="${item == 'search'}">
 									<td class="td_list_2">
-										<frame:dict name="itemCompareTypes" type="select" typeCode="compareType" value="${itemTmp.compareType}" defaultVal="compare_Eq" cssClass="validate[required]"/>
+										<frame:dict name="itemCompareTypes" type="select" typeCode="compareType" value="${itemTmp.compareType}" defaultVal="compareType_Eq" cssClass="validate[required]"/>
 									</td>
                                     <td class="td_list_2">
                                         <frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="${itemTmp.tagType}" defaultVal="tagType_Input" cssClass="validate[required]"/>
@@ -188,7 +188,7 @@
 
 				if('${item}' == 'search') {
 					cell = row.insertCell(-1);
-					cell.innerHTML = "<frame:dict name="itemCompareTypes" type="select" typeCode="compareType" value="" defaultVal="compare_Eq" cssClass="validate[required]"/>";
+					cell.innerHTML = "<frame:dict name="itemCompareTypes" type="select" typeCode="compareType" value="" defaultVal="compareType_Eq" cssClass="validate[required]"/>";
 					cell.className = "td_list_2";
                     cell = row.insertCell(-1);
                     cell.innerHTML = "<frame:dict name="itemTagTypes" type="select" typeCode="tagType" value="" defaultVal="tagType_Input" cssClass="validate[required]"/>";
