@@ -15,17 +15,21 @@ public class QueryItem {
     private static Map<String, Class<?>> DATA_TYPE_MAP = PageEnum.DataType.namesMap();
 
     private String dataType;
-    private String opsType;
+    private String compareType;
     private String fieldName;
     private Object fieldVal;
 
     public QueryItem(String attrName, String attrVal) {
         String[] attrNameArr = attrName.split("_");
-        fieldName = attrName.replace(attrNameArr[0] + "_" + attrNameArr[1] + "_", "");
-        opsType = attrNameArr[0];
-        dataType = attrNameArr[1];
-        if (attrVal != null && attrVal.trim().length() > 0) {
-            fieldVal = ConvertUtils.convertStringToObject(attrVal, PageEnum.DataType.valueOf(dataType).getClazz());
+        fieldName = attrName.contains("_OR_") ? attrName : attrName.replace(attrNameArr[0] + "_" + attrNameArr[1] + "_", "");
+        compareType = attrName.contains("_OR_") ? "or" : attrNameArr[0];
+        dataType = attrName.contains("_OR_") ? "String" : attrNameArr[1];
+        if (attrName.contains("_OR_")) {
+            fieldVal = attrVal;
+        } else {
+            if (attrVal != null && attrVal.trim().length() > 0) {
+                fieldVal = ConvertUtils.convertStringToObject(attrVal, PageEnum.DataType.valueOf(dataType).getClazz());
+            }
         }
     }
 
@@ -53,8 +57,8 @@ public class QueryItem {
         return dataType;
     }
 
-    public String getOpsType() {
-        return opsType;
+    public String getCompareType() {
+        return compareType;
     }
 
     public String getFieldName() {

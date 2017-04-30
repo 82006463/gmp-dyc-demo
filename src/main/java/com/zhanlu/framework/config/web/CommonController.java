@@ -2,6 +2,8 @@ package com.zhanlu.framework.config.web;
 
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.service.DataDictService;
+import com.zhanlu.framework.nosql.service.MongoService;
+import com.zhanlu.framework.nosql.util.QueryItem;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,6 +29,8 @@ public class CommonController {
 
     @Resource(name = "jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private MongoService mongoService;
     @Autowired
     private DataDictService dataDictService;
 
@@ -69,24 +73,44 @@ public class CommonController {
             return dataList;
         }
         String sql = dataDict.getDataSource();
-        if (!sql.trim().toUpperCase().startsWith("SELECT ")) {
-            return dataList;
-        }
-
-        sql = sql.replace("LIKE ?", "LIKE '%" + keyword + "%'").replace("like ?", "like '%" + keyword + "%'");
-        String[] orArr = sql.toUpperCase().split("WHERE")[1].trim().toUpperCase().split("OR");
-        List<String> params = new ArrayList<>();
-        for (String or : orArr) {
-            if (or.contains("=?") || or.contains("= ?"))
-                params.add(keyword);
-        }
-        List<Map<String, Object>> tmpMaps = jdbcTemplate.queryForList(sql, params.toArray());
-        for (Map<String, Object> map : tmpMaps) {
-            String tmpVal = "";
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                tmpVal += tmpVal.length() == 0 ? entry.getValue() : ":" + entry.getValue();
+        if (sql.trim().toUpperCase().startsWith("SELECT ")) {
+            sql = sql.replace("LIKE ?", "LIKE '%" + keyword + "%'").replace("like ?", "like '%" + keyword + "%'");
+            String[] orArr = sql.toUpperCase().split("WHERE")[1].trim().toUpperCase().split("OR");
+            List<String> params = new ArrayList<>();
+            for (String or : orArr) {
+                if (or.contains("=?") || or.contains("= ?"))
+                    params.add(keyword);
             }
-            dataList.add(tmpVal);
+            List<Map<String, Object>> tmpMaps = jdbcTemplate.queryForList(sql, params.toArray());
+            for (Map<String, Object> map : tmpMaps) {
+                String tmpVal = "";
+                for (Map.Entry<String, Object> entry : map.entrySet()) {
+                    tmpVal += tmpVal.length() == 0 ? entry.getValue() : ":" + entry.getValue();
+                }
+                dataList.add(tmpVal);
+            }
+        } else {
+            String[] fromArr = sql.split(" FROM ");
+            String[] fieldArr = fromArr[0].split(",");
+            String[] whereArr = fromArr[1].split(" WHERE ");
+            String tableName = whereArr[0];
+            String[] orArr = whereArr[1].split(" OR ");
+            String fieldName = "";
+            for (String or : orArr) {
+                String[] tmpArr = or.split(" ");
+                fieldName += tmpArr[1] + "_String_" + tmpArr[0] + "_OR_";
+            }
+            fieldName = fieldName.substring(0, fieldName.length() - 4);
+            List<QueryItem> queryItems = new ArrayList<>(2);
+            queryItems.add(new QueryItem(fieldName, keyword));
+            List<Map<String, Object>> items = mongoService.findByProp(tableName, queryItems);
+            for (Map<String, Object> item : items) {
+                String tmpVal = item.get(fieldArr[0]).toString();
+                for (int i = 1; i < fieldArr.length; i++) {
+                    tmpVal += ":" + item.get(fieldArr[i]).toString();
+                }
+                dataList.add(tmpVal);
+            }
         }
         return dataList;
     }

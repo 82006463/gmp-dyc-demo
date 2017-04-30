@@ -1,5 +1,6 @@
 package com.zhanlu.framework.nosql.service;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.zhanlu.framework.common.page.Page;
@@ -70,11 +71,28 @@ public class MongoServiceImpl implements MongoService {
                 if (item.getFieldVal() == null) {
                     continue;
                 }
-                if (item.getOpsType().equalsIgnoreCase("like")) {
-                    Pattern pattern = Pattern.compile("^.*" + item.getFieldVal() + ".*$", Pattern.CASE_INSENSITIVE);
-                    query.put(item.getFieldName(), pattern);
+                if (item.getFieldName().contains("_OR_")) {
+                    BasicDBList values = new BasicDBList();
+                    String[] orArr = item.getFieldName().split("_OR_");
+                    for (String or : orArr) {
+                        QueryItem itemTmp = new QueryItem(or, item.getFieldVal().toString());
+                        DBObject queryTmp = new BasicDBObject();
+                        if (itemTmp.getCompareType().equalsIgnoreCase("like")) {
+                            Pattern pattern = Pattern.compile("^.*" + item.getFieldVal() + ".*$", Pattern.CASE_INSENSITIVE);
+                            queryTmp.put(itemTmp.getFieldName(), pattern);
+                        } else {
+                            queryTmp.put(itemTmp.getFieldName(), new Document("$" + itemTmp.getCompareType().toLowerCase(), item.getFieldVal()));
+                        }
+                        values.add(queryTmp);
+                    }
+                    query.put("$or", values);
                 } else {
-                    query.put(item.getFieldName(), new Document("$" + item.getOpsType().toLowerCase(), item.getFieldVal()));
+                    if (item.getCompareType().equalsIgnoreCase("like")) {
+                        Pattern pattern = Pattern.compile("^.*" + item.getFieldVal() + ".*$", Pattern.CASE_INSENSITIVE);
+                        query.put(item.getFieldName(), pattern);
+                    } else {
+                        query.put(item.getFieldName(), new Document("$" + item.getCompareType().toLowerCase(), item.getFieldVal()));
+                    }
                 }
             }
         }
