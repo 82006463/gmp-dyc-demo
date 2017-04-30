@@ -1,10 +1,7 @@
 package com.zhanlu.meta.web;
 
-import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.page.Page;
-import com.zhanlu.framework.config.entity.ElasticTable;
 import com.zhanlu.framework.config.service.DataDictService;
-import com.zhanlu.framework.config.service.ElastictTableService;
 import com.zhanlu.framework.nosql.service.MongoService;
 import com.zhanlu.framework.nosql.util.BasicUtils;
 import com.zhanlu.framework.nosql.util.EditItem;
@@ -20,7 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 报表Controller
@@ -48,13 +48,12 @@ public class MetaController {
     @RequestMapping(value = "{metaType}/{type}/list", method = RequestMethod.GET)
     public ModelAndView list(Page<?> page, @PathVariable("metaType") String metaType, @PathVariable("type") String type, HttpServletRequest req) throws Exception {
         Map<String, String[]> paramMap = req.getParameterMap();
-        List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("Eq_String_code", metaType + "_" + type));
-        Map<String, Object> metaTag = mongoService.findOne(metaTagTable, queryItems);
+        Map<String, Object> metaTag = this.getMetaTag(metaType, type);
 
-        queryItems = QueryItem.buildSearchItems(paramMap);
+        List<QueryItem> queryItems = QueryItem.buildSearchItems(paramMap);
         queryItems.add(new QueryItem("Eq_String_type", type));
-        List<Map<String, Object>> entityList = mongoService.findByPage("meta_" + metaType, queryItems, page);
+        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
+        List<Map<String, Object>> entityList = mongoService.findByPage(tableName, queryItems, page);
 
         ModelAndView view = new ModelAndView("meta/metaList");
         view.addObject("jsonSearch", BasicUtils.jsonSearch(dataDictService, jdbcTemplate, metaTag, paramMap));
@@ -69,10 +68,7 @@ public class MetaController {
      */
     @RequestMapping(value = "{metaType}/{type}/create", method = RequestMethod.GET)
     public ModelAndView create(@PathVariable("metaType") String metaType, @PathVariable("type") String type) throws Exception {
-        List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("Eq_String_code", metaType + "_" + type));
-        Map<String, Object> metaTag = mongoService.findOne(metaTagTable, queryItems);
-
+        Map<String, Object> metaTag = this.getMetaTag(metaType, type);
         ModelAndView view = new ModelAndView("meta/metaEdit");
         Map<String, Object> entity = new HashMap<>();
         entity.put("type", type);
@@ -87,12 +83,10 @@ public class MetaController {
      */
     @RequestMapping(value = "{metaType}/{type}/update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("metaType") String metaType, @PathVariable("type") String type, @PathVariable("id") String id) throws Exception {
-        List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("Eq_String_code", metaType + "_" + type));
-        Map<String, Object> metaTag = mongoService.findOne(metaTagTable, queryItems);
-
+        Map<String, Object> metaTag = this.getMetaTag(metaType, type);
         ModelAndView view = new ModelAndView("meta/metaEdit");
-        Map<String, Object> entity = mongoService.findOne("meta_" + metaType, id);
+        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
+        Map<String, Object> entity = mongoService.findOne(tableName, id);
         view.addObject("jsonEdit", BasicUtils.jsonEdit(jdbcTemplate, dataDictService, metaTag, entity));
         view.addObject("entity", entity);
         view.addObject("metaTag", metaTag);
@@ -104,14 +98,12 @@ public class MetaController {
      */
     @RequestMapping(value = "{metaType}/{type}/update", method = RequestMethod.POST)
     public ModelAndView update(RedirectAttributes attributes, @PathVariable("metaType") String metaType, @PathVariable("type") String type, String id, HttpServletRequest req) throws Exception {
-        List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("Eq_String_code", metaType + "_" + type));
-        Map<String, Object> metaTag = mongoService.findOne(metaTagTable, queryItems);
-
+        Map<String, Object> metaTag = this.getMetaTag(metaType, type);
         Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), req.getParameterMap());
         entity.put("type", type);
-        mongoService.saveOrUpdate("meta_" + metaType, id, entity);
-        ModelAndView view = new ModelAndView("redirect:/meta/logBook/" + type + "/list");
+        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
+        mongoService.saveOrUpdate(tableName, id, entity);
+        ModelAndView view = new ModelAndView("redirect:/meta/" + metaType + "/" + type + "/list");
         attributes.addAttribute("type", type);
         return view;
     }
@@ -121,12 +113,10 @@ public class MetaController {
      */
     @RequestMapping(value = "{metaType}/{type}/view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("metaType") String metaType, @PathVariable("type") String type, @PathVariable("id") String id) throws Exception {
-        List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("Eq_String_code", metaType + "_" + type));
-        Map<String, Object> metaTag = mongoService.findOne(metaTagTable, queryItems);
-
+        Map<String, Object> metaTag = this.getMetaTag(metaType, type);
         ModelAndView view = new ModelAndView("meta/metaView");
-        Map<String, Object> entity = mongoService.findOne("meta_" + metaType, id);
+        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
+        Map<String, Object> entity = mongoService.findOne(tableName, id);
         view.addObject("entity", entity);
         view.addObject("jsonEdit", BasicUtils.jsonView(dataDictService, metaTag, entity));
         view.addObject("metaTag", metaTag);
@@ -138,10 +128,17 @@ public class MetaController {
      */
     @RequestMapping(value = "{metaType}/{type}/delete/{id}")
     public ModelAndView delete(RedirectAttributes attributes, @PathVariable("metaType") String metaType, @PathVariable("type") String type, @PathVariable("id") String id) {
-        mongoService.removeOne("meta_" + metaType, id);
+        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
+        mongoService.removeOne(tableName, id);
         ModelAndView view = new ModelAndView("redirect:/meta/" + metaType + "/" + type + "/list");
         attributes.addAttribute("type", type);
         return view;
+    }
+
+    public Map<String, Object> getMetaTag(String metaType, String type) {
+        List<QueryItem> queryItems = new ArrayList<>(1);
+        queryItems.add(new QueryItem("Eq_String_code", metaType + "_" + type));
+        return mongoService.findOne(metaTagTable, queryItems);
     }
 
 }
