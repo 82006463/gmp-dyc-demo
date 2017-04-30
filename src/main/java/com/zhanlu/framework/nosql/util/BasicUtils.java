@@ -24,16 +24,14 @@ public class BasicUtils {
             String tagType = entry.get("tagType").replace("tagType_", "");
             String compareType = entry.get("compareType").replace("compareType_", "");
             String dataType = entry.get("dataType").replace("dataType_", "");
-            String code = entry.get("code");
-            String desc = entry.get("desc");
-            code = compareType + "_" + dataType + "_" + code;
+            String code = compareType + "_" + dataType + "_" + entry.get("code");
             String val = paramMap.get(code) == null ? "" : paramMap.get(code)[0];
 
+            itemIndex++;
             if (itemIndex > 1 && itemIndex % 2 == 1) {
                 html += "<tr>";
             }
-            itemIndex++;
-            html += "<td class='td_table_1'>" + desc + "：</td><td class='td_table_2' " + (itemIndex == structList.size() ? "colspan='3'" : "") + ">";
+            html += "<td class='td_table_1'>" + entry.get("desc") + "：</td><td class='td_table_2' " + (itemIndex % 2 == 1 && itemIndex == structList.size() ? "colspan='3'" : "") + ">";
             if (tagType.equalsIgnoreCase("date")) {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
             } else if (tagType.equalsIgnoreCase("timestamp")) {
@@ -42,8 +40,7 @@ public class BasicUtils {
                 DataDict dataDict = dataDictService.findByCode("tagType_" + tagType);
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource()) && dataDict.getDataSource().trim().toUpperCase().startsWith("SELECT ")) {
                     List<Map<String, Object>> itemList = jdbcTemplate.queryForList(dataDict.getDataSource());
-                    html += "<select name='" + code + "' class='input_select'>";
-                    html += "<option value='' selected>--请选择--</option>";
+                    html += "<select name='" + code + "' class='input_select'><option value='' selected>--请选择--</option>";
                     for (Map<String, Object> item : itemList) {
                         html += "<option value='" + item.get("code") + "'" + (item.get("code").toString().equals(val) ? " selected='selected'" : "") + ">" + item.get("name") + "</option>";
                     }
