@@ -40,15 +40,15 @@
 					<td class="td_table_2">
 						<input type="text" id="list_url" name="list_url" value="${entity.list_url}" class="input_240 validate[required]" />
 					</td>
-					<td class="td_table_1">编辑链接URL：</td>
+					<td class="td_table_1">列表创建URL：</td>
 					<td class="td_table_2">
-						<input type="text" id="list_edit_url" name="list_edit_url" value="${entity.list_edit_url}" class="input_240 validate[required]" />
+						<input type="text" id="list_create_url" name="list_create_url" value="${entity.list_create_url}" class="input_240 validate[required]" />
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">查看链接URL：</td>
+					<td class="td_table_1">编辑链接URL：</td>
 					<td class="td_table_2">
-						<input type="text" id="list_view_url" name="list_view_url" value="${entity.list_view_url}" class="input_240 validate[required]" />
+						<input type="text" id="list_update_url" name="list_update_url" value="${entity.list_update_url}" class="input_240 validate[required]" />
 					</td>
 					<td class="td_table_1">删除链接URL：</td>
 					<td class="td_table_2">
@@ -56,9 +56,13 @@
 					</td>
 				</tr>
 				<tr>
+					<td class="td_table_1">查看链接URL：</td>
+					<td class="td_table_2">
+						<input type="text" id="list_view_url" name="list_view_url" value="${entity.list_view_url}" class="input_240 validate[required]" />
+					</td>
 					<td class="td_table_1">提交链接URL：</td>
-					<td class="td_table_2" colspan="3">
-						<input type="text" id="edit_submit_url" name="edit_submit_url" value="${entity.edit_submit_url}" class="input_240 validate[required]" />
+					<td class="td_table_2">
+						<input type="text" id="update_submit_url" name="update_submit_url" value="${entity.update_submit_url}" class="input_240 validate[required]" />
 					</td>
 				</tr>
 			</table>
@@ -155,17 +159,20 @@
                     if($.trim($('[name=list_url]').val()).length == 0) {
                         $('[name=list_url]').val(_pre + '/list');
                     }
-                    if($.trim($('[name=list_edit_url]').val()).length == 0) {
-                        $('[name=list_edit_url]').val(_pre + '/edit');
+					if($.trim($('[name=list_create_url]').val()).length == 0) {
+						$('[name=list_create_url]').val(_pre + '/create');
+					}
+                    if($.trim($('[name=list_update_url]').val()).length == 0) {
+                        $('[name=list_update_url]').val(_pre + '/edit');
                     }
+					if($.trim($('[name=list_delete_url]').val()).length == 0) {
+						$('[name=list_delete_url]').val(_pre + '/delete');
+					}
                     if($.trim($('[name=list_view_url]').val()).length == 0) {
                         $('[name=list_view_url]').val(_pre + '/view');
                     }
-                    if($.trim($('[name=list_delete_url]').val()).length == 0) {
-                        $('[name=list_delete_url]').val(_pre + '/delete');
-                    }
-                    if($.trim($('[name=edit_submit_url]').val()).length == 0) {
-                        $('[name=edit_submit_url]').val(_pre + '/update');
+                    if($.trim($('[name=update_submit_url]').val()).length == 0) {
+                        $('[name=update_submit_url]').val(_pre + '/update');
                     }
 				});
 			});

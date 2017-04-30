@@ -26,18 +26,20 @@
 				<tr>
 					<td class="td_table_1">列表搜索URL：</td>
 					<td class="td_table_2">${entity.list_url}</td>
-					<td class="td_table_1">编辑链接URL：</td>
-					<td class="td_table_2">${entity.list_edit_url}</td>
+					<td class="td_table_1">列表创建URL：</td>
+					<td class="td_table_2">${entity.list_create_url}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">查看链接URL：</td>
-					<td class="td_table_2">${entity.list_view_url}</td>
+					<td class="td_table_1">编辑链接URL：</td>
+					<td class="td_table_2">${entity.list_edit_url}</td>
 					<td class="td_table_1">删除链接URL：</td>
 					<td class="td_table_2">${entity.list_delete_url}</td>
 				</tr>
 				<tr>
+					<td class="td_table_1">查看链接URL：</td>
+					<td class="td_table_2">${entity.list_view_url}</td>
 					<td class="td_table_1">提交链接URL：</td>
-					<td class="td_table_2" colspan="3">${entity.edit_submit_url}</td>
+					<td class="td_table_2">${entity.edit_submit_url}</td>
 				</tr>
 			</table>
 

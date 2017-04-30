@@ -104,13 +104,16 @@ public class LogBookController {
      * 新增、编辑的提交处理。保存实体，并返回列表视图
      */
     @RequestMapping(value = "{type}/update", method = RequestMethod.POST)
-    public ModelAndView update(RedirectAttributes attributes, @PathVariable("type") String type, HttpServletRequest req) throws Exception {
+    public ModelAndView update(RedirectAttributes attributes, @PathVariable("type") String type, String id, HttpServletRequest req) throws Exception {
         List<QueryItem> queryItems = new ArrayList<>(1);
         queryItems.add(new QueryItem("Eq_String_code", "logBook_" + type));
         Map<String, Object> metaTag = mongoService.findOne(metaTagTable, queryItems);
 
         Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), req.getParameterMap());
-        mongoService.saveOrUpdate("dyc_report", req.getParameter("id"), entity);
+        if (id == null || id.trim().length() == 0) {
+            entity.put("type", type);
+        }
+        mongoService.saveOrUpdate(this.tableName, id, entity);
         ModelAndView view = new ModelAndView("redirect:/meta/logBook/" + type + "/list");
         attributes.addAttribute("type", type);
         return view;

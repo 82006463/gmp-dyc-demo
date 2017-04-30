@@ -86,15 +86,21 @@ public class MetaTagController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ModelAndView update(RedirectAttributes attributes, String id, String item, String[] itemCodes, HttpServletRequest req) {
         Map<String, String[]> paramMap = req.getParameterMap();
-        Map<String, Object> entity = new LinkedHashMap<>(itemCodes.length);
+        Map<String, Object> entity = null;
+        if (id != null && id.trim().length() > 0) {
+            entity = mongoService.findOne(this.tableName, id);
+        } else {
+            entity = new LinkedHashMap<>(itemCodes == null ? 16 : itemCodes.length + 16);
+        }
         entity.put("type", paramMap.get("type")[0]);
         entity.put("code", paramMap.get("code")[0]);
         entity.put("name", paramMap.get("name")[0]);
         entity.put("list_url", paramMap.get("list_url")[0]);
-        entity.put("list_edit_url", paramMap.get("list_edit_url")[0]);
-        entity.put("list_view_url", paramMap.get("list_view_url")[0]);
+        entity.put("list_create_url", paramMap.get("list_create_url")[0]);
+        entity.put("list_update_url", paramMap.get("list_update_url")[0]);
         entity.put("list_delete_url", paramMap.get("list_delete_url")[0]);
-        entity.put("edit_submit_url", paramMap.get("edit_submit_url")[0]);
+        entity.put("list_view_url", paramMap.get("list_view_url")[0]);
+        entity.put("update_submit_url", paramMap.get("update_submit_url")[0]);
         if (itemCodes != null && itemCodes.length > 0) {
             String[] itemNames = paramMap.get("itemNames");
             String[] itemDescs = paramMap.get("itemDescs");

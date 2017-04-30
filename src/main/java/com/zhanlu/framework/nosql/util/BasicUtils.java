@@ -22,11 +22,11 @@ public class BasicUtils {
         String html = "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' style='margin-top: 0px'><tr>";
         for (Map<String, String> entry : structList) {
             String tagType = entry.get("tagType").replace("tagType_", "");
-            String compare = entry.get("compare").replace("compare_", "").replace("EQ", "Eq").replace("LIKE", "Like");
-            String dataType = entry.get("dataType").replace("dataType_", "").replace("varchar", "String").replace("int", "Int");
-            String code = entry.get("code").toString();
-            String desc = entry.get("desc").toString();
-            code = compare + "_" + dataType + "_" + code;
+            String compareType = entry.get("compareType").replace("compareType_", "");
+            String dataType = entry.get("dataType").replace("dataType_", "");
+            String code = entry.get("code");
+            String desc = entry.get("desc");
+            code = compareType + "_" + dataType + "_" + code;
             String val = paramMap.get(code) == null ? "" : paramMap.get(code)[0];
 
             if (itemIndex > 1 && itemIndex % 2 == 1) {
@@ -80,7 +80,7 @@ public class BasicUtils {
             }
             html += "<td class='td_list_2' align=left>";
             html += "<a href='" + contextPath + metaTag.get("list_delete_url") + "' class='btnDel' title='删除' onclick='return confirmDel();'>删除</a>";
-            html += "<a href='" + contextPath + metaTag.get("list_edit_url") + "/" + entry.get("_id") + "' class='btnEdit'' title='编辑'>编辑</a>";
+            html += "<a href='" + contextPath + metaTag.get("list_update_url") + "/" + entry.get("_id") + "' class='btnEdit'' title='编辑'>编辑</a>";
             html += "<a href='" + contextPath + metaTag.get("list_delete_url") + "/" + entry.get("_id") + "' class='btnView'' title='查看'>查看</a>";
             html += "</td></tr>";
         }
