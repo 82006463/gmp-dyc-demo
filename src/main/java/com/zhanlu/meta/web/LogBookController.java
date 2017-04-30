@@ -110,9 +110,7 @@ public class LogBookController {
         Map<String, Object> metaTag = mongoService.findOne(metaTagTable, queryItems);
 
         Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), req.getParameterMap());
-        if (id == null || id.trim().length() == 0) {
-            entity.put("type", type);
-        }
+        entity.put("type", type);
         mongoService.saveOrUpdate(this.tableName, id, entity);
         ModelAndView view = new ModelAndView("redirect:/meta/logBook/" + type + "/list");
         attributes.addAttribute("type", type);

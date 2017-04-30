@@ -163,7 +163,7 @@
 						$('[name=list_create_url]').val(_pre + '/create');
 					}
                     if($.trim($('[name=list_update_url]').val()).length == 0) {
-                        $('[name=list_update_url]').val(_pre + '/edit');
+                        $('[name=list_update_url]').val(_pre + '/update');
                     }
 					if($.trim($('[name=list_delete_url]').val()).length == 0) {
 						$('[name=list_delete_url]').val(_pre + '/delete');
