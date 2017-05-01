@@ -50,7 +50,7 @@ public class AppController {
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> metaApp = this.getMetaTag(metaType, type);
 
-        ModelAndView view = new ModelAndView("meta/metaAppList");
+        ModelAndView view = new ModelAndView("meta/appList");
         view.addObject("jsonSearch", BasicUtils.jsonSearch(dataDictService, jdbcTemplate, metaApp, paramMap));
         view.addObject("page", page);
         view.addObject("metaApp", metaApp);
