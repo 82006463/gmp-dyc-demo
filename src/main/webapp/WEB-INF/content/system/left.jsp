@@ -11,10 +11,14 @@
 </head>
 
 <body>
-<div class="sidebar" style="overflow-x: hidden; height: 800px;">
+<div id="sidebar" class="sidebar" style="overflow-x: hidden;">
   <frame:menu />
 </div>
 <script type="text/javascript">
+	$(function () {
+		$('#sidebar').height(document.body.clientHeight + 40);
+	});
+
     $("li").click(function() {
     	removeCSS();
         $(this).addClass("current").siblings().removeClass("current");

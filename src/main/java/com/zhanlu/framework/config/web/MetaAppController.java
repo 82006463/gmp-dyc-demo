@@ -21,19 +21,19 @@ import java.util.Map;
  * 标签属性管理Controller
  */
 @Controller
-@RequestMapping(value = "/config/meta/tag")
-public class MetaTagController {
+@RequestMapping(value = "/config/meta/app")
+public class MetaAppController {
 
     @Autowired
     private MongoService mongoService;
-    private String tableName = "config_meta_tag";
+    private String tableName = "config_meta_app";
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public ModelAndView list(Page<Object> page, String type, HttpServletRequest req) {
         List<QueryItem> queryItems = QueryItem.buildSearchItems(req.getParameterMap());
         queryItems.add(new QueryItem("Eq_String_type", type));
         List<Map<String, Object>> entityList = mongoService.findByPage(this.tableName, queryItems, page);
-        ModelAndView view = new ModelAndView("config/metaTagList");
+        ModelAndView view = new ModelAndView("config/metaAppList");
         view.addObject("type", type);
         view.addObject("page", page);
         view.addObject("entityList", entityList);
@@ -44,7 +44,7 @@ public class MetaTagController {
     public ModelAndView create(String type, String item) {
         Map<String, Object> entity = new LinkedHashMap<>();
         entity.put("type", type);
-        ModelAndView view = new ModelAndView("config/metaTagEdit");
+        ModelAndView view = new ModelAndView("config/metaAppEdit");
         view.addObject("item", item);
         view.addObject("entity", entity);
         return view;
@@ -53,7 +53,7 @@ public class MetaTagController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("id") String id, String item) throws Exception {
         Map<String, Object> entity = mongoService.findOne(this.tableName, id);
-        ModelAndView view = new ModelAndView("config/metaTagEdit");
+        ModelAndView view = new ModelAndView("config/metaAppEdit");
         view.addObject("item", item);
         view.addObject("entity", entity);
         return view;
@@ -61,7 +61,7 @@ public class MetaTagController {
 
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("id") String id) {
-        ModelAndView view = new ModelAndView("config/metaTagView");
+        ModelAndView view = new ModelAndView("config/metaAppView");
         view.addObject("entity", mongoService.findOne(this.tableName, id));
         return view;
     }
@@ -79,13 +79,8 @@ public class MetaTagController {
         entity.put("code", paramMap.get("code")[0]);
         entity.put("name", paramMap.get("name")[0]);
         entity.put("list_url", paramMap.get("list_url")[0]);
-        entity.put("list_create_url", paramMap.get("list_create_url")[0]);
-        entity.put("list_update_url", paramMap.get("list_update_url")[0]);
-        entity.put("list_delete_url", paramMap.get("list_delete_url")[0]);
-        entity.put("list_view_url", paramMap.get("list_view_url")[0]);
-        entity.put("update_submit_url", paramMap.get("update_submit_url")[0]);
+        entity.put("itemSql", paramMap.get("itemSql")[0]);
         if (itemCodes != null && itemCodes.length > 0) {
-            String[] itemNames = paramMap.get("itemNames");
             String[] itemDescs = paramMap.get("itemDescs");
             String[] itemDataTypes = paramMap.get("itemDataTypes");
             List<Map<String, Object>> items = new ArrayList<>(itemCodes == null ? 0 : itemCodes.length);
@@ -95,7 +90,6 @@ public class MetaTagController {
                 for (int i = 0; i < itemCodes.length; i++) {
                     Map<String, Object> itemMap = new LinkedHashMap<>(8);
                     itemMap.put("code", itemCodes[i]);
-                    itemMap.put("name", itemNames[i]);
                     itemMap.put("desc", itemDescs[i]);
                     itemMap.put("dataType", itemDataTypes[i]);
                     itemMap.put("compareType", itemCompareTypes[i]);
@@ -103,41 +97,10 @@ public class MetaTagController {
                     items.add(itemMap);
                 }
                 entity.put("queryItems", items);
-            } else if (item.equals("list")) {
-                for (int i = 0; i < itemCodes.length; i++) {
-                    Map<String, Object> itemMap = new LinkedHashMap<>(8);
-                    itemMap.put("code", itemCodes[i]);
-                    itemMap.put("name", itemNames[i]);
-                    itemMap.put("desc", itemDescs[i]);
-                    itemMap.put("dataType", itemDataTypes[i]);
-                    items.add(itemMap);
-                }
-                entity.put("listItems", items);
-            } else if (item.equals("edit")) {
-                Map<String, String> itemsMap = new LinkedHashMap<>(itemCodes.length);
-                String[] itemRequireds = paramMap.get("itemRequireds");
-                String[] itemSubForms = paramMap.get("itemSubForms");
-                String[] itemFuzzys = paramMap.get("itemFuzzys");
-                String[] itemTagTypes = paramMap.get("itemTagTypes");
-                for (int i = 0; i < itemCodes.length; i++) {
-                    Map<String, Object> itemMap = new LinkedHashMap<>(8);
-                    itemMap.put("code", itemCodes[i]);
-                    itemMap.put("name", itemNames[i]);
-                    itemMap.put("desc", itemDescs[i]);
-                    itemMap.put("required", itemRequireds[i]);
-                    itemMap.put("dataType", itemDataTypes[i]);
-                    itemMap.put("tagType", itemTagTypes[i]);
-                    itemMap.put("fuzzy", itemFuzzys[i]);
-                    itemMap.put("subForm", itemSubForms[i]);
-                    items.add(itemMap);
-                    itemsMap.put(itemCodes[i], itemDescs[i]);
-                }
-                entity.put("itemsMap", itemsMap);
-                entity.put("editItems", items);
             }
         }
         mongoService.saveOrUpdate(this.tableName, id, entity);
-        ModelAndView view = new ModelAndView("redirect:/config/meta/tag/list");
+        ModelAndView view = new ModelAndView("redirect:/config/meta/app/list");
         attributes.addAttribute("type", paramMap.get("type")[0]);
         return view;
     }
@@ -145,7 +108,7 @@ public class MetaTagController {
     @RequestMapping(value = "delete/{id}")
     public ModelAndView delete(RedirectAttributes attributes, @PathVariable("id") String id, String type) {
         mongoService.removeOne(this.tableName, id);
-        ModelAndView view = new ModelAndView("redirect:/config/meta/tag/list");
+        ModelAndView view = new ModelAndView("redirect:/config/meta/app/list");
         attributes.addAttribute("type", type);
         return view;
     }
