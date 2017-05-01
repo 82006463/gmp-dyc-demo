@@ -200,13 +200,13 @@ public class BasicUtils {
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource()) && dataDict.getDataSource().trim().toUpperCase().startsWith("SELECT ")) {
                     List<Map<String, Object>> itemList = ResultSetUtils.convertList(jdbcTemplate.queryForList(dataDict.getDataSource()));
                     if (tagType.startsWith("Select_")) {
-                        html += "<select name='" + code + "' class='input_select" + (required.equals("yes") ? " validate[required]" : "") + "' onchange='Qps.setVal(this);'>";
+                        html += "<select name='" + code + "' class='input_select" + (required.equals("yes") ? " validate[required]" : "") + "' onchange=\"$('[name=" + code + "_val]').val($(this).find('option:selected').text());\">";
                         html += "<option value='' selected>--请选择--</option>";
                         for (Map<String, Object> item : itemList) {
                             html += "<option value='" + item.get("code") + "'" + (item.get("code").toString().equals(val) ? " selected='selected'" : "") + ">" + item.get("name") + "</option>";
                         }
                         html += "</select>";
-                        html += "<input type='hidden' name='" + code + "_val' value='' class='input_240'/>";
+                        html += "<input type='hidden' name='" + code + "_val' value='" + (dataMap.get(code + "_val") == null ? "" : dataMap.get(code + "_val")) + "' class='input_240'/>";
                     } else if (tagType.startsWith("Radio_")) {
                         for (Map<String, Object> item : itemList) {
                             html += "<input type='radio' name='" + code + "' value='" + item.get("code") + "' class='input_radio" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
