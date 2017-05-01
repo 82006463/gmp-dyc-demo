@@ -1,5 +1,6 @@
 package com.zhanlu.framework.nosql.util;
 
+import com.zhanlu.framework.common.utils.ConvertUtils;
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.service.DataDictService;
 import org.apache.commons.lang.StringUtils;
@@ -25,21 +26,10 @@ public class EditItem {
             if (tagType.equals("subForm")) {
                 fieldVal = attrValArr;
             } else {
-                String attrVal = attrValArr[0];
-                if (dataType.equalsIgnoreCase("Byte")) {
-                    fieldVal = Byte.parseByte(attrVal);
-                } else if (dataType.equalsIgnoreCase("Int")) {
-                    fieldVal = Integer.parseInt(attrVal);
-                } else if (dataType.equalsIgnoreCase("Long")) {
-                    fieldVal = Long.parseLong(attrVal);
-                } else if (dataType.equalsIgnoreCase("Float")) {
-                    fieldVal = Float.parseFloat(attrVal);
-                } else if (dataType.equalsIgnoreCase("Double")) {
-                    fieldVal = Double.parseDouble(attrVal);
-                } else if (dataType.equalsIgnoreCase("Boolean")) {
-                    fieldVal = Boolean.parseBoolean(attrVal);
-                } else {
-                    fieldVal = attrVal;
+                try {
+                    fieldVal = ConvertUtils.convertStringToObject(attrValArr[0], PageEnum.DataType.valueOf(dataType).getClazz());
+                } catch (Exception e) {
+                    fieldVal = attrValArr;
                 }
             }
         } else if (dataType.equalsIgnoreCase("String")) {
@@ -72,6 +62,10 @@ public class EditItem {
             } else {
                 tagTypeMap.put(struct.get("code"), tagType);
                 dataTypeMap.put(struct.get("code"), struct.get("dataType").replace("dataType_", ""));
+                if (tagType.startsWith("Select")) {
+                    tagTypeMap.put(struct.get("code") + "_val", "Input");
+                    dataTypeMap.put(struct.get("code") + "_val", "String");
+                }
             }
         }
         List<EditItem> items = new ArrayList<>(paramMap.size());
@@ -80,8 +74,7 @@ public class EditItem {
                 continue;
             }
             String tagType = tagTypeMap.get(entry.getKey());
-            String dataType = dataTypeMap.get(entry.getKey()).replace("varchar", "String");
-            dataType = dataType.replace("int", "Int").replace("date", "Date");
+            String dataType = dataTypeMap.get(entry.getKey());
             EditItem editItem = EditItem.buildEditItem(dataType, tagType, entry.getKey(), entry.getValue());
             if (editItem == null) {
                 continue;

@@ -84,4 +84,10 @@
         _parent.remove();
         return false;
     }
+
+    //设置Select标签对应的隐藏域
+    Qps.setVal = function (selectTag) {
+        alert('')
+        $('[name=' + $(selectTag).prop('name') + '_val]').val($(selectTag).find('option:selected').text());
+    }
 </script>
