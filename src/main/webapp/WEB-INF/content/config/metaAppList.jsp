@@ -35,6 +35,7 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
+					<input type='button' onclick="addNew('${ctx}/config/meta/app/create?type=${type}&item=edit')" class='button_70px' value='新建'/>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>
@@ -46,6 +47,18 @@
 				<td align=center class="td_list_1">名称</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
+			<c:forEach items="${entityList}" var="item">
+				<tr>
+					<td class="td_list_2" align=left>${item.code}</td>
+					<td class="td_list_2" align=left>${item.name}</td>
+					<td class="td_list_2" align=left>
+						<a href="${ctx}/config/meta/app/delete/${item._id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+						<a href="${ctx}/config/meta/app/update/${item._id}?item=edit" class="btnEdit" title="编辑">编辑</a>
+						<a href="${ctx}/config/meta/app/view/${item._id}" class="btnView" title="查看">查看</a>
+					</td>
+				</tr>
+			</c:forEach>
+			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages}" totalRecords="${page.totalCount}" lookup="${lookup} "/>
 		</table>
 	</form>
 	</body>
