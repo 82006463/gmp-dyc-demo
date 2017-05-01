@@ -79,7 +79,7 @@ public class BasicUtils {
                 if (entry.get(field.getKey()) instanceof Date) {
                     html += DateFormatUtils.format((Date) entry.get(field.getKey()), "yyyy-MM-dd");
                 } else if (entry.get(field.getKey()) instanceof Timestamp) {
-                    html += DateFormatUtils.format((Date) entry.get(field.getKey()), "yyyy-MM-dd HH:mm:ss");
+                    html += DateFormatUtils.format((Timestamp) entry.get(field.getKey()), "yyyy-MM-dd HH:mm:ss");
                 } else {
                     html += entry.get(field.getKey());
                 }
@@ -134,7 +134,7 @@ public class BasicUtils {
                 html += "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
             } else if (tagType.equalsIgnoreCase("timestamp")) {
                 if (dataMap.get(code) instanceof Timestamp) {
-                    html += "<input type='text' name='" + code + "' value='" + DateFormatUtils.format((Date) dataMap.get(code), "yyyy-MM-dd HH:mm:ss");
+                    html += "<input type='text' name='" + code + "' value='" + DateFormatUtils.format((Timestamp) dataMap.get(code), "yyyy-MM-dd HH:mm:ss");
                 } else {
                     html += "<input type='text' name='" + code + "' value='" + val;
                 }
@@ -306,10 +306,10 @@ public class BasicUtils {
                     html += "</table>";
                 }
             } else {
-                if (tagType.equalsIgnoreCase("date") && dataMap.get(code) instanceof Date) {
+                if (dataMap.get(code) instanceof Date) {
                     html += DateFormatUtils.format((Date) dataMap.get(code), "yyyy-MM-dd");
-                } else if (tagType.equalsIgnoreCase("timestamp") && dataMap.get(code) instanceof Timestamp) {
-                    html += DateFormatUtils.format((Date) dataMap.get(code), "yyyy-MM-dd HH:mm:ss");
+                } else if (dataMap.get(code) instanceof Timestamp) {
+                    html += DateFormatUtils.format((Timestamp) dataMap.get(code), "yyyy-MM-dd HH:mm:ss");
                 } else {
                     html += val;
                 }
