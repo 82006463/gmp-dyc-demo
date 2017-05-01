@@ -17,14 +17,14 @@
 					type: '${metaApp.chartType}'
 				},
 				title: {
-					text: 'Fruit Consumption'
+					text: '${metaApp.name}'
 				},
 				xAxis: {
 					categories: ['Apples', 'Bananas', 'Oranges']
 				},
 				yAxis: {
 					title: {
-						text: '${metaApp.name}'
+						text: 'Fruit eaten'
 					}
 				},
 				series: [{
