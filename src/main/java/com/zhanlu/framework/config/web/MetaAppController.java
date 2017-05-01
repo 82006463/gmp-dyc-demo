@@ -84,20 +84,18 @@ public class MetaAppController {
             String[] itemDescs = paramMap.get("itemDescs");
             String[] itemDataTypes = paramMap.get("itemDataTypes");
             List<Map<String, Object>> items = new ArrayList<>(itemCodes == null ? 0 : itemCodes.length);
-            if (item.equals("search")) {
-                String[] itemCompareTypes = paramMap.get("itemCompareTypes");
-                String[] itemTagTypes = paramMap.get("itemTagTypes");
-                for (int i = 0; i < itemCodes.length; i++) {
-                    Map<String, Object> itemMap = new LinkedHashMap<>(8);
-                    itemMap.put("code", itemCodes[i]);
-                    itemMap.put("desc", itemDescs[i]);
-                    itemMap.put("dataType", itemDataTypes[i]);
-                    itemMap.put("compareType", itemCompareTypes[i]);
-                    itemMap.put("tagType", itemTagTypes[i]);
-                    items.add(itemMap);
-                }
-                entity.put("queryItems", items);
+            String[] itemCompareTypes = paramMap.get("itemCompareTypes");
+            String[] itemTagTypes = paramMap.get("itemTagTypes");
+            for (int i = 0; i < itemCodes.length; i++) {
+                Map<String, Object> itemMap = new LinkedHashMap<>(8);
+                itemMap.put("code", itemCodes[i]);
+                itemMap.put("desc", itemDescs[i]);
+                itemMap.put("dataType", itemDataTypes[i]);
+                itemMap.put("compareType", itemCompareTypes[i]);
+                itemMap.put("tagType", itemTagTypes[i]);
+                items.add(itemMap);
             }
+            entity.put("queryItems", items);
         }
         mongoService.saveOrUpdate(this.tableName, id, entity);
         ModelAndView view = new ModelAndView("redirect:/config/meta/app/list");

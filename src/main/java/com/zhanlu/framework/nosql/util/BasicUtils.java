@@ -76,9 +76,15 @@ public class BasicUtils {
                 html += "<td class='td_list_2' align=left>" + entry.get(field.getKey()) + "</td>";
             }
             html += "<td class='td_list_2' align=left>";
-            html += "<a href='" + contextPath + metaTag.get("list_delete_url") + "/" + entry.get("_id") + "' class='btnDel' title='删除' onclick='return confirmDel();'>删除</a>";
-            html += "<a href='" + contextPath + metaTag.get("list_update_url") + "/" + entry.get("_id") + "' class='btnEdit'' title='编辑'>编辑</a>";
-            html += "<a href='" + contextPath + metaTag.get("list_view_url") + "/" + entry.get("_id") + "' class='btnView'' title='查看'>查看</a>";
+            if (metaTag.get("list_delete_url") != null) {
+                html += "<a href='" + contextPath + metaTag.get("list_delete_url") + "/" + entry.get("_id") + "' class='btnDel' title='删除' onclick='return confirmDel();'>删除</a>";
+            }
+            if (metaTag.get("list_update_url") != null) {
+                html += "<a href='" + contextPath + metaTag.get("list_update_url") + "/" + entry.get("_id") + "' class='btnEdit'' title='编辑'>编辑</a>";
+            }
+            if (metaTag.get("list_view_url") != null) {
+                html += "<a href='" + contextPath + metaTag.get("list_view_url") + "/" + entry.get("_id") + "' class='btnView'' title='查看'>查看</a>";
+            }
             html += "</td></tr>";
         }
         return html;

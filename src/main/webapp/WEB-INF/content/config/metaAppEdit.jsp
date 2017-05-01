@@ -48,7 +48,6 @@
 				</tr>
 			</table>
 
-			<c:if test="${item=='search'}">
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
 					<td class="td_table_1">添加选项：</td>
@@ -95,7 +94,6 @@
 					</td>
 				</tr>
 			</table>
-			</c:if>
 
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">

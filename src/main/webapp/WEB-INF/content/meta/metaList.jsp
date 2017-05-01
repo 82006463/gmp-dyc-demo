@@ -22,7 +22,9 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<input type='button' onclick="addNew('${ctx}${metaTag.list_create_url}')" class='button_70px' value='新建'/>
+					<c:if test="${!empty metaTag.list_create_url}">
+						<input type='button' onclick="addNew('${ctx}${metaTag.list_create_url}')" class='button_70px' value='新建'/>
+					</c:if>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>

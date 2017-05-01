@@ -40,7 +40,7 @@ public class AppController {
 
     @Autowired
     private MongoService mongoService;
-    private String metaTagTable = "config_meta_tag";
+    private String metaAppTable = "config_meta_app";
 
     /**
      * 分页列表
@@ -48,97 +48,19 @@ public class AppController {
     @RequestMapping(value = "{metaType}/{type}/list", method = RequestMethod.GET)
     public ModelAndView list(Page<?> page, @PathVariable("metaType") String metaType, @PathVariable("type") String type, HttpServletRequest req) throws Exception {
         Map<String, String[]> paramMap = req.getParameterMap();
-        Map<String, Object> metaTag = this.getMetaTag(metaType, type);
+        Map<String, Object> metaApp = this.getMetaTag(metaType, type);
 
-        List<QueryItem> queryItems = QueryItem.buildSearchItems(paramMap);
-        queryItems.add(new QueryItem("Eq_String_type", type));
-        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
-        List<Map<String, Object>> entityList = mongoService.findByPage(tableName, queryItems, page);
-
-        ModelAndView view = new ModelAndView("meta/metaList");
-        view.addObject("jsonSearch", BasicUtils.jsonSearch(dataDictService, jdbcTemplate, metaTag, paramMap));
-        view.addObject("jsonList", BasicUtils.jsonList(req.getContextPath(), metaTag, entityList));
+        ModelAndView view = new ModelAndView("meta/metaAppList");
+        view.addObject("jsonSearch", BasicUtils.jsonSearch(dataDictService, jdbcTemplate, metaApp, paramMap));
         view.addObject("page", page);
-        view.addObject("metaTag", metaTag);
-        return view;
-    }
-
-    /**
-     * 新建页面
-     */
-    @RequestMapping(value = "{metaType}/{type}/create", method = RequestMethod.GET)
-    public ModelAndView create(@PathVariable("metaType") String metaType, @PathVariable("type") String type) throws Exception {
-        Map<String, Object> metaTag = this.getMetaTag(metaType, type);
-        ModelAndView view = new ModelAndView("meta/metaEdit");
-        Map<String, Object> entity = new HashMap<>();
-        entity.put("type", type);
-        view.addObject("jsonEdit", BasicUtils.jsonEdit(jdbcTemplate, dataDictService, metaTag, entity));
-        view.addObject("entity", entity);
-        view.addObject("metaTag", metaTag);
-        return view;
-    }
-
-    /**
-     * 编辑页面
-     */
-    @RequestMapping(value = "{metaType}/{type}/update/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("metaType") String metaType, @PathVariable("type") String type, @PathVariable("id") String id) throws Exception {
-        Map<String, Object> metaTag = this.getMetaTag(metaType, type);
-        ModelAndView view = new ModelAndView("meta/metaEdit");
-        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
-        Map<String, Object> entity = mongoService.findOne(tableName, id);
-        view.addObject("jsonEdit", BasicUtils.jsonEdit(jdbcTemplate, dataDictService, metaTag, entity));
-        view.addObject("entity", entity);
-        view.addObject("metaTag", metaTag);
-        return view;
-    }
-
-    /**
-     * 新增、编辑的提交处理。保存实体，并返回列表视图
-     */
-    @RequestMapping(value = "{metaType}/{type}/update", method = RequestMethod.POST)
-    public ModelAndView update(RedirectAttributes attributes, @PathVariable("metaType") String metaType, @PathVariable("type") String type, String id, HttpServletRequest req) throws Exception {
-        Map<String, Object> metaTag = this.getMetaTag(metaType, type);
-        Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), req.getParameterMap());
-        entity.put("type", type);
-        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
-        mongoService.saveOrUpdate(tableName, id, entity);
-        ModelAndView view = new ModelAndView("redirect:/meta/" + metaType + "/" + type + "/list");
-        attributes.addAttribute("type", type);
-        return view;
-    }
-
-    /**
-     * 查看页面
-     */
-    @RequestMapping(value = "{metaType}/{type}/view/{id}", method = RequestMethod.GET)
-    public ModelAndView view(@PathVariable("metaType") String metaType, @PathVariable("type") String type, @PathVariable("id") String id) throws Exception {
-        Map<String, Object> metaTag = this.getMetaTag(metaType, type);
-        ModelAndView view = new ModelAndView("meta/metaView");
-        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
-        Map<String, Object> entity = mongoService.findOne(tableName, id);
-        view.addObject("entity", entity);
-        view.addObject("jsonEdit", BasicUtils.jsonView(dataDictService, metaTag, entity));
-        view.addObject("metaTag", metaTag);
-        return view;
-    }
-
-    /**
-     * 根据主键ID删除实体，并返回列表视图
-     */
-    @RequestMapping(value = "{metaType}/{type}/delete/{id}")
-    public ModelAndView delete(RedirectAttributes attributes, @PathVariable("metaType") String metaType, @PathVariable("type") String type, @PathVariable("id") String id) {
-        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
-        mongoService.removeOne(tableName, id);
-        ModelAndView view = new ModelAndView("redirect:/meta/" + metaType + "/" + type + "/list");
-        attributes.addAttribute("type", type);
+        view.addObject("metaApp", metaApp);
         return view;
     }
 
     public Map<String, Object> getMetaTag(String metaType, String type) {
         List<QueryItem> queryItems = new ArrayList<>(1);
         queryItems.add(new QueryItem("Eq_String_code", metaType + "_" + type));
-        return mongoService.findOne(metaTagTable, queryItems);
+        return mongoService.findOne(metaAppTable, queryItems);
     }
 
 }
