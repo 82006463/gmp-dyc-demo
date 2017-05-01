@@ -48,12 +48,6 @@ public interface MongoService {
 
     /**
      * @param collectionName 集合名称
-     * @return 所有文档
-     */
-    List<Map<String, Object>> findByProp(String collectionName, Map<String, Object> paramMap);
-
-    /**
-     * @param collectionName 集合名称
      * @return 分页文档
      */
     List<Map<String, Object>> findByPage(String collectionName, List<QueryItem> queryItems, Page page);

@@ -18,15 +18,24 @@ public class QueryItem {
     private String compareType;
     private String fieldName;
     private Object fieldVal;
+    private List<QueryItem> subItems;
 
     public QueryItem(String attrName, String attrVal) {
-        String[] attrNameArr = attrName.split("_");
-        fieldName = attrName.contains("_OR_") ? attrName : attrName.replace(attrNameArr[0] + "_" + attrNameArr[1] + "_", "");
-        compareType = attrName.contains("_OR_") ? "or" : attrNameArr[0];
-        dataType = attrName.contains("_OR_") ? "String" : attrNameArr[1];
-        if (attrName.contains("_OR_")) {
+        if (attrName.contains(" OR ")) {
+            fieldName = attrName;
             fieldVal = attrVal;
+            compareType = "$or";
+            dataType = "String";
+            String[] orArr = attrName.split(" OR ");
+            subItems = new ArrayList<>(orArr.length);
+            for (String or : orArr) {
+                subItems.add(new QueryItem(or, attrVal));
+            }
         } else {
+            String[] attrNameArr = attrName.split("_");
+            fieldName = attrName.replace(attrNameArr[0] + "_" + attrNameArr[1] + "_", "");
+            compareType = attrNameArr[0];
+            dataType = attrNameArr[1];
             if (attrVal != null && attrVal.trim().length() > 0) {
                 fieldVal = ConvertUtils.convertStringToObject(attrVal, PageEnum.DataType.valueOf(dataType).getClazz());
             }
@@ -67,5 +76,9 @@ public class QueryItem {
 
     public Object getFieldVal() {
         return fieldVal;
+    }
+
+    public List<QueryItem> getSubItems() {
+        return subItems;
     }
 }

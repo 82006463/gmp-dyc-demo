@@ -11,7 +11,8 @@ import java.util.Map;
  */
 public class Test {
     public static void main(String[] args) {
-        String sqlStr = "{'type':'chart'}";
+        String sqlStr = "Like_String_type OR Like_String_name";
+
         Map<String, Object> paramMap = JSON.parseObject(sqlStr, Map.class);
 
         MongoClient client = new MongoClient("101.200.36.213", 27017);
