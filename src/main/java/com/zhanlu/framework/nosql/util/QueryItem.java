@@ -53,6 +53,9 @@ public class QueryItem {
     public static List<QueryItem> buildSearchItems(Map<String, String[]> paramMap) {
         List<QueryItem> items = new ArrayList<>(2);
         for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
+            if (entry.getValue() == null || entry.getValue()[0] == null || entry.getValue()[0].trim().length() == 0) {
+                continue;
+            }
             QueryItem searchItem = QueryItem.buildSearchItem(entry.getKey(), entry.getValue()[0]);
             if (searchItem == null) {
                 continue;

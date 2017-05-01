@@ -36,14 +36,29 @@
 				</tr>
 				<tr>
 					<td class="td_table_1">列表搜索URL：</td>
-					<td class="td_table_2" colspan="3">
+					<td class="td_table_2">
 						<input type="text" id="list_url" name="list_url" value="${entity.list_url}" class="input_240 validate[required]" />
+					</td>
+					<td class="td_table_1">图表类型：</td>
+					<td class="td_table_2">
+						<select name="chartType" class="input_select validate[required]">
+							<option value="">-请选择-</option>
+							<option value="pie" <c:if test="${entity.chartType=='pie'}">selected="selected"</c:if>>饼图</option>
+							<option value="column" <c:if test="${entity.chartType=='column'}">selected="selected"</c:if>>柱状图</option>
+							<option value="line" <c:if test="${entity.chartType=='line'}">selected="selected"</c:if>>拆线图</option>
+						</select>
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">SQL：</td>
+					<td class="td_table_1">Select SQL：</td>
 					<td class="td_table_2" colspan="3">
-						<textarea name="itemSql" class="input_textarea_600 validate[required]">${entity.itemSql}</textarea>
+						<textarea name="selectSql" class="input_textarea_600 validate[required]">${entity.selectSql}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">Count SQL：</td>
+					<td class="td_table_2" colspan="3">
+						<textarea name="countSql" class="input_textarea_600 validate[required]">${entity.countSql}</textarea>
 					</td>
 				</tr>
 			</table>
@@ -108,7 +123,7 @@
 		<script type="text/javascript">
 			$(document).ready(function () {
 				$('select[name=code]').change(function () {
-					var _pre = '/meta/${entity.type}/' + $(this).val().replace('${entity.type}_','');
+					var _pre = '/app/${entity.type}/' + $(this).val().replace('${entity.type}_','');
                     if($.trim($('[name=list_url]').val()).length == 0) {
                         $('[name=list_url]').val(_pre + '/list');
                     }

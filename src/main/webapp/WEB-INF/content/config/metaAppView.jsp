@@ -25,11 +25,17 @@
 
 				<tr>
 					<td class="td_table_1">列表搜索URL：</td>
-					<td class="td_table_2" colspan="3">${entity.list_url}</td>
+					<td class="td_table_2">${entity.list_url}</td>
+					<td class="td_table_1">图表类型：</td>
+					<td class="td_table_2">${entity.chartType=='pie' ? '饼图':entity.chartType=='column' ? '柱状图':entity.chartType=='line'? '拆线图<':''}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">SQL：</td>
-					<td class="td_table_2" colspan="3">${entity.itemSql}</td>
+					<td class="td_table_1">Select SQL：</td>
+					<td class="td_table_2" colspan="3">${entity.selectSql}</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">Count SQL：</td>
+					<td class="td_table_2" colspan="3">${entity.countSql}</td>
 				</tr>
 			</table>
 

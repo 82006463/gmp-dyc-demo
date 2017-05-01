@@ -79,7 +79,9 @@ public class MetaAppController {
         entity.put("code", paramMap.get("code")[0]);
         entity.put("name", paramMap.get("name")[0]);
         entity.put("list_url", paramMap.get("list_url")[0]);
-        entity.put("itemSql", paramMap.get("itemSql")[0]);
+        entity.put("chartType", paramMap.get("chartType")[0]);
+        entity.put("selectSql", paramMap.get("selectSql")[0]);
+        entity.put("countSql", paramMap.get("countSql")[0]);
         if (itemCodes != null && itemCodes.length > 0) {
             String[] itemDescs = paramMap.get("itemDescs");
             String[] itemDataTypes = paramMap.get("itemDataTypes");
