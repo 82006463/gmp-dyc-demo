@@ -66,10 +66,12 @@ public class BasicUtils {
     public static String jsonList(String contextPath, Map<String, Object> metaTag, List<Map<String, Object>> entityList) {
         List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("listItems");
         Map<String, String> fieldMap = new LinkedHashMap<>(structList.size());
+        Map<String, String> tagTypeMap = new LinkedHashMap<>(structList.size());
         String html = "<tr>";
         for (Map<String, String> entry : structList) {
             html += "<td align=center class='td_list_1'>" + entry.get("desc") + "</td>";
             fieldMap.put(entry.get("code"), entry.get("desc"));
+            tagTypeMap.put(entry.get("code"), entry.get("tagType"));
         }
         html += "<td align=center width=10% class='td_list_1'>操作</td></tr>";
         for (Map<String, Object> entry : entityList) {
@@ -81,7 +83,11 @@ public class BasicUtils {
                 } else if (entry.get(field.getKey()) instanceof Timestamp) {
                     html += DateFormatUtils.format((Timestamp) entry.get(field.getKey()), "yyyy-MM-dd HH:mm:ss");
                 } else {
-                    html += entry.get(field.getKey());
+                    /*if (tagTypeMap.get(field.getKey()).startsWith("Select") && entry.get(field.getKey() + "_val") != null) {
+                        html += entry.get(field.getKey() + "_val");
+                    } else {*/
+                        html += entry.get(field.getKey());
+                    //}
                 }
                 html += "</td>";
             }
