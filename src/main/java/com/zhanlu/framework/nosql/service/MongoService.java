@@ -15,48 +15,54 @@ public interface MongoService {
      * 保存或更新文档
      *
      * @param collectionName 集合名称
-     * @param docMap       文档
+     * @param docMap         文档
      * @return 是否成功
      */
-    public Map<String, Object> saveOrUpdate(String collectionName, String id, Map<String, Object> docMap);
+    Map<String, Object> saveOrUpdate(String collectionName, String id, Map<String, Object> docMap);
 
     /**
      * @param collectionName 集合名称
      * @param id             对象ID
      * @return 单个文档
      */
-    public Map<String, Object> findOne(String collectionName, String id);
+    Map<String, Object> findOne(String collectionName, String id);
 
     /**
      * @param collectionName 集合名称
-     * @param queryItems             对象ID
+     * @param queryItems     对象ID
      * @return 单个文档
      */
-    public Map<String, Object> findOne(String collectionName, List<QueryItem> queryItems);
+    Map<String, Object> findOne(String collectionName, List<QueryItem> queryItems);
 
     /**
      * @param collectionName 集合名称
      * @return 所有文档
      */
-    public List<Map<String, Object>> findAll(String collectionName);
+    List<Map<String, Object>> findAll(String collectionName);
 
     /**
      * @param collectionName 集合名称
      * @return 所有文档
      */
-    public List<Map<String, Object>> findByProp(String collectionName, List<QueryItem> queryItems);
+    List<Map<String, Object>> findByProp(String collectionName, List<QueryItem> queryItems);
+
+    /**
+     * @param collectionName 集合名称
+     * @return 所有文档
+     */
+    List<Map<String, Object>> findByProp(String collectionName, Map<String, Object> paramMap);
 
     /**
      * @param collectionName 集合名称
      * @return 分页文档
      */
-    public List<Map<String, Object>> findByPage(String collectionName, List<QueryItem> queryItems, Page page);
+    List<Map<String, Object>> findByPage(String collectionName, List<QueryItem> queryItems, Page page);
 
     /**
      * @param collectionName 集合名称
      * @param id             对象ID
      * @return 是否成功
      */
-    public int removeOne(String collectionName, String id);
+    int removeOne(String collectionName, String id);
 
 }

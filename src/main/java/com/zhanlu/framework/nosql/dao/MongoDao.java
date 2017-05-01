@@ -91,7 +91,9 @@ public class MongoDao {
         } else {
             cursor = collection.find();
         }
-        return cursor.toArray();
+        List<DBObject> list = cursor.toArray();
+        cursor.close();
+        return list;
     }
 
     /**
@@ -174,7 +176,9 @@ public class MongoDao {
         } else {
             cursor = collection.find();
         }
-        return cursor.toArray();
+        List<DBObject> list = cursor.toArray();
+        cursor.close();
+        return list;
     }
 
     /**

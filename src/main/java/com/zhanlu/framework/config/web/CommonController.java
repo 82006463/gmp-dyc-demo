@@ -1,9 +1,9 @@
 package com.zhanlu.framework.config.web;
 
+import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.nosql.service.MongoService;
-import com.zhanlu.framework.nosql.util.QueryItem;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -93,17 +93,12 @@ public class CommonController {
             String[] fromArr = sql.split(" FROM ");
             String[] fieldArr = fromArr[0].split(",");
             String[] whereArr = fromArr[1].split(" WHERE ");
-            String tableName = whereArr[0];
-            String[] orArr = whereArr[1].split(" OR ");
-            String fieldName = "";
-            for (String or : orArr) {
-                String[] tmpArr = or.split(" ");
-                fieldName += tmpArr[1] + "_String_" + tmpArr[0] + "_OR_";
+            String sqlStr = whereArr[1].trim();
+            for (String field : fieldArr) {
+                sqlStr = sqlStr.replace(":" + field, keyword);
             }
-            fieldName = fieldName.substring(0, fieldName.length() - 4);
-            List<QueryItem> queryItems = new ArrayList<>(2);
-            queryItems.add(new QueryItem(fieldName, keyword));
-            List<Map<String, Object>> items = mongoService.findByProp(tableName, queryItems);
+            Map<String, Object> paramMap = JSON.parseObject(sqlStr, Map.class);
+            List<Map<String, Object>> items = mongoService.findByProp(whereArr[0], paramMap);
             for (Map<String, Object> item : items) {
                 String tmpVal = item.get(fieldArr[0]).toString();
                 for (int i = 1; i < fieldArr.length; i++) {
