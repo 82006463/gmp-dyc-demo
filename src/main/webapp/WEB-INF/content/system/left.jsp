@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<div class="sidebar" style="overflow-x: hidden;">
+<div class="sidebar" style="overflow-x: hidden; height: 800px;">
   <frame:menu />
 </div>
 <script type="text/javascript">
