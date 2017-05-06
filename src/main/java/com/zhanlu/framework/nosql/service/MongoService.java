@@ -54,6 +54,12 @@ public interface MongoService {
 
     /**
      * @param collectionName 集合名称
+     * @return 文档数量
+     */
+    long countByProp(String collectionName, List<QueryItem> queryItems);
+
+    /**
+     * @param collectionName 集合名称
      * @param id             对象ID
      * @return 是否成功
      */

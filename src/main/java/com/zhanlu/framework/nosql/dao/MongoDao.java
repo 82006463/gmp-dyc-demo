@@ -183,6 +183,16 @@ public class MongoDao {
 
     /**
      * @param collectionName 集合名称
+     * @param query          查询条件
+     * @return 所有文档
+     */
+    public long countByProp(String collectionName, DBObject query) {
+        DBCollection collection = mongoDbFactory.getDb().getCollection(collectionName);
+        return collection.count(query);
+    }
+
+    /**
+     * @param collectionName 集合名称
      * @param id             对象ID
      * @return 是否成功
      */

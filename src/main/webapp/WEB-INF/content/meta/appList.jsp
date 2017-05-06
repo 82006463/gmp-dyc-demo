@@ -11,33 +11,52 @@
 	<script type="text/javascript">
 		var chart1;
 		$(function () {
-			chart1 = new Highcharts.Chart({
-				chart: {
-					renderTo: 'container',
-					type: '${metaApp.chartType}'
-				},
-				title: {
-					text: '${metaApp.name}'
-				},
-				xAxis: {
-					categories: ['Apples', 'Bananas', 'Oranges']
-				},
-				yAxis: {
+			if('${metaApp.chartType}' == 'pie') {
+				chart1 = new Highcharts.Chart({
+					chart: {
+						renderTo: 'container',
+						type: '${metaApp.chartType}'
+					},
 					title: {
-						text: 'Fruit eaten'
-					}
-				},
-				series: [{
-					size: '80%',
-					name: 'Jane',
-					data: [1, 0, 4]
-				}, {
-					size: '60%',
-					innerSize: '60%',
-					name: 'John',
-					data: [5, 7, 3]
-				}]
-			});
+						text: '${metaApp.title}'
+					},
+					tooltip: {
+						valueSuffix: '个'
+					},
+					plotOptions: {
+						pie: {
+							allowPointSelect: true,
+							cursor: 'pointer',
+							dataLabels: {
+								enabled: true,
+								format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+								style: {
+									color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+								}
+							},
+							slicedOffset: 20,
+							point: {
+								events: {
+									mouseOver: function() {
+										this.slice();
+									},
+									mouseOut: function() {
+										this.slice();
+									},
+									click: function() {
+										return false;
+									}
+								}
+							}
+						}
+					},
+					series: [{
+						type: 'pie',
+						name: '${metaApp.subtitle}',
+						data: ${data}
+					}]
+				});
+			}
 		});
 	</script>
 </head>

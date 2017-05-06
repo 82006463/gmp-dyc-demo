@@ -21,7 +21,7 @@
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
 					<td class="td_table_1">编号：</td>
-					<td class="td_table_2">
+					<td class="td_table_2" colspan="3">
                         <c:if test="${empty entity.code}">
 						    <frame:dict name="code" type="select" typeCode="${entity.type}" value="${entity.code}" cssClass="input_select validate[required]" />
                         </c:if>
@@ -29,9 +29,15 @@
                             <input type="hidden" id="code" name="code" value="${entity.code}" class="input_240" />${entity.code}
                         </c:if>
 					</td>
-					<td class="td_table_1">名称：</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">外标题：</td>
 					<td class="td_table_2">
-						<input type="text" id="name" name="name" value="${entity.name}" class="input_240 validate[required]" />
+						<input type="text" id="title" name="title" value="${entity.title}" class="input_240 validate[required]" />
+					</td>
+					<td class="td_table_1">内标题：</td>
+					<td class="td_table_2">
+						<input type="text" id="subtitle" name="subtitle" value="${entity.subtitle}" class="input_240 validate[required]" />
 					</td>
 				</tr>
 				<tr>

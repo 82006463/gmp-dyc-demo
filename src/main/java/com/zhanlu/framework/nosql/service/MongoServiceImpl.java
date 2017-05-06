@@ -66,6 +66,26 @@ public class MongoServiceImpl implements MongoService {
     @Override
     public List<Map<String, Object>> findByPage(String collectionName, List<QueryItem> queryItems, Page page) {
         DBObject query = new BasicDBObject();
+        List<DBObject> docList = mongoDao.findByPage(collectionName, this.parseQuery(queryItems, query), page);
+        List<Map<String, Object>> resultList = new ArrayList<>(docList.size());
+        for (DBObject doc : docList) {
+            resultList.add(doc.toMap());
+        }
+        return resultList;
+    }
+
+    @Override
+    public long countByProp(String collectionName, List<QueryItem> queryItems) {
+        DBObject query = new BasicDBObject();
+        return mongoDao.countByProp(collectionName, this.parseQuery(queryItems, query));
+    }
+
+    @Override
+    public int removeOne(String collectionName, String id) {
+        return mongoDao.removeOne(collectionName, id).getN();
+    }
+
+    private DBObject parseQuery(List<QueryItem> queryItems, DBObject query) {
         if (queryItems != null && queryItems.size() > 0) {
             for (QueryItem item : queryItems) {
                 if (item.getFieldVal() == null) {
@@ -95,16 +115,6 @@ public class MongoServiceImpl implements MongoService {
                 }
             }
         }
-        List<DBObject> docList = mongoDao.findByPage(collectionName, query, page);
-        List<Map<String, Object>> resultList = new ArrayList<>(docList.size());
-        for (DBObject doc : docList) {
-            resultList.add(doc.toMap());
-        }
-        return resultList;
-    }
-
-    @Override
-    public int removeOne(String collectionName, String id) {
-        return mongoDao.removeOne(collectionName, id).getN();
+        return query;
     }
 }

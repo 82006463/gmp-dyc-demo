@@ -77,7 +77,8 @@ public class MetaAppController {
         }
         entity.put("type", paramMap.get("type")[0]);
         entity.put("code", paramMap.get("code")[0]);
-        entity.put("name", paramMap.get("name")[0]);
+        entity.put("title", paramMap.get("title")[0]);
+        entity.put("subtitle", paramMap.get("subtitle")[0]);
         entity.put("list_url", paramMap.get("list_url")[0]);
         entity.put("chartType", paramMap.get("chartType")[0]);
         entity.put("selectSql", paramMap.get("selectSql")[0]);

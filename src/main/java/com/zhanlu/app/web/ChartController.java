@@ -1,5 +1,6 @@
 package com.zhanlu.app.web;
 
+import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.nosql.service.MongoService;
 import com.zhanlu.framework.nosql.util.BasicUtils;
@@ -26,8 +27,8 @@ import java.util.Map;
  * @since 0.1
  */
 @Controller
-@RequestMapping(value = "/app")
-public class AppController {
+@RequestMapping(value = "/chart")
+public class ChartController {
 
     @Resource(name = "jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
@@ -41,31 +42,44 @@ public class AppController {
     /**
      * 分页列表
      */
-    @RequestMapping(value = "{metaType}/{type}/list", method = RequestMethod.GET)
-    public ModelAndView list(@PathVariable("metaType") String metaType, @PathVariable("type") String type, HttpServletRequest req) throws Exception {
+    @RequestMapping(value = "{type}/{field}/list", method = RequestMethod.GET)
+    public ModelAndView list(@PathVariable("type") String type, @PathVariable("field") String field, HttpServletRequest req) throws Exception {
         Map<String, String[]> paramMap = req.getParameterMap();
-        Map<String, Object> metaApp = this.getMetaTag(metaType, type);
+        Map<String, Object> metaApp = this.getMetaTag(type, field);
 
         List<QueryItem> queryItems = QueryItem.buildSearchItems(paramMap);
-        if (queryItems.size() > 0) {
-            String selectSql = metaApp.get("selectSql").toString();
-            if (selectSql.startsWith("SELECT ")) {
-                List<Map<String, Object>> items = jdbcTemplate.queryForList(selectSql);
-            }
+        queryItems.add(new QueryItem("Eq_String_type", type));
+        String selectSql = metaApp.get("selectSql").toString();
+        List<Map<String, Object>> selectItems = null;
+        if (selectSql.startsWith("SELECT ")) {
+            selectItems = jdbcTemplate.queryForList(selectSql);
+        }
+        List<Object> dataResult = new ArrayList<>(selectItems.size());
+        if (selectItems != null && selectItems.size() > 0) {
             String countSql = metaApp.get("countSql").toString();
             String[] fromArr = countSql.split(" FROM ");
             String[] fieldArr = fromArr[0].split(",");
-            List<Map<String, Object>> items = mongoService.findByProp(fromArr[1], queryItems);
+            String[] whereArr = fromArr[1].split(" WHERE ");
+            for (Map<String, Object> items : selectItems) {
+                List<QueryItem> tmpItems = queryItems;
+                tmpItems.add(new QueryItem(whereArr[1].split("=")[0], items.get("code").toString()));
+                List<Object> dateItem = new ArrayList<>(2);
+                dateItem.add(items.get("name"));
+                long count = mongoService.countByProp(whereArr[0], tmpItems);
+                dateItem.add(count);
+                dataResult.add(dateItem);
+            }
         }
         ModelAndView view = new ModelAndView("meta/appList");
         view.addObject("jsonSearch", BasicUtils.jsonSearch(dataDictService, jdbcTemplate, metaApp, paramMap));
         view.addObject("metaApp", metaApp);
+        view.addObject("data", JSON.toJSONString(dataResult));
         return view;
     }
 
-    public Map<String, Object> getMetaTag(String metaType, String type) {
+    public Map<String, Object> getMetaTag(String type, String field) {
         List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("Eq_String_code", metaType + "_" + type));
+        queryItems.add(new QueryItem("Eq_String_code", "chart" + "_" + type + "_" + field));
         return mongoService.findOne(metaAppTable, queryItems);
     }
 
