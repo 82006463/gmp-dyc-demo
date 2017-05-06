@@ -18,7 +18,7 @@
 						type: '${metaApp.chartType}'
 					},
 					title: {
-						text: '${metaApp.title}'
+						text: '<b>${metaApp.title}</b>'
 					},
 					tooltip: {
 						valueSuffix: '个'
@@ -50,6 +50,9 @@
 							}
 						}
 					},
+					credits: {
+						enabled: false
+					},
 					series: [{
 						type: 'pie',
 						name: '${metaApp.subtitle}',
@@ -63,21 +66,19 @@
 						type: '${metaApp.chartType}'
 					},
 					title: {
-						text: '${metaApp.title}'
+						text: '<b>${metaApp.title}</b>'
 					},
 					xAxis: {
 						categories: ${categories}
 					},
-					credits: {
-						enabled: true
-					},
-					plotOptions: {
-						column: {
-							dataLabels: {
-								enabled: true,
-								inside: true
-							}
+					yAxis: {
+						allowDecimals: false,
+						title: {
+							text: '<b>${metaApp.ytitle}</b>'
 						}
+					},
+					credits: {
+						enabled: false
 					},
 					series: ${data}
 				});
@@ -99,6 +100,9 @@
 				<td align="left">
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
+			</tr>
+			<tr>
+				<td height="20px;"></td>
 			</tr>
 		</table>
 		<div id="container" style="min-width: 400px; height: 400px;"></div>

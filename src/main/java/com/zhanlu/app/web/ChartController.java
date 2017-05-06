@@ -52,6 +52,16 @@ public class ChartController {
 
         List<QueryItem> queryItems = QueryItem.buildSearchItems(paramMap);
         queryItems.add(new QueryItem("Eq_String_type", type));
+        for (QueryItem item : queryItems) {
+            if (item.getCompareType().equalsIgnoreCase("In") && item.getFieldName().toLowerCase().contains("dep")) {
+                List<Object> tmpList = (List) item.getFieldVal();
+                String levelNo = jdbcTemplate.queryForObject("SELECT level_no FROM sec_org WHERE code=?", String.class, tmpList.get(0));
+                List<?> codeList = jdbcTemplate.queryForList("SELECT code FROM sec_org WHERE level_no LIKE '" + levelNo + "%'", String.class);
+                if (codeList != null && codeList.size() > 0) {
+                    tmpList.addAll(codeList);
+                }
+            }
+        }
 
         String selectSql = metaApp.get("selectSql").toString();
         List<Map<String, Object>> selectItems = null;
@@ -80,7 +90,7 @@ public class ChartController {
                     tmpItems.add(new QueryItem(whereArr[1].split("=")[0], codeList));
                     dataList.add(mongoService.countByProp(whereArr[0], tmpItems));
                 }
-                dataMap.put("name", metaApp.get("title"));
+                dataMap.put("name", " ");
                 dataMap.put("data", dataList);
                 dataResult.add(dataMap);
             } else {

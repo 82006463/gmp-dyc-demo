@@ -30,13 +30,23 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">外标题：</td>
+					<td class="td_table_1">标题：</td>
 					<td class="td_table_2">
 						<input type="text" id="title" name="title" value="${entity.title}" class="input_240 validate[required]" />
 					</td>
-					<td class="td_table_1">内标题：</td>
+					<td class="td_table_1">子标题：</td>
 					<td class="td_table_2">
-						<input type="text" id="subtitle" name="subtitle" value="${entity.subtitle}" class="input_240 validate[required]" />
+						<input type="text" id="subtitle" name="subtitle" value="${entity.subtitle}" class="input_240" />
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">Y轴标题：</td>
+					<td class="td_table_2">
+						<input type="text" id="ytitle" name="ytitle" value="${entity.ytitle}" class="input_240" />
+					</td>
+					<td class="td_table_1">值后缀：</td>
+					<td class="td_table_2">
+						<input type="text" id="valueSuffix" name="valueSuffix" value="${entity.valueSuffix}" class="input_240" />
 					</td>
 				</tr>
 				<tr>

@@ -75,15 +75,11 @@ public class MetaChartController {
         } else {
             entity = new LinkedHashMap<>(itemCodes == null ? 16 : itemCodes.length + 16);
         }
-        entity.put("type", paramMap.get("type")[0]);
-        entity.put("code", paramMap.get("code")[0]);
-        entity.put("title", paramMap.get("title")[0]);
-        entity.put("subtitle", paramMap.get("subtitle")[0]);
-        entity.put("list_url", paramMap.get("list_url")[0]);
-        entity.put("chartType", paramMap.get("chartType")[0]);
-        entity.put("selectSql", paramMap.get("selectSql")[0]);
-        entity.put("inSql", paramMap.get("inSql")[0]);
-        entity.put("countSql", paramMap.get("countSql")[0]);
+        for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
+            if (!entry.getKey().equals("id") && !entry.getKey().startsWith("item")) {
+                entity.put(entry.getKey(), entry.getValue()[0]);
+            }
+        }
         if (itemCodes != null && itemCodes.length > 0) {
             String[] itemDescs = paramMap.get("itemDescs");
             String[] itemDataTypes = paramMap.get("itemDataTypes");
