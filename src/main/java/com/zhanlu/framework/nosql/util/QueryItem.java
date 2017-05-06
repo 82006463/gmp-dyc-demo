@@ -20,7 +20,7 @@ public class QueryItem {
     private Object fieldVal;
     private List<QueryItem> subItems;
 
-    public QueryItem(String attrName, String attrVal) {
+    public QueryItem(String attrName, Object attrVal) {
         if (attrName.contains(" OR ")) {
             fieldName = attrName;
             fieldVal = attrVal;
@@ -36,8 +36,16 @@ public class QueryItem {
             fieldName = attrName.replace(attrNameArr[0] + "_" + attrNameArr[1] + "_", "");
             compareType = attrNameArr[0];
             dataType = attrNameArr[1];
-            if (attrVal != null && attrVal.trim().length() > 0) {
-                fieldVal = ConvertUtils.convertStringToObject(attrVal, PageEnum.DataType.valueOf(dataType).getClazz());
+            if (attrVal != null && attrVal instanceof String && attrVal.toString().trim().length() > 0) {
+                if (compareType.equalsIgnoreCase("In")) {
+                    List<Object> dataList = new ArrayList<>(1);
+                    dataList.add(ConvertUtils.convertStringToObject(attrVal.toString(), PageEnum.DataType.valueOf(dataType).getClazz()));
+                    fieldVal = dataList;
+                } else {
+                    fieldVal = ConvertUtils.convertStringToObject(attrVal.toString(), PageEnum.DataType.valueOf(dataType).getClazz());
+                }
+            } else {
+                fieldVal = attrVal;
             }
         }
     }

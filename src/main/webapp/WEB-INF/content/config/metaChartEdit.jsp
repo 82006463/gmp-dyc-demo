@@ -55,9 +55,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">Select SQL：</td>
-					<td class="td_table_2" colspan="3">
+					<td class="td_table_1">SelectSQL：</td>
+					<td class="td_table_2">
 						<textarea name="selectSql" class="input_textarea_600 validate[required]">${entity.selectSql}</textarea>
+					</td>
+					<td class="td_table_1">InSQL：</td>
+					<td class="td_table_2">
+						<textarea name="inSql" class="input_textarea_600">${entity.inSql}</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -128,7 +132,7 @@
 		<script type="text/javascript">
 			$(document).ready(function () {
 				$('select[name=code]').change(function () {
-					var _pre = '/app/${entity.type}/' + $(this).val().replace('${entity.type}_','');
+					var _pre = '/${entity.type}/' + $(this).val().replace('${entity.type}_','').replace('_','/');
                     if($.trim($('[name=list_url]').val()).length == 0) {
                         $('[name=list_url]').val(_pre + '/list');
                     }

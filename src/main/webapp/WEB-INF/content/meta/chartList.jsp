@@ -56,6 +56,31 @@
 						data: ${data}
 					}]
 				});
+			} else {
+				chart1 = new Highcharts.Chart({
+					chart: {
+						renderTo: 'container',
+						type: '${metaApp.chartType}'
+					},
+					title: {
+						text: '${metaApp.title}'
+					},
+					xAxis: {
+						categories: ${categories}
+					},
+					credits: {
+						enabled: true
+					},
+					plotOptions: {
+						column: {
+							dataLabels: {
+								enabled: true,
+								inside: true
+							}
+						}
+					},
+					series: ${data}
+				});
 			}
 		});
 	</script>

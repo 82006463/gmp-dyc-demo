@@ -82,6 +82,7 @@ public class MetaChartController {
         entity.put("list_url", paramMap.get("list_url")[0]);
         entity.put("chartType", paramMap.get("chartType")[0]);
         entity.put("selectSql", paramMap.get("selectSql")[0]);
+        entity.put("inSql", paramMap.get("inSql")[0]);
         entity.put("countSql", paramMap.get("countSql")[0]);
         if (itemCodes != null && itemCodes.length > 0) {
             String[] itemDescs = paramMap.get("itemDescs");

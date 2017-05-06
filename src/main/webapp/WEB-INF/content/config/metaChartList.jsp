@@ -35,7 +35,7 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<input type='button' onclick="addNew('${ctx}/config/meta/app/create?type=${type}&item=edit')" class='button_70px' value='新建'/>
+					<input type='button' onclick="addNew('${ctx}/config/meta/chart/create?type=${type}')" class='button_70px' value='新建'/>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>
@@ -50,7 +50,7 @@
 			<c:forEach items="${entityList}" var="item">
 				<tr>
 					<td class="td_list_2" align=left>${item.code}</td>
-					<td class="td_list_2" align=left>${item.name}</td>
+					<td class="td_list_2" align=left>${item.title}</td>
 					<td class="td_list_2" align=left>
 						<a href="${ctx}/config/meta/chart/delete/${item._id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 						<a href="${ctx}/config/meta/chart/update/${item._id}" class="btnEdit" title="编辑">编辑</a>
