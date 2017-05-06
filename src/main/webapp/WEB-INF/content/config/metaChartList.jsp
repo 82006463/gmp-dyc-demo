@@ -9,7 +9,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/config/meta/app/list" method="get">
+	<form id="mainForm" action="${ctx}/config/meta/chart/list" method="get">
 		<input type="hidden" name="type" value="${type}" />
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
@@ -52,9 +52,9 @@
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>
-						<a href="${ctx}/config/meta/app/delete/${item._id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-						<a href="${ctx}/config/meta/app/update/${item._id}?item=edit" class="btnEdit" title="编辑">编辑</a>
-						<a href="${ctx}/config/meta/app/view/${item._id}" class="btnView" title="查看">查看</a>
+						<a href="${ctx}/config/meta/chart/delete/${item._id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+						<a href="${ctx}/config/meta/chart/update/${item._id}" class="btnEdit" title="编辑">编辑</a>
+						<a href="${ctx}/config/meta/chart/view/${item._id}" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>
 			</c:forEach>

@@ -37,7 +37,7 @@ public class ChartController {
 
     @Autowired
     private MongoService mongoService;
-    private String metaAppTable = "config_meta_app";
+    private String metaAppTable = "config_meta_chart";
 
     /**
      * 分页列表
@@ -70,7 +70,7 @@ public class ChartController {
                 dataResult.add(dateItem);
             }
         }
-        ModelAndView view = new ModelAndView("meta/appList");
+        ModelAndView view = new ModelAndView("meta/chartList");
         view.addObject("jsonSearch", BasicUtils.jsonSearch(dataDictService, jdbcTemplate, metaApp, paramMap));
         view.addObject("metaApp", metaApp);
         view.addObject("data", JSON.toJSONString(dataResult));

@@ -21,19 +21,19 @@ import java.util.Map;
  * 标签属性管理Controller
  */
 @Controller
-@RequestMapping(value = "/config/meta/app")
-public class MetaAppController {
+@RequestMapping(value = "/config/meta/chart")
+public class MetaChartController {
 
     @Autowired
     private MongoService mongoService;
-    private String tableName = "config_meta_app";
+    private String tableName = "config_meta_chart";
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public ModelAndView list(Page<Object> page, String type, HttpServletRequest req) {
         List<QueryItem> queryItems = QueryItem.buildSearchItems(req.getParameterMap());
         queryItems.add(new QueryItem("Eq_String_type", type));
         List<Map<String, Object>> entityList = mongoService.findByPage(this.tableName, queryItems, page);
-        ModelAndView view = new ModelAndView("config/metaAppList");
+        ModelAndView view = new ModelAndView("config/metaChartList");
         view.addObject("type", type);
         view.addObject("page", page);
         view.addObject("entityList", entityList);
@@ -44,7 +44,7 @@ public class MetaAppController {
     public ModelAndView create(String type, String item) {
         Map<String, Object> entity = new LinkedHashMap<>();
         entity.put("type", type);
-        ModelAndView view = new ModelAndView("config/metaAppEdit");
+        ModelAndView view = new ModelAndView("config/metaChartEdit");
         view.addObject("item", item);
         view.addObject("entity", entity);
         return view;
@@ -53,7 +53,7 @@ public class MetaAppController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("id") String id, String item) throws Exception {
         Map<String, Object> entity = mongoService.findOne(this.tableName, id);
-        ModelAndView view = new ModelAndView("config/metaAppEdit");
+        ModelAndView view = new ModelAndView("config/metaChartEdit");
         view.addObject("item", item);
         view.addObject("entity", entity);
         return view;
@@ -61,7 +61,7 @@ public class MetaAppController {
 
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("id") String id) {
-        ModelAndView view = new ModelAndView("config/metaAppView");
+        ModelAndView view = new ModelAndView("config/metaChartView");
         view.addObject("entity", mongoService.findOne(this.tableName, id));
         return view;
     }
@@ -101,7 +101,7 @@ public class MetaAppController {
             entity.put("queryItems", items);
         }
         mongoService.saveOrUpdate(this.tableName, id, entity);
-        ModelAndView view = new ModelAndView("redirect:/config/meta/app/list");
+        ModelAndView view = new ModelAndView("redirect:/config/meta/chart/list");
         attributes.addAttribute("type", paramMap.get("type")[0]);
         return view;
     }
@@ -109,7 +109,7 @@ public class MetaAppController {
     @RequestMapping(value = "delete/{id}")
     public ModelAndView delete(RedirectAttributes attributes, @PathVariable("id") String id, String type) {
         mongoService.removeOne(this.tableName, id);
-        ModelAndView view = new ModelAndView("redirect:/config/meta/app/list");
+        ModelAndView view = new ModelAndView("redirect:/config/meta/chart/list");
         attributes.addAttribute("type", type);
         return view;
     }
