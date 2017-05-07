@@ -50,7 +50,8 @@ public class MetaAppController {
         Map<String, Object> metaTag = this.getMetaTag(metaType, cmcode);
 
         List<QueryItem> queryItems = QueryItem.buildSearchItems(paramMap);
-        queryItems.add(new QueryItem("Eq_String_type", cmcode));
+        queryItems.add(new QueryItem("Eq_String_metaType", metaType));
+        queryItems.add(new QueryItem("Eq_String_cmcode", cmcode));
         String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
         mongoService.findByPage(tableName, queryItems, page);
 
@@ -74,7 +75,7 @@ public class MetaAppController {
         Map<String, Object> entity = new HashMap<>();
         view.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, metaTag, entity));
         entity.put("metaType", metaType);
-        entity.put("type", cmcode);
+        entity.put("cmcode", cmcode);
         view.addObject("entity", entity);
         view.addObject("metaTag", metaTag);
         return view;
@@ -98,15 +99,15 @@ public class MetaAppController {
     /**
      * 新增、编辑的提交处理。保存实体，并返回列表视图
      */
-    @RequestMapping(value = "{metaType}/{type}/update", method = RequestMethod.POST)
+    @RequestMapping(value = "{metaType}/{cmcode}/update", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable("metaType") String metaType, @PathVariable("cmcode") String cmcode, String id, HttpServletRequest req) throws Exception {
         Map<String, Object> metaTag = this.getMetaTag(metaType, cmcode);
         Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), req.getParameterMap());
         entity.put("metaType", metaType);
-        entity.put("type", cmcode);
+        entity.put("cmcode", cmcode);
         String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
         mongoService.saveOrUpdate(tableName, id, entity);
-        ModelAndView view = new ModelAndView("redirect:/meta/" + metaType + "/" + cmcode + "/list");
+        ModelAndView view = new ModelAndView("redirect:/meta/app/" + metaType + "/" + cmcode + "/list");
         return view;
     }
 
@@ -132,14 +133,14 @@ public class MetaAppController {
     public ModelAndView delete(@PathVariable("metaType") String metaType, @PathVariable("cmcode") String cmcode, @PathVariable("id") String id) {
         String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
         mongoService.removeOne(tableName, id);
-        ModelAndView view = new ModelAndView("redirect:/meta/" + metaType + "/" + cmcode + "/list");
+        ModelAndView view = new ModelAndView("redirect:/meta/app/" + metaType + "/" + cmcode + "/list");
         return view;
     }
 
-    public Map<String, Object> getMetaTag(String metaType, String type) {
+    public Map<String, Object> getMetaTag(String metaType, String cmcode) {
         List<QueryItem> queryItems = new ArrayList<>(1);
         queryItems.add(new QueryItem("Eq_String_type", metaType));
-        queryItems.add(new QueryItem("Eq_String_code", type));
+        queryItems.add(new QueryItem("Eq_String_code", cmcode));
         return mongoService.findOne(metaTable, queryItems);
     }
 

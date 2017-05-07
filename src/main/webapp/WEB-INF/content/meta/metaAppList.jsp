@@ -14,7 +14,7 @@
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="order" id="order" value="${page.order}"/>
 		<input type="hidden" name="metaType" id="metaType" value="${metaType}"/>
-		<input type="hidden" name="cmcode" id="cmcode" value="${cmcode}"/>
+		<input type="hidden" name="type" id="cmcode" value="${cmcode}"/>
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="center">${metaTag.name}</td>
