@@ -45,7 +45,7 @@ public class MetaChartController {
     @RequestMapping(value = "{cmcode}/{type}/list", method = RequestMethod.GET)
     public ModelAndView list(@PathVariable("cmcode") String cmcode, @PathVariable("cmcode") String type, HttpServletRequest req) throws Exception {
         Map<String, String[]> paramMap = req.getParameterMap();
-        Map<String, Object> metaApp = this.getMetaTag(cmcode);
+        Map<String, Object> metaApp = this.getMetaTag("chart", cmcode);
         ModelAndView view = new ModelAndView("meta/metaChartList");
         view.addObject("type", type);
         view.addObject("cmcode", cmcode);
@@ -162,8 +162,9 @@ public class MetaChartController {
         return view;
     }
 
-    public Map<String, Object> getMetaTag(String cmcode) {
+    public Map<String, Object> getMetaTag(String metaType, String cmcode) {
         List<QueryItem> queryItems = new ArrayList<>(1);
+        queryItems.add(new QueryItem("Eq_String_type", metaType));
         queryItems.add(new QueryItem("Eq_String_code", cmcode));
         return mongoService.findOne(metaTable, queryItems);
     }
