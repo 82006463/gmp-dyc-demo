@@ -44,8 +44,14 @@
 					<td class="td_table_2">
 						<input type="text" id="ytitle" name="ytitle" value="${entity.ytitle}" class="input_240" />
 					</td>
-					<td class="td_table_1">值后缀：</td>
+					<td class="td_table_1">图示：</td>
 					<td class="td_table_2">
+						<input type="text" id="xtitle" name="xtitle" value="${entity.xtitle}" class="input_240" />
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">值后缀：</td>
+					<td class="td_table_2" colspan="3">
 						<input type="text" id="valueSuffix" name="valueSuffix" value="${entity.valueSuffix}" class="input_240" />
 					</td>
 				</tr>

@@ -65,9 +65,7 @@ public class ChartController {
         List<String> categories = new ArrayList<>(10);
 
         String field1Name = null;
-        String field1Val = null;
         String field2Name = null;
-        String field2Val = null;
         String selectSql = metaApp.get("selectSql").toString();
         List<Map<String, Object>> selectItems = null;
         if (selectSql.startsWith("SELECT ")) {
@@ -78,21 +76,36 @@ public class ChartController {
             field1Name = fieldArr[0];
             field2Name = fieldArr[1];
             Date curDate = new Date();
-            field1Val = paramMap.get(field1Name) == null || paramMap.get(field1Name)[0].length() == 0 ? DateFormatUtils.format(curDate, "yyyy") + "-01-01" : paramMap.get(field1Name)[0];
-            field2Val = paramMap.get(field2Name) == null || paramMap.get(field2Name)[0].length() == 0 ? DateFormatUtils.format(curDate, "yyyy-MM-dd") : paramMap.get(field2Name)[0];
+            String field1Val = paramMap.get(field1Name) == null || paramMap.get(field1Name)[0].length() == 0 ? DateFormatUtils.format(curDate, "yyyy") + "-01-01" : paramMap.get(field1Name)[0];
+            String field2Val = paramMap.get(field2Name) == null || paramMap.get(field2Name)[0].length() == 0 ? DateFormatUtils.format(curDate, "yyyy-MM-dd") : paramMap.get(field2Name)[0];
             String[] field1Arr = field1Val.split("-");
-            int year = Integer.parseInt(field1Arr[0]);
-            int start = Integer.parseInt(field1Arr[1]);
-            int end = Integer.parseInt(field2Val.split("-")[1]);
+            String[] field2Arr = field2Val.split("-");
+            int start = Integer.parseInt(field1Arr[0] + field1Arr[1]);
+            int end = Integer.parseInt(field2Arr[0] + field2Arr[1]);
             for (int i = start; i <= end; i++) {
                 Map<String, Object> itemMap = new LinkedHashMap<>(4);
-                String month = i < 10 ? "0" + i : "" + 10;
-                int day = i == 1 || i == 3 || i == 5 || i == 7 || i == 8 || i == 10 || i == 12 ? 31 : i == 4 || i == 6 || i == 9 || i == 11 ? 30 : year % 4 == 0 && year % 100 != 0 ? 29 : 28;
-                itemMap.put("start", field1Arr[0] + "-" + month + "-01");
-                itemMap.put("end", field1Arr[0] + "-" + month + "-" + day);
-                itemMap.put("name", month + "月");
+                int year = i / 100;
+                int month = i % 100;
+                if (month == 13) {
+                    year++;
+                    month = 1;
+                    i = Integer.parseInt(year + "01");
+                }
+                int day = 0;
+                if (month == 4 || month == 6 || month == 9 || month == 11) {
+                    day = 30;
+                } else if (month == 2) {
+                    day = year % 4 == 0 && year % 100 != 0 ? 29 : 28;
+                } else {
+                    day = 31;
+                }
+                itemMap.put("start", year + "-" + (month < 10 ? "0" + month : month) + "-01");
+                itemMap.put("end", year + "-" + (month < 10 ? "0" + month : month) + "-" + day);
+                itemMap.put("name", i + "");
                 selectItems.add(itemMap);
             }
+        } else {
+
         }
         if (selectItems != null && selectItems.size() > 0) {
             String countSql = metaApp.get("countSql").toString();
@@ -110,7 +123,7 @@ public class ChartController {
                     tmpItems.add(new QueryItem(whereArr[1].split("=")[0], item.get("code")));
                     dataList.add(mongoService.countByProp(whereArr[0], tmpItems));
                 }
-                dataMap.put("name", " ");
+                dataMap.put("name", metaApp.get("xtitle") == null ? " " : metaApp.get("xtitle"));
                 dataMap.put("data", dataList);
                 dataResult.add(dataMap);
             } else if (!selectSql.contains(" FROM ")) {
@@ -123,7 +136,7 @@ public class ChartController {
                     tmpItems.add(new QueryItem(field2Name, item.get("end")));
                     dataList.add(mongoService.countByProp(whereArr[0], tmpItems));
                 }
-                dataMap.put("name", field1Val.split("-")[0] + "年");
+                dataMap.put("name", metaApp.get("xtitle") == null ? " " : metaApp.get("xtitle"));
                 dataMap.put("data", dataList);
                 dataResult.add(dataMap);
             } else {
