@@ -19,9 +19,9 @@ import java.util.Map;
 /**
  * 标签属性管理Controller
  */
-@Controller("configMeta")
+@Controller
 @RequestMapping(value = "/config/meta")
-public class MetaController {
+public class ConfigMetaController {
 
     @Autowired
     private MongoService mongoService;
