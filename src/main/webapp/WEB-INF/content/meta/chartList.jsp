@@ -61,12 +61,10 @@
 						filename: '${metaApp.title}',
 						buttons: {
 							contextButton: {
-								menuItems: [{
-									text: 'Export to PDF',
-									onclick: function () {
-										this.exportChart({type:"application/pdf"});
-									}
-								}]
+								menuItems: [
+									{text: 'Export to PDF',onclick: function () {this.exportChart({type:"application/pdf"});}}
+									//,{text: 'Print Chart', onclick: function () {this.print();}}
+								]
 							}
 						}
 					}
@@ -96,12 +94,10 @@
 						filename: '${metaApp.title}',
 						buttons: {
 							contextButton: {
-								menuItems: [{
-									text: 'Export to PDF',
-									onclick: function () {
-										this.exportChart({type:"application/pdf"});
-									}
-								}]
+								menuItems: [
+									{text: 'Export to PDF',onclick: function () {this.exportChart({type:"application/pdf"});}}
+									//,{text: 'Print Chart', onclick: function () {this.print();}}
+								]
 							}
 						}
 					}
