@@ -19,10 +19,10 @@ public class MetaTagUtils {
      * 将JSON转成HTML串
      */
     public static String search(DataDictService dataDictService, JdbcTemplate jdbcTemplate, Map<String, Object> metaTag, Map<String, String[]> paramMap) {
-        List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("queryItems");
+        List<Map<String, String>> queryList = (List<Map<String, String>>) metaTag.get("queryItems");
         int itemIndex = 0;
         String html = "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' style='margin-top: 0px'><tr>";
-        for (Map<String, String> entry : structList) {
+        for (Map<String, String> entry : queryList) {
             String tagType = entry.get("tagType").replace("tagType_", "");
             String compareType = entry.get("compareType").replace("compareType_", "");
             String dataType = entry.get("dataType").replace("dataType_", "");
@@ -33,7 +33,7 @@ public class MetaTagUtils {
             if (itemIndex > 1 && itemIndex % 2 == 1) {
                 html += "<tr>";
             }
-            html += "<td class='td_table_1'>" + entry.get("desc") + "：</td><td class='td_table_2' " + (itemIndex % 2 == 1 && itemIndex == structList.size() ? "colspan='3'" : "") + ">";
+            html += "<td class='td_table_1'>" + entry.get("desc") + "：</td><td class='td_table_2' " + (itemIndex % 2 == 1 && itemIndex == queryList.size() ? "colspan='3'" : "") + ">";
             if (tagType.equalsIgnoreCase("date")) {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
             } else if (tagType.equalsIgnoreCase("timestamp")) {
@@ -52,7 +52,7 @@ public class MetaTagUtils {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240'/>";
             }
             html += "</td>";
-            if ((itemIndex > 0 && itemIndex % 2 == 0) || itemIndex == structList.size()) {
+            if ((itemIndex > 0 && itemIndex % 2 == 0) || itemIndex == queryList.size()) {
                 html += "</tr>";
             }
         }
@@ -64,13 +64,16 @@ public class MetaTagUtils {
      * 将JSON转成HTML串
      */
     public static String list(String contextPath, Map<String, Object> metaTag, List<Map<String, Object>> entityList) {
-        List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("listItems");
-        Map<String, String> fieldMap = new LinkedHashMap<>(structList.size());
-        Map<String, String> tagTypeMap = new LinkedHashMap<>(structList.size());
+        List<Map<String, String>> listList = (List<Map<String, String>>) metaTag.get("listItems");
+        List<Map<String, String>> editList = (List<Map<String, String>>) metaTag.get("editItems");
+        Map<String, String> fieldMap = new LinkedHashMap<>(listList.size());
+        Map<String, String> tagTypeMap = new LinkedHashMap<>(listList.size());
         String html = "<tr>";
-        for (Map<String, String> entry : structList) {
+        for (Map<String, String> entry : listList) {
             html += "<td align=center class='td_list_1'>" + entry.get("desc") + "</td>";
             fieldMap.put(entry.get("code"), entry.get("desc"));
+        }
+        for (Map<String, String> entry : editList) {
             tagTypeMap.put(entry.get("code"), entry.get("tagType"));
         }
         html += "<td align=center width=10% class='td_list_1'>操作</td></tr>";
@@ -83,11 +86,11 @@ public class MetaTagUtils {
                 } else if (entry.get(field.getKey()) instanceof Timestamp) {
                     html += DateFormatUtils.format((Timestamp) entry.get(field.getKey()), "yyyy-MM-dd HH:mm:ss");
                 } else {
-                    /*if (tagTypeMap.get(field.getKey()).startsWith("Select") && entry.get(field.getKey() + "_val") != null) {
+                    if (tagTypeMap.get(field.getKey()).startsWith("tagType_Select") && entry.get(field.getKey() + "_val") != null) {
                         html += entry.get(field.getKey() + "_val");
-                    } else {*/
+                    } else {
                         html += entry.get(field.getKey());
-                    //}
+                    }
                 }
                 html += "</td>";
             }
@@ -110,11 +113,11 @@ public class MetaTagUtils {
      * 将JSON转成HTML串
      */
     public static String edit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, Map<String, Object> metaTag, Map<String, Object> dataMap) {
-        List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("editItems");
+        List<Map<String, String>> editList = (List<Map<String, String>>) metaTag.get("editItems");
         int tmpIndex = 0;
         int itemIndex = 0;
         String html = "<tr>";
-        for (Map<String, String> entry : structList) {
+        for (Map<String, String> entry : editList) {
             String tagType = entry.get("tagType").replace("tagType_", "");
             String required = entry.get("required");
             String fuzzy = entry.get("fuzzy");
@@ -237,10 +240,10 @@ public class MetaTagUtils {
                     html = html.replace("${" + (itemIndex - 1) + "}", " colspan='3'");
                     html = html.replace("${" + itemIndex + "}", " colspan='3'");
                 }
-            } else if (tmpIndex == 1 && itemIndex == structList.size()) {
+            } else if (tmpIndex == 1 && itemIndex == editList.size()) {
                 html = html.replace("${" + itemIndex + "}", " colspan='3'");
             }
-            if (tmpIndex == 2 || itemIndex == structList.size() ||
+            if (tmpIndex == 2 || itemIndex == editList.size() ||
                     (tmpIndex == 1 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm")))) {
                 html += "</tr>";
                 tmpIndex = 0;
@@ -253,11 +256,11 @@ public class MetaTagUtils {
      * 将JSON转成HTML串
      */
     public static String view(DataDictService dataDictService, Map<String, Object> metaTag, Map<String, Object> dataMap) {
-        List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("editItems");
+        List<Map<String, String>> editList = (List<Map<String, String>>) metaTag.get("editItems");
         int tmpIndex = 0;
         int itemIndex = 0;
         String html = "<tr>";
-        for (Map<String, String> entry : structList) {
+        for (Map<String, String> entry : editList) {
             String tagType = entry.get("tagType").replace("tagType_", "");
             String code = tagType.startsWith("Select") ? entry.get("code") + "_val" : entry.get("code");
             String desc = entry.get("desc");
@@ -328,10 +331,10 @@ public class MetaTagUtils {
                     html = html.replace("${" + (itemIndex - 1) + "}", " colspan='3'");
                     html = html.replace("${" + itemIndex + "}", " colspan='3'");
                 }
-            } else if (tmpIndex == 1 && itemIndex == structList.size()) {
+            } else if (tmpIndex == 1 && itemIndex == editList.size()) {
                 html = html.replace("${" + itemIndex + "}", " colspan='3'");
             }
-            if (tmpIndex == 2 || itemIndex == structList.size() || (tmpIndex == 1 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm")))) {
+            if (tmpIndex == 2 || itemIndex == editList.size() || (tmpIndex == 1 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm")))) {
                 html += "</tr>";
                 tmpIndex = 0;
             }
