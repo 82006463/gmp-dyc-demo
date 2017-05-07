@@ -8,7 +8,7 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx}/config/meta/tag/update" method="post">
+		<form id="inputForm" action="${ctx}/config/meta/${entity.type}/update" method="post">
 			<input type="hidden" id="id" name="id" value="${entity._id}"/>
 			<input type="hidden" id="type" name="type" value="${entity.type}"/>
 			<input type="hidden" id="item" name="item" value="${item}"/>
@@ -22,12 +22,7 @@
 				<tr>
 					<td class="td_table_1">编号：</td>
 					<td class="td_table_2">
-                        <c:if test="${empty entity.code}">
-						    <frame:dict name="code" type="select" typeCode="${entity.type}" value="${entity.code}" cssClass="input_select validate[required]" />
-                        </c:if>
-                        <c:if test="${!empty entity.code}">
-                            <input type="hidden" id="code" name="code" value="${entity.code}" class="input_240" />${entity.code}
-                        </c:if>
+						<input type="text" id="code" name="code" value="${entity.code}" class="input_240 validate[required]" />
 					</td>
 					<td class="td_table_1">名称：</td>
 					<td class="td_table_2">

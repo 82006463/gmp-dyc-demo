@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -20,58 +19,64 @@ import java.util.Map;
 /**
  * 标签属性管理Controller
  */
-@Controller
-@RequestMapping(value = "/config/meta/tag")
-public class MetaTagController {
+@Controller("configMeta")
+@RequestMapping(value = "/config/meta")
+public class MetaController {
 
     @Autowired
     private MongoService mongoService;
-    private String tableName = "config_meta_tag";
+    private String metaTable = "config_meta";
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
-    public ModelAndView list(Page<Object> page, String type, HttpServletRequest req) {
+    @RequestMapping(value = "{type}/list", method = RequestMethod.GET)
+    public ModelAndView list(@PathVariable("type") String type, Page<Map<String, Object>> page, HttpServletRequest req) {
         List<QueryItem> queryItems = QueryItem.buildSearchItems(req.getParameterMap());
         queryItems.add(new QueryItem("Eq_String_type", type));
-        List<Map<String, Object>> entityList = mongoService.findByPage(this.tableName, queryItems, page);
-        ModelAndView view = new ModelAndView("config/metaTagList");
+        mongoService.findByPage(this.metaTable, queryItems, page);
+
+        String jspPage = type.contains("chart") ? "metaChartList" : "metaTagList";
+        ModelAndView view = new ModelAndView("config/" + jspPage);
         view.addObject("type", type);
         view.addObject("page", page);
-        view.addObject("entityList", entityList);
         return view;
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.GET)
-    public ModelAndView create(String type, String item) {
+    @RequestMapping(value = "{type}/create", method = RequestMethod.GET)
+    public ModelAndView create(@PathVariable("type") String type, String item) {
         Map<String, Object> entity = new LinkedHashMap<>();
         entity.put("type", type);
-        ModelAndView view = new ModelAndView("config/metaTagEdit");
+
+        String jspPage = type.contains("chart") ? "metaChartEdit" : "metaTagEdit";
+        ModelAndView view = new ModelAndView("config/" + jspPage);
         view.addObject("item", item);
         view.addObject("entity", entity);
         return view;
     }
 
-    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") String id, String item) throws Exception {
-        Map<String, Object> entity = mongoService.findOne(this.tableName, id);
-        ModelAndView view = new ModelAndView("config/metaTagEdit");
+    @RequestMapping(value = "{type}/update/{id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable("type") String type, @PathVariable("id") String id, String item) throws Exception {
+        Map<String, Object> entity = mongoService.findOne(this.metaTable, id);
+
+        String jspPage = type.contains("chart") ? "metaChartEdit" : "metaTagEdit";
+        ModelAndView view = new ModelAndView("config/" + jspPage);
         view.addObject("item", item);
         view.addObject("entity", entity);
         return view;
     }
 
-    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
-    public ModelAndView view(@PathVariable("id") String id) {
-        ModelAndView view = new ModelAndView("config/metaTagView");
-        view.addObject("entity", mongoService.findOne(this.tableName, id));
+    @RequestMapping(value = "{type}/view/{id}", method = RequestMethod.GET)
+    public ModelAndView view(@PathVariable("type") String type, @PathVariable("id") String id) {
+        String jspPage = type.contains("chart") ? "metaChartView" : "metaTagView";
+        ModelAndView view = new ModelAndView("config/" + jspPage);
+        view.addObject("entity", mongoService.findOne(this.metaTable, id));
         return view;
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ModelAndView update(RedirectAttributes attributes, String id, String item, String[] itemCodes, HttpServletRequest req) {
+    @RequestMapping(value = "{type}/update", method = RequestMethod.POST)
+    public ModelAndView update(@PathVariable("type") String type, String id, String item, String[] itemCodes, HttpServletRequest req) {
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> entity = null;
         if (id != null && id.trim().length() > 0) {
-            entity = mongoService.findOne(this.tableName, id);
+            entity = mongoService.findOne(this.metaTable, id);
         } else {
             entity = new LinkedHashMap<>(itemCodes == null ? 16 : itemCodes.length + 16);
         }
@@ -132,17 +137,15 @@ public class MetaTagController {
                 entity.put("editItems", items);
             }
         }
-        mongoService.saveOrUpdate(this.tableName, id, entity);
-        ModelAndView view = new ModelAndView("redirect:/config/meta/tag/list");
-        attributes.addAttribute("type", paramMap.get("type")[0]);
+        mongoService.saveOrUpdate(this.metaTable, id, entity);
+        ModelAndView view = new ModelAndView("redirect:/config/meta/" + type + "/list");
         return view;
     }
 
-    @RequestMapping(value = "delete/{id}")
-    public ModelAndView delete(RedirectAttributes attributes, @PathVariable("id") String id, String type) {
-        mongoService.removeOne(this.tableName, id);
-        ModelAndView view = new ModelAndView("redirect:/config/meta/tag/list");
-        attributes.addAttribute("type", type);
+    @RequestMapping(value = "{type}/delete/{id}")
+    public ModelAndView delete(@PathVariable("type") String type, @PathVariable("id") String id) {
+        mongoService.removeOne(this.metaTable, id);
+        ModelAndView view = new ModelAndView("redirect:/config/meta/" + type + "/list");
         return view;
     }
 

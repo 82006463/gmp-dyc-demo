@@ -3,8 +3,8 @@ package com.zhanlu.app.web;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.nosql.service.MongoService;
-import com.zhanlu.framework.nosql.util.MetaTagUtils;
 import com.zhanlu.framework.nosql.util.EditItem;
+import com.zhanlu.framework.nosql.util.MetaTagUtils;
 import com.zhanlu.framework.nosql.util.QueryItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -40,24 +40,24 @@ public class MetaController {
 
     @Autowired
     private MongoService mongoService;
-    private String metaTagTable = "config_meta_tag";
+    private String metaTable = "config_meta";
 
     /**
      * 分页列表
      */
     @RequestMapping(value = "{metaType}/{type}/list", method = RequestMethod.GET)
-    public ModelAndView list(Page<?> page, @PathVariable("metaType") String metaType, @PathVariable("type") String type, HttpServletRequest req) throws Exception {
+    public ModelAndView list(Page<Map<String, Object>> page, @PathVariable("metaType") String metaType, @PathVariable("type") String type, HttpServletRequest req) throws Exception {
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> metaTag = this.getMetaTag(metaType, type);
 
         List<QueryItem> queryItems = QueryItem.buildSearchItems(paramMap);
         queryItems.add(new QueryItem("Eq_String_type", type));
         String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
-        List<Map<String, Object>> entityList = mongoService.findByPage(tableName, queryItems, page);
+        mongoService.findByPage(tableName, queryItems, page);
 
         ModelAndView view = new ModelAndView("meta/metaList");
         view.addObject("jsonSearch", MetaTagUtils.search(dataDictService, jdbcTemplate, metaTag, paramMap));
-        view.addObject("jsonList", MetaTagUtils.list(req.getContextPath(), metaTag, entityList));
+        view.addObject("jsonList", MetaTagUtils.list(req.getContextPath(), metaTag, page.getResult()));
         view.addObject("page", page);
         view.addObject("metaTag", metaTag);
         return view;
@@ -138,7 +138,7 @@ public class MetaController {
     public Map<String, Object> getMetaTag(String metaType, String type) {
         List<QueryItem> queryItems = new ArrayList<>(1);
         queryItems.add(new QueryItem("Eq_String_code", metaType + "_" + type));
-        return mongoService.findOne(metaTagTable, queryItems);
+        return mongoService.findOne(metaTable, queryItems);
     }
 
 }

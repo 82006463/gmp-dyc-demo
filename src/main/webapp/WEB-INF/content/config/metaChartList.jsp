@@ -9,7 +9,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/config/meta/chart/list" method="get">
+	<form id="mainForm" action="${ctx}/config/meta/${type}/list" method="get">
 		<input type="hidden" name="type" value="${type}" />
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
@@ -22,9 +22,9 @@
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td class="td_table_1">类型：</td>
+				<td class="td_table_1">编号：</td>
 				<td class="td_table_2">
-					<frame:dict name="Eq_String_code" type="select" typeCode="${type}" value="${param['Eq_String_code']}" cssClass="input_select"/>
+					<input type="text" name="Eq_String_code" value="${param['Eq_String_code']}" class="input_240"/>
 				</td>
 				<td class="td_table_1">名称：</td>
 				<td class="td_table_2">
@@ -35,7 +35,7 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<input type='button' onclick="addNew('${ctx}/config/meta/chart/create?type=${type}')" class='button_70px' value='新建'/>
+					<input type='button' onclick="addNew('${ctx}/config/meta/${type}/create')" class='button_70px' value='新建'/>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>
@@ -53,9 +53,9 @@
 					<td class="td_list_2" align=left>${item.title}</td>
 
 					<td class="td_list_2" align=left>
-						<a href="${ctx}/config/meta/chart/delete/${item._id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-						<a href="${ctx}/config/meta/chart/update/${item._id}" class="btnEdit" title="编辑">编辑</a>
-						<a href="${ctx}/config/meta/chart/view/${item._id}" class="btnView" title="查看">查看</a>
+						<a href="${ctx}/config/meta/${type}/delete/${item._id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+						<a href="${ctx}/config/meta/${type}/update/${item._id}" class="btnEdit" title="编辑">编辑</a>
+						<a href="${ctx}/config/meta/${type}/view/${item._id}" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>
 			</c:forEach>
