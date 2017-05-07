@@ -8,6 +8,8 @@
 	<%@ include file="/common/common-list.jsp"%>
 	<link rel="stylesheet" href="${ctx}/styles/plugin/css/highcharts.css" type="text/css" media="all" />
 	<script type="text/javascript" src="${ctx}/styles/plugin/js/highcharts.js"></script>
+	<script type="text/javascript" src="${ctx}/styles/plugin/js/highcharts-exporting.js"></script>
+	<script type="text/javascript" src="${ctx}/styles/plugin/js/highcharts-zh_CN.js"></script>
 	<script type="text/javascript">
 		var chart1;
 		$(function () {

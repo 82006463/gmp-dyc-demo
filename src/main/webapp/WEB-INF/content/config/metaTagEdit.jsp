@@ -155,6 +155,9 @@
 		<script type="text/javascript">
 			$(document).ready(function () {
 				$('select[name=code]').change(function () {
+					if($.trim($('[name=name]').val()).length==0 && $(this).val().length>0) {
+						$('[name=name]').val($(this).find('option:selected').text());
+					}
 					var _pre = '/meta/${entity.type}/' + $(this).val().replace('${entity.type}_','');
                     if($.trim($('[name=list_url]').val()).length == 0) {
                         $('[name=list_url]').val(_pre + '/list');
