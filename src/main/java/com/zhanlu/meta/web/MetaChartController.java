@@ -51,7 +51,6 @@ public class MetaChartController {
         view.addObject("cmcode", cmcode);
 
         List<QueryItem> queryItems = QueryItem.buildSearchItems(paramMap);
-        queryItems.add(new QueryItem("Eq_String_type", cmcode));
         for (QueryItem item : queryItems) {
             if (item.getCompareType().equalsIgnoreCase("In") && item.getFieldName().toLowerCase().contains("dep")) {
                 List<Object> tmpList = (List) item.getFieldVal();
@@ -122,7 +121,11 @@ public class MetaChartController {
                 for (Map<String, Object> item : selectItems) {
                     categories.add((String) item.get("name"));
                     List<QueryItem> tmpItems = queryItems;
-                    tmpItems.add(new QueryItem(whereArr[1].split("=")[0], item.get("code")));
+                    String[] andArr = whereArr[1].split(" AND ");
+                    for (String and : andArr) {
+                        String[] tmpArr = and.split("=");
+                        tmpItems.add(new QueryItem(tmpArr[0], item.get(tmpArr[1]) == null ? tmpArr[1] : item.get(tmpArr[1])));
+                    }
                     dataList.add(mongoService.countByProp(whereArr[0], tmpItems));
                 }
                 dataMap.put("name", metaApp.get("xtitle") == null ? " " : metaApp.get("xtitle"));
@@ -136,6 +139,11 @@ public class MetaChartController {
                     List<QueryItem> tmpItems = queryItems;
                     tmpItems.add(new QueryItem(field1Name, item.get("start")));
                     tmpItems.add(new QueryItem(field2Name, item.get("end")));
+                    String[] andArr = whereArr[1].split(" AND ");
+                    for (String and : andArr) {
+                        String[] tmpArr = and.split("=");
+                        tmpItems.add(new QueryItem(tmpArr[0], item.get(tmpArr[1]) == null ? tmpArr[1] : item.get(tmpArr[1])));
+                    }
                     dataList.add(mongoService.countByProp(whereArr[0], tmpItems));
                 }
                 dataMap.put("name", metaApp.get("xtitle") == null ? " " : metaApp.get("xtitle"));
@@ -145,9 +153,11 @@ public class MetaChartController {
                 for (Map<String, Object> item : selectItems) {
                     categories.add((String) item.get("name"));
                     List<QueryItem> tmpItems = queryItems;
-                    String[] tmpArr = whereArr[1].split("=");
-                    tmpItems.add(new QueryItem(tmpArr[0], item.get(StringUtils.isBlank(tmpArr[1]) ? "code" : tmpArr[1])));
-
+                    String[] andArr = whereArr[1].split(" AND ");
+                    for (String and : andArr) {
+                        String[] tmpArr = and.split("=");
+                        tmpItems.add(new QueryItem(tmpArr[0], item.get(tmpArr[1]) == null ? tmpArr[1] : item.get(tmpArr[1])));
+                    }
                     List<Object> dataItem = new ArrayList<>(2);
                     dataItem.add(item.get("name"));
                     dataItem.add(mongoService.countByProp(whereArr[0], tmpItems));
