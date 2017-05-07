@@ -42,8 +42,8 @@ public class MetaChartController {
     /**
      * 分页列表
      */
-    @RequestMapping(value = "{cmcode}/{type}/list", method = RequestMethod.GET)
-    public ModelAndView list(@PathVariable("cmcode") String cmcode, @PathVariable("cmcode") String type, HttpServletRequest req) throws Exception {
+    @RequestMapping(value = "{type}/{cmcode}/list", method = RequestMethod.GET)
+    public ModelAndView list(@PathVariable("type") String type, @PathVariable("cmcode") String cmcode, HttpServletRequest req) throws Exception {
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> metaApp = this.getMetaTag("chart", cmcode);
         ModelAndView view = new ModelAndView("meta/metaChartList");

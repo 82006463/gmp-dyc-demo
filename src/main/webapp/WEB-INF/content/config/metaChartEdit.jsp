@@ -11,6 +11,7 @@
 		<form id="inputForm" action="${ctx}/config/meta/${entity.type}/update" method="post">
 			<input type="hidden" id="id" name="id" value="${entity._id}"/>
 			<input type="hidden" id="type" name="type" value="${entity.type}"/>
+			<input type="hidden" id="item" name="item" value="${item}"/>
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
 					<td class="td_table_top" align="center">配置管理-应用-${item=='search' ? '搜索项':item=='list' ? '列表项':'编辑页'}</td>

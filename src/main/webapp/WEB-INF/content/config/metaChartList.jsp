@@ -35,7 +35,7 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<input type='button' onclick="addNew('${ctx}/config/meta/${type}/create')" class='button_70px' value='新建'/>
+					<input type='button' onclick="addNew('${ctx}/config/meta/${type}/create?item=edit')" class='button_70px' value='新建'/>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>
@@ -54,7 +54,7 @@
 
 					<td class="td_list_2" align=left>
 						<a href="${ctx}/config/meta/${type}/delete/${item._id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-						<a href="${ctx}/config/meta/${type}/update/${item._id}" class="btnEdit" title="编辑">编辑</a>
+						<a href="${ctx}/config/meta/${type}/update/${item._id}?item=edit" class="btnEdit" title="编辑">编辑</a>
 						<a href="${ctx}/config/meta/${type}/view/${item._id}" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>

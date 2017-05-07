@@ -90,7 +90,23 @@ public class ConfigMetaController {
             String[] itemDescs = paramMap.get("itemDescs");
             String[] itemDataTypes = paramMap.get("itemDataTypes");
             List<Map<String, Object>> items = new ArrayList<>(itemCodes == null ? 0 : itemCodes.length);
-            if (item.equals("search")) {
+            if (type.contains("chart")) {
+                Map<String, String> itemsMap = new LinkedHashMap<>(itemCodes.length);
+                String[] itemCompareTypes = paramMap.get("itemCompareTypes");
+                String[] itemTagTypes = paramMap.get("itemTagTypes");
+                for (int i = 0; i < itemCodes.length; i++) {
+                    Map<String, Object> itemMap = new LinkedHashMap<>(8);
+                    itemMap.put("code", itemCodes[i]);
+                    itemMap.put("desc", itemDescs[i]);
+                    itemMap.put("dataType", itemDataTypes[i]);
+                    itemMap.put("compareType", itemCompareTypes[i]);
+                    itemMap.put("tagType", itemTagTypes[i]);
+                    items.add(itemMap);
+                    itemsMap.put(itemCodes[i], itemDescs[i]);
+                }
+                entity.put("itemsMap", itemsMap);
+                entity.put("editItems", items);
+            } else if (item.equals("search")) {
                 String[] itemCompareTypes = paramMap.get("itemCompareTypes");
                 String[] itemTagTypes = paramMap.get("itemTagTypes");
                 for (int i = 0; i < itemCodes.length; i++) {
