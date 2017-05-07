@@ -1,4 +1,4 @@
-package com.zhanlu.app.web;
+package com.zhanlu.meta.web;
 
 import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.config.service.DataDictService;
@@ -27,8 +27,8 @@ import java.util.*;
  * @since 0.1
  */
 @Controller
-@RequestMapping(value = "/chart")
-public class ChartController {
+@RequestMapping(value = "/meta/chart")
+public class MetaChartController {
 
     @Resource(name = "jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
@@ -37,19 +37,21 @@ public class ChartController {
 
     @Autowired
     private MongoService mongoService;
-    private String metaAppTable = "config_meta_chart";
+    private String metaTable = "config_meta";
 
     /**
      * 分页列表
      */
-    @RequestMapping(value = "{type}/{field}/list", method = RequestMethod.GET)
-    public ModelAndView list(@PathVariable("type") String type, @PathVariable("field") String field, HttpServletRequest req) throws Exception {
+    @RequestMapping(value = "{type}/{cmcode}/list", method = RequestMethod.GET)
+    public ModelAndView list(@PathVariable("cmcode") String type, @PathVariable("cmcode") String cmcode,HttpServletRequest req) throws Exception {
         Map<String, String[]> paramMap = req.getParameterMap();
-        Map<String, Object> metaApp = this.getMetaTag(type, field);
-        ModelAndView view = new ModelAndView("meta/chartList");
+        Map<String, Object> metaApp = this.getMetaTag(cmcode);
+        ModelAndView view = new ModelAndView("meta/metaChartList");
+        view.addObject("type", type);
+        view.addObject("cmcode", cmcode);
 
         List<QueryItem> queryItems = QueryItem.buildSearchItems(paramMap);
-        queryItems.add(new QueryItem("Eq_String_type", type));
+        queryItems.add(new QueryItem("Eq_String_type", cmcode));
         for (QueryItem item : queryItems) {
             if (item.getCompareType().equalsIgnoreCase("In") && item.getFieldName().toLowerCase().contains("dep")) {
                 List<Object> tmpList = (List) item.getFieldVal();
@@ -160,10 +162,10 @@ public class ChartController {
         return view;
     }
 
-    public Map<String, Object> getMetaTag(String type, String field) {
+    public Map<String, Object> getMetaTag(String cmcode) {
         List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("Eq_String_code", "chart" + "_" + type + "_" + field));
-        return mongoService.findOne(metaAppTable, queryItems);
+        queryItems.add(new QueryItem("Eq_String_code", cmcode));
+        return mongoService.findOne(metaTable, queryItems);
     }
 
 }

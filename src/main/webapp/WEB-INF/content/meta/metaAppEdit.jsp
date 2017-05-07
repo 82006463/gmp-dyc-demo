@@ -9,7 +9,7 @@
 </head>
 
 <body>
-	<form id="inputForm" action="${ctx}${metaTag.update_submit_url}" method="post">
+	<form id="inputForm" action="${ctx}/meta/app/${metaType}/${cmcode}/update" method="post">
 		<input type="hidden" name="id" value="${entity._id}"/>
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
