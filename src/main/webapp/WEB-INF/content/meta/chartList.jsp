@@ -21,7 +21,7 @@
 						text: '<b>${metaApp.title}</b>'
 					},
 					tooltip: {
-						valueSuffix: '个'
+						valueSuffix: '${metaApp.valueSuffix}'
 					},
 					plotOptions: {
 						pie: {
@@ -54,18 +54,19 @@
 						enabled: false
 					},
 					series: [{
-						type: 'pie',
 						name: '${metaApp.subtitle}',
 						data: ${data}
 					}],
 					exporting: {
-						chartOptions: {
-							plotOptions: {
-								series: {
-									dataLabels: {
-										enabled: true
+						filename: '${metaApp.title}',
+						buttons: {
+							contextButton: {
+								menuItems: [{
+									text: 'Export to PDF',
+									onclick: function () {
+										this.exportChart({type:"application/pdf"});
 									}
-								}
+								}]
 							}
 						}
 					}
@@ -92,13 +93,15 @@
 					},
 					series: ${data},
 					exporting: {
-						chartOptions: {
-							plotOptions: {
-								series: {
-									dataLabels: {
-										enabled: true
+						filename: '${metaApp.title}',
+						buttons: {
+							contextButton: {
+								menuItems: [{
+									text: 'Export to PDF',
+									onclick: function () {
+										this.exportChart({type:"application/pdf"});
 									}
-								}
+								}]
 							}
 						}
 					}
