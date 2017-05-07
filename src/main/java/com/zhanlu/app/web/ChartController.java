@@ -3,7 +3,7 @@ package com.zhanlu.app.web;
 import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.nosql.service.MongoService;
-import com.zhanlu.framework.nosql.util.BasicUtils;
+import com.zhanlu.framework.nosql.util.MetaTagUtils;
 import com.zhanlu.framework.nosql.util.QueryItem;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -153,7 +153,7 @@ public class ChartController {
                 }
             }
         }
-        view.addObject("jsonSearch", BasicUtils.jsonSearch(dataDictService, jdbcTemplate, metaApp, paramMap));
+        view.addObject("jsonSearch", MetaTagUtils.search(dataDictService, jdbcTemplate, metaApp, paramMap));
         view.addObject("metaApp", metaApp);
         view.addObject("categories", JSON.toJSONString(categories));
         view.addObject("data", JSON.toJSONString(dataResult));

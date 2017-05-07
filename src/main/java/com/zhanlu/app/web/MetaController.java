@@ -3,7 +3,7 @@ package com.zhanlu.app.web;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.nosql.service.MongoService;
-import com.zhanlu.framework.nosql.util.BasicUtils;
+import com.zhanlu.framework.nosql.util.MetaTagUtils;
 import com.zhanlu.framework.nosql.util.EditItem;
 import com.zhanlu.framework.nosql.util.QueryItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +56,8 @@ public class MetaController {
         List<Map<String, Object>> entityList = mongoService.findByPage(tableName, queryItems, page);
 
         ModelAndView view = new ModelAndView("meta/metaList");
-        view.addObject("jsonSearch", BasicUtils.jsonSearch(dataDictService, jdbcTemplate, metaTag, paramMap));
-        view.addObject("jsonList", BasicUtils.jsonList(req.getContextPath(), metaTag, entityList));
+        view.addObject("jsonSearch", MetaTagUtils.search(dataDictService, jdbcTemplate, metaTag, paramMap));
+        view.addObject("jsonList", MetaTagUtils.list(req.getContextPath(), metaTag, entityList));
         view.addObject("page", page);
         view.addObject("metaTag", metaTag);
         return view;
@@ -72,7 +72,7 @@ public class MetaController {
         ModelAndView view = new ModelAndView("meta/metaEdit");
         Map<String, Object> entity = new HashMap<>();
         entity.put("type", type);
-        view.addObject("jsonEdit", BasicUtils.jsonEdit(jdbcTemplate, dataDictService, metaTag, entity));
+        view.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, metaTag, entity));
         view.addObject("entity", entity);
         view.addObject("metaTag", metaTag);
         return view;
@@ -87,7 +87,7 @@ public class MetaController {
         ModelAndView view = new ModelAndView("meta/metaEdit");
         String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
         Map<String, Object> entity = mongoService.findOne(tableName, id);
-        view.addObject("jsonEdit", BasicUtils.jsonEdit(jdbcTemplate, dataDictService, metaTag, entity));
+        view.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, metaTag, entity));
         view.addObject("entity", entity);
         view.addObject("metaTag", metaTag);
         return view;
@@ -118,7 +118,7 @@ public class MetaController {
         String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + type);
         Map<String, Object> entity = mongoService.findOne(tableName, id);
         view.addObject("entity", entity);
-        view.addObject("jsonEdit", BasicUtils.jsonView(dataDictService, metaTag, entity));
+        view.addObject("jsonEdit", MetaTagUtils.view(dataDictService, metaTag, entity));
         view.addObject("metaTag", metaTag);
         return view;
     }

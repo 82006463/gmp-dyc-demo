@@ -13,12 +13,12 @@ import java.util.*;
 /**
  * Created by Administrator on 2017/4/3.
  */
-public class BasicUtils {
+public class MetaTagUtils {
 
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonSearch(DataDictService dataDictService, JdbcTemplate jdbcTemplate, Map<String, Object> metaTag, Map<String, String[]> paramMap) {
+    public static String search(DataDictService dataDictService, JdbcTemplate jdbcTemplate, Map<String, Object> metaTag, Map<String, String[]> paramMap) {
         List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("queryItems");
         int itemIndex = 0;
         String html = "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' style='margin-top: 0px'><tr>";
@@ -63,7 +63,7 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonList(String contextPath, Map<String, Object> metaTag, List<Map<String, Object>> entityList) {
+    public static String list(String contextPath, Map<String, Object> metaTag, List<Map<String, Object>> entityList) {
         List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("listItems");
         Map<String, String> fieldMap = new LinkedHashMap<>(structList.size());
         Map<String, String> tagTypeMap = new LinkedHashMap<>(structList.size());
@@ -109,7 +109,7 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonEdit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, Map<String, Object> metaTag, Map<String, Object> dataMap) {
+    public static String edit(JdbcTemplate jdbcTemplate, DataDictService dataDictService, Map<String, Object> metaTag, Map<String, Object> dataMap) {
         List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("editItems");
         int tmpIndex = 0;
         int itemIndex = 0;
@@ -252,7 +252,7 @@ public class BasicUtils {
     /**
      * 将JSON转成HTML串
      */
-    public static String jsonView(DataDictService dataDictService, Map<String, Object> metaTag, Map<String, Object> dataMap) {
+    public static String view(DataDictService dataDictService, Map<String, Object> metaTag, Map<String, Object> dataMap) {
         List<Map<String, String>> structList = (List<Map<String, String>>) metaTag.get("editItems");
         int tmpIndex = 0;
         int itemIndex = 0;
