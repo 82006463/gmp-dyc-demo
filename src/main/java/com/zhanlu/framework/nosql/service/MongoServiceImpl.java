@@ -71,7 +71,9 @@ public class MongoServiceImpl implements MongoService {
         for (DBObject doc : docList) {
             resultList.add(doc.toMap());
         }
-        page.setResult(resultList);
+        if (page != null) {
+            page.setResult(resultList);
+        }
         return resultList;
     }
 

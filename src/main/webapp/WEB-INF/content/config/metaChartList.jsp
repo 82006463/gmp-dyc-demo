@@ -47,7 +47,7 @@
 				<td align=center class="td_list_1">名称</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
-			<c:forEach items="${entityList}" var="item">
+			<c:forEach items="${page.result}" var="item">
 				<tr>
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.title}</td>
