@@ -8,15 +8,13 @@
 	<%@ include file="/common/common-list.jsp"%>
 	<link rel="stylesheet" href="${ctx}/styles/plugin/css/highcharts.css" type="text/css" media="all" />
 	<script type="text/javascript" src="${ctx}/styles/plugin/js/highcharts.js"></script>
-	<script type="text/javascript" src="${ctx}/styles/plugin/js/highcharts-exporting.js"></script>
+	<script type="text/javascript" src="${ctx}/styles/plugin/js/exporting.js"></script>
 	<script type="text/javascript" src="${ctx}/styles/plugin/js/highcharts-zh_CN.js"></script>
 	<script type="text/javascript">
-		var chart1;
 		$(function () {
 			if('${metaApp.chartType}' == 'pie') {
-				chart1 = new Highcharts.Chart({
+				Highcharts.chart('container', {
 					chart: {
-						renderTo: 'container',
 						type: '${metaApp.chartType}'
 					},
 					title: {
@@ -59,12 +57,22 @@
 						type: 'pie',
 						name: '${metaApp.subtitle}',
 						data: ${data}
-					}]
+					}],
+					exporting: {
+						chartOptions: {
+							plotOptions: {
+								series: {
+									dataLabels: {
+										enabled: true
+									}
+								}
+							}
+						}
+					}
 				});
 			} else {
-				chart1 = new Highcharts.Chart({
+				Highcharts.chart('container', {
 					chart: {
-						renderTo: 'container',
 						type: '${metaApp.chartType}'
 					},
 					title: {
@@ -82,7 +90,18 @@
 					credits: {
 						enabled: false
 					},
-					series: ${data}
+					series: ${data},
+					exporting: {
+						chartOptions: {
+							plotOptions: {
+								series: {
+									dataLabels: {
+										enabled: true
+									}
+								}
+							}
+						}
+					}
 				});
 			}
 		});
