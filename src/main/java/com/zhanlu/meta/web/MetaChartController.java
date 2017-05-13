@@ -69,7 +69,7 @@ public class MetaChartController {
         String field2Name = null;
         String selectSql = metaApp.get("selectSql").toString();
         List<Map<String, Object>> selectItems = null;
-        if (selectSql.startsWith("SELECT ")) {
+        if (selectSql.startsWith("SELECT ")) { //分类统计
             selectItems = jdbcTemplate.queryForList(selectSql);
         } else if (!selectSql.contains(" FROM ")) {
             selectItems = new ArrayList<>(12);
@@ -124,7 +124,17 @@ public class MetaChartController {
                     String[] andArr = whereArr[1].split(" AND ");
                     for (String and : andArr) {
                         String[] tmpArr = and.split("=");
-                        tmpItems.add(new QueryItem(tmpArr[0], item.get(tmpArr[1]) == null ? tmpArr[1] : item.get(tmpArr[1])));
+                        if (tmpArr[1].startsWith("$$")) { //引用InSQL字段
+                            List<Object> codeList = jdbcTemplate.queryForList(inSql.replace("$level_no", "'" + item.get("level_no") + "%'"), Object.class);
+                            if (codeList == null)
+                                codeList = new ArrayList<>(1);
+                            codeList.add(item.get("level_no"));
+                            tmpItems.add(new QueryItem(tmpArr[0], codeList));
+                        } else if (tmpArr[1].startsWith("$")) { //引用SelectSQL字段
+                            tmpItems.add(new QueryItem(tmpArr[0], item.get(tmpArr[1].replace("$", ""))));
+                        } else {
+                            tmpItems.add(new QueryItem(tmpArr[0], tmpArr[1]));
+                        }
                     }
                     dataList.add(mongoService.countByProp(whereArr[0], tmpItems));
                 }
@@ -137,12 +147,10 @@ public class MetaChartController {
                 for (Map<String, Object> item : selectItems) {
                     categories.add((String) item.get("name"));
                     List<QueryItem> tmpItems = queryItems;
-                    tmpItems.add(new QueryItem(field1Name, item.get("start")));
-                    tmpItems.add(new QueryItem(field2Name, item.get("end")));
                     String[] andArr = whereArr[1].split(" AND ");
                     for (String and : andArr) {
                         String[] tmpArr = and.split("=");
-                        tmpItems.add(new QueryItem(tmpArr[0], item.get(tmpArr[1]) == null ? tmpArr[1] : item.get(tmpArr[1])));
+                        tmpItems.add(new QueryItem(tmpArr[0], tmpArr[1].startsWith("$") ? item.get(tmpArr[1].replace("$", "")) : tmpArr[1]));
                     }
                     dataList.add(mongoService.countByProp(whereArr[0], tmpItems));
                 }
@@ -156,7 +164,7 @@ public class MetaChartController {
                     String[] andArr = whereArr[1].split(" AND ");
                     for (String and : andArr) {
                         String[] tmpArr = and.split("=");
-                        tmpItems.add(new QueryItem(tmpArr[0], item.get(tmpArr[1]) == null ? tmpArr[1] : item.get(tmpArr[1])));
+                        tmpItems.add(new QueryItem(tmpArr[0], tmpArr[1].startsWith("$") ? item.get(tmpArr[1].replace("$", "")) : tmpArr[1]));
                     }
                     List<Object> dataItem = new ArrayList<>(2);
                     dataItem.add(item.get("name"));
