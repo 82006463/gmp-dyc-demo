@@ -114,19 +114,13 @@ public class MongoServiceImpl implements MongoService {
                         Pattern pattern = Pattern.compile("^.*" + item.getFieldVal() + ".*$", Pattern.CASE_INSENSITIVE);
                         query.put(item.getFieldName(), pattern);
                     } else {
-                        if (item.getCompareType().startsWith("Gt") || item.getCompareType().startsWith("Lt")) { //范围查询
-                            if (documentMap.get(item.getFieldName()) == null) {
-                                documentMap.put(item.getFieldName(), new Document("$" + item.getCompareType().toLowerCase(), item.getFieldVal()));
-                            } else {
-                                Document document = documentMap.get(item.getFieldName());
-                                document.put("$" + item.getCompareType().toLowerCase(), item.getFieldVal());
-                            }
-                        }
-                        if (documentMap.containsKey(item.getFieldName())) {
-                            query.put(item.getFieldName(), documentMap.get(item.getFieldName()));
+                        if ((item.getCompareType().startsWith("Gt") || item.getCompareType().startsWith("Lt")) && documentMap.get(item.getFieldName()) != null) { //范围查询
+                            Document document = documentMap.get(item.getFieldName());
+                            document.put("$" + item.getCompareType().toLowerCase(), item.getFieldVal());
                         } else {
-                            query.put(item.getFieldName(), new Document("$" + item.getCompareType().toLowerCase(), item.getFieldVal()));
+                            documentMap.put(item.getFieldName(), new Document("$" + item.getCompareType().toLowerCase(), item.getFieldVal()));
                         }
+                        query.put(item.getFieldName(), documentMap.get(item.getFieldName()));
                     }
                 }
             }
