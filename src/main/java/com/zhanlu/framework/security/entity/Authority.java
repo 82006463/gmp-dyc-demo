@@ -4,8 +4,6 @@ package com.zhanlu.framework.security.entity;
 import com.zhanlu.framework.common.entity.CodeEntity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 权限实体类，继承抽象安全实体类
@@ -19,10 +17,12 @@ public class Authority extends CodeEntity {
 
     private static final long serialVersionUID = -8349705525996917628L;
 
+    //资源值（此处主要作为url资源，及链接路径）
+    private String source;
+    //资源所属菜单
+    private Menu menu;
     //是否选择，该字段不需要持久化，仅仅是方便页面控制选择状态
     private Integer selected;
-    //权限管辖的资源列表（多对多关联）
-    private List<Resource> resources = new ArrayList<>();
 
     public Authority() {
     }
@@ -31,14 +31,23 @@ public class Authority extends CodeEntity {
         this.id = id;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "SEC_AUTHORITY_RESOURCE", joinColumns = {@JoinColumn(name = "AUTHORITY_ID")}, inverseJoinColumns = {@JoinColumn(name = "RESOURCE_ID")})
-    public List<Resource> getResources() {
-        return resources;
+    @ManyToOne
+    @JoinColumn(name = "menu_id")
+    public Menu getMenu() {
+        return menu;
     }
 
-    public void setResources(List<Resource> resources) {
-        this.resources = resources;
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    @Column(name = "source", length = 200)
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     @Transient

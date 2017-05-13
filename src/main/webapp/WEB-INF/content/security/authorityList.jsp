@@ -37,16 +37,12 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<c:choose>
-						<c:when test="${empty lookup}">
-							<shiro:hasPermission name="AUTHORITYEDIT">
-								<input type='button' onclick="addNew('${ctx}/security/authority/create')" class='button_70px' value='新建'/>
-							</shiro:hasPermission>
-						</c:when>
-						<c:otherwise>
-							<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
-						</c:otherwise>
-					</c:choose>
+					<c:if test="${empty lookup}">
+							<input type='button' onclick="addNew('${ctx}/security/authority/create')" class='button_70px' value='新建'/>
+					</c:if>
+					<c:if test="${!empty lookup}">
+						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
+					</c:if>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>
@@ -65,21 +61,17 @@
 					<td class="td_list_2" align=left>${authority.remark}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
-							<shiro:hasPermission name="AUTHORITYDELETE">
-								<a href="${ctx}/security/authority/delete/${authority.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-							</shiro:hasPermission>
-							<shiro:hasPermission name="AUTHORITYEDIT">
-								<a href="${ctx}/security/authority/update/${authority.id }" class="btnEdit" title="编辑">编辑</a>
-							</shiro:hasPermission>
-							<a href="${ctx}/security/authority/view/${authority.id }" class="btnView" title="查看">查看</a>
+							<a href="${ctx}/security/authority/delete/${authority.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+							<a href="${ctx}/security/authority/update/${authority.id}" class="btnEdit" title="编辑">编辑</a>
+							<a href="${ctx}/security/authority/view/${authority.id}" class="btnView" title="查看">查看</a>
 						</c:if>
 						<c:if test="${!empty lookup}">
-							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${authority.id}','${authority.name }')">选择</a>
+							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${authority.id}','${authority.name}')">选择</a>
 						</c:if>
 					</td>
 				</tr>
 			</c:forEach>
-			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup }"/>
+			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup}"/>
 		</table>
 	</form>
 	</body>

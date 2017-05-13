@@ -3,9 +3,8 @@ package com.zhanlu.framework.security.web;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.Authority;
-import com.zhanlu.framework.security.entity.Resource;
+import com.zhanlu.framework.security.entity.Menu;
 import com.zhanlu.framework.security.service.AuthorityService;
-import com.zhanlu.framework.security.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +24,9 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/security/authority")
 public class AuthorityController {
-    //注入权限管理对象
+
     @Autowired
     private AuthorityService authorityService;
-    //注入资源管理对象
-    @Autowired
-    private ResourceService resourceService;
 
     /**
      * 分页查询权限，返回权限列表视图
@@ -61,8 +57,7 @@ public class AuthorityController {
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
-        model.addAttribute("authority", new Authority(null));
-        model.addAttribute("resources", resourceService.findAll());
+        model.addAttribute("entity", new Authority());
         return "security/authorityEdit";
     }
 
@@ -76,20 +71,7 @@ public class AuthorityController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
         Authority entity = authorityService.findById(id);
-        List<Resource> resources = resourceService.findAll();
-        List<Resource> resss = entity.getResources();
-        for (Resource res : resources) {
-            for (Resource selRes : resss) {
-                if (res.getId().longValue() == selRes.getId().longValue()) {
-                    res.setSelected(1);
-                }
-                if (res.getSelected() == null) {
-                    res.setSelected(0);
-                }
-            }
-        }
-        model.addAttribute("authority", entity);
-        model.addAttribute("resources", resources);
+        model.addAttribute("entity", entity);
         return "security/authorityEdit";
     }
 
@@ -102,7 +84,7 @@ public class AuthorityController {
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("authority", authorityService.findById(id));
+        model.addAttribute("entity", authorityService.findById(id));
         return "security/authorityView";
     }
 
@@ -112,14 +94,12 @@ public class AuthorityController {
      * @return
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(Authority authority, Long[] orderIndexs) {
-        if (orderIndexs != null) {
-            for (Long order : orderIndexs) {
-                Resource res = new Resource(order);
-                authority.getResources().add(res);
-            }
+    public String update(Authority entity, Long menuId) {
+        if (menuId != null && menuId.longValue() > 0) {
+            Menu menu = new Menu(menuId);
+            entity.setMenu(menu);
         }
-        authorityService.saveOrUpdate(authority);
+        authorityService.saveOrUpdate(entity);
         return "redirect:/security/authority";
     }
 

@@ -7,20 +7,29 @@
 		<title>权限管理</title>
 		<%@ include file="/common/common-edit.jsp"%>
 		<script type="text/javascript">
-			$("#selectAll").click(function(){
-				var status = $(this).attr("checked");
-				if(status) {
-					$("input[name='orderIndexs']").attr("checked",true);
-				} else {
-					$("input[name='orderIndexs']").attr("checked",false);
+			var iframewbox;
+			function openMenu() {
+				iframewbox=$("#selectMenu").wBox({
+					requestType: "iframe",
+					iframeWH:{width:800,height:400},
+					show: true,
+					title:"选择菜单",
+					target:"${ctx}/security/menu?lookup=1"
+				});
+			}
+			function callbackProcess(id, name) {
+				if(iframewbox) {
+					document.getElementById("menuId").value=id;
+					document.getElementById("menuName").value=name;
+					iframewbox.close();
 				}
-			});
+			}
 		</script>
 	</head>
 
 	<body>
 		<form id="inputForm" action="${ctx }/security/authority/update" method="post">
-			<input type="hidden" name="id" id="id" value="${id}"/>
+			<input type="hidden" name="id" id="id" value="${entity.id}"/>
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
 					<td class="td_table_top" align="center">权限管理</td>
@@ -30,17 +39,29 @@
 				<tr>
 					<td class="td_table_1">权限编号：</td>
 					<td class="td_table_2">
-						<input type="text" class="input_240 validate[required,minSize[1],maxSize[50]]" id="code" name="code" value="${authority.code}" />
+						<input type="text" class="input_240 validate[required,minSize[1],maxSize[50]]" id="code" name="code" value="${entity.code}" />
 					</td>
 					<td class="td_table_1">权限名称：</td>
 					<td class="td_table_2">
-						<input type="text" class="input_240 validate[required,minSize[1],maxSize[100]]" id="name" name="name" value="${authority.name}" />
+						<input type="text" class="input_520 validate[required,minSize[1],maxSize[100]]" id="name" name="name" value="${entity.name}" />
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">所属菜单：</td>
+					<td class="td_table_2">
+						<input type="hidden" id="menuId" name="menuId" value="${entity.menu.id}">
+						<input type="text" id="menuName" name="menuName" value="${entity.menu.name}" class="input_240" readonly="readonly">
+						<input type='button' class='button_70px' value='选择菜单' id="selectMenu" onclick="openMenu()"/>
+					</td>
+					<td class="td_table_1">资源值：</td>
+					<td class="td_table_2">
+						<input type="text" class="input_520 validate[required,minSize[1],maxSize[200]]" id="source" name="source" value="${entity.source}" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">权限描述：</td>
 					<td class="td_table_2" colspan="3">
-						<textarea class="input_textarea_600 validate[maxSize[150]]" id="remark" name="remark">${authority.remark}</textarea>
+						<textarea class="input_textarea_600 validate[maxSize[150]]" id="remark" name="remark">${entity.remark}</textarea>
 					</td>
 				</tr>
 			</table>
@@ -51,31 +72,6 @@
 						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>
-			</table>
-			
-			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
-				<tr>
-					<td align=center width=10% class="td_list_1" nowrap>
-						<input type="checkbox" title="全选" id="selectAll">
-					</td>
-					<td align=center width=45% class="td_list_1" nowrap>
-						<a href="javascript:sort('name','asc')">资源名称</a>
-					</td>
-					<td align=center width=45% class="td_list_1" nowrap>
-						<a href="javascript:sort('source','asc')">资源</a>
-					</td>
-				</tr>
-				<c:forEach items="${resources}" var="resource">
-					<tr>
-						<td class="td_list_2" align=center>
-							<label class="checkbox">
-								<input type="checkbox" name="orderIndexs" value="${resource.id}" ${resource.selected== 1 ? 'checked' : '' }>
-							</label>
-						</td>
-						<td class="td_list_2" align=left>${resource.name}</td>
-						<td class="td_list_2" align=left>${resource.source}</td>
-					</tr>
-				</c:forEach>
 			</table>
 		</form>
 	</body>

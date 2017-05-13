@@ -61,17 +61,6 @@ public class UserService extends CommonService<User, Long> {
     }
 
     /**
-     * 根据用户名判断是否唯一
-     *
-     * @param newUserName
-     * @param oldUserName
-     * @return
-     */
-    public boolean isUserNameUnique(String newUserName, String oldUserName) {
-        return userDao.isPropertyUnique("username", newUserName, oldUserName);
-    }
-
-    /**
      * 根据用户ID查询该用户所拥有的权限列表
      *
      * @param userId
@@ -79,12 +68,12 @@ public class UserService extends CommonService<User, Long> {
      */
     @SuppressWarnings("unchecked")
     public List<String> getAuthorityCodes(Long userId) {
-        String sql = "select a.code from sec_user u " +
-                " left outer join sec_role_user ru on u.id=ru.user_id " +
-                " left outer join sec_role r on ru.role_id=r.id " +
-                " left outer join sec_role_authority ra on r.id = ra.role_id " +
-                " left outer join sec_authority a on ra.authority_id = a.id " +
-                " where u.id=? ";
+        String sql = "SELECT a.code FROM sec_user u" +
+                " LEFT OUTER JOIN sec_role_user ru ON u.id = ru.user_id" +
+                " LEFT OUTER JOIN sec_role r ON ru.role_id = r.id" +
+                " LEFT OUTER JOIN sec_role_authority ra ON r.id = ra.role_id" +
+                " LEFT OUTER JOIN sec_authority a ON ra.authority_id = a.id" +
+                " WHERE a.code IS NOT NULL AND u.id=?";
         SQLQuery query = userDao.createSQLQuery(sql, userId);
         return query.list();
     }
@@ -97,10 +86,10 @@ public class UserService extends CommonService<User, Long> {
      */
     @SuppressWarnings("unchecked")
     public List<String> getRoleCodes(Long userId) {
-        String sql = "select r.code from sec_user u " +
-                " left outer join sec_role_user ru on u.id=ru.user_id " +
-                " left outer join sec_role r on ru.role_id=r.id " +
-                " where u.id=? ";
+        String sql = "SELECT r.code FROM sec_user u" +
+                " LEFT OUTER JOIN sec_role_user ru ON u.id = ru.user_id" +
+                " LEFT OUTER JOIN sec_role r ON ru.role_id = r.id" +
+                " WHERE r.code IS NOT NULL AND u.id=?";
         SQLQuery query = userDao.createSQLQuery(sql, userId);
         return query.list();
     }
