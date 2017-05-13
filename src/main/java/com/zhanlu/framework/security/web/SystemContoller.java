@@ -1,4 +1,4 @@
-package com.zhanlu.app.web;
+package com.zhanlu.framework.security.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @since 0.1
  */
 @Controller
-public class PlatformContoller {
+public class SystemContoller {
 	/**
 	 * 登录成功后系统首页（一般存在top、left、right三大区域通过frameset包含）
 	 * @param model
