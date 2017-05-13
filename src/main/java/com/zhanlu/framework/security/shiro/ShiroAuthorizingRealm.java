@@ -15,8 +15,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -59,8 +58,8 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
                 //根据用户名称，获取该用户所有的权限列表
                 List<String> authorities = userService.getAuthorityCodes(userId);
                 List<String> rolelist = userService.getRoleCodes(userId);
-                subject.setAuthorities(authorities);
-                subject.setRoles(rolelist);
+                subject.setAuthorities(new HashSet<>(authorities));
+                subject.setRoles(new HashSet<>(rolelist));
                 subject.setAuthorized(true);
                 log.info("用户【" + username + "】授权初始化成功......");
                 log.info("用户【" + username + "】 角色列表为：" + subject.getRoles());
@@ -108,8 +107,8 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
         ShiroPrincipal subject = new ShiroPrincipal(user);
         List<String> authorities = userService.getAuthorityCodes(user.getId());
         List<String> rolelist = userService.getRoleCodes(user.getId());
-        subject.setAuthorities(authorities);
-        subject.setRoles(rolelist);
+        subject.setAuthorities(new HashSet<>(authorities));
+        subject.setRoles(new HashSet<>(rolelist));
         subject.setAuthorized(true);
         return new SimpleAuthenticationInfo(subject, user.getPassword(), ByteSource.Util.bytes(salt), getName());
     }
