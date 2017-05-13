@@ -15,12 +15,14 @@
 			<input type="hidden" name="id" id="id" value="${id }"/>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
+					<td class="td_table_1">角色编号：</td>
+					<td class="td_table_2">${role.code}</td>
 					<td class="td_table_1">角色名称：</td>
-					<td class="td_table_2" colspan="3">${role.name }</td>
+					<td class="td_table_2">${role.name}</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">角色描述：</td>
-					<td class="td_table_2" colspan="3">${role.description }</td>
+					<td class="td_table_2" colspan="3">${role.remark}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
@@ -33,13 +35,13 @@
 			
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td align=center width=100% class="td_list_1" nowrap>
-						<a href="javascript:sort('name','asc')">权限名称</a>
-					</td>
+					<td align=center width=45% class="td_list_1">权限编号</td>
+					<td align=center width=55% class="td_list_1">权限名称</td>
 				</tr>
-				<c:forEach items="${role.authorities}" var="authority">
+				<c:forEach items="${role.authorities}" var="item">
 					<tr>
-						<td class="td_list_2" align=left nowrap>${authority.name}</td>
+						<td class="td_list_2" align=left>${item.code}</td>
+						<td class="td_list_2" align=left>${item.name}</td>
 					</tr>
 				</c:forEach>
 			</table>

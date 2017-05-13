@@ -61,8 +61,8 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
 		try {
 			if(!subject.isAuthorized()) {
 				//根据用户名称，获取该用户所有的权限列表
-				List<String> authorities = userService.getAuthoritiesName(userId);
-				List<String> rolelist = userService.getRolesName(userId);
+				List<String> authorities = userService.getAuthorityCodes(userId);
+				List<String> rolelist = userService.getRoleCodes(userId);
 				subject.setAuthorities(authorities);
 				subject.setRoles(rolelist);
 				subject.setAuthorized(true);
@@ -110,8 +110,8 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
 		log.info("用户【" + username + "】登录成功");
 		byte[] salt = EncodeUtils.hexDecode(user.getSalt());
 		ShiroPrincipal subject = new ShiroPrincipal(user);
-		List<String> authorities = userService.getAuthoritiesName(user.getId());
-		List<String> rolelist = userService.getRolesName(user.getId());
+		List<String> authorities = userService.getAuthorityCodes(user.getId());
+		List<String> rolelist = userService.getRoleCodes(user.getId());
 		subject.setAuthorities(authorities);
 		subject.setRoles(rolelist);
 		subject.setAuthorized(true);

@@ -22,23 +22,26 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
+					<td class="td_table_1">角色编号：</td>
+					<td class="td_table_2">
+						<input type="text" class="input_240 validate[required,minSize[1],maxSize[50]]" id="code" name="code" value="${role.code}" />
+					</td>
 					<td class="td_table_1">角色名称：</td>
-					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="name" name="name" value="${role.name }" />
+					<td class="td_table_2">
+						<input type="text" class="input_240 validate[required,minSize[1],maxSize[100]]" id="name" name="name" value="${role.name}" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">角色描述：</td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="description" name="description" value="${role.description }" />
+						<textarea class="input_textarea_600 validate[maxSize[150]]" id="remark" name="remark">${role.remark}</textarea>
 					</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
-						<input type="submit" class="button_70px" name="submit" value="提交">
-						&nbsp;&nbsp;
+						<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
 						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>
@@ -46,23 +49,19 @@
 			
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td align=center width=30% class="td_list_1">
+					<td align=center width=10% class="td_list_1">
 						<input type="checkbox" title="全选" id="selectAll">
 					</td>
-					<td align=center width=70% class="td_list_1">
-						<a href="javascript:sort('name','asc')">权限名称</a>
-					</td>
+					<td align=center width=40% class="td_list_1">权限编号</td>
+					<td align=center width=50% class="td_list_1">权限名称</td>
 				</tr>
-				<c:forEach items="${authorities}" var="authority">
+				<c:forEach items="${authorities}" var="item">
 					<tr>
 						<td class="td_list_2" align=center>
-							<label class="checkbox">
-								<input type="checkbox" name="orderIndexs" value="${authority.id}" ${authority.selected== 1 ? 'checked' : '' }>
-							</label>
+							<input type="checkbox" name="orderIndexs" value="${item.id}" ${item.selected== 1 ? 'checked' : ''}>
 						</td>
-						<td class="td_list_2" align=left>
-							${authority.name}
-						</td>
+						<td class="td_list_2" align=left>${item.code}</td>
+						<td class="td_list_2" align=left>${item.name}</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -77,7 +76,6 @@
 		} else {
 			$("input[name='orderIndexs']").attr("checked",false);
 		}
-	    
 	});
 	</script>
 </html>

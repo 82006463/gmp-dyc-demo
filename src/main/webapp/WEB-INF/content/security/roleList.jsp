@@ -24,6 +24,10 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
+				<td class="td_table_1">角色编号：</td>
+				<td class="td_table_2">
+					<input type="text" class="input_240" name="filter_EQS_code" value="${param['filter_EQS_code']}"/>
+				</td>
 				<td class="td_table_1">角色名称：</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="filter_LIKES_name" value="${param['filter_LIKES_name']}"/>
@@ -49,14 +53,16 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
+				<td align=center width=45% class="td_list_1">角色编号</td>
 				<td align=center width=45% class="td_list_1">角色名称</td>
 				<td align=center width=45% class="td_list_1">角色描述</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="role">
 				<tr>
+					<td class="td_list_2" align=left>${role.code}</td>
 					<td class="td_list_2" align=left>${role.name}</td>
-					<td class="td_list_2" align=left>${role.description}</td>
+					<td class="td_list_2" align=left>${role.remark}</td>
 					<td class="td_list_2" align=left>
 				    <c:choose>
 						<c:when test="${empty lookup}">

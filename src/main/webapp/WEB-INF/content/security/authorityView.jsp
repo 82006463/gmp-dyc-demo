@@ -12,15 +12,17 @@
 
 	<body>
 		<form id="inputForm" action="" method="post">
-			<input type="hidden" name="id" id="id" value="${id }"/>
+			<input type="hidden" name="id" id="id" value="${id}"/>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
+					<td class="td_table_1">权限编号：</td>
+					<td class="td_table_2">${authority.code}</td>
 					<td class="td_table_1">权限名称：</td>
-					<td class="td_table_2" colspan="3">${authority.name }</td>
+					<td class="td_table_2">${authority.name}</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">权限描述：</td>
-					<td class="td_table_2" colspan="3">${authority.description }</td>
+					<td class="td_table_2" colspan="3">${authority.remark}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">

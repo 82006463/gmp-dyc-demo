@@ -18,9 +18,9 @@ public class ShiroPrincipal implements Serializable {
 	//用户对象
 	private User user;
 	//用户权限列表
-	private List<String> authorities = new ArrayList<String>();
+	private List<String> authorities = new ArrayList<>();
 	//用户角色列表
-	private List<String> roles = new ArrayList<String>();
+	private List<String> roles = new ArrayList<>();
 	//是否已授权。如果已授权，则不需要再从数据库中获取权限信息，减少数据库访问
 	//这里会导致修改权限时，需要重新登录方可有效
 	private boolean isAuthorized = false;

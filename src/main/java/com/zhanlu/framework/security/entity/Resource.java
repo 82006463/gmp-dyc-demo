@@ -1,10 +1,8 @@
 package com.zhanlu.framework.security.entity;
 
-import com.zhanlu.framework.common.entity.IdEntity;
+import com.zhanlu.framework.common.entity.CodeEntity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 资源实体类，继承抽象安全实体类
@@ -14,30 +12,19 @@ import java.util.List;
  */
 @Entity
 @Table(name = "SEC_RESOURCE")
-public class Resource extends IdEntity {
-    /**
-     *
-     */
+public class Resource extends CodeEntity {
+
     private static final long serialVersionUID = 5503383469393219319L;
-    //资源名称
-    private String name;
+
     //资源值（此处主要作为url资源，及链接路径）
     private String source;
     //是否选择，该字段不需要持久化，仅仅是方便页面控制选择状态
     private Integer selected;
-    //资源所属权限列表（多对多关联）
-    private List<Authority> authorities = new ArrayList<Authority>();
     //资源所属菜单
     private Menu menu;
 
     public Resource() {
     }
-
-    /**
-     * 构造函数，参数为主键ID
-     *
-     * @param id
-     */
     public Resource(Long id) {
         this.id = id;
     }
@@ -59,24 +46,6 @@ public class Resource extends IdEntity {
 
     public void setSource(String source) {
         this.source = source;
-    }
-
-    @Column(name = "name", unique = true, nullable = false, length = 200)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @ManyToMany(mappedBy = "resources", fetch = FetchType.EAGER)
-    public List<Authority> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(List<Authority> authorities) {
-        this.authorities = authorities;
     }
 
     @Transient
