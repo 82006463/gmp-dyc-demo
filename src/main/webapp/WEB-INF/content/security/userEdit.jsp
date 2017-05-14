@@ -89,8 +89,9 @@
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
-						<input type="submit" class="button_70px" name="submit" value="提交">
-						&nbsp;&nbsp;
+						<shiro:hasPermission name="sec_user_edit">
+							<input type="submit" class="button_70px" name="submit" value="提交">&nbsp;&nbsp;
+						</shiro:hasPermission>
 						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>
@@ -120,14 +121,13 @@
 		</form>
 	</body>
 	<script type="text/javascript">
-	$("#selectAll").click(function(){
-		var status = $(this).attr("checked");
-		if(status) {
-			$("input[name='orderIndexs']").attr("checked",true);
-		} else {
-			$("input[name='orderIndexs']").attr("checked",false);
-		}
-	    
-	});
+		$("#selectAll").click(function(){
+			var status = $(this).attr("checked");
+			if(status) {
+				$("input[name='orderIndexs']").attr("checked",true);
+			} else {
+				$("input[name='orderIndexs']").attr("checked",false);
+			}
+		});
 	</script>
 </html>

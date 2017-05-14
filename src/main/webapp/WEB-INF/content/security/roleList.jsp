@@ -37,16 +37,14 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<c:choose>
-						<c:when test="${empty lookup}">
-							<shiro:hasPermission name="ROLEEDIT">
-								<input type='button' onclick="addNew('${ctx}/security/role/create')" class='button_70px' value='新建'/>
-							</shiro:hasPermission>
-						</c:when>
-						<c:otherwise>
-							<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
-						</c:otherwise>
-					</c:choose>
+					<c:if test="${empty lookup}">
+						<shiro:hasPermission name="sec_role_edit">
+							<input type='button' onclick="addNew('${ctx}/security/role/create')" class='button_70px' value='新建'/>
+						</shiro:hasPermission>
+					</c:if>
+					<c:if test="${!empty lookup}">
+						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
+					</c:if>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>
@@ -64,20 +62,20 @@
 					<td class="td_list_2" align=left>${role.name}</td>
 					<td class="td_list_2" align=left>${role.remark}</td>
 					<td class="td_list_2" align=left>
-				    <c:choose>
-						<c:when test="${empty lookup}">
-							<shiro:hasPermission name="ROLEDELETE">
+						<c:if test="${empty lookup}">
+							<shiro:hasPermission name="sec_role_delete">
 								<a href="${ctx}/security/role/delete/${role.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 							</shiro:hasPermission>
-							<shiro:hasPermission name="ROLEEDIT">
+							<shiro:hasPermission name="sec_role_edit">
 								<a href="${ctx}/security/role/update/${role.id }" class="btnEdit" title="编辑">编辑</a>
 							</shiro:hasPermission>
-							<a href="${ctx}/security/role/view/${role.id }" class="btnView" title="查看">查看</a>
-						</c:when>
-						<c:otherwise>
+							<shiro:hasPermission name="sec_role_view">
+								<a href="${ctx}/security/role/view/${role.id }" class="btnView" title="查看">查看</a>
+							</shiro:hasPermission>
+						</c:if>
+						<c:if test="${!empty lookup}">
 							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${role.id}','${role.name }')">选择</a>
-						</c:otherwise>
-					</c:choose>
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>

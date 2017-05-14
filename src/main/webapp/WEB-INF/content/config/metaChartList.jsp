@@ -35,7 +35,14 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<input type='button' onclick="addNew('${ctx}/config/meta/${type}/create?item=edit')" class='button_70px' value='新建'/>
+					<c:if test="${empty lookup}">
+						<shiro:hasPermission name="config_meta_${type}_edit">
+							<input type='button' onclick="addNew('${ctx}/config/meta/${type}/create?item=edit')" class='button_70px' value='新建'/>
+						</shiro:hasPermission>
+					</c:if>
+					<c:if test="${!empty lookup}">
+						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
+					</c:if>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>
@@ -53,9 +60,17 @@
 					<td class="td_list_2" align=left>${item.title}</td>
 
 					<td class="td_list_2" align=left>
-						<a href="${ctx}/config/meta/${type}/delete/${item._id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-						<a href="${ctx}/config/meta/${type}/update/${item._id}?item=edit" class="btnEdit" title="编辑">编辑</a>
-						<a href="${ctx}/config/meta/${type}/view/${item._id}" class="btnView" title="查看">查看</a>
+						<c:if test="${empty lookup}">
+							<shiro:hasPermission name="config_meta_${type}_delete">
+								<a href="${ctx}/config/meta/${type}/delete/${item._id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="config_meta_${type}_edit">
+								<a href="${ctx}/config/meta/${type}/update/${item._id}?item=edit" class="btnEdit" title="编辑">编辑</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="config_meta_${type}_view">
+								<a href="${ctx}/config/meta/${type}/view/${item._id}" class="btnView" title="查看">查看</a>
+							</shiro:hasPermission>
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>

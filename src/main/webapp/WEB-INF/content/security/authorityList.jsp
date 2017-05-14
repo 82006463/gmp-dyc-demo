@@ -38,7 +38,9 @@
 			<tr>
 				<td align="left">
 					<c:if test="${empty lookup}">
+						<shiro:hasPermission name="sec_auth_edit">
 							<input type='button' onclick="addNew('${ctx}/security/authority/create')" class='button_70px' value='新建'/>
+						</shiro:hasPermission>
 					</c:if>
 					<c:if test="${!empty lookup}">
 						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
@@ -61,9 +63,15 @@
 					<td class="td_list_2" align=left>${authority.remark}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
-							<a href="${ctx}/security/authority/delete/${authority.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-							<a href="${ctx}/security/authority/update/${authority.id}" class="btnEdit" title="编辑">编辑</a>
-							<a href="${ctx}/security/authority/view/${authority.id}" class="btnView" title="查看">查看</a>
+							<shiro:hasPermission name="sec_auth_delete">
+								<a href="${ctx}/security/authority/delete/${authority.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="sec_auth_edit">
+								<a href="${ctx}/security/authority/update/${authority.id}" class="btnEdit" title="编辑">编辑</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="sec_auth_view">
+								<a href="${ctx}/security/authority/view/${authority.id}" class="btnView" title="查看">查看</a>
+							</shiro:hasPermission>
 						</c:if>
 						<c:if test="${!empty lookup}">
 							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${authority.id}','${authority.name}')">选择</a>

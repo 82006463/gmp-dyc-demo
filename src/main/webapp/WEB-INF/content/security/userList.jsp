@@ -36,9 +36,14 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<shiro:hasPermission name="USEREDIT">
+					<c:if test="${empty lookup}">
+					<shiro:hasPermission name="sec_user_edit">
 						<input type='button' onclick="addNew('${ctx}/security/user/create')" class='button_70px' value='新建'/>
 					</shiro:hasPermission>
+					</c:if>
+					<c:if test="${!empty lookup}">
+						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
+					</c:if>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>
@@ -60,13 +65,17 @@
 					</td>
 					<td class="td_list_2" align=left>${user.org.name}</td>
 					<td class="td_list_2" align=left>
-					<shiro:hasPermission name="USERDELETE">
-						<a href="${ctx}/security/user/delete/${user.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-					</shiro:hasPermission>
-					<shiro:hasPermission name="USEREDIT">
-						<a href="${ctx}/security/user/update/${user.id }" class="btnEdit" title="编辑">编辑</a>
-					</shiro:hasPermission>
-						<a href="${ctx}/security/user/view/${user.id }" class="btnView" title="查看">查看</a>
+						<c:if test="${empty lookup}">
+						<shiro:hasPermission name="sec_user_delete">
+							<a href="${ctx}/security/user/delete/${user.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+						</shiro:hasPermission>
+						<shiro:hasPermission name="sec_user_edit">
+							<a href="${ctx}/security/user/update/${user.id }" class="btnEdit" title="编辑">编辑</a>
+						</shiro:hasPermission>
+						<shiro:hasPermission name="sec_user_view">
+							<a href="${ctx}/security/user/view/${user.id }" class="btnView" title="查看">查看</a>
+						</shiro:hasPermission>
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>

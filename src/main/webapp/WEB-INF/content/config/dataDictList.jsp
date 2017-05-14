@@ -35,14 +35,14 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<c:choose>
-						<c:when test="${empty lookup}">
+					<c:if test="${empty lookup}">
+						<shiro:hasPermission name="config_dict_edit">
 							<input type='button' onclick="addNew('${ctx}/config/dictionary/create')" class='button_70px' value='新建'/>
-						</c:when>
-						<c:otherwise>
-							<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
-						</c:otherwise>
-					</c:choose>
+						</shiro:hasPermission>
+					</c:if>
+					<c:if test="${!empty lookup}">
+						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
+					</c:if>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>
@@ -59,16 +59,20 @@
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>
-						<c:choose>
-							<c:when test="${empty lookup}">
+						<c:if test="${empty lookup}">
+							<shiro:hasPermission name="config_dict_delete">
 								<a href="${ctx}/config/dictionary/delete/${item.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="config_dict_edit">
 								<a href="${ctx}/config/dictionary/update/${item.id }" class="btnEdit" title="编辑">编辑</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="config_dict_view">
 								<a href="${ctx}/config/dictionary/view/${item.id }" class="btnView" title="查看">查看</a>
-							</c:when>
-							<c:otherwise>
-								<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>
-							</c:otherwise>
-						</c:choose>
+							</shiro:hasPermission>
+						</c:if>
+						<c:if test="${!empty lookup}">
+							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>
