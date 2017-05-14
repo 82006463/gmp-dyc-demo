@@ -138,7 +138,7 @@ public class MetaAppController {
     }
 
     public Map<String, Object> getMetaTag(String metaType, String cmcode) {
-        List<QueryItem> queryItems = new ArrayList<>(1);
+        List<QueryItem> queryItems = new ArrayList<>(2);
         queryItems.add(new QueryItem("Eq_String_type", metaType));
         queryItems.add(new QueryItem("Eq_String_code", cmcode));
         return mongoService.findOne(metaTable, queryItems);
