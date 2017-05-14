@@ -556,6 +556,10 @@ a.btnClock {
 	border: #dcdddc 1px solid;
 }
 
+.requiredWarn {
+	color: red;
+}
+
 .node {
 	float: left;  width: 176px; line-height: 39px;
 }
@@ -595,7 +599,6 @@ a.btnClock {
 	width: 135px;
 	background-image: url(../images/arrow.png);
 }
-
 
 .snaker_title {
 	color:navy;

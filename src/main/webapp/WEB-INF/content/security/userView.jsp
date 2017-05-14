@@ -12,25 +12,20 @@
 
 	<body>
 		<form id="inputForm" action="" method="post">
-			<input type="hidden" name="id" id="id" value="${id }"/>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
 					<td class="td_table_1">账号：</td>
-					<td class="td_table_2">${user.username }</td>
+					<td class="td_table_2">${entity.username}</td>
 					<td class="td_table_1">姓名：</td>
-					<td class="td_table_2">${user.fullname }</td>
+					<td class="td_table_2">${entity.fullname}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">
-						<span>邮箱：</span>
-					</td>
-					<td class="td_table_2" colspan="3">
-						${user.email }
-					</td>
+					<td class="td_table_1">邮箱：</td>
+					<td class="td_table_2" colspan="3">${entity.email}</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">部门：</td>
-					<td class="td_table_2" colspan="3">${user.org.name }</td>
+					<td class="td_table_2" colspan="3">${entity.org.name}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
@@ -43,13 +38,13 @@
 			
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td align=center width=45% class="td_list_1">
-						<a href="javascript:sort('name','asc')">角色名称</a>
-					</td>
+					<td align=center width=40% class="td_list_1" >角色编号</td>
+					<td align=center width=45% class="td_list_1">角色名称</td>
 				</tr>
 
 				<c:forEach items="${user.roles}" var="role">
 					<tr>
+						<td class="td_list_2" align=left>${role.code}</td>
 						<td class="td_list_2" align=left>${role.name}</td>
 					</tr>
 				</c:forEach>

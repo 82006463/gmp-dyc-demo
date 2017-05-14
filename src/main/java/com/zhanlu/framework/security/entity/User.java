@@ -1,9 +1,11 @@
 package com.zhanlu.framework.security.entity;
 
 import com.zhanlu.framework.common.entity.IdEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,11 +17,14 @@ import java.util.List;
 @Entity
 @Table(name = "SEC_USER")
 public class User extends IdEntity {
+
     private static final long serialVersionUID = 7446802057673100315L;
+
     //系统管理员账号类型
     public static final Integer TYPE_ADMIN = 0;
     //普通用户账号类型
     public static final Integer TYPE_GENERAL = 1;
+
     //登录用户名称
     private String username;
     //密码
@@ -32,14 +37,21 @@ public class User extends IdEntity {
     private String fullname;
     //类型
     private Integer type;
-    //电子邮箱
-    private String email;
-    //联系地址
-    private String address;
     //年龄
-    private Integer age;
+    private Date birthDate;
     //性别
     private String sex;
+    //联系地址
+    private String address;
+    //电子邮箱
+    private String email;
+    //手机
+    private String mobile;
+    //座机
+    private String phone;
+    private String qq;
+    private String weixin;
+
     //是否可用
     private String enabled;
     //所属部门
@@ -96,15 +108,6 @@ public class User extends IdEntity {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    @Column(name = "age")
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
     }
 
     @Column(name = "sex")
@@ -180,5 +183,51 @@ public class User extends IdEntity {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "birth_date")
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    @Column(name = "mobile", length = 15)
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    @Column(name = "phone", length = 15)
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Column(name = "qq", length = 15)
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    @Column(name = "weixin", length = 20)
+    public String getWeixin() {
+        return weixin;
+    }
+
+    public void setWeixin(String weixin) {
+        this.weixin = weixin;
     }
 }

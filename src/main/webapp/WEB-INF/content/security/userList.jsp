@@ -60,19 +60,19 @@
 				<tr>
 					<td class="td_list_2" align=left>${user.username}</td>
 					<td class="td_list_2" align=left>${user.fullname}</td>
-					<td class="td_list_2" align=left>${user.enabled=='yesNo_yes' ? '是':user.enabled=='yesNo_no' ? '否':''}</td>
+					<td class="td_list_2" align=left>${user.enabled=='1' ? '是':user.enabled=='0' ? '否':''}</td>
 					<td class="td_list_2" align=left>${user.org.name}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
-						<shiro:hasPermission name="sec_user_delete">
-							<a href="${ctx}/security/user/delete/${user.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="sec_user_edit">
-							<a href="${ctx}/security/user/update/${user.id }" class="btnEdit" title="编辑">编辑</a>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="sec_user_view">
-							<a href="${ctx}/security/user/view/${user.id }" class="btnView" title="查看">查看</a>
-						</shiro:hasPermission>
+							<shiro:hasPermission name="sec_user_delete">
+								<a href="${ctx}/security/user/delete/${user.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="sec_user_edit">
+								<a href="${ctx}/security/user/update/${user.id}" class="btnEdit" title="编辑">编辑</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="sec_user_view">
+								<a href="${ctx}/security/user/view/${user.id}" class="btnView" title="查看">查看</a>
+							</shiro:hasPermission>
 						</c:if>
 					</td>
 				</tr>

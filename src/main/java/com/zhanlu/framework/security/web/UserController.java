@@ -55,7 +55,7 @@ public class UserController {
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("entity", new User());
         model.addAttribute("roles", roleService.findAll());
         return "security/userEdit";
     }
@@ -73,7 +73,7 @@ public class UserController {
                 role.setSelected(role.getId().longValue() == selRole.getId().longValue() ? 1 : 0);
             }
         }
-        model.addAttribute("user", userService.findById(id));
+        model.addAttribute("entity", userService.findById(id));
         model.addAttribute("roles", roles);
         return "security/userEdit";
     }
@@ -83,7 +83,7 @@ public class UserController {
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.findById(id));
+        model.addAttribute("entity", userService.findById(id));
         return "security/userView";
     }
 
@@ -91,7 +91,7 @@ public class UserController {
      * 新增、编辑用户页面的提交处理。保存用户实体，并返回用户列表视图
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(User user, Long[] orderIndexs, Long parentOrgId) {
+    public String update(User user, Long[] orderIndexs, Long orgId) {
         if (orderIndexs != null) {
             for (Long order : orderIndexs) {
                 Role role = new Role();
@@ -99,8 +99,8 @@ public class UserController {
                 user.getRoles().add(role);
             }
         }
-        if (parentOrgId != null && parentOrgId.longValue() > 0) {
-            user.setOrg(orgService.findById(parentOrgId));
+        if (orgId != null && orgId.longValue() > 0) {
+            user.setOrg(orgService.findById(orgId));
         }
         userService.saveOrUpdate(user);
         return "redirect:/security/user";

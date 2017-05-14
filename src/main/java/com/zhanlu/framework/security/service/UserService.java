@@ -42,11 +42,12 @@ public class UserService extends CommonService<User, Long> {
      */
     @Transactional
     @Override
-    public User save(User entity) {
+    public User saveOrUpdate(User entity) {
         if (StringUtils.isNotBlank(entity.getPlainPassword())) {
             entryptPassword(entity);
         }
-        userDao.save(entity);
+        entity.setPlainPassword(null);
+        super.saveOrUpdate(entity);
         return entity;
     }
 

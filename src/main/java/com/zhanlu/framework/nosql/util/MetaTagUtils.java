@@ -119,7 +119,7 @@ public class MetaTagUtils {
         String html = "<tr>";
         for (Map<String, String> entry : editList) {
             String tagType = entry.get("tagType").replace("tagType_", "");
-            String required = entry.get("required");
+            String required = entry.get("required").replace("yesNo_", "");
             String fuzzy = entry.get("fuzzy");
             String code = entry.get("code");
             String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
@@ -131,7 +131,7 @@ public class MetaTagUtils {
             } else if (tmpIndex == 2 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm"))) {
                 html += "</tr><tr>";
             }
-            html += "<td class='td_table_1'>" + entry.get("desc") + "</td><td class='td_table_2' ${" + itemIndex + "}>";
+            html += "<td class='td_table_1'>" + entry.get("desc") + (required.equals("yes") ? "<b class='requiredWarn'>*</b>" : "") + "</td><td class='td_table_2' ${" + itemIndex + "}>";
             if (tagType.equalsIgnoreCase("textarea")) {
                 html += "<textarea name='" + code + "' class='input_textarea_600" + (required.equals("yes") ? " validate[required]" : "") + "'>" + val + "</textarea>";
             } else if (tagType.equalsIgnoreCase("date")) {
