@@ -11,18 +11,17 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/security/role/update" method="post">
-			<input type="hidden" name="id" id="id" value="${id }"/>
+		<form id="inputForm">
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
 					<td class="td_table_1">角色编号：</td>
-					<td class="td_table_2">${role.code}</td>
+					<td class="td_table_2">${entity.code}</td>
 					<td class="td_table_1">角色名称：</td>
-					<td class="td_table_2">${role.name}</td>
+					<td class="td_table_2">${entity.name}</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">角色描述：</td>
-					<td class="td_table_2" colspan="3">${role.remark}</td>
+					<td class="td_table_2" colspan="3">${entity.remark}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">

@@ -13,28 +13,28 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/security/role/update" method="post">
-			<input type="hidden" name="id" id="id" value="${id }"/>
-		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
-			<tr>
-				<td class="td_table_top" align="center">角色管理</td>
-			</tr>
-		</table>
-		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
+		<form id="inputForm" action="${ctx}/security/role/update" method="post">
+			<input type="hidden" name="id" id="id" value="${entity.id}"/>
+			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
+				<tr>
+					<td class="td_table_top" align="center">角色管理</td>
+				</tr>
+			</table>
+			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
 					<td class="td_table_1">角色编号：</td>
 					<td class="td_table_2">
-						<input type="text" class="input_240 validate[required,minSize[1],maxSize[50]]" id="code" name="code" value="${role.code}" />
+						<input type="text" class="input_240 validate[required,minSize[1],maxSize[50]]" id="code" name="code" value="${entity.code}" />
 					</td>
 					<td class="td_table_1">角色名称：</td>
 					<td class="td_table_2">
-						<input type="text" class="input_240 validate[required,minSize[1],maxSize[100]]" id="name" name="name" value="${role.name}" />
+						<input type="text" class="input_240 validate[required,minSize[1],maxSize[100]]" id="name" name="name" value="${entity.name}" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">角色描述：</td>
 					<td class="td_table_2" colspan="3">
-						<textarea class="input_textarea_600 validate[maxSize[150]]" id="remark" name="remark">${role.remark}</textarea>
+						<textarea class="input_textarea_600 validate[maxSize[150]]" id="remark" name="remark">${entity.remark}</textarea>
 					</td>
 				</tr>
 			</table>

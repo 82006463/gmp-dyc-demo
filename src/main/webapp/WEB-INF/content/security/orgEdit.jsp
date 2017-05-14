@@ -61,7 +61,7 @@
 			<tr>
 				<td class="td_table_1">部门描述：</td>
 				<td class="td_table_2" colspan="3">
-					<input type="text" class="input_520" id="remark" name="remark" value="${entity.remark}">
+					<textarea class="input_textarea_600 validate[maxSize[150]]" id="remark" name="remark">${entity.remark}</textarea>
 				</td>
 			</tr>
 		</table>

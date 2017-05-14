@@ -2,6 +2,7 @@ package com.zhanlu.framework.security.web;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.security.entity.Authority;
 import com.zhanlu.framework.security.entity.Menu;
 import com.zhanlu.framework.security.service.AuthorityService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +41,7 @@ public class AuthorityController {
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, Page<Authority> page, HttpServletRequest request) {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
+        //filters.add(new PropertyFilter("EQL_pid", "0"));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");
@@ -57,7 +60,9 @@ public class AuthorityController {
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
-        model.addAttribute("entity", new Authority());
+        Authority entity = new Authority();
+        entity.setPid(0L);
+        model.addAttribute("entity", entity);
         return "security/authorityEdit";
     }
 
@@ -71,6 +76,7 @@ public class AuthorityController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
         Authority entity = authorityService.findById(id);
+        //entity.setItems(authorityService.findItems(entity.getId()));
         model.addAttribute("entity", entity);
         return "security/authorityEdit";
     }
@@ -84,7 +90,9 @@ public class AuthorityController {
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("entity", authorityService.findById(id));
+        Authority entity = authorityService.findById(id);
+        //entity.setItems(authorityService.findItems(entity.getId()));
+        model.addAttribute("entity", entity);
         return "security/authorityView";
     }
 

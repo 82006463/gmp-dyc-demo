@@ -49,7 +49,7 @@ public class MenuController {
 	 */
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String create(Model model) {
-		model.addAttribute("entity", new Menu(null));
+		model.addAttribute("entity", new Menu());
 		return "security/menuEdit";
 	}
 

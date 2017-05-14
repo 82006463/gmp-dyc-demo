@@ -54,4 +54,9 @@ public class AuthorityService extends CommonService<Authority, Long> {
         query.addEntity(Authority.class);
         return query.list();
     }
+
+    public List<Authority> findItems(Long pid) {
+        return authorityDao.find("FROM " + Authority.class.getName() + " WHERE pid=?", pid);
+    }
+
 }

@@ -9,9 +9,8 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="" method="post">
-			<table class="table_all" align="center" border="0" cellpadding="0"
-				cellspacing="0">
+		<form id="inputForm">
+			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
 					<td class="td_table_1">菜单名称：</td>
 					<td class="td_table_2" colspan="3">${entity.name}</td>

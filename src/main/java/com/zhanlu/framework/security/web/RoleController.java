@@ -52,7 +52,7 @@ public class RoleController {
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
-        model.addAttribute("role", new Role());
+        model.addAttribute("entity", new Role());
         model.addAttribute("authorities", authorityService.findAll());
         return "security/roleEdit";
     }
@@ -75,7 +75,7 @@ public class RoleController {
                 }
             }
         }
-        model.addAttribute("role", entity);
+        model.addAttribute("entity", entity);
         model.addAttribute("authorities", authorities);
         return "security/roleEdit";
     }
@@ -85,7 +85,7 @@ public class RoleController {
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("role", roleService.findById(id));
+        model.addAttribute("entity", roleService.findById(id));
         return "security/roleView";
     }
 
