@@ -37,11 +37,14 @@ public class AuditServiceImpl implements AuditService {
                     docMap.put(entry.getKey(), entry.getValue());
                     continue;
                 }
+                if (itemsMap.get(entry.getKey()) == null) {
+                    continue;
+                }
                 if (oldEntity == null) {
                     buf.append(itemsMap.get(entry.getKey()) + "：【" + entry.getValue() + "】被添加<br/>");
                 } else {
                     if (!entry.getValue().equals(oldEntity.get(entry.getKey()))) {
-                        buf.append(itemsMap.get(entry.getKey()) + "：由【" + oldEntity.get(entry.getKey()) + "】修改为【" + entry.getValue() + "】被添加<br/>");
+                        buf.append(itemsMap.get(entry.getKey()) + "：由【" + oldEntity.get(entry.getKey()) + "】修改为【" + entry.getValue() + "】<br/>");
                     }
                 }
             }
