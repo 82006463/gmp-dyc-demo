@@ -17,7 +17,7 @@ public class AuditServiceImpl implements AuditService {
 
     @Autowired
     private MongoService mongoService;
-    private String tableName = "meta_audit";
+    private String tableName = "meta_logs_audit";
 
     @Override
     public Map<String, Object> insert(Map<String, Object> oldEntity, Map<String, Object> newEntity) {

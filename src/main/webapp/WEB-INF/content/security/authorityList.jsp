@@ -51,16 +51,16 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=20% class="td_list_1">权限编号</td>
-				<td align=center width=30% class="td_list_1">权限名称</td>
-				<td align=center width=40% class="td_list_1">权限描述</td>
+				<td align=center width=15% class="td_list_1">权限编号</td>
+				<td align=center width=20% class="td_list_1">权限名称</td>
+				<td align=center width=55% class="td_list_1">资源值</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="authority">
 				<tr>
 					<td class="td_list_2" align=left>${authority.code}</td>
 					<td class="td_list_2" align=left>${authority.name}</td>
-					<td class="td_list_2" align=left>${authority.remark}</td>
+					<td class="td_list_2" align=left>${authority.source}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<shiro:hasPermission name="sec_auth_delete">

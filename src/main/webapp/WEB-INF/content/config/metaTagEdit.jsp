@@ -30,7 +30,7 @@
 					</td>
 				</tr>
 
-				<tr>
+				<%--<tr>
 					<td class="td_table_1">列表搜索URL：</td>
 					<td class="td_table_2">
 						<input type="text" id="list_url" name="list_url" value="${entity.list_url}" class="input_240 validate[required]" />
@@ -59,7 +59,7 @@
 					<td class="td_table_2">
 						<input type="text" id="update_submit_url" name="update_submit_url" value="${entity.update_submit_url}" class="input_240 validate[required]" />
 					</td>
-				</tr>
+				</tr>--%>
 			</table>
 
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
@@ -149,33 +149,6 @@
 			</table>
 		</form>
 		<script type="text/javascript">
-			$(document).ready(function () {
-				$('select[name=code]').change(function () {
-					if($.trim($('[name=name]').val()).length==0 && $(this).val().length>0) {
-						$('[name=name]').val($(this).find('option:selected').text());
-					}
-					var _pre = '/meta/${entity.type}/' + $(this).val().replace('${entity.type}_','');
-                    if($.trim($('[name=list_url]').val()).length == 0) {
-                        $('[name=list_url]').val(_pre + '/list');
-                    }
-					if($.trim($('[name=list_create_url]').val()).length == 0) {
-						$('[name=list_create_url]').val(_pre + '/create');
-					}
-                    if($.trim($('[name=list_update_url]').val()).length == 0) {
-                        $('[name=list_update_url]').val(_pre + '/update');
-                    }
-					if($.trim($('[name=list_delete_url]').val()).length == 0) {
-						$('[name=list_delete_url]').val(_pre + '/delete');
-					}
-                    if($.trim($('[name=list_view_url]').val()).length == 0) {
-                        $('[name=list_view_url]').val(_pre + '/view');
-                    }
-                    if($.trim($('[name=update_submit_url]').val()).length == 0) {
-                        $('[name=update_submit_url]').val(_pre + '/update');
-                    }
-				});
-			});
-
 			function addItem() {
 				var table = document.getElementById("itemTable");
 				var row = table.insertRow(-1);
