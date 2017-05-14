@@ -45,9 +45,9 @@ public class User extends IdEntity {
     //所属部门
     private Org org;
     //角色列表（多对多关联）
-    private List<Role> roles = new ArrayList<Role>();
+    private List<Role> roles = new ArrayList<>();
     //权限列表（多对多关联）
-    private List<Authority> authorities = new ArrayList<Authority>();
+    private List<Authority> authorities = new ArrayList<>();
 
     public User() {
 

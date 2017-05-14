@@ -60,9 +60,7 @@
 				<tr>
 					<td class="td_list_2" align=left>${user.username}</td>
 					<td class="td_list_2" align=left>${user.fullname}</td>
-					<td class="td_list_2" align=left>
-						<frame:dict name="enabled" type="select" typeCode="yesNo" value="${user.enabled}" displayType="1"/>
-					</td>
+					<td class="td_list_2" align=left>${user.enabled=='yesNo_yes' ? '是':user.enabled=='yesNo_no' ? '否':''}</td>
 					<td class="td_list_2" align=left>${user.org.name}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">

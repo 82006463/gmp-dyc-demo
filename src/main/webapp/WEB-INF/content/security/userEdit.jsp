@@ -34,13 +34,13 @@
 
 	<body>
 		<form id="inputForm" action="${ctx }/security/user/update" method="post">
-			<input type="hidden" name="id" id="id" value="${id }"/>
-		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
-			<tr>
-				<td class="td_table_top" align="center">用户管理</td>
-			</tr>
-		</table>
-		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
+			<input type="hidden" name="id" id="id" value="${user.id}"/>
+			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
+				<tr>
+					<td class="td_table_top" align="center">用户管理</td>
+				</tr>
+			</table>
+			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
 					<td class="td_table_1">账号：</td>
 					<td class="td_table_2">
@@ -68,20 +68,20 @@
 					</td>
 					<td class="td_table_1">性别：</td>
 					<td class="td_table_2">
-						<frame:dict name="sex" type="radio" typeCode="sex" value="${user.sex == null ? '1' : user.sex }" cssClass="input_radio"/>
+						<frame:dict name="sex" type="radio" typeCode="sex" value="${user.sex}" cssClass="input_radio"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">是否可用：</td>
 					<td class="td_table_2" colspan="3">
-						<frame:dict name="enabled" type="radio" typeCode="yesNo" value="${user.enabled == null ? '1' : user.enabled }" cssClass="input_radio"/>
+						<frame:dict name="enabled" type="radio" typeCode="yesNo" value="${user.enabled}" cssClass="input_radio"/>
 					</td>
 				</tr>
  				<tr>
 					<td class="td_table_1">部门：</td>
 					<td class="td_table_2" colspan="3">
-						<input type="hidden" id="parentOrgId" name="parentOrgId" value="${user.org.id }">
-						<input type="text" id="parentOrgName" readonly="readonly" name="parentOrgName" class="input_520" value="${user.org.name }">
+						<input type="hidden" id="parentOrgId" name="parentOrgId" value="${user.org.id}">
+						<input type="text" id="parentOrgName" readonly="readonly" name="parentOrgName" class="input_520" value="${user.org.name}">
 						<input type='button' class='button_70px' value='选择部门' id="selectOrgBtn" onclick="openOrg()"/>
 					</td>
 				</tr>
@@ -99,12 +99,11 @@
 			
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td align=center width=10% class="td_list_1" nowrap>
+					<td align=center width=10% class="td_list_1">
 						<input type="checkbox" title="全选" id="selectAll">
 					</td>
-					<td align=center width=45% class="td_list_1" nowrap>
-						<a href="javascript:sort('name','asc')">角色名称</a>
-					</td>
+					<td align=center width=40% class="td_list_1" >角色名称</td>
+					<td align=center width=50% class="td_list_1" >角色名称</td>
 				</tr>
 
 				<c:forEach items="${roles}" var="role">
@@ -114,6 +113,7 @@
 								<input type="checkbox" name="orderIndexs" value="${role.id}" ${role.selected== 1 ? 'checked=true' : '' }>
 							</label>
 						</td>
+						<td class="td_list_2" align=left>${role.code}</td>
 						<td class="td_list_2" align=left>${role.name}</td>
 					</tr>
 				</c:forEach>

@@ -2,9 +2,9 @@ package com.zhanlu.framework.security.web;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
-import com.zhanlu.framework.security.entity.Org;
 import com.zhanlu.framework.security.entity.Role;
 import com.zhanlu.framework.security.entity.User;
+import com.zhanlu.framework.security.service.OrgService;
 import com.zhanlu.framework.security.service.RoleService;
 import com.zhanlu.framework.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private OrgService orgService;
 
     /**
      * 分页查询用户，返回用户列表视图
@@ -68,12 +70,7 @@ public class UserController {
         List<Role> roless = entity.getRoles();
         for (Role role : roles) {
             for (Role selRole : roless) {
-                if (role.getId().longValue() == selRole.getId().longValue()) {
-                    role.setSelected(1);
-                }
-                if (role.getSelected() == null) {
-                    role.setSelected(0);
-                }
+                role.setSelected(role.getId().longValue() == selRole.getId().longValue() ? 1 : 0);
             }
         }
         model.addAttribute("user", userService.findById(id));
@@ -103,8 +100,7 @@ public class UserController {
             }
         }
         if (parentOrgId != null && parentOrgId.longValue() > 0) {
-            Org parent = new Org(parentOrgId);
-            user.setOrg(parent);
+            user.setOrg(orgService.findById(parentOrgId));
         }
         userService.saveOrUpdate(user);
         return "redirect:/security/user";
