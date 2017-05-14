@@ -36,9 +36,9 @@
 			<tr>
 				<td align="left">
 					<c:if test="${empty lookup}">
-						<shiro:hasPermission name="config_meta_${type}_edit">
+						<%--<shiro:hasPermission name="config_meta_${type}_edit">--%>
 							<input type='button' onclick="addNew('${ctx}/config/meta/${type}/create?item=edit')" class='button_70px' value='新建'/>
-						</shiro:hasPermission>
+						<%--</shiro:hasPermission>--%>
 					</c:if>
 					<c:if test="${!empty lookup}">
 						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
@@ -64,9 +64,9 @@
 							<shiro:hasPermission name="config_meta_${type}_delete">
 								<a href="${ctx}/config/meta/${type}/delete/${item._id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 							</shiro:hasPermission>
-							<shiro:hasPermission name="config_meta_${type}_edit">
+							<%--<shiro:hasPermission name="config_meta_${type}_edit">--%>
 								<a href="${ctx}/config/meta/${type}/update/${item._id}?item=edit" class="btnEdit" title="编辑">编辑</a>
-							</shiro:hasPermission>
+							<%--</shiro:hasPermission>--%>
 							<shiro:hasPermission name="config_meta_${type}_view">
 								<a href="${ctx}/config/meta/${type}/view/${item._id}" class="btnView" title="查看">查看</a>
 							</shiro:hasPermission>

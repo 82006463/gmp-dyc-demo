@@ -134,9 +134,9 @@
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
-						<shiro:hasPermission name="config_meta_${type}_edit">
+						<%--<shiro:hasPermission name="config_meta_${type}_edit">--%>
 							<input type="submit" class="button_70px" name="submit"value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
-						</shiro:hasPermission>
+						<%--</shiro:hasPermission>--%>
 						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>
