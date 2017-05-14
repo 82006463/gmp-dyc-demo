@@ -39,6 +39,7 @@ public class LoginController {
                 token.setRememberMe(true);
             }
             subject.login(token);
+            request.getSession().setAttribute("username", user.getUsername());
             return "redirect:/index";
             //return "redirect:/snaker/task/active";
         } catch (UnknownAccountException ue) {

@@ -2,6 +2,8 @@ package com.zhanlu.framework.security.web;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.common.utils.Digests;
+import com.zhanlu.framework.common.utils.EncodeUtils;
 import com.zhanlu.framework.security.entity.Role;
 import com.zhanlu.framework.security.entity.User;
 import com.zhanlu.framework.security.service.OrgService;
@@ -9,13 +11,16 @@ import com.zhanlu.framework.security.service.RoleService;
 import com.zhanlu.framework.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户管理Controller
@@ -38,7 +43,7 @@ public class UserController {
      * 分页查询用户，返回用户列表视图
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String list(Model model, Page<User> page, HttpServletRequest request) {
+    public ModelAndView list(Page<User> page, HttpServletRequest request) {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
@@ -46,25 +51,27 @@ public class UserController {
             page.setOrder(Page.ASC);
         }
         page = userService.findPage(page, filters);
-        model.addAttribute("page", page);
-        return "security/userList";
+        ModelAndView mv = new ModelAndView("security/userList");
+        mv.addObject("page", page);
+        return mv;
     }
 
     /**
      * 新建用户时，返回用户编辑视图
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String create(Model model) {
-        model.addAttribute("entity", new User());
-        model.addAttribute("roles", roleService.findAll());
-        return "security/userEdit";
+    public ModelAndView create() {
+        ModelAndView mv = new ModelAndView("security/userEdit");
+        mv.addObject("entity", new User());
+        mv.addObject("roles", roleService.findAll());
+        return mv;
     }
 
     /**
      * 编辑用户时，返回用户编辑视图
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable("id") Long id, Model model) {
+    public ModelAndView edit(@PathVariable("id") Long id) {
         User entity = userService.findById(id);
         List<Role> roles = roleService.findAll();
         List<Role> roless = entity.getRoles();
@@ -73,25 +80,27 @@ public class UserController {
                 role.setSelected(role.getId().longValue() == selRole.getId().longValue() ? 1 : 0);
             }
         }
-        model.addAttribute("entity", userService.findById(id));
-        model.addAttribute("roles", roles);
-        return "security/userEdit";
+        ModelAndView mv = new ModelAndView("security/userEdit");
+        mv.addObject("entity", userService.findById(id));
+        mv.addObject("roles", roles);
+        return mv;
     }
 
     /**
      * 编辑用户时，返回用户查看视图
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
-    public String view(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("entity", userService.findById(id));
-        return "security/userView";
+    public ModelAndView view(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView("security/userView");
+        mv.addObject("entity", userService.findById(id));
+        return mv;
     }
 
     /**
      * 新增、编辑用户页面的提交处理。保存用户实体，并返回用户列表视图
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(User user, Long[] orderIndexs, Long orgId) {
+    public ModelAndView update(User user, Long[] orderIndexs, Long orgId) {
         if (orderIndexs != null) {
             for (Long order : orderIndexs) {
                 Role role = new Role();
@@ -103,15 +112,49 @@ public class UserController {
             user.setOrg(orgService.findById(orgId));
         }
         userService.saveOrUpdate(user);
-        return "redirect:/security/user";
+        ModelAndView mv = new ModelAndView("redirect:/security/user");
+        return mv;
     }
 
     /**
      * 根据主键ID删除用户实体，并返回用户列表视图
      */
     @RequestMapping(value = "delete/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    public ModelAndView delete(@PathVariable("id") Long id) {
         userService.delete(id);
-        return "redirect:/security/user";
+        ModelAndView mv = new ModelAndView("redirect:/security/user");
+        return mv;
+    }
+
+    @RequestMapping(value = "uppwd/{username}", method = RequestMethod.GET)
+    public ModelAndView uppwdGet(@PathVariable("username") String username) {
+        User userByName = userService.findUserByName(username);
+        ModelAndView mv = new ModelAndView("security/userPwd");
+        mv.addObject("entity", userByName);
+        return mv;
+    }
+
+    @RequestMapping(value = "uppwd", method = RequestMethod.POST)
+    public ModelAndView uppwdPost(User entity) {
+        User oldUser = userService.findById(entity.getId());
+        oldUser.setPlainPassword(entity.getPlainPassword());
+        userService.saveOrUpdate(oldUser);
+        ModelAndView mv = new ModelAndView("redirect:/logout");
+        return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "checkpwd", method = RequestMethod.GET)
+    private Map<String, Object> checkpwd(String password, String plainPassword) {
+        Map<String, Object> resultMap = new HashMap<>();
+        byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), Digests.generateSalt(8), UserService.HASH_INTERATIONS);
+        plainPassword = EncodeUtils.hexEncode(hashPassword);
+        if(password.equals(plainPassword)) {
+            resultMap.put("result", 1);
+        } else {
+            resultMap.put("result", 0);
+            resultMap.put("msg", "旧密码不正确");
+        }
+        return resultMap;
     }
 }

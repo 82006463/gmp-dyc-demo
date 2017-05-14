@@ -33,6 +33,15 @@
 					$("input[name='orderIndexs']").attr("checked",false);
 				}
 			});
+			
+			function updateForm() {
+				if($('#plainPassword').val().length>0 && $('#plainPassword').val() != $('#passwordConfirm').val()) {
+					alert('密码和确认不一致,请重新输入');
+					$('#passwordConfirm').focus();
+					return false;
+				}
+				return Ops.submit();
+			}
 		</script>
 	</head>
 	<body>
@@ -131,7 +140,7 @@
 				<tr align="left">
 					<td colspan="1">
 						<shiro:hasPermission name="sec_user_edit">
-							<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
+							<input type="submit" class="button_70px" name="submit" value="提交" onclick="return updateForm();">&nbsp;&nbsp;
 						</shiro:hasPermission>
 						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
