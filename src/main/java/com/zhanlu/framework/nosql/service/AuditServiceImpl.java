@@ -41,6 +41,9 @@ public class AuditServiceImpl implements AuditService {
             docMap.put("fk_cmcode", newEntity.get("cmcode"));
             docMap.put("metaType", "logs");
             docMap.put("cmcode", "audit");
+            docMap.put("moduleCode", tableStruct.get("code"));
+            docMap.put("moduleName", tableStruct.get("name"));
+            docMap.put("moduleType", tableStruct.get("type"));
             StringBuilder buf = new StringBuilder();
             for (Map.Entry<String, Object> entry : newEntity.entrySet()) {
                 if (entry.getKey().startsWith("sec_create") || entry.getKey().startsWith("sec_update")) {
