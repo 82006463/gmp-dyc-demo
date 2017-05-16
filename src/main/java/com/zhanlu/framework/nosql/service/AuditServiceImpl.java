@@ -1,5 +1,7 @@
 package com.zhanlu.framework.nosql.service;
 
+import com.mongodb.BasicDBObject;
+import com.zhanlu.framework.nosql.dao.MongoDao;
 import com.zhanlu.framework.nosql.util.QueryItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,11 @@ import java.util.Map;
 public class AuditServiceImpl implements AuditService {
 
     @Autowired
+    private MongoDao mongoDao;
+    @Autowired
     private MongoService mongoService;
-    private String tableName = "meta_logs_audit";
+    private String configMeta = "config_meta";
+    private String metaLogsAudit = "meta_logs_audit";
 
     @Override
     public Map<String, Object> insert(Map<String, Object> oldEntity, Map<String, Object> newEntity) {
@@ -26,12 +31,12 @@ public class AuditServiceImpl implements AuditService {
             List<QueryItem> queryItems = new ArrayList<>(2);
             queryItems.add(new QueryItem("Eq_String_type", newEntity.get("metaType")));
             queryItems.add(new QueryItem("Eq_String_code", newEntity.get("cmcode")));
-            tableStruct = mongoService.findOne("config_meta", queryItems);
+            tableStruct = mongoService.findOne(configMeta, queryItems);
         }
         if (tableStruct != null) {
             Map<String, String> itemsMap = (Map) tableStruct.get("itemsMap");
             Map<String, Object> docMap = new HashMap<>();
-            docMap.put("fk_id", newEntity.get("_id"));
+            docMap.put("fk_id", oldEntity == null ? newEntity.get("_id") : oldEntity.get("_id"));
             docMap.put("fk_metaType", newEntity.get("metaType"));
             docMap.put("fk_cmcode", newEntity.get("cmcode"));
             docMap.put("metaType", "logs");
@@ -55,7 +60,7 @@ public class AuditServiceImpl implements AuditService {
             }
             if (buf.length() > 0) {
                 docMap.put("content", buf.toString());
-                mongoService.saveOrUpdate(tableName, null, docMap);
+                mongoDao.insert(metaLogsAudit, new BasicDBObject(docMap));
             }
         }
         return newEntity;

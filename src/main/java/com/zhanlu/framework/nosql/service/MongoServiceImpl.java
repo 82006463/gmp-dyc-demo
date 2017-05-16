@@ -29,7 +29,6 @@ public class MongoServiceImpl implements MongoService {
     @Override
     public Map<String, Object> saveOrUpdate(String collectionName, String id, Map<String, Object> docMap) {
         DBObject doc = new BasicDBObject();
-        doc.putAll(docMap);
         User user = ShiroUtils.getUser();
         Map<String, Object> userMap = new HashMap<>(4);
         if (user != null) {
@@ -38,12 +37,11 @@ public class MongoServiceImpl implements MongoService {
             userMap.put("sec_updateDeptId", user.getOrg().getId());
             userMap.put("sec_updateDeptName", user.getOrg().getName());
             userMap.put("sec_updateTime", new Date());
+            docMap.putAll(userMap);
         }
         Map<String, Object> oldEntity = null;
         if (id != null && id.length() > 0) {
-            if (userMap.size() > 0) {
-                doc.putAll(userMap);
-            }
+            doc.putAll(docMap);
             oldEntity = this.findOne(collectionName, id);
             mongoDao.update(collectionName, id, doc);
         } else {
@@ -53,8 +51,9 @@ public class MongoServiceImpl implements MongoService {
                 userMap.put("sec_createDeptId", userMap.get("sec_updateDeptId"));
                 userMap.put("sec_createDeptName", userMap.get("sec_updateDeptName"));
                 userMap.put("sec_createTime", userMap.get("sec_updateTime"));
-                doc.putAll(userMap);
+                docMap.putAll(userMap);
             }
+            doc.putAll(docMap);
             DBObject insert = mongoDao.insert(collectionName, doc);
             docMap.put("_id", insert.get("id"));
         }
