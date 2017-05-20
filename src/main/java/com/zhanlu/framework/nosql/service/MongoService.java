@@ -15,10 +15,10 @@ public interface MongoService {
      * 保存或更新文档
      *
      * @param collectionName 集合名称
-     * @param docMap         文档
+     * @param paramMap         页面数据
      * @return 是否成功
      */
-    Map<String, Object> saveOrUpdate(String collectionName, String id, Map<String, Object> docMap);
+    Map<String, Object> saveOrUpdate(String collectionName, String id, Map<String, Object> paramMap);
 
     /**
      * @param collectionName 集合名称
@@ -29,7 +29,7 @@ public interface MongoService {
 
     /**
      * @param collectionName 集合名称
-     * @param queryItems     对象ID
+     * @param queryItems     查询条件
      * @return 单个文档
      */
     Map<String, Object> findOne(String collectionName, List<QueryItem> queryItems);

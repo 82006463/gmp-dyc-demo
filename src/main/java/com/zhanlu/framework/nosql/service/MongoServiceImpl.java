@@ -27,7 +27,7 @@ public class MongoServiceImpl implements MongoService {
     private AuditService auditService;
 
     @Override
-    public Map<String, Object> saveOrUpdate(String collectionName, String id, Map<String, Object> docMap) {
+    public Map<String, Object> saveOrUpdate(String collectionName, String id, Map<String, Object> paramMap) {
         DBObject doc = new BasicDBObject();
         User user = ShiroUtils.getUser();
         Map<String, Object> userMap = new HashMap<>(4);
@@ -37,11 +37,11 @@ public class MongoServiceImpl implements MongoService {
             userMap.put("sec_updateDeptId", user.getOrg().getId());
             userMap.put("sec_updateDeptName", user.getOrg().getName());
             userMap.put("sec_updateTime", new Date());
-            docMap.putAll(userMap);
+            paramMap.putAll(userMap);
         }
         Map<String, Object> oldEntity = null;
         if (id != null && id.length() > 0) {
-            doc.putAll(docMap);
+            doc.putAll(paramMap);
             oldEntity = this.findOne(collectionName, id);
             mongoDao.update(collectionName, id, doc);
         } else {
@@ -51,16 +51,16 @@ public class MongoServiceImpl implements MongoService {
                 userMap.put("sec_createDeptId", userMap.get("sec_updateDeptId"));
                 userMap.put("sec_createDeptName", userMap.get("sec_updateDeptName"));
                 userMap.put("sec_createTime", userMap.get("sec_updateTime"));
-                docMap.putAll(userMap);
+                paramMap.putAll(userMap);
             }
-            doc.putAll(docMap);
+            doc.putAll(paramMap);
             DBObject insert = mongoDao.insert(collectionName, doc);
-            docMap.put("_id", insert.get("id"));
+            paramMap.put("_id", insert.get("id"));
         }
 
         //任务操作都要记审计追踪
-        auditService.insert(oldEntity, docMap);
-        return docMap;
+        auditService.insert(oldEntity, paramMap);
+        return paramMap;
     }
 
     @Override
