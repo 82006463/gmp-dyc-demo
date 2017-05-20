@@ -2,7 +2,7 @@ package com.zhanlu.framework.nosql.service;
 
 import com.mongodb.BasicDBObject;
 import com.zhanlu.framework.nosql.dao.MongoDao;
-import com.zhanlu.framework.util.QueryItem;
+import com.zhanlu.framework.nosql.item.QueryItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

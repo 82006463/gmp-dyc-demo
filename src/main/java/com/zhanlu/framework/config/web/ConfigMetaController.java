@@ -2,7 +2,7 @@ package com.zhanlu.framework.config.web;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.nosql.service.MongoService;
-import com.zhanlu.framework.util.QueryItem;
+import com.zhanlu.framework.nosql.item.QueryItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
