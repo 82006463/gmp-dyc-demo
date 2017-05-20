@@ -57,14 +57,14 @@ public class AuditLogicImpl implements AuditLogic {
                     String oldVal = null;
                     String newVal = null;
                     if (entry.getValue() != null && entry.getValue() instanceof Date) {
-                        oldVal = oldEntity == null ? "" : DateFormatUtils.format((Date) oldEntity.get(entry.getKey()), "yyyy-MM-dd");
+                        oldVal = oldEntity == null || oldEntity.get(entry.getKey()) == null ? "" : DateFormatUtils.format((Date) oldEntity.get(entry.getKey()), "yyyy-MM-dd");
                         newVal = DateFormatUtils.format((Date) entry.getValue(), "yyyy-MM-dd");
                     } else if (entry.getValue() != null && entry.getValue() instanceof Timestamp) {
-                        oldVal = oldEntity == null ? "" : DateFormatUtils.format((Date) oldEntity.get(entry.getKey()), "yyyy-MM-dd HH:mm:ss");
+                        oldVal = oldEntity == null || oldEntity.get(entry.getKey()) == null ? "" : DateFormatUtils.format((Date) oldEntity.get(entry.getKey()), "yyyy-MM-dd HH:mm:ss");
                         newVal = DateFormatUtils.format((Date) entry.getValue(), "yyyy-MM-dd HH:mm:ss");
                     } else {
-                        oldVal = oldEntity == null ? "" : oldEntity.get(entry.getKey()).toString().trim();
-                        newVal = entry.getValue() == null ? "" : entry.getValue().toString().trim();
+                        oldVal = oldEntity == null || oldEntity.get(entry.getKey()) == null ? "" : oldEntity.get(entry.getKey()).toString().trim();
+                        newVal = entry.getValue() == null || entry.getValue() == null ? "" : entry.getValue().toString().trim();
                     }
                     buf.append(!oldVal.equals(newVal) ? (itemsMap.get(entry.getKey()) + "：" + "由【" + oldVal + "】修改为【" + newVal + "】<br/>") : "");
                 }

@@ -27,10 +27,12 @@ public class EditItem {
             if (tagType.equals("subForm")) {
                 fieldVal = attrValArr;
             } else {
-                try {
-                    fieldVal = ConvertUtils.convertStringToObject(attrValArr[0], PageEnum.DataType.valueOf(dataType).getClazz());
-                } catch (Exception e) {
-                    fieldVal = attrValArr;
+                if (attrValArr[0] != null && attrValArr[0].trim().length() > 0) {
+                    try {
+                        fieldVal = ConvertUtils.convertStringToObject(attrValArr[0], PageEnum.DataType.valueOf(dataType).getClazz());
+                    } catch (Exception e) {
+                        fieldVal = attrValArr;
+                    }
                 }
             }
         } else if (dataType.equalsIgnoreCase("String")) {
