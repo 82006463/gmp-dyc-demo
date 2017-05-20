@@ -81,15 +81,17 @@ public class MetaTagUtils {
             html += "<tr>";
             for (Map.Entry<String, String> field : fieldMap.entrySet()) {
                 html += "<td class='td_list_2' align=left>";
-                if (entry.get(field.getKey()) instanceof Date) {
-                    html += DateFormatUtils.format((Date) entry.get(field.getKey()), "yyyy-MM-dd");
-                } else if (entry.get(field.getKey()) instanceof Timestamp) {
-                    html += DateFormatUtils.format((Timestamp) entry.get(field.getKey()), "yyyy-MM-dd HH:mm:ss");
-                } else {
-                    if (tagTypeMap.get(field.getKey()).startsWith("tagType_Select") && entry.get(field.getKey() + "_val") != null) {
-                        html += entry.get(field.getKey() + "_val");
+                if (entry.get(field.getKey()) != null) {
+                    if (entry.get(field.getKey()) instanceof Date) {
+                        html += DateFormatUtils.format((Date) entry.get(field.getKey()), "yyyy-MM-dd");
+                    } else if (entry.get(field.getKey()) instanceof Timestamp) {
+                        html += DateFormatUtils.format((Timestamp) entry.get(field.getKey()), "yyyy-MM-dd HH:mm:ss");
                     } else {
-                        html += entry.get(field.getKey());
+                        if (tagTypeMap.get(field.getKey()).startsWith("tagType_Select") && entry.get(field.getKey() + "_val") != null) {
+                            html += entry.get(field.getKey() + "_val");
+                        } else {
+                            html += entry.get(field.getKey());
+                        }
                     }
                 }
                 html += "</td>";

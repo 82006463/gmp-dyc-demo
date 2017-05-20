@@ -88,7 +88,11 @@ public class MongoLogicImpl implements MongoLogic {
 
     @Override
     public int removeOne(String collectionName, String id) {
-        return this.mongoService.removeOne(collectionName, id);
+        Map<String, Object> oldEntity = mongoService.findOne(collectionName, id);
+        int rowCounnt = this.mongoService.removeOne(collectionName, id);
+        Map<String, Object> newEntity = mongoService.findOne(collectionName, id);
+        auditLogic.insertForRemove(oldEntity, newEntity);
+        return rowCounnt;
     }
 
 

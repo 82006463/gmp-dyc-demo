@@ -4,13 +4,12 @@ import com.mongodb.BasicDBObject;
 import com.zhanlu.framework.logic.AuditLogic;
 import com.zhanlu.framework.nosql.item.QueryItem;
 import com.zhanlu.framework.nosql.service.MongoService;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * 审计追踪服务实现
@@ -52,13 +51,23 @@ public class AuditLogicImpl implements AuditLogic {
                 if (itemsMap.get(entry.getKey()) == null) {
                     continue;
                 }
-                if (oldEntity == null) {
-                    buf.append(itemsMap.get(entry.getKey()) + "：【" + entry.getValue() + "】被添加<br/>");
+                String oldVal = null;
+                String newVal = null;
+                if (entry.getValue() != null && entry.getValue() instanceof Date) {
+                    oldVal = oldEntity == null ? "" : DateFormatUtils.format((Date) oldEntity.get(entry.getKey()), "yyyy-MM-dd");
+                    newVal = DateFormatUtils.format((Date) entry.getValue(), "yyyy-MM-dd");
+                } else if (entry.getValue() != null && entry.getValue() instanceof Timestamp) {
+                    oldVal = oldEntity == null ? "" : DateFormatUtils.format((Date) oldEntity.get(entry.getKey()), "yyyy-MM-dd HH:mm:ss");
+                    newVal = DateFormatUtils.format((Date) entry.getValue(), "yyyy-MM-dd HH:mm:ss");
                 } else {
-                    if (!entry.getValue().equals(oldEntity.get(entry.getKey()))) {
-                        buf.append(itemsMap.get(entry.getKey()) + "：由【" + oldEntity.get(entry.getKey()) + "】修改为【" + entry.getValue() + "】<br/>");
-                    }
+                    oldVal = oldEntity == null ? "" : oldEntity.get(entry.getKey()).toString().trim();
+                    newVal = entry.getValue() == null ? "" : entry.getValue().toString().trim();
                 }
+                if (oldEntity == null && (entry.getValue() == null || entry.getValue().toString().trim().length() == 0)) {
+                    continue;
+                }
+                buf.append(itemsMap.get(entry.getKey()) + "：");
+                buf.append(oldEntity == null ? ("【" + newVal + "】被添加<br/>") : !oldVal.equals(newVal) ? ("由【" + oldVal + "】修改为【" + newVal + "】<br/>") : "");
             }
             if (buf.length() > 0) {
                 docMap.put("content", buf.toString());
@@ -66,6 +75,32 @@ public class AuditLogicImpl implements AuditLogic {
             }
         }
         return newEntity;
+    }
+
+    @Override
+    public Map<String, Object> insertForRemove(Map<String, Object> oldEntity, Map<String, Object> newEntity) {
+        Map<String, Object> tableStruct = null;
+        if (oldEntity.get("metaType") != null && oldEntity.get("cmcode") != null) {
+            List<QueryItem> queryItems = new ArrayList<>(2);
+            queryItems.add(new QueryItem("Eq_String_type", oldEntity.get("metaType")));
+            queryItems.add(new QueryItem("Eq_String_code", oldEntity.get("cmcode")));
+            tableStruct = mongoService.findOne(configMeta, queryItems);
+        }
+        if (newEntity == null && tableStruct != null) {
+            Map<String, String> itemsMap = (Map) tableStruct.get("itemsMap");
+            Map<String, Object> docMap = new HashMap<>();
+            docMap.put("fk_id", oldEntity.get("_id"));
+            docMap.put("fk_metaType", oldEntity.get("metaType"));
+            docMap.put("fk_cmcode", oldEntity.get("cmcode"));
+            docMap.put("metaType", "logs");
+            docMap.put("cmcode", "audit");
+            docMap.put("moduleCode", tableStruct.get("code"));
+            docMap.put("moduleName", tableStruct.get("name"));
+            docMap.put("moduleType", tableStruct.get("type"));
+            docMap.put("content", itemsMap.get("code") + "：【" + oldEntity.get("code") + "】," + itemsMap.get("name") + "：【" + oldEntity.get("name") + "】被删除");
+            mongoService.saveOrUpdate(metaLogsAudit, null, new BasicDBObject(docMap));
+        }
+        return oldEntity;
     }
 
 }

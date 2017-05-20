@@ -41,7 +41,7 @@ public class MongoServiceImpl implements MongoService {
     @Override
     public Map<String, Object> findOne(String collectionName, String id) {
         DBObject entity = mongoDao.findOne(collectionName, id);
-        return (Map<String, Object>) entity.toMap();
+        return entity == null ? null : (Map<String, Object>) entity.toMap();
     }
 
     @Override
