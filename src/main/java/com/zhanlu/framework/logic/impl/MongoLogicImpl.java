@@ -28,29 +28,8 @@ public class MongoLogicImpl implements MongoLogic {
 
     @Override
     public Map<String, Object> saveOrUpdate(String collectionName, String id, Map<String, Object> paramMap) {
-        User user = ShiroUtils.getUser();
-        Map<String, Object> userMap = new HashMap<>(4);
-        if (user != null) {
-            userMap.put("sec_updateById", user.getId());
-            userMap.put("sec_updateByName", user.getFullname());
-            userMap.put("sec_updateDeptId", user.getOrg().getId());
-            userMap.put("sec_updateDeptName", user.getOrg().getName());
-            userMap.put("sec_updateTime", new Date());
-            paramMap.putAll(userMap);
-        }
-        Map<String, Object> oldEntity = null;
-        if (id != null && id.length() > 0) {
-            oldEntity = this.findOne(collectionName, id);
-        } else {
-            if (userMap.size() > 0) {
-                userMap.put("sec_createById", userMap.get("sec_updateById"));
-                userMap.put("sec_createByName", userMap.get("sec_updateByName"));
-                userMap.put("sec_createDeptId", userMap.get("sec_updateDeptId"));
-                userMap.put("sec_createDeptName", userMap.get("sec_updateDeptName"));
-                userMap.put("sec_createTime", userMap.get("sec_updateTime"));
-                paramMap.putAll(userMap);
-            }
-        }
+        paramMap.putAll(this.getUserMap(id));
+        Map<String, Object> oldEntity = (id != null && id.length() > 0) ? this.findOne(collectionName, id) : null;
         Map<String, Object> entity = mongoService.saveOrUpdate(collectionName, id, paramMap);
         auditLogic.insert(oldEntity, paramMap); //任务操作都要记审计追踪
         return entity;
@@ -91,9 +70,28 @@ public class MongoLogicImpl implements MongoLogic {
         Map<String, Object> oldEntity = mongoService.findOne(collectionName, id);
         int rowCounnt = this.mongoService.removeOne(collectionName, id);
         Map<String, Object> newEntity = mongoService.findOne(collectionName, id);
-        auditLogic.insertForRemove(oldEntity, newEntity);
+        auditLogic.insertForRemove(oldEntity, newEntity, this.getUserMap(id));
         return rowCounnt;
     }
 
+    private Map<String, Object> getUserMap(String entityId) {
+        User user = ShiroUtils.getUser();
+        Map<String, Object> userMap = new HashMap<>(4);
+        if (user != null) {
+            userMap.put("sec_updateById", user.getId());
+            userMap.put("sec_updateByName", user.getFullname());
+            userMap.put("sec_updateDeptId", user.getOrg().getId());
+            userMap.put("sec_updateDeptName", user.getOrg().getName());
+            userMap.put("sec_updateTime", new Date());
+            if (entityId == null || entityId.length() == 0) {
+                userMap.put("sec_createById", userMap.get("sec_updateById"));
+                userMap.put("sec_createByName", userMap.get("sec_updateByName"));
+                userMap.put("sec_createDeptId", userMap.get("sec_updateDeptId"));
+                userMap.put("sec_createDeptName", userMap.get("sec_updateDeptName"));
+                userMap.put("sec_createTime", userMap.get("sec_updateTime"));
+            }
+        }
+        return userMap;
+    }
 
 }

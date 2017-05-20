@@ -43,31 +43,31 @@ public class AuditLogicImpl implements AuditLogic {
             docMap.put("moduleName", tableStruct.get("name"));
             docMap.put("moduleType", tableStruct.get("type"));
             StringBuilder buf = new StringBuilder();
-            for (Map.Entry<String, Object> entry : newEntity.entrySet()) {
-                if (entry.getKey().startsWith("sec_create") || entry.getKey().startsWith("sec_update")) {
-                    docMap.put(entry.getKey(), entry.getValue());
-                    continue;
+            if (oldEntity == null) {
+                buf.append(itemsMap.get("code") + "：【" + newEntity.get("code") + "】," + itemsMap.get("name") + "：【" + newEntity.get("name") + "】被添加");
+            } else {
+                for (Map.Entry<String, Object> entry : newEntity.entrySet()) {
+                    if (entry.getKey().startsWith("sec_create") || entry.getKey().startsWith("sec_update")) {
+                        docMap.put(entry.getKey(), entry.getValue());
+                        continue;
+                    }
+                    if (itemsMap.get(entry.getKey()) == null) {
+                        continue;
+                    }
+                    String oldVal = null;
+                    String newVal = null;
+                    if (entry.getValue() != null && entry.getValue() instanceof Date) {
+                        oldVal = oldEntity == null ? "" : DateFormatUtils.format((Date) oldEntity.get(entry.getKey()), "yyyy-MM-dd");
+                        newVal = DateFormatUtils.format((Date) entry.getValue(), "yyyy-MM-dd");
+                    } else if (entry.getValue() != null && entry.getValue() instanceof Timestamp) {
+                        oldVal = oldEntity == null ? "" : DateFormatUtils.format((Date) oldEntity.get(entry.getKey()), "yyyy-MM-dd HH:mm:ss");
+                        newVal = DateFormatUtils.format((Date) entry.getValue(), "yyyy-MM-dd HH:mm:ss");
+                    } else {
+                        oldVal = oldEntity == null ? "" : oldEntity.get(entry.getKey()).toString().trim();
+                        newVal = entry.getValue() == null ? "" : entry.getValue().toString().trim();
+                    }
+                    buf.append(!oldVal.equals(newVal) ? (itemsMap.get(entry.getKey()) + "：" + "由【" + oldVal + "】修改为【" + newVal + "】<br/>") : "");
                 }
-                if (itemsMap.get(entry.getKey()) == null) {
-                    continue;
-                }
-                String oldVal = null;
-                String newVal = null;
-                if (entry.getValue() != null && entry.getValue() instanceof Date) {
-                    oldVal = oldEntity == null ? "" : DateFormatUtils.format((Date) oldEntity.get(entry.getKey()), "yyyy-MM-dd");
-                    newVal = DateFormatUtils.format((Date) entry.getValue(), "yyyy-MM-dd");
-                } else if (entry.getValue() != null && entry.getValue() instanceof Timestamp) {
-                    oldVal = oldEntity == null ? "" : DateFormatUtils.format((Date) oldEntity.get(entry.getKey()), "yyyy-MM-dd HH:mm:ss");
-                    newVal = DateFormatUtils.format((Date) entry.getValue(), "yyyy-MM-dd HH:mm:ss");
-                } else {
-                    oldVal = oldEntity == null ? "" : oldEntity.get(entry.getKey()).toString().trim();
-                    newVal = entry.getValue() == null ? "" : entry.getValue().toString().trim();
-                }
-                if (oldEntity == null && (entry.getValue() == null || entry.getValue().toString().trim().length() == 0)) {
-                    continue;
-                }
-                buf.append(itemsMap.get(entry.getKey()) + "：");
-                buf.append(oldEntity == null ? ("【" + newVal + "】被添加<br/>") : !oldVal.equals(newVal) ? ("由【" + oldVal + "】修改为【" + newVal + "】<br/>") : "");
             }
             if (buf.length() > 0) {
                 docMap.put("content", buf.toString());
@@ -78,7 +78,7 @@ public class AuditLogicImpl implements AuditLogic {
     }
 
     @Override
-    public Map<String, Object> insertForRemove(Map<String, Object> oldEntity, Map<String, Object> newEntity) {
+    public Map<String, Object> insertForRemove(Map<String, Object> oldEntity, Map<String, Object> newEntity, Map<String, Object> extMap) {
         Map<String, Object> tableStruct = null;
         if (oldEntity.get("metaType") != null && oldEntity.get("cmcode") != null) {
             List<QueryItem> queryItems = new ArrayList<>(2);
@@ -97,6 +97,7 @@ public class AuditLogicImpl implements AuditLogic {
             docMap.put("moduleCode", tableStruct.get("code"));
             docMap.put("moduleName", tableStruct.get("name"));
             docMap.put("moduleType", tableStruct.get("type"));
+            docMap.putAll(extMap);
             docMap.put("content", itemsMap.get("code") + "：【" + oldEntity.get("code") + "】," + itemsMap.get("name") + "：【" + oldEntity.get("name") + "】被删除");
             mongoService.saveOrUpdate(metaLogsAudit, null, new BasicDBObject(docMap));
         }

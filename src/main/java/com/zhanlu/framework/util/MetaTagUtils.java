@@ -181,7 +181,7 @@ public class MetaTagUtils {
                     for (String title : titles) {
                         html += "<td align='center' class='td_list_1'>" + title + "</td>";
                     }
-                    html += "<td align='center' width='6%' class='td_list_1'><a class='btnAdd' onclick='$('[name=" + code + "_val]').val($(this).find('option:selected').text());'></a></td>";
+                    html += "<td align='center' width='6%' class='td_list_1'><a class='btnAdd' onclick='return Ops.addTr(this);'></a></td>";
                     html += "</tr>";
 
                     for (int row = 0; row < rowCount; row++) {
