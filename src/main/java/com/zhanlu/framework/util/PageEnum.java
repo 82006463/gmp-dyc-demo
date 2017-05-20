@@ -1,4 +1,4 @@
-package com.zhanlu.framework.nosql.util;
+package com.zhanlu.framework.util;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

@@ -3,7 +3,7 @@ package com.zhanlu.framework.config.web;
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.nosql.service.MongoService;
-import com.zhanlu.framework.nosql.util.QueryItem;
+import com.zhanlu.framework.util.QueryItem;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

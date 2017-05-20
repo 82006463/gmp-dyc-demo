@@ -1,4 +1,4 @@
-package com.zhanlu.framework.nosql.util;
+package com.zhanlu.framework.util;
 
 import com.zhanlu.framework.common.utils.ConvertUtils;
 import com.zhanlu.framework.config.entity.DataDict;

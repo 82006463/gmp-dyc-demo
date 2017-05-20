@@ -1,7 +1,7 @@
 package com.zhanlu.framework.nosql.service;
 
 import com.zhanlu.framework.common.page.Page;
-import com.zhanlu.framework.nosql.util.QueryItem;
+import com.zhanlu.framework.util.QueryItem;
 
 import java.util.List;
 import java.util.Map;

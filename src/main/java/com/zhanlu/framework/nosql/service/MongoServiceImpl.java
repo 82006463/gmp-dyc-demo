@@ -5,7 +5,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.nosql.dao.MongoDao;
-import com.zhanlu.framework.nosql.util.QueryItem;
+import com.zhanlu.framework.util.QueryItem;
 import com.zhanlu.framework.security.entity.User;
 import com.zhanlu.framework.security.shiro.ShiroUtils;
 import org.bson.Document;
