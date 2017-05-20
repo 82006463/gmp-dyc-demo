@@ -66,7 +66,7 @@
 							</shiro:hasPermission>
 							<%--<shiro:hasPermission name="config_meta_${type}_edit">--%>
 								<%--<a href="${ctx}/config/meta/${type}/update/${item._id}?item=edit" class="btnEdit" title="编辑">编辑</a>--%>
-								<a href="${ctx}/config/meta/${type}/update/${item._id}?item=search" title="编辑搜索">搜索</a>
+								<a href="${ctx}/config/meta/${type}/update/${item._id}?item=search" class="btnEdit" title="编辑搜索"></a>
 							<%--</shiro:hasPermission>--%>
 							<shiro:hasPermission name="config_meta_${type}_view">
 								<a href="${ctx}/config/meta/${type}/view/${item._id}" class="btnView" title="查看">查看</a>
