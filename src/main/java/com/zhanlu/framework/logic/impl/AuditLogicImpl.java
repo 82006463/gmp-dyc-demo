@@ -1,8 +1,9 @@
-package com.zhanlu.framework.nosql.service;
+package com.zhanlu.framework.logic.impl;
 
 import com.mongodb.BasicDBObject;
-import com.zhanlu.framework.nosql.dao.MongoDao;
+import com.zhanlu.framework.logic.AuditLogic;
 import com.zhanlu.framework.nosql.item.QueryItem;
+import com.zhanlu.framework.nosql.service.MongoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,8 @@ import java.util.Map;
  * 审计追踪服务实现
  */
 @Service
-public class AuditServiceImpl implements AuditService {
+public class AuditLogicImpl implements AuditLogic {
 
-    @Autowired
-    private MongoDao mongoDao;
     @Autowired
     private MongoService mongoService;
     private String configMeta = "config_meta";
@@ -63,7 +62,7 @@ public class AuditServiceImpl implements AuditService {
             }
             if (buf.length() > 0) {
                 docMap.put("content", buf.toString());
-                mongoDao.insert(metaLogsAudit, new BasicDBObject(docMap));
+                mongoService.saveOrUpdate(metaLogsAudit, null, new BasicDBObject(docMap));
             }
         }
         return newEntity;

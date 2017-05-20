@@ -2,9 +2,9 @@ package com.zhanlu.meta.web;
 
 import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.config.service.DataDictService;
-import com.zhanlu.framework.nosql.service.MongoService;
-import com.zhanlu.framework.util.MetaTagUtils;
+import com.zhanlu.framework.logic.MongoLogic;
 import com.zhanlu.framework.nosql.item.QueryItem;
+import com.zhanlu.framework.util.MetaTagUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class MetaChartController {
     private DataDictService dataDictService;
 
     @Autowired
-    private MongoService mongoService;
+    private MongoLogic mongoLogic;
     private String metaTable = "config_meta";
 
     /**
@@ -136,7 +136,7 @@ public class MetaChartController {
                             tmpItems.add(new QueryItem(tmpArr[0], tmpArr[1]));
                         }
                     }
-                    dataList.add(mongoService.countByProp(whereArr[0], tmpItems));
+                    dataList.add(mongoLogic.countByProp(whereArr[0], tmpItems));
                 }
                 dataMap.put("name", metaApp.get("xtitle") == null ? " " : metaApp.get("xtitle"));
                 dataMap.put("data", dataList);
@@ -152,7 +152,7 @@ public class MetaChartController {
                         String[] tmpArr = and.split("=");
                         tmpItems.add(new QueryItem(tmpArr[0], tmpArr[1].startsWith("$") ? item.get(tmpArr[1].replace("$", "")) : tmpArr[1]));
                     }
-                    dataList.add(mongoService.countByProp(whereArr[0], tmpItems));
+                    dataList.add(mongoLogic.countByProp(whereArr[0], tmpItems));
                 }
                 dataMap.put("name", metaApp.get("xtitle") == null ? " " : metaApp.get("xtitle"));
                 dataMap.put("data", dataList);
@@ -168,7 +168,7 @@ public class MetaChartController {
                     }
                     List<Object> dataItem = new ArrayList<>(2);
                     dataItem.add(item.get("name"));
-                    dataItem.add(mongoService.countByProp(whereArr[0], tmpItems));
+                    dataItem.add(mongoLogic.countByProp(whereArr[0], tmpItems));
                     dataResult.add(dataItem);
                 }
             }
@@ -184,7 +184,7 @@ public class MetaChartController {
         List<QueryItem> queryItems = new ArrayList<>(1);
         queryItems.add(new QueryItem("Eq_String_type", metaType));
         queryItems.add(new QueryItem("Eq_String_code", cmcode));
-        return mongoService.findOne(metaTable, queryItems);
+        return mongoLogic.findOne(metaTable, queryItems);
     }
 
 }

@@ -115,7 +115,8 @@ public class MongoDao {
      * @return 是否成功
      */
     public DBObject insert(String collectionName, DBObject document) {
-        mongoDbFactory.getDb().getCollection(collectionName).save(document);
+        WriteResult result = mongoDbFactory.getDb().getCollection(collectionName).save(document);
+        document.put("_id", result.getUpsertedId());
         return document;
     }
 
@@ -130,6 +131,7 @@ public class MongoDao {
     public DBObject update(String collectionName, String id, DBObject document) {
         DBObject query = new BasicDBObject("_id", new ObjectId(id));
         mongoDbFactory.getDb().getCollection(collectionName).update(query, document);
+        document.put("_id", query.get("_id"));
         return document;
     }
 

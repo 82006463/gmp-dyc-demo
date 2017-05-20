@@ -6,13 +6,14 @@ import com.mongodb.DBObject;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.nosql.dao.MongoDao;
 import com.zhanlu.framework.nosql.item.QueryItem;
-import com.zhanlu.framework.security.entity.User;
-import com.zhanlu.framework.security.shiro.ShiroUtils;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -23,50 +24,24 @@ public class MongoServiceImpl implements MongoService {
 
     @Autowired
     private MongoDao mongoDao;
-    @Autowired
-    private AuditService auditService;
 
     @Override
     public Map<String, Object> saveOrUpdate(String collectionName, String id, Map<String, Object> paramMap) {
-        DBObject doc = new BasicDBObject();
-        User user = ShiroUtils.getUser();
-        Map<String, Object> userMap = new HashMap<>(4);
-        if (user != null) {
-            userMap.put("sec_updateById", user.getId());
-            userMap.put("sec_updateByName", user.getFullname());
-            userMap.put("sec_updateDeptId", user.getOrg().getId());
-            userMap.put("sec_updateDeptName", user.getOrg().getName());
-            userMap.put("sec_updateTime", new Date());
-            paramMap.putAll(userMap);
-        }
-        Map<String, Object> oldEntity = null;
+        DBObject entity = new BasicDBObject();
         if (id != null && id.length() > 0) {
-            doc.putAll(paramMap);
-            oldEntity = this.findOne(collectionName, id);
-            mongoDao.update(collectionName, id, doc);
+            entity.putAll(paramMap);
+            mongoDao.update(collectionName, id, entity);
         } else {
-            if (userMap.size() > 0) {
-                userMap.put("sec_createById", userMap.get("sec_updateById"));
-                userMap.put("sec_createByName", userMap.get("sec_updateByName"));
-                userMap.put("sec_createDeptId", userMap.get("sec_updateDeptId"));
-                userMap.put("sec_createDeptName", userMap.get("sec_updateDeptName"));
-                userMap.put("sec_createTime", userMap.get("sec_updateTime"));
-                paramMap.putAll(userMap);
-            }
-            doc.putAll(paramMap);
-            DBObject insert = mongoDao.insert(collectionName, doc);
-            paramMap.put("_id", insert.get("id"));
+            entity.putAll(paramMap);
+            entity = mongoDao.insert(collectionName, entity);
         }
-
-        //任务操作都要记审计追踪
-        auditService.insert(oldEntity, paramMap);
-        return paramMap;
+        return entity.toMap();
     }
 
     @Override
     public Map<String, Object> findOne(String collectionName, String id) {
-        DBObject one = mongoDao.findOne(collectionName, id);
-        return (Map<String, Object>) one.toMap();
+        DBObject entity = mongoDao.findOne(collectionName, id);
+        return (Map<String, Object>) entity.toMap();
     }
 
     @Override

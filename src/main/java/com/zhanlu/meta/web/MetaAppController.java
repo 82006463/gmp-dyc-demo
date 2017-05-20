@@ -2,10 +2,10 @@ package com.zhanlu.meta.web;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.config.service.DataDictService;
-import com.zhanlu.framework.nosql.service.MongoService;
+import com.zhanlu.framework.logic.MongoLogic;
 import com.zhanlu.framework.nosql.item.EditItem;
-import com.zhanlu.framework.util.MetaTagUtils;
 import com.zhanlu.framework.nosql.item.QueryItem;
+import com.zhanlu.framework.util.MetaTagUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,7 @@ public class MetaAppController {
     private DataDictService dataDictService;
 
     @Autowired
-    private MongoService mongoService;
+    private MongoLogic mongoLogic;
     private String metaTable = "config_meta";
 
     /**
@@ -53,7 +53,7 @@ public class MetaAppController {
         queryItems.add(new QueryItem("Eq_String_metaType", metaType));
         queryItems.add(new QueryItem("Eq_String_cmcode", cmcode));
         String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
-        mongoService.findByPage(tableName, queryItems, page);
+        mongoLogic.findByPage(tableName, queryItems, page);
 
         ModelAndView view = new ModelAndView("meta/metaAppList");
         view.addObject("jsonSearch", MetaTagUtils.search(dataDictService, jdbcTemplate, metaTag, paramMap));
@@ -89,7 +89,7 @@ public class MetaAppController {
         Map<String, Object> metaTag = this.getMetaTag(metaType, cmcode);
         ModelAndView view = new ModelAndView("meta/metaAppEdit");
         String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
-        Map<String, Object> entity = mongoService.findOne(tableName, id);
+        Map<String, Object> entity = mongoLogic.findOne(tableName, id);
         view.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, metaTag, entity));
         view.addObject("entity", entity);
         view.addObject("metaTag", metaTag);
@@ -106,7 +106,7 @@ public class MetaAppController {
         entity.put("metaType", metaType);
         entity.put("cmcode", cmcode);
         String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
-        mongoService.saveOrUpdate(tableName, id, entity);
+        mongoLogic.saveOrUpdate(tableName, id, entity);
         ModelAndView view = new ModelAndView("redirect:/meta/app/" + metaType + "/" + cmcode + "/list");
         return view;
     }
@@ -119,7 +119,7 @@ public class MetaAppController {
         Map<String, Object> metaTag = this.getMetaTag(metaType, cmcode);
         ModelAndView view = new ModelAndView("meta/metaAppView");
         String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
-        Map<String, Object> entity = mongoService.findOne(tableName, id);
+        Map<String, Object> entity = mongoLogic.findOne(tableName, id);
         view.addObject("entity", entity);
         view.addObject("jsonEdit", MetaTagUtils.view(dataDictService, metaTag, entity));
         view.addObject("metaTag", metaTag);
@@ -132,7 +132,7 @@ public class MetaAppController {
     @RequestMapping(value = "{metaType}/{cmcode}/delete/{id}")
     public ModelAndView delete(@PathVariable("metaType") String metaType, @PathVariable("cmcode") String cmcode, @PathVariable("id") String id) {
         String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
-        mongoService.removeOne(tableName, id);
+        mongoLogic.removeOne(tableName, id);
         ModelAndView view = new ModelAndView("redirect:/meta/app/" + metaType + "/" + cmcode + "/list");
         return view;
     }
@@ -141,7 +141,7 @@ public class MetaAppController {
         List<QueryItem> queryItems = new ArrayList<>(2);
         queryItems.add(new QueryItem("Eq_String_type", metaType));
         queryItems.add(new QueryItem("Eq_String_code", cmcode));
-        return mongoService.findOne(metaTable, queryItems);
+        return mongoLogic.findOne(metaTable, queryItems);
     }
 
 }

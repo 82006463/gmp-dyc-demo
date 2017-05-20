@@ -1,7 +1,7 @@
 package com.zhanlu.framework.config.web;
 
 import com.zhanlu.framework.common.page.Page;
-import com.zhanlu.framework.nosql.service.MongoService;
+import com.zhanlu.framework.logic.MongoLogic;
 import com.zhanlu.framework.nosql.item.QueryItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,14 +24,14 @@ import java.util.Map;
 public class ConfigMetaController {
 
     @Autowired
-    private MongoService mongoService;
+    private MongoLogic mongoLogic;
     private String metaTable = "config_meta";
 
     @RequestMapping(value = "{type}/list", method = RequestMethod.GET)
     public ModelAndView list(@PathVariable("type") String type, Page<Map<String, Object>> page, HttpServletRequest req) {
         List<QueryItem> queryItems = QueryItem.buildSearchItems(req.getParameterMap());
         queryItems.add(new QueryItem("Eq_String_type", type));
-        mongoService.findByPage(this.metaTable, queryItems, page);
+        mongoLogic.findByPage(this.metaTable, queryItems, page);
 
         String jspPage = type.contains("chart") ? "metaChartList" : "metaTagList";
         ModelAndView view = new ModelAndView("config/" + jspPage);
@@ -54,7 +54,7 @@ public class ConfigMetaController {
 
     @RequestMapping(value = "{type}/update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("type") String type, @PathVariable("id") String id, String item) throws Exception {
-        Map<String, Object> entity = mongoService.findOne(this.metaTable, id);
+        Map<String, Object> entity = mongoLogic.findOne(this.metaTable, id);
 
         String jspPage = type.contains("chart") ? "metaChartEdit" : "metaTagEdit";
         ModelAndView view = new ModelAndView("config/" + jspPage);
@@ -67,7 +67,7 @@ public class ConfigMetaController {
     public ModelAndView view(@PathVariable("type") String type, @PathVariable("id") String id) {
         String jspPage = type.contains("chart") ? "metaChartView" : "metaTagView";
         ModelAndView view = new ModelAndView("config/" + jspPage);
-        view.addObject("entity", mongoService.findOne(this.metaTable, id));
+        view.addObject("entity", mongoLogic.findOne(this.metaTable, id));
         return view;
     }
 
@@ -76,7 +76,7 @@ public class ConfigMetaController {
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> entity = null;
         if (id != null && id.trim().length() > 0) {
-            entity = mongoService.findOne(this.metaTable, id);
+            entity = mongoLogic.findOne(this.metaTable, id);
         } else {
             entity = new LinkedHashMap<>(itemCodes == null ? 16 : itemCodes.length + 16);
         }
@@ -153,14 +153,14 @@ public class ConfigMetaController {
                 entity.put("editItems", items);
             }
         }
-        mongoService.saveOrUpdate(this.metaTable, id, entity);
+        mongoLogic.saveOrUpdate(this.metaTable, id, entity);
         ModelAndView view = new ModelAndView("redirect:/config/meta/" + type + "/list");
         return view;
     }
 
     @RequestMapping(value = "{type}/delete/{id}")
     public ModelAndView delete(@PathVariable("type") String type, @PathVariable("id") String id) {
-        mongoService.removeOne(this.metaTable, id);
+        mongoLogic.removeOne(this.metaTable, id);
         ModelAndView view = new ModelAndView("redirect:/config/meta/" + type + "/list");
         return view;
     }
