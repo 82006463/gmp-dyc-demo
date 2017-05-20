@@ -66,7 +66,9 @@ public class AuditLogicImpl implements AuditLogic {
                         oldVal = oldEntity == null || oldEntity.get(entry.getKey()) == null ? "" : oldEntity.get(entry.getKey()).toString().trim();
                         newVal = entry.getValue() == null || entry.getValue() == null ? "" : entry.getValue().toString().trim();
                     }
-                    buf.append(!oldVal.equals(newVal) ? (itemsMap.get(entry.getKey()) + "：" + "由【" + oldVal + "】修改为【" + newVal + "】<br/>") : "");
+                    if (!oldVal.equals(newVal)) {
+                        buf.append((itemsMap.get(entry.getKey()) + "：由【" + (oldVal.length() == 0 ? "N.A." : oldVal) + "】修改为【" + (newVal.length() == 0 ? "N.A." : newVal) + "】<br/>"));
+                    }
                 }
             }
             if (buf.length() > 0) {
