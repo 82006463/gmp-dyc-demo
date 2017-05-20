@@ -34,7 +34,7 @@ public class MetaTagUtils {
             if (itemIndex > 1 && itemIndex % 2 == 1) {
                 html += "<tr>";
             }
-            html += "<td class='td_table_1'>" + entry.get("desc") + "：</td><td class='td_table_2' " + (itemIndex % 2 == 1 && itemIndex == queryList.size() ? "colspan='3'" : "") + ">";
+            html += "<td class='td_table_1'>" + entry.get("name") + "：</td><td class='td_table_2' " + (itemIndex % 2 == 1 && itemIndex == queryList.size() ? "colspan='3'" : "") + ">";
             if (tagType.equalsIgnoreCase("date")) {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
             } else if (tagType.equalsIgnoreCase("timestamp")) {
@@ -71,8 +71,8 @@ public class MetaTagUtils {
         Map<String, String> tagTypeMap = new LinkedHashMap<>(listList.size());
         String html = "<tr>";
         for (Map<String, String> entry : listList) {
-            html += "<td align=center class='td_list_1'>" + entry.get("desc") + "</td>";
-            fieldMap.put(entry.get("code"), entry.get("desc"));
+            html += "<td align=center class='td_list_1'>" + entry.get("name") + "</td>";
+            fieldMap.put(entry.get("code"), entry.get("name"));
         }
         for (Map<String, String> entry : editList) {
             tagTypeMap.put(entry.get("code"), entry.get("tagType"));
@@ -134,7 +134,7 @@ public class MetaTagUtils {
             } else if (tmpIndex == 2 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm"))) {
                 html += "</tr><tr>";
             }
-            html += "<td class='td_table_1'>" + entry.get("desc") + (required.equals("yes") ? "<b class='requiredWarn'>*</b>" : "") + "</td><td class='td_table_2' ${" + itemIndex + "}>";
+            html += "<td class='td_table_1'>" + entry.get("name") + (required.equals("yes") ? "<b class='requiredWarn'>*</b>" : "") + "</td><td class='td_table_2' ${" + itemIndex + "}>";
             if (tagType.equalsIgnoreCase("textarea")) {
                 html += "<textarea name='" + code + "' class='input_textarea_600" + (required.equals("yes") ? " validate[required]" : "") + "'>" + val + "</textarea>";
             } else if (tagType.equalsIgnoreCase("date")) {
@@ -256,7 +256,6 @@ public class MetaTagUtils {
         for (Map<String, String> entry : editList) {
             String tagType = entry.get("tagType").replace("tagType_", "");
             String code = tagType.startsWith("Select") ? entry.get("code") + "_val" : entry.get("code");
-            String desc = entry.get("desc");
             String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
 
             itemIndex++;
@@ -266,7 +265,7 @@ public class MetaTagUtils {
             } else if (tmpIndex == 2 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm"))) {
                 html += "</tr><tr>";
             }
-            html += "<td class='td_table_1'>" + desc + "</td><td class='td_table_2' ${" + itemIndex + "}>";
+            html += "<td class='td_table_1'>" + entry.get("name") + "</td><td class='td_table_2' ${" + itemIndex + "}>";
             if (tagType.equals("subForm")) {
                 DataDict dataDict = dataDictService.findByCode(entry.get("subForm").toString());
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {

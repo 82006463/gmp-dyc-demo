@@ -8,7 +8,7 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/config/dictionary/update" method="post">
+		<form id="inputForm" action="${ctx}/config/dictionary/update" method="post">
 			<input type="hidden" name="id" id="id" value="${entity.id}"/>
 			<input type="hidden" id="rootId" name="rootId" value="${entity.rootId}"/>
 			<input type="hidden" id="pid" name="pid" value="${entity.pid}">

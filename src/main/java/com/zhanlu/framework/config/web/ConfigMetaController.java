@@ -2,6 +2,7 @@ package com.zhanlu.framework.config.web;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.logic.MongoLogic;
+import com.zhanlu.framework.nosql.service.MongoService;
 import com.zhanlu.framework.nosql.item.QueryItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -87,33 +88,15 @@ public class ConfigMetaController {
         }
         if (itemCodes != null && itemCodes.length > 0) {
             String[] itemNames = paramMap.get("itemNames");
-            String[] itemDescs = paramMap.get("itemDescs");
             String[] itemDataTypes = paramMap.get("itemDataTypes");
             List<Map<String, Object>> items = new ArrayList<>(itemCodes == null ? 0 : itemCodes.length);
-            if (type.contains("chart")) {
-                Map<String, String> itemsMap = new LinkedHashMap<>(itemCodes.length);
-                String[] itemCompareTypes = paramMap.get("itemCompareTypes");
-                String[] itemTagTypes = paramMap.get("itemTagTypes");
-                for (int i = 0; i < itemCodes.length; i++) {
-                    Map<String, Object> itemMap = new LinkedHashMap<>(8);
-                    itemMap.put("code", itemCodes[i]);
-                    itemMap.put("desc", itemDescs[i]);
-                    itemMap.put("dataType", itemDataTypes[i]);
-                    itemMap.put("compareType", itemCompareTypes[i]);
-                    itemMap.put("tagType", itemTagTypes[i]);
-                    items.add(itemMap);
-                    itemsMap.put(itemCodes[i], itemDescs[i]);
-                }
-                entity.put("itemsMap", itemsMap);
-                entity.put("editItems", items);
-            } else if (item.equals("search")) {
+            if (item.equals("search")) {
                 String[] itemCompareTypes = paramMap.get("itemCompareTypes");
                 String[] itemTagTypes = paramMap.get("itemTagTypes");
                 for (int i = 0; i < itemCodes.length; i++) {
                     Map<String, Object> itemMap = new LinkedHashMap<>(8);
                     itemMap.put("code", itemCodes[i]);
                     itemMap.put("name", itemNames[i]);
-                    itemMap.put("desc", itemDescs[i]);
                     itemMap.put("dataType", itemDataTypes[i]);
                     itemMap.put("compareType", itemCompareTypes[i]);
                     itemMap.put("tagType", itemTagTypes[i]);
@@ -125,7 +108,6 @@ public class ConfigMetaController {
                     Map<String, Object> itemMap = new LinkedHashMap<>(8);
                     itemMap.put("code", itemCodes[i]);
                     itemMap.put("name", itemNames[i]);
-                    itemMap.put("desc", itemDescs[i]);
                     itemMap.put("dataType", itemDataTypes[i]);
                     items.add(itemMap);
                 }
@@ -140,14 +122,13 @@ public class ConfigMetaController {
                     Map<String, Object> itemMap = new LinkedHashMap<>(8);
                     itemMap.put("code", itemCodes[i]);
                     itemMap.put("name", itemNames[i]);
-                    itemMap.put("desc", itemDescs[i]);
                     itemMap.put("required", itemRequireds[i]);
                     itemMap.put("dataType", itemDataTypes[i]);
                     itemMap.put("tagType", itemTagTypes[i]);
                     itemMap.put("fuzzy", itemFuzzys[i]);
                     itemMap.put("subForm", itemSubForms[i]);
                     items.add(itemMap);
-                    itemsMap.put(itemCodes[i], itemDescs[i]);
+                    itemsMap.put(itemCodes[i], itemNames[i]);
                 }
                 entity.put("itemsMap", itemsMap);
                 entity.put("editItems", items);
