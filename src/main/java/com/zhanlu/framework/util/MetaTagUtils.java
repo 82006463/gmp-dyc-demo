@@ -1,5 +1,6 @@
 package com.zhanlu.framework.util;
 
+import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.utils.ResultSetUtils;
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.service.DataDictService;
@@ -153,54 +154,44 @@ public class MetaTagUtils {
             } else if (tagType.equalsIgnoreCase("subForm")) {
                 DataDict dataDict = dataDictService.findByCode(entry.get("subForm").toString());
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {
-                    String[] fieldArr = dataDict.getDataSource().split(",");
-                    List<String> titles = new ArrayList<>(fieldArr.length);
-                    List<String> tagTypes = new ArrayList<>(fieldArr.length);
-                    List<String> tagNames = new ArrayList<>(fieldArr.length);
-                    for (String field : fieldArr) {
-                        String[] tmpField = field.split(":");
-                        tagNames.add(tmpField[0]);
-                        tagTypes.add(tmpField[1]);
-                        titles.add(tmpField[2]);
-                    }
-                    Map<String, List<String>> valMap = new HashMap<>();
+                    html += "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' id='" + code + "' style='margin: 0'><tr>";
+                    List<Map<String, Object>> tagList = JSON.parseObject(dataDict.getDataSource(), List.class);
+                    Map<String, List<String>> tagValMap = new HashMap<>();
                     int rowCount = 0;
-                    for (String tagName : tagNames) {
+                    for (Map<String, Object> map : tagList) {
+                        html += "<td align='center' class='td_list_1'>" + map.get("name") + (map.get("required").toString().equals("true") ? "<b class='requiredWarn'>*</b>" : "") + "</td>";
+                        String tmpCode = map.get("code").toString();
                         List<String> tmpVals = null;
-                        if (dataMap.get(tagName) == null) {
+                        if (dataMap.get(tmpCode) == null) {
                             tmpVals = new ArrayList<>(1);
                             tmpVals.add("");
                         } else {
-                            tmpVals = (List) dataMap.get(tagName);
+                            tmpVals = (List) dataMap.get(tmpCode);
                         }
                         rowCount = rowCount == 0 ? tmpVals.size() : rowCount;
-                        valMap.put(tagName, tmpVals);
+                        tagValMap.put(tmpCode, tmpVals);
                     }
-                    html += "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' id='" + code + "' style='margin: 0'>";
-                    html += "<tr>";
-                    for (String title : titles) {
-                        html += "<td align='center' class='td_list_1'>" + title + "</td>";
-                    }
-                    html += "<td align='center' width='6%' class='td_list_1'><a class='btnAdd' onclick='return Ops.addTr(this);'></a></td>";
-                    html += "</tr>";
-
+                    html += "<td align='center' width='6%' class='td_list_1'><a class='btnAdd' onclick='return Ops.addTr(this);'></a></td></tr>";
                     for (int row = 0; row < rowCount; row++) {
                         html += "<tr>";
-                        for (int i = 0; i < tagNames.size(); i++) {
-                            String tmpName = tagNames.get(i);
-                            String tmpType = tagTypes.get(i);
-                            if (tmpType.equals("date")) {
-                                html += "<td class='td_list_2'><input type='text' name='" + tmpName + "' value='" + valMap.get(tmpName).get(row) + "' class='input_240 validate[required]' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/></td>";
-                            } else if (tmpType.equals("timestamp")) {
-                                html += "<td class='td_list_2'><input type='text' name='" + tmpName + "' value='" + valMap.get(tmpName).get(row) + "' class='input_240 validate[required]' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/></td>";
-                            } else if (tmpType.equals("textarea")) {
-                                html += "<td class='td_list_2'><textarea name='" + tmpName + "' class='input_textarea_600 validate[required]'>" + valMap.get(tmpName).get(row) + "</textarea></td>";
+                        for (Map<String, Object> map : tagList) {
+                            String tmpCode = map.get("code").toString();
+                            String tmpTagType = map.get("tagType").toString();
+                            String tmpRequired = map.get("required").toString();
+                            html += "<td class='td_list_2'>";
+                            if (tmpTagType.equalsIgnoreCase("date")) {
+                                html += "<input type='text' name='" + tmpCode + "' value='" + tagValMap.get(tmpCode).get(row) + "' class='input_240" + (tmpRequired.equals("true") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
+                            } else if (tmpTagType.equalsIgnoreCase("timestamp")) {
+                                html += "<input type='text' name='" + tmpCode + "' value='" + tagValMap.get(tmpCode).get(row) + "' class='input_240" + (tmpRequired.equals("true") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
+                            } else if (tmpTagType.equalsIgnoreCase("textarea")) {
+                                html += "<textarea name='" + tmpCode + "' class='input_textarea_600" + (tmpRequired.equals("true") ? " validate[required]" : "") + "'>" + tagValMap.get(tmpCode).get(row) + "</textarea>";
                             } else {
-                                html += "<td class='td_list_2'><input type='text' name='" + tmpName + "' value='" + valMap.get(tmpName).get(row) + "' class='input_240 validate[required]'/></td>";
+                                html += "<input type='text' name='" + tmpCode + "' value='" + tagValMap.get(tmpCode).get(row) + "' class='input_240" + (tmpRequired.equals("true") ? " validate[required]" : "") + "'/>";
                             }
                         }
-                        html += "<td class='td_list_2'>" + (row > 0 ? "<a class='btnDel' onclick='return Ops.removeTr(this,1);'></a><a onclick='return Ops.up(this);' title='上移'>上</a><a onclick='return Ops.down(this);' title='下移'>下</a>" : "") + "</td>";
-                        html += "</tr>";
+                        html += "</td><td class='td_list_2'>";
+                        html += (row > 0 ? "<a class='btnDel' onclick='return Ops.removeTr(this,1);'></a><a onclick='return Ops.up(this);' title='上移'>上</a><a onclick='return Ops.down(this);' title='下移'>下</a>" : "");
+                        html += "</td></tr>";
                     }
                     html += "</table>";
                 } else {

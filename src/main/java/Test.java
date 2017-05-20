@@ -1,7 +1,4 @@
 import com.alibaba.fastjson.JSON;
-import com.mongodb.*;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +8,7 @@ import java.util.Map;
  */
 public class Test {
     public static void main(String[] args) {
-        String sqlStr = "Like_String_type OR Like_String_name";
+        /*String sqlStr = "Like_String_type OR Like_String_name";
 
         Map<String, Object> paramMap = JSON.parseObject(sqlStr, Map.class);
 
@@ -27,6 +24,14 @@ public class Test {
 
         System.err.println(JSON.toJSONString(list));
 
-        client.close();
+        client.close();*/
+
+        String json = "[{code:'code',name:'name',dataType:'String',tagType:'Input',required:true},{code:'code',name:'name',dataType:'String',tagType:'Input',required:true}]";
+        List<Map<String, Object>> list = JSON.parseObject(json, List.class);
+        for (Map<String,Object> map:list) {
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                System.err.println(entry.getKey() + ":" + entry.getValue());
+            }
+        }
     }
 }
