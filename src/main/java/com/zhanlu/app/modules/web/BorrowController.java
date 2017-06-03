@@ -37,6 +37,6 @@ public class BorrowController {
 	public String applySave(String processId, String orderId, String taskId, Borrow model) {
         manager.save(processId, orderId, taskId, model);
 		/** 业务数据处理结束 */
-		return "redirect:/flow/task/active";
+		return "redirect:/flow/task/list";
 	}
 }

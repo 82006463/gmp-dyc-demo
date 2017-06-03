@@ -11,7 +11,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/snaker/task/active/ccmore" method="get">
+	<form id="mainForm" action="${ctx}/flow/task/list/ccmore" method="get">
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<table width="100%" border="0" align="center" cellpadding="0"
 				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
@@ -45,25 +45,15 @@
 			</tr>
 			<c:forEach items="${page.result}" var="item">
 				<tr>
-					<td class="td_list_2" align=left nowrap>
-						${item.processName}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
-						${item.orderNo}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
-						${item.createTime}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
-						${item.creator}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
-						${item.orderState == 0 ? '已结束' : '运行中'}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
-						<a href="${ctx}/snaker/process/display?processId=${item.processId }&orderId=${item.id} " class="btnPict" title="查看流程图">查看流程图</a>
-						<a href="${ctx}/snaker/all?processId=${item.processId }&orderId=${item.id}&type=cc " class="btnView" title="查看">查看</a>
-						<a href="${ctx}/snaker/ccread?id=${item.id}&url=/snaker/task/active " class="btnRead" title="关闭">关闭</a>
+					<td class="td_list_2" align=left>${item.processName}</td>
+					<td class="td_list_2" align=left>${item.orderNo}</td>
+					<td class="td_list_2" align=left>${item.createTime}</td>
+					<td class="td_list_2" align=left>${item.creator}</td>
+					<td class="td_list_2" align=left>${item.orderState == 0 ? '已结束' : '运行中'}</td>
+					<td class="td_list_2" align=left>
+						<a href="${ctx}/flow/process/display?processId=${item.processId }&orderId=${item.id} " class="btnPict" title="查看流程图">查看流程图</a>
+						<a href="${ctx}/flow/all?processId=${item.processId }&orderId=${item.id}&type=cc " class="btnView" title="查看">查看</a>
+						<a href="${ctx}/flow/ccread?id=${item.id}&url=/flow/task/list " class="btnRead" title="关闭">关闭</a>
 					</td>
 				</tr>
 			</c:forEach>

@@ -11,7 +11,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/snaker/task/active/more" method="get">
+	<form id="mainForm" action="${ctx}/flow/task/list/more" method="get">
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="taskType" id="taskType" value="${taskType}"/>
 		<table width="100%" border="0" align="center" cellpadding="0"
@@ -63,7 +63,7 @@
 						${item.taskCreateTime}&nbsp;
 					</td>
 					<td class="td_list_2" align=left nowrap>
-						<a href="${ctx}/snaker/process/display?processId=${item.processId }&orderId=${item.orderId} " class="btnView" title="查看">查看</a>
+						<a href="${ctx}/flow/process/display?processId=${item.processId }&orderId=${item.orderId} " class="btnView" title="查看">查看</a>
 						<a href="${ctx}${empty item.instanceUrl ? item.actionUrl : item.instanceUrl }?processId=${item.processId }&taskId=${item.taskId}&orderId=${item.orderId} " class="btnEdit" title="处理">处理</a>
 					</td>
 				</tr>

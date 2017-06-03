@@ -41,7 +41,7 @@ public class LoginController {
             subject.login(token);
             request.getSession().setAttribute("username", user.getUsername());
             return "redirect:/index";
-            //return "redirect:/flow/task/active";
+            //return "redirect:/flow/task/list";
         } catch (UnknownAccountException ue) {
             token.clear();
             model.addAttribute("error", "登录失败，您输入的账号不存在");

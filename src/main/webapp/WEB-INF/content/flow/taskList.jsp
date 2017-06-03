@@ -12,12 +12,12 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/snaker/task/active" method="get">
+	<form id="mainForm" action="${ctx}/flow/task/list" method="get">
 		<table width="100%" border="0" align="center" cellpadding="0"
 				class="table_all_border" cellspacing="0" style="border-bottom: 0px; margin-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="left">
-					待办任务<font color="red">[共:${majorTotal }项]&nbsp;&nbsp;<a href="${ctx}/snaker/task/active/more?taskType=0">更多...</a></font>
+					待办任务<font color="red">[共:${majorTotal }项]&nbsp;&nbsp;<a href="${ctx}/flow/task/list/more?taskType=0">更多...</a></font>
 				</td>
 			</tr>
 		</table>
@@ -63,7 +63,7 @@
 						${item.taskCreateTime}&nbsp;
 					</td>
 					<td class="td_list_2" align=left nowrap>
-						<a href="${ctx}/snaker/process/display?processId=${item.processId }&orderId=${item.orderId} " class="btnPict" title="查看流程图">查看流程图</a>
+						<a href="${ctx}/flow/process/display?processId=${item.processId }&orderId=${item.orderId} " class="btnPict" title="查看流程图">查看流程图</a>
 						<a href="${ctx}${empty item.instanceUrl ? item.actionUrl : item.instanceUrl }?processId=${item.processId }&taskId=${item.taskId}&orderId=${item.orderId} " class="btnEdit" title="处理">处理</a>
 					</td>
 				</tr>
@@ -86,7 +86,7 @@
 				class="table_all_border" cellspacing="0" style="border-bottom: 0px; margin-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="left">
-					协办任务<font color="red">[共:${aidantTotal }项]&nbsp;&nbsp;<a href="${ctx}/snaker/task/active/more?taskType=1">更多...</a></font>
+					协办任务<font color="red">[共:${aidantTotal }项]&nbsp;&nbsp;<a href="${ctx}/flow/task/list/more?taskType=1">更多...</a></font>
 				</td>
 			</tr>
 		</table>
@@ -132,8 +132,8 @@
 						${item.taskCreateTime}&nbsp;
 					</td>
 					<td class="td_list_2" align=left nowrap>
-						<a href="${ctx}/snaker/process/display?processId=${item.processId }&orderId=${item.orderId} " class="btnPict" title="查看流程图">查看流程图</a>
-						<a href="${ctx}${empty item.instanceUrl ? item.actionUrl : item.instanceUrl }?processId=${item.processId }&taskId=${item.taskId}&orderId=${item.orderId} " class="btnEdit" title="处理">处理</a>
+						<a href="${ctx}/flow/process/display?processId=${item.processId }&orderId=${item.orderId} " class="btnPict" title="查看流程图">查看流程图</a>
+						<a href="${ctx}${empty item.instanceUrl ? item.actionUrl : item.instanceUrl}?processId=${item.processId }&taskId=${item.taskId}&orderId=${item.orderId} " class="btnEdit" title="处理">处理</a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -155,7 +155,7 @@
 				class="table_all_border" cellspacing="0" style="border-bottom: 0px; margin-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="left">
-					抄送任务<font color="red">[共:${ccorderTotal }项]&nbsp;&nbsp;<a href="${ctx}/snaker/task/active/ccmore">更多...</a></font>
+					抄送任务<font color="red">[共:${ccorderTotal }项]&nbsp;&nbsp;<a href="${ctx}/flow/task/list/ccmore">更多...</a></font>
 				</td>
 			</tr>
 		</table>
@@ -200,9 +200,9 @@
 						${item.orderState == 0 ? '已结束' : '运行中'}&nbsp;
 					</td>
 					<td class="td_list_2" align=left nowrap>
-						<a href="${ctx}/snaker/process/display?processId=${item.processId }&orderId=${item.id} " class="btnPict" title="查看流程图">查看流程图</a>
+						<a href="${ctx}/flow/process/display?processId=${item.processId }&orderId=${item.id} " class="btnPict" title="查看流程图">查看流程图</a>
 						<a href="${ctx}${empty item.instanceUrl ? item.actionUrl : item.instanceUrl }?processId=${item.processId }&orderId=${item.id}&type=cc " class="btnView" title="查看">查看</a>
-						<a href="${ctx}/snaker/ccread?id=${item.id}&url=/snaker/task/active " class="btnRead" title="关闭">关闭</a>
+						<a href="${ctx}/flow/ccread?id=${item.id}&url=/snaker/task/active " class="btnRead" title="关闭">关闭</a>
 					</td>
 				</tr>
 			</c:forEach>
