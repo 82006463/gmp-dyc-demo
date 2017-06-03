@@ -56,7 +56,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @since 0.1
  */
 @Controller
-@RequestMapping(value = "/snaker/process")
+@RequestMapping(value = "/flow/process")
 public class ProcessController {
 	private static Log log = LogFactory.getLog(ProcessController.class);
 	@Autowired

@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @since 0.1
  */
 @Controller
-@RequestMapping(value = "/snaker/surrogate")
+@RequestMapping(value = "/flow/surrogate")
 public class SurrogateController {
 	@Autowired
 	private SnakerEngineFacets facets;

@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @since 0.1
  */
 @Controller
-@RequestMapping(value = "/snaker/task")
+@RequestMapping(value = "/flow/task")
 public class TaskController {
 	private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 	@Autowired

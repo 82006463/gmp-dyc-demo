@@ -30,8 +30,8 @@ import java.util.*;
  * @since 2.0
  */
 @Controller
-@RequestMapping(value = "/snaker/flow")
-public class FlowController {
+@RequestMapping(value = "/flow/order")
+public class OrderController {
     public static final String PARA_PROCESSID = "processId";
     public static final String PARA_ORDERID = "orderId";
     public static final String PARA_TASKID = "taskId";
@@ -50,7 +50,7 @@ public class FlowController {
      * @param page
      * @return
      */
-    @RequestMapping(value = "order", method= RequestMethod.GET)
+    @RequestMapping(value = "list", method= RequestMethod.GET)
     public String order(Model model, Page<HistoryOrder> page) {
         facets.getEngine().query().getHistoryOrders(page, new QueryFilter());
         model.addAttribute("page", page);
