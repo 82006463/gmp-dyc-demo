@@ -34,7 +34,7 @@ public class TaskController {
 	@Autowired
 	private SnakerEngineFacets facets;
 	
-	@RequestMapping(value = "active", method=RequestMethod.GET)
+	@RequestMapping(value = "list", method=RequestMethod.GET)
 	public String homeTaskList(Model model) {
 		List<String> list = ShiroUtils.getGroups();
 		list.add(ShiroUtils.getUsername());
@@ -67,7 +67,7 @@ public class TaskController {
 		model.addAttribute("aidantTotal", aidantPage.getTotalCount());
 		model.addAttribute("ccorderWorks", ccWorks);
 		model.addAttribute("ccorderTotal", ccorderPage.getTotalCount());
-		return "snaker/activeTask";
+		return "flow/taskList";
 	}
 	
 	/**
@@ -80,14 +80,14 @@ public class TaskController {
 		facets.getEngine().query().getWorkItems(page, 
 				new QueryFilter().setOperator(ShiroUtils.getUsername()));
 		model.addAttribute("page", page);
-		return "snaker/userTask";
+		return "flow/userTask";
 	}
 
     @RequestMapping(value = "actor/add", method=RequestMethod.GET)
     public String addTaskActor(Model model, String orderId, String taskName) {
         model.addAttribute("orderId", orderId);
         model.addAttribute("taskName", taskName);
-        return "snaker/actor";
+        return "flow/actor";
     }
 
     @RequestMapping(value = "actor/add", method=RequestMethod.POST)
@@ -131,7 +131,7 @@ public class TaskController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "active/more", method=RequestMethod.GET)
+	@RequestMapping(value = "taskList/more", method=RequestMethod.GET)
 	public String activeTaskList(Model model, Page<WorkItem> page, Integer taskType) {
 		List<String> list = ShiroUtils.getGroups();
 		list.add(ShiroUtils.getUsername());
@@ -142,7 +142,7 @@ public class TaskController {
 				new QueryFilter().setOperators(assignees).setTaskType(taskType));
 		model.addAttribute("page", page);
 		model.addAttribute("taskType", taskType);
-		return "snaker/activeTaskMore";
+		return "flow/taskListMore";
 	}
 	
 	/**
@@ -163,7 +163,7 @@ public class TaskController {
 				.setOperators(assignees)
 				.setState(1));
 		model.addAttribute("page", page);
-		return "snaker/activeCCMore";
+		return "flow/activeCCMore";
 	}
 	
 	/**
@@ -174,7 +174,7 @@ public class TaskController {
 	@RequestMapping(value = "exec", method=RequestMethod.GET)
 	public String activeTaskExec(Model model, String taskId) {
 		facets.execute(taskId, ShiroUtils.getUsername(), null);
-		return "redirect:/snaker/task/active";
+		return "redirect:/flow/task/list";
 	}
 	
 	/**
@@ -191,7 +191,7 @@ public class TaskController {
 		} catch(Exception e) {
 			error = "?error=1";
 		}
-		return "redirect:/snaker/task/active" + error;
+		return "redirect:/flow/task/list" + error;
 	}
 	
 	/**
@@ -204,7 +204,7 @@ public class TaskController {
 		facets.getEngine().query().getHistoryWorkItems(page, 
 				new QueryFilter().setOperator(ShiroUtils.getUsername()));
 		model.addAttribute("page", page);
-		return "snaker/historyTask";
+		return "flow/historyList";
 	}
 	
 	/**
@@ -222,6 +222,6 @@ public class TaskController {
 			returnMessage = e.getMessage();
 		}
 		model.addAttribute("returnMessage", returnMessage);
-		return "redirect:/snaker/task/history";
+		return "redirect:/flow/task/history";
 	}
 }

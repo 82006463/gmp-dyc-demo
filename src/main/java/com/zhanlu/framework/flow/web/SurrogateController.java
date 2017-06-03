@@ -40,27 +40,27 @@ public class SurrogateController {
 	public String list(Model model, Page<Surrogate> page) {
 		facets.searchSurrogate(page, new QueryFilter());
 		model.addAttribute("page", page);
-		return "snaker/surrogateList";
+		return "flow/surrogateList";
 	}
 	
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String create(Model model) {
 		model.addAttribute("surrogate", new Surrogate());
 		model.addAttribute("processNames", facets.getAllProcessNames());
-		return "snaker/surrogateEdit";
+		return "flow/surrogateEdit";
 	}
 
 	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") String id, Model model) {
 		model.addAttribute("surrogate", facets.getSurrogate(id));
 		model.addAttribute("processNames", facets.getAllProcessNames());
-		return "snaker/surrogateEdit";
+		return "flow/surrogateEdit";
 	}
 	
 	@RequestMapping(value = "view/{id}", method = RequestMethod.GET)
 	public String view(@PathVariable("id") String id, Model model) {
 		model.addAttribute("surrogate", facets.getSurrogate(id));
-		return "snaker/surrogateView";
+		return "flow/surrogateView";
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
@@ -68,12 +68,12 @@ public class SurrogateController {
 		surrogate.setSdate(surrogate.getSdate() + " 00:00:00");
 		surrogate.setEdate(surrogate.getEdate() + " 23:59:59");
 		facets.addSurrogate(surrogate);
-		return "redirect:/snaker/surrogate/list";
+		return "redirect:/flow/surrogate/list";
 	}
 	
 	@RequestMapping(value = "delete/{id}")
 	public String delete(@PathVariable("id") String id) {
 		facets.deleteSurrogate(id);
-		return "redirect:/snaker/surrogate";
+		return "redirect:/flow/surrogate/list";
 	}
 }

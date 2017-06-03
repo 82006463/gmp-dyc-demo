@@ -54,7 +54,7 @@ public class OrderController {
     public String order(Model model, Page<HistoryOrder> page) {
         facets.getEngine().query().getHistoryOrders(page, new QueryFilter());
         model.addAttribute("page", page);
-        return "snaker/order";
+        return "flow/orderList";
     }
 
     /**
@@ -154,7 +154,7 @@ public class OrderController {
         if(StringUtils.isNotEmpty(ccOperator)) {
             facets.getEngine().order().createCCOrder(orderId, ShiroUtils.getUsername(), ccOperator.split(","));
         }
-        return "redirect:/snaker/task/active";
+        return "redirect:/flow/task/active";
     }
 
     /**
@@ -175,7 +175,7 @@ public class OrderController {
         if(StringUtils.isNotEmpty(taskId)) {
             model.addAttribute("task", facets.getEngine().query().getTask(taskId));
         }
-        return "snaker/all";
+        return "flow/all";
     }
 
     /**
@@ -208,10 +208,10 @@ public class OrderController {
 		model.addAttribute("orderId", orderId);
 		model.addAttribute("taskId", taskId);
         if(StringUtils.isNotEmpty(taskId)) {
-            return "snaker/approval";
+            return "flow/approval";
         } else {
             model.addAttribute("approvals", manager.findByFlow(orderId, taskName));
-            return "snaker/approvalView";
+            return "flow/approvalView";
         }
     }
 
@@ -228,6 +228,6 @@ public class OrderController {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("result", model.getResult());
         facets.execute(model.getTaskId(), ShiroUtils.getUsername(), params);
-        return "redirect:/snaker/task/active";
+        return "redirect:/flow/task/active";
     }
 }

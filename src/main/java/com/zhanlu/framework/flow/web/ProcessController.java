@@ -74,7 +74,7 @@ public class ProcessController {
 		}
 		facets.getEngine().process().getProcesss(page, filter);
 		model.addAttribute("page", page);
-		return "snaker/processList";
+		return "flow/processList";
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class ProcessController {
 	@RequestMapping(value = "init", method=RequestMethod.GET)
 	public String processInit() {
 		facets.initFlows();
-		return "redirect:/snaker/process/list";
+		return "redirect:/flow/process/list";
 	}
 	
 	/**
@@ -104,7 +104,7 @@ public class ProcessController {
 	 */
 	@RequestMapping(value = "add", method=RequestMethod.GET)
 	public String processAdd(Model model) {
-		return "snaker/processAdd";
+		return "flow/processAdd";
 	}
 	
 	/**
@@ -124,7 +124,7 @@ public class ProcessController {
 			}
 			model.addAttribute("processId", processId);
 		}
-		return "snaker/processDesigner";
+		return "flow/processDesigner";
 	}
 	
 	/**
@@ -143,7 +143,7 @@ public class ProcessController {
                 e.printStackTrace();
             }
         }
-		return "snaker/processEdit";
+		return "flow/processEdit";
 	}
 	
 	/**
@@ -154,7 +154,7 @@ public class ProcessController {
 	@RequestMapping(value = "delete/{id}", method=RequestMethod.GET)
 	public String processDelete(@PathVariable("id") String id) {
 		facets.getEngine().process().undeploy(id);
-		return "redirect:/snaker/process/list";
+		return "redirect:/flow/process/list";
 	}
 	
 	/**
@@ -184,7 +184,7 @@ public class ProcessController {
 				}
 			}
 		}
-		return "redirect:/snaker/process/list";
+		return "redirect:/flow/process/list";
 	}
 	
 	/**
@@ -223,7 +223,7 @@ public class ProcessController {
 	@RequestMapping(value = "start", method=RequestMethod.GET)
 	public String processStart(Model model, String processName) {
 		facets.startInstanceByName(processName, null, ShiroUtils.getUsername(), null);
-		return "redirect:/snaker/process/list";
+		return "redirect:/flow/process/list";
 	}
 	
 	@RequestMapping(value = "json", method=RequestMethod.GET)
@@ -254,7 +254,7 @@ public class ProcessController {
 		model.addAttribute("order", order);
 		List<HistoryTask> tasks = facets.getEngine().query().getHistoryTasks(new QueryFilter().setOrderId(orderId));
 		model.addAttribute("tasks", tasks);
-		return "snaker/processView";
+		return "flow/processView";
 	}
 
     /**
@@ -264,6 +264,6 @@ public class ProcessController {
     public String diagram(Model model, String processId, String orderId) {
         model.addAttribute("processId", processId);
         model.addAttribute("orderId", orderId);
-        return "snaker/diagram";
+        return "flow/diagram";
     }
 }
