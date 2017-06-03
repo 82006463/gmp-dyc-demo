@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.entity.HistoryOrder;
+import org.snaker.engine.entity.Process;
 import org.snaker.engine.entity.Task;
 import org.snaker.engine.entity.WorkItem;
 import org.snaker.engine.model.TaskModel.TaskType;
@@ -121,7 +122,7 @@ public class TaskController {
      * 活动任务查询列表
      */
     @RequestMapping(value = "more", method = RequestMethod.GET)
-    public String activeTaskList(Model model, Page<WorkItem> page, Integer taskType) {
+    public String taskMore(Model model, Page<WorkItem> page, Integer taskType) {
         List<String> list = ShiroUtils.getGroups();
         list.add(ShiroUtils.getUsername());
         log.info(list.toString());
@@ -131,7 +132,7 @@ public class TaskController {
                 new QueryFilter().setOperators(assignees).setTaskType(taskType));
         model.addAttribute("page", page);
         model.addAttribute("taskType", taskType);
-        return "flow/taskListMore";
+        return "flow/taskMore";
     }
 
     /**
@@ -146,13 +147,27 @@ public class TaskController {
         list.toArray(assignees);
         facets.getEngine().query().getCCWorks(page, new QueryFilter().setOperators(assignees).setState(1));
         model.addAttribute("page", page);
-        return "flow/activeCCMore";
+        return "flow/taskCCMore";
     }
 
-    @RequestMapping(value = "approvePage", method = RequestMethod.GET)
+    @RequestMapping(value = "approval", method = RequestMethod.GET)
     public ModelAndView approval(HttpServletRequest req) {
-        ModelAndView mv = new ModelAndView();
+        String processId = req.getParameter("processId");
+        String orderId = req.getParameter("orderId");
+        String taskId = req.getParameter("taskId");
+        Process process = facets.getEngine().process().getProcessById(processId);
+        String formCode = process.getInstanceUrl();
+        if (StringUtils.isNotEmpty(taskId)) {
+            Task task = facets.getEngine().query().getTask(taskId);
+            formCode = task.getActionUrl();
+        }
 
+        ModelAndView mv = new ModelAndView("flow/taskApproval");
+        mv.addObject("process", process);
+        mv.addObject("processId", processId);
+        mv.addObject("orderId", orderId);
+        mv.addObject("taskId", taskId);
+        mv.addObject("jsonEdit", taskId);
         return mv;
     }
 

@@ -81,6 +81,26 @@ $.extend(true, snakerflow.editors, {
 		this.destroy = function(){
 			//
 		}
+	},
+	redirectEditor : function(arg){
+		var _props,_k,_div,_src,_r;
+		this.init = function(props, k, div, src, r){
+			_props=props; _k=k; _div=div; _src=src; _r=r;
+			$('<input style="width:83%;" readonly="readonly"/>').val(props[_k].value).change(function(){
+				props[_k].value = $(this).val();
+			}).appendTo('#'+_div);
+
+			$('<input style="width:15%;" type="button" value="选择'+(k=='type'?'类型':'表单')+'"/>').click(function(){
+				FlowNode.inputForm = $('div#' + _div + '.editor').find('input:eq(0)');
+				var url = snakerflow.config.ctxPath+arg + '&formIds=' + FlowNode.inputForm.val();
+				openMenu($(this), url); //弹出表单列表
+			}).appendTo('#'+_div);
+
+			$('#'+_div).data('editor', this);
+		}
+		this.destroy = function(){
+			//
+		}
 	}
 });
 

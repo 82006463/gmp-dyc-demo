@@ -17,7 +17,7 @@
 				class="table_all_border" cellspacing="0" style="border-bottom: 0px; margin-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="left">
-					待办任务<font color="red">[共:${majorTotal }项]&nbsp;&nbsp;<a href="${ctx}/flow/task/list/more?taskType=0">更多...</a></font>
+					待办任务<font color="red">[共:${majorTotal }项]&nbsp;&nbsp;<a href="${ctx}/flow/task/more?taskType=0">更多...</a></font>
 				</td>
 			</tr>
 		</table>
@@ -86,7 +86,7 @@
 				class="table_all_border" cellspacing="0" style="border-bottom: 0px; margin-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="left">
-					协办任务<font color="red">[共:${aidantTotal }项]&nbsp;&nbsp;<a href="${ctx}/flow/task/list/more?taskType=1">更多...</a></font>
+					协办任务<font color="red">[共:${aidantTotal }项]&nbsp;&nbsp;<a href="${ctx}/flow/task/more?taskType=1">更多...</a></font>
 				</td>
 			</tr>
 		</table>
@@ -155,7 +155,7 @@
 				class="table_all_border" cellspacing="0" style="border-bottom: 0px; margin-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="left">
-					抄送任务<font color="red">[共:${ccorderTotal }项]&nbsp;&nbsp;<a href="${ctx}/flow/task/list/ccmore">更多...</a></font>
+					抄送任务<font color="red">[共:${ccorderTotal }项]&nbsp;&nbsp;<a href="${ctx}/flow/task/ccmore">更多...</a></font>
 				</td>
 			</tr>
 		</table>

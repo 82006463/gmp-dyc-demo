@@ -11,7 +11,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/flow/task/list/more" method="get">
+	<form id="mainForm" action="${ctx}/flow/task/more" method="get">
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="taskType" id="taskType" value="${taskType}"/>
 		<table width="100%" border="0" align="center" cellpadding="0"
