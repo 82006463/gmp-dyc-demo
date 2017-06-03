@@ -56,7 +56,7 @@ public class SnakerHelper {
 		return buffer.toString();
 	}
 
-	public static String getModelJson(ProcessModel model) {
+	public static String getModelJson(ProcessModel model, Map<String,Object> extraMap) {
 		StringBuffer buffer = new StringBuffer();
 		List<TransitionModel> tms = new ArrayList<TransitionModel>();
 		for(NodeModel node : model.getNodes()) {
@@ -77,6 +77,13 @@ public class SnakerHelper {
 		buffer.append(convert(model.getInstanceUrl()));
 		buffer.append("'},instanceNoClass:{name:'instanceNoClass',value:'");
 		buffer.append(convert(model.getInstanceNoClass()));
+		//附加的属性
+		if (extraMap != null && extraMap.size() > 0) {
+			for (Map.Entry<String, Object> entry : extraMap.entrySet()) {
+				buffer.append("'}," + entry.getKey() + ":{name:'" + entry.getKey() + "',value:'");
+				buffer.append(entry.getValue() == null ? "" : entry.getValue());
+			}
+		}
 		buffer.append("'}}}}");
 		return buffer.toString();
 	}

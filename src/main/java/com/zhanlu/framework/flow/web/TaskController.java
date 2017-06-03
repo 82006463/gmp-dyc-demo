@@ -17,7 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,11 +119,8 @@ public class TaskController {
 
     /**
      * 活动任务查询列表
-     *
-     * @param model
-     * @return
      */
-    @RequestMapping(value = "list/more", method = RequestMethod.GET)
+    @RequestMapping(value = "more", method = RequestMethod.GET)
     public String activeTaskList(Model model, Page<WorkItem> page, Integer taskType) {
         List<String> list = ShiroUtils.getGroups();
         list.add(ShiroUtils.getUsername());
@@ -137,11 +136,8 @@ public class TaskController {
 
     /**
      * 活动任务查询列表
-     *
-     * @param model
-     * @return
      */
-    @RequestMapping(value = "list/ccmore", method = RequestMethod.GET)
+    @RequestMapping(value = "ccmore", method = RequestMethod.GET)
     public String activeCCList(Model model, Page<HistoryOrder> page) {
         List<String> list = ShiroUtils.getGroups();
         list.add(ShiroUtils.getUsername());
@@ -153,11 +149,15 @@ public class TaskController {
         return "flow/activeCCMore";
     }
 
+    @RequestMapping(value = "approvePage", method = RequestMethod.GET)
+    public ModelAndView approval(HttpServletRequest req) {
+        ModelAndView mv = new ModelAndView();
+
+        return mv;
+    }
+
     /**
      * 测试任务的执行
-     *
-     * @param model
-     * @return
      */
     @RequestMapping(value = "exec", method = RequestMethod.GET)
     public String activeTaskExec(Model model, String taskId) {
