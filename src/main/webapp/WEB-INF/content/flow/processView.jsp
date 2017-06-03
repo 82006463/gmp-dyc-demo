@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
     function addTaskActor(taskName) {
-        var url = '${ctx}/snaker/task/actor/add?orderId=${order.id}&taskName=' + taskName;
+        var url = '${ctx}/flow/task/actor/add?orderId=${order.id}&taskName=' + taskName;
         var returnValue = window.showModalDialog(url,window,'dialogWidth:1000px;dialogHeight:600px');
         if(returnValue) {
             $('#currentActorDIV').append(',' + returnValue);
@@ -99,7 +99,7 @@
 		<script type="text/javascript">
 		$.ajax({
 				type:'GET',
-				url:"${ctx}/snaker/process/json",
+				url:"${ctx}/flow/process/json",
 				data:"processId=${processId}&orderId=${order.id}",
 				async: false,
 				globle:false,

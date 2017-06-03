@@ -11,7 +11,7 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/snaker/process/deploy" method="post" enctype="multipart/form-data">
+		<form id="inputForm" action="${ctx }/flow/process/deploy" method="post" enctype="multipart/form-data">
 		<table width="100%" border="0" align="center" cellpadding="0"
 				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>

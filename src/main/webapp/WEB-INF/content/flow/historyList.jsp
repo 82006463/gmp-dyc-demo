@@ -13,7 +13,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/snaker/task/history" method="get">
+	<form id="mainForm" action="${ctx}/flow/task/history" method="get">
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<table width="100%" border="0" align="center" cellpadding="0"
 				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">

@@ -202,7 +202,7 @@
 					<td class="td_list_2" align=left nowrap>
 						<a href="${ctx}/flow/process/display?processId=${item.processId }&orderId=${item.id} " class="btnPict" title="查看流程图">查看流程图</a>
 						<a href="${ctx}${empty item.instanceUrl ? item.actionUrl : item.instanceUrl }?processId=${item.processId }&orderId=${item.id}&type=cc " class="btnView" title="查看">查看</a>
-						<a href="${ctx}/flow/ccread?id=${item.id}&url=/snaker/task/active " class="btnRead" title="关闭">关闭</a>
+						<a href="${ctx}/flow/ccread?id=${item.id}&url=/flow/task/list " class="btnRead" title="关闭">关闭</a>
 					</td>
 				</tr>
 			</c:forEach>

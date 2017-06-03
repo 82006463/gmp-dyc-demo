@@ -60,6 +60,6 @@ public class SystemContoller {
 	@RequestMapping(value = "/right" ,method=RequestMethod.GET)
 	public String right(Model model) {
 		//return "system/right";
-		return "redirect:/snaker/task/list";
+		return "redirect:/flow/task/list";
 	}
 }

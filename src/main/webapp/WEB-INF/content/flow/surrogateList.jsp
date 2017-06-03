@@ -12,7 +12,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/snaker/surrogate" method="get">
+	<form id="mainForm" action="${ctx}/flow/surrogate/list" method="get">
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<table width="100%" border="0" align="center" cellpadding="0"
 				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
@@ -37,7 +37,7 @@
 			<tr>
 				<td align="left">
 				<shiro:hasPermission name="RESOURCEEDIT">
-					<input type='button' onclick="addNew('${ctx}/snaker/surrogate/create')" class='button_70px' value='新建'/>
+					<input type='button' onclick="addNew('${ctx}/flow/surrogate/create')" class='button_70px' value='新建'/>
 				</shiro:hasPermission>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
@@ -83,9 +83,9 @@
 						${surrogate.edate}&nbsp;
 					</td>
 					<td class="td_list_2" align=left nowrap>
-						<a href="${ctx}/snaker/surrogate/delete/${surrogate.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-						<a href="${ctx}/snaker/surrogate/update/${surrogate.id }" class="btnEdit" title="编辑">编辑</a>
-						<a href="${ctx}/snaker/surrogate/view/${surrogate.id }" class="btnView" title="查看">查看</a>
+						<a href="${ctx}/flow/surrogate/delete/${surrogate.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+						<a href="${ctx}/flow/surrogate/update/${surrogate.id }" class="btnEdit" title="编辑">编辑</a>
+						<a href="${ctx}/flow/surrogate/view/${surrogate.id }" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>
 			</c:forEach>

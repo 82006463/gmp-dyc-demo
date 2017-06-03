@@ -12,7 +12,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/snaker/order" method="get">
+	<form id="mainForm" action="${ctx}/flow/order/list" method="get">
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<table width="100%" border="0" align="center" cellpadding="0"
 				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
@@ -74,8 +74,8 @@
 						${item.orderState == 0 ? '已结束' : '运行中'}&nbsp;
 					</td>
 					<td class="td_list_2" align=left nowrap>
-						<a href="${ctx}/snaker/process/display?processId=${item.processId }&orderId=${item.id} " class="btnPict" title="查看流程图">查看流程图</a>
-						<a href="${ctx}/snaker/all?processId=${item.processId }&orderId=${item.id}&type=cc " class="btnView" title="查看">查看</a>
+						<a href="${ctx}/flow/process/display?processId=${item.processId }&orderId=${item.id} " class="btnPict" title="查看流程图">查看流程图</a>
+						<a href="${ctx}/flow/all?processId=${item.processId }&orderId=${item.id}&type=cc " class="btnView" title="查看">查看</a>
 					</td>
 				</tr>
 			</c:forEach>
