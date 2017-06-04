@@ -16,7 +16,7 @@ public class R_ActorStrategy implements ActorStrategy {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Map<String, Object>> findActors(String operator, List<String> codes, Map<String, Object> flowArgs) {
+    public List<Object> findActors(String operator, List<String> codes, Map<String, Object> flowArgs) {
         StringBuilder sqlBuf = new StringBuilder(SQL_R);
         List<Object> paramList = new ArrayList<>(codes.size());
 
@@ -27,6 +27,6 @@ public class R_ActorStrategy implements ActorStrategy {
             paramList.add(codes.get(i));
         }
         sqlBuf.append(")");
-        return jdbcTemplate.queryForList(sqlBuf.toString(), paramList.toArray());
+        return jdbcTemplate.queryForList(sqlBuf.toString(), paramList.toArray(), Object.class);
     }
 }

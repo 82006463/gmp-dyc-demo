@@ -16,7 +16,7 @@ public class RD_ActorStrategy implements ActorStrategy {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Map<String, Object>> findActors(String operator, List<String> codes, Map<String, Object> flowArgs) {
+    public List<Object> findActors(String operator, List<String> codes, Map<String, Object> flowArgs) {
         StringBuilder sqlBuf = new StringBuilder(SQL_RD);
         List<Object> paramList = new ArrayList<>(codes.size() * 2);
 
@@ -31,7 +31,7 @@ public class RD_ActorStrategy implements ActorStrategy {
             paramList.add(rdCodes[1]);
         }
         sqlBuf.append(")");
-        return jdbcTemplate.queryForList(sqlBuf.toString(), paramList.toArray());
+        return jdbcTemplate.queryForList(sqlBuf.toString(), paramList.toArray(), Object.class);
     }
 
 }

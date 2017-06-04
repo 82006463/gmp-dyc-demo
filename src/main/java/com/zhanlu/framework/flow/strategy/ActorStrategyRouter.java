@@ -75,16 +75,11 @@ public class ActorStrategyRouter {
             if (entry.getValue().isEmpty())
                 continue;
             ActorStrategy actorService = applicationContext.getBean(entry.getKey() + "_ActorStrategy", ActorStrategy.class);
-            List<Map<String, Object>> tmpList = actorService.findActors(operator, entry.getValue(), flowArgs);
+            List<Object> tmpList = actorService.findActors(operator, entry.getValue(), flowArgs);
             if (tmpList == null || tmpList.isEmpty())
                 continue;
-            for (Map<String, Object> tmp : tmpList) {
-                for (Map.Entry<String, Object> tmpEntry : tmp.entrySet()) {
-                    if (tmpEntry.getKey().equals("username")) {
-                        resultSet.add(tmpEntry.getValue().toString());
-                        break;
-                    }
-                }
+            for (Object tmp : tmpList) {
+                resultSet.add(tmp.toString());
             }
         }
         return resultSet;
