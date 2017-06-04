@@ -58,9 +58,7 @@ public class ActorStrategyRouter {
             } else if (preName.equals(ActorStrategy.RULE_RD)) {
                 String[] rdCodes = rule2Arr[1].split("\\&");
                 rule2Arr[1] = rdCodes[0] + "&";
-                if (rdCodes.length > 1 && rdCodes[1].length() == 1) { //指定的部门层级
-                    rule2Arr[1] += flowArgs.get("v_deptCode" + rdCodes[1]);
-                } else if (rdCodes.length > 1 && flowArgs.containsKey(rdCodes[1])) //页面选择的部门
+                if (rdCodes.length > 1 && flowArgs.containsKey(rdCodes[1])) //页面选择的部门
                     rule2Arr[1] += flowArgs.get(rdCodes[1]);
                 else //当前部门
                     rule2Arr[1] += flowArgs.get("v_deptCode");
@@ -78,15 +76,10 @@ public class ActorStrategyRouter {
             List<Object> tmpList = actorService.findActors(operator, entry.getValue(), flowArgs);
             if (tmpList == null || tmpList.isEmpty())
                 continue;
-            for (Object tmp : tmpList) {
+            for (Object tmp : tmpList)
                 resultSet.add(tmp.toString());
-            }
         }
         return resultSet;
     }
 
-    public static void main(String[] args) {
-        String ruleStr = "R_123,R_456";
-        new ActorStrategyRouter().findActors("liuqi", ruleStr, null);
-    }
 }

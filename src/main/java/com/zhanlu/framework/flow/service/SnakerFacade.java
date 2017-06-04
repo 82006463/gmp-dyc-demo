@@ -14,22 +14,21 @@
  */
 package com.zhanlu.framework.flow.service;
 
-import com.zhanlu.framework.flow.strategy.ActorStrategy;
 import org.apache.commons.lang.StringUtils;
 import org.snaker.engine.SnakerEngine;
 import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;
-import org.snaker.engine.entity.*;
+import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Process;
+import org.snaker.engine.entity.Surrogate;
+import org.snaker.engine.entity.Task;
 import org.snaker.engine.helper.StreamHelper;
-import org.snaker.engine.model.TaskModel;
 import org.snaker.engine.model.TaskModel.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,13 +51,11 @@ public class SnakerFacade {
 
     public List<String> getAllProcessNames() {
         List<Process> list = engine.process().getProcesss(new QueryFilter());
-        List<String> names = new ArrayList<String>();
+        List<String> names = new ArrayList<>();
         for (Process entity : list) {
-            if (names.contains(entity.getName())) {
+            if (names.contains(entity.getName()))
                 continue;
-            } else {
-                names.add(entity.getName());
-            }
+            names.add(entity.getName());
         }
         return names;
     }
@@ -93,13 +90,9 @@ public class SnakerFacade {
     @Transactional
     public List<Task> execute(String taskId, String operator, Map<String, Object> args) {
         Task task = engine.query().getTask(taskId);
-        TaskModel taskModel = task.getModel() == null ? engine.task().getTaskModel(taskId) : task.getModel();
-        Map<String, Object> taskMap = task.getVariableMap();
-        String assigneeStr = taskModel.getAssignee();
-        String[] assigneeArr = assigneeStr.split(ActorStrategy.RULE_MID);
-
-        if (args == null)
-            args = taskMap;
+        if (args == null) {
+            args = task.getVariableMap();
+        }
         if (!args.containsKey("wf_orderId")) {
             Order order = engine.query().getOrder(task.getOrderId());
             args.put("wf_orderId", order.getId());
@@ -119,6 +112,7 @@ public class SnakerFacade {
         return newTasks;
     }
 
+    //转办
     @Transactional
     public List<Task> transferMajor(String taskId, String operator, String... actors) {
         List<Task> tasks = engine.task().createNewTask(taskId, TaskType.Major.ordinal(), actors);
@@ -126,25 +120,12 @@ public class SnakerFacade {
         return tasks;
     }
 
+    //协办
     @Transactional
     public List<Task> transferAidant(String taskId, String operator, String... actors) {
         List<Task> tasks = engine.task().createNewTask(taskId, TaskType.Aidant.ordinal(), actors);
         engine.task().complete(taskId, operator);
         return tasks;
-    }
-
-    public Map<String, Object> flowData(String orderId, String taskName) {
-        Map<String, Object> data = new HashMap<>();
-        if (StringUtils.isNotEmpty(orderId) && StringUtils.isNotEmpty(taskName)) {
-            List<HistoryTask> histTasks = engine.query().getHistoryTasks(new QueryFilter().setOrderId(orderId).setName(taskName));
-            List<Map<String, Object>> vars = new ArrayList<Map<String, Object>>();
-            for (HistoryTask hist : histTasks) {
-                vars.add(hist.getVariableMap());
-            }
-            data.put("vars", vars);
-            data.put("histTasks", histTasks);
-        }
-        return data;
     }
 
     public void addSurrogate(Surrogate entity) {
