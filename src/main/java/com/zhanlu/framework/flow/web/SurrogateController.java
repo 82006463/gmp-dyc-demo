@@ -17,7 +17,7 @@ package com.zhanlu.framework.flow.web;
 import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.entity.Surrogate;
-import com.zhanlu.framework.flow.service.SnakerEngineFacets;
+import com.zhanlu.framework.flow.service.SnakerFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/flow/surrogate")
 public class SurrogateController {
 	@Autowired
-	private SnakerEngineFacets facets;
+	private SnakerFacade facets;
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list(Model model, Page<Surrogate> page) {

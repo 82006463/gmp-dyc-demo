@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<form id="inputForm" action="${ctx }/flow/task/exec" method="post">
+	<form id="inputForm" action="${ctx }/flow/task/approval" method="post">
 		<input type="hidden" id="id" name="id" value="${entity.id}"/>
 		<input type="hidden" id="processId" name="processId" value="${process.id}"/>
 		<input type="hidden" id="orderId" name="orderId" value="${orderId}"/>
@@ -37,6 +37,7 @@
 				<td colspan="1">
 					<input type="button" class="button_70px" name="submit" value="保存">&nbsp;&nbsp;
 					<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
+					<input type="submit" class="button_70px" name="submit" value="拒绝">&nbsp;&nbsp;
 					<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 				</td>
 			</tr>

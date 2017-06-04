@@ -15,7 +15,7 @@
 package com.zhanlu.framework.flow.web;
 
 import com.zhanlu.framework.common.utils.SnakerHelper;
-import com.zhanlu.framework.flow.service.SnakerEngineFacets;
+import com.zhanlu.framework.flow.service.SnakerFacade;
 import com.zhanlu.framework.security.shiro.ShiroUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -65,7 +65,7 @@ public class ProcessController {
     private static Log log = LogFactory.getLog(ProcessController.class);
 
     @Autowired
-    private SnakerEngineFacets facets;
+    private SnakerFacade facets;
 
     /**
      * 流程定义查询列表
@@ -184,12 +184,6 @@ public class ProcessController {
         //facets.getEngine().process().undeploy(id);
         facets.getEngine().process().cascadeRemove(id);
         return new ModelAndView("redirect:/flow/process/list");
-    }
-
-    @RequestMapping(value = "start", method = RequestMethod.GET)
-    public String processStart(Model model, String processName) {
-        facets.startInstanceByName(processName, null, ShiroUtils.getUsername(), null);
-        return "redirect:/flow/process/list";
     }
 
     @RequestMapping(value = "json", method = RequestMethod.GET)

@@ -1,8 +1,9 @@
 package com.zhanlu.framework.flow.web;
 
 import com.zhanlu.framework.config.service.DataDictService;
-import com.zhanlu.framework.flow.service.SnakerEngineFacets;
+import com.zhanlu.framework.flow.service.SnakerFacade;
 import com.zhanlu.framework.logic.MongoLogic;
+import com.zhanlu.framework.nosql.item.EditItem;
 import com.zhanlu.framework.nosql.item.QueryItem;
 import com.zhanlu.framework.security.shiro.ShiroUtils;
 import com.zhanlu.framework.util.MetaTagUtils;
@@ -52,7 +53,7 @@ public class TaskController {
     private String metaTable = "config_meta";
 
     @Autowired
-    private SnakerEngineFacets facets;
+    private SnakerFacade facets;
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String homeTaskList(Model model) {
@@ -176,45 +177,53 @@ public class TaskController {
         Process process = facets.getEngine().process().getProcessById(processId);
         Task task = StringUtils.isNotEmpty(taskId) ? facets.getEngine().query().getTask(taskId) : null;
 
-        ModelAndView mv = new ModelAndView("flow/taskApproval");
+        ModelAndView mav = new ModelAndView("flow/taskApproval");
         String formPage = task != null ? task.getActionUrl() : process.getInstanceUrl();
         Map<String, Object> entity = task != null ? task.getVariableMap() : new HashMap<String, Object>();
         if (formPage.contains("/")) {
-            mv.addObject("includeFile", formPage);
+            mav.addObject("includeFile", formPage);
         } else {
-            List<QueryItem> queryItems = new ArrayList<>(2);
-            queryItems.add(new QueryItem("Eq_String_code", formPage));
-            Map<String, Object> metaTag = mongoLogic.findOne(metaTable, queryItems);
-            mv.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, metaTag, entity));
+            mav.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, this.getMetaTag(formPage), entity));
         }
-        mv.addObject("process", process);
-        mv.addObject("orderId", orderId);
-        mv.addObject("task", task);
-        mv.addObject("entity", entity);
-        return mv;
+        mav.addObject("process", process);
+        mav.addObject("orderId", orderId);
+        mav.addObject("task", task);
+        mav.addObject("entity", entity);
+        return mav;
     }
 
     /**
      * 测试任务的执行
      */
-    @RequestMapping(value = "exec", method = RequestMethod.GET)
-    public String activeTaskExec(Model model, String taskId) {
-        facets.execute(taskId, ShiroUtils.getUsername(), null);
-        return "redirect:/flow/task/list";
-    }
+    @RequestMapping(value = "approval", method = RequestMethod.POST)
+    public ModelAndView doApproval(HttpServletRequest req) {
+        String processId = req.getParameter("processId");
+        //String orderId = req.getParameter("orderId");
+        String taskId = req.getParameter("taskId");
 
-    /**
-     * 活动任务的驳回
-     */
-    @RequestMapping(value = "reject", method = RequestMethod.GET)
-    public String activeTaskReject(Model model, String taskId) {
-        String error = "";
-        try {
-            facets.executeAndJump(taskId, ShiroUtils.getUsername(), null, null);
-        } catch (Exception e) {
-            error = "?error=1";
+        Task task = StringUtils.isNotEmpty(taskId) ? facets.getEngine().query().getTask(taskId) : null;
+        Process process = task == null ? facets.getEngine().process().getProcessById(processId) : null;
+        String formPage = task != null ? task.getActionUrl() : process.getInstanceUrl();
+        Map<String, Object> taskMap = task != null ? task.getVariableMap() : new HashMap<String, Object>();
+        Map<String, Object> metaTag = this.getMetaTag(formPage);
+
+        Map<String, String[]> paramMap = req.getParameterMap();
+        Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), paramMap);
+        String submitBtn = paramMap.containsKey("submit") ? paramMap.get("submit")[0] : "";
+        if (task != null) {
+            if (submitBtn.equals("保存")) {
+                taskMap.putAll(entity);
+            } else if (submitBtn.equals("提交")) {
+                taskMap.putAll(entity);
+                facets.execute(taskId, ShiroUtils.getUsername(), taskMap);
+            } else if (submitBtn.equals("拒绝")) {
+                facets.executeAndJump(taskId, ShiroUtils.getUsername(), taskMap, null);
+            }
+        } else if (submitBtn.equals("提交")) {
+            facets.startAndExecute(processId, ShiroUtils.getUsername(), entity);
         }
-        return "redirect:/flow/task/list" + error;
+        ModelAndView mav = new ModelAndView("redirect:/flow/task/list");
+        return mav;
     }
 
     /**
@@ -224,7 +233,7 @@ public class TaskController {
     public String historyList(Model model, Page<WorkItem> page) {
         facets.getEngine().query().getHistoryWorkItems(page, new QueryFilter().setOperator(ShiroUtils.getUsername()));
         model.addAttribute("page", page);
-        return "flow/historyList";
+        return "flow/taskHistory";
     }
 
     /**
@@ -241,5 +250,11 @@ public class TaskController {
         }
         model.addAttribute("returnMessage", returnMessage);
         return "redirect:/flow/task/history";
+    }
+
+    private Map<String, Object> getMetaTag(String code) {
+        List<QueryItem> queryItems = new ArrayList<>(2);
+        queryItems.add(new QueryItem("Eq_String_code", code));
+        return mongoLogic.findOne(metaTable, queryItems);
     }
 }

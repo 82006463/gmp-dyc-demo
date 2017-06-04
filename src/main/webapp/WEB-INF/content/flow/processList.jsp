@@ -72,7 +72,7 @@
 					<td class="td_list_2" align=left>${process.state == 1 ? '启用' : '禁用'}</td>
 					<td class="td_list_2" align=left>${process.version}</td>
 					<td class="td_list_2" align=left>
-						<a href="${ctx}/flow/task/approval?processId=${process.id}&processName=${process.name}" title="启动流程">启动</a>
+						<a href="${ctx}/flow/task/approval?processId=${process.id}" title="启动流程">启动</a>
 
 							<%--<a href="${ctx}/flow/process/edit/${process.id }" class="btnEdit" title="编辑">编辑</a>--%>
 						<c:if test="${process.state != 0}">
