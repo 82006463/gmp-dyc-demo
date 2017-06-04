@@ -10,10 +10,7 @@ import com.zhanlu.framework.security.shiro.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/4/29.
@@ -53,6 +50,13 @@ public class MongoLogicImpl implements MongoLogic {
     @Override
     public List<Map<String, Object>> findByProp(String collectionName, List<QueryItem> queryItems) {
         return this.mongoService.findByProp(collectionName, queryItems);
+    }
+
+    @Override
+    public Map<String, Object> findMetaByCode(String cmcode) {
+        List<QueryItem> queryItems = new ArrayList<>(2);
+        queryItems.add(new QueryItem("Eq_String_code", cmcode));
+        return this.mongoService.findOne("config_meta", queryItems);
     }
 
     @Override

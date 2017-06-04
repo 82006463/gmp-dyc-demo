@@ -15,7 +15,7 @@ public interface MongoLogic {
      * 保存或更新文档
      *
      * @param collectionName 集合名称
-     * @param paramMap         页面数据
+     * @param paramMap       页面数据
      * @return 是否成功
      */
     Map<String, Object> saveOrUpdate(String collectionName, String id, Map<String, Object> paramMap);
@@ -45,6 +45,8 @@ public interface MongoLogic {
      * @return 所有文档
      */
     List<Map<String, Object>> findByProp(String collectionName, List<QueryItem> queryItems);
+
+    Map<String, Object> findMetaByCode(String cmcode);
 
     /**
      * @param collectionName 集合名称

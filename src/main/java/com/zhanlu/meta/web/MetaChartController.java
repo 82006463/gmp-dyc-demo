@@ -37,7 +37,6 @@ public class MetaChartController {
 
     @Autowired
     private MongoLogic mongoLogic;
-    private String metaTable = "config_meta";
 
     /**
      * 分页列表
@@ -45,7 +44,7 @@ public class MetaChartController {
     @RequestMapping(value = "{type}/{cmcode}/list", method = RequestMethod.GET)
     public ModelAndView list(@PathVariable("type") String type, @PathVariable("cmcode") String cmcode, HttpServletRequest req) throws Exception {
         Map<String, String[]> paramMap = req.getParameterMap();
-        Map<String, Object> metaApp = this.getMetaTag("chart", cmcode);
+        Map<String, Object> metaApp = mongoLogic.findMetaByCode(cmcode.startsWith("chart_") ? cmcode : "chart_" + type + "_" + cmcode);
         ModelAndView view = new ModelAndView("meta/metaChartList");
         view.addObject("type", type);
         view.addObject("cmcode", cmcode);
@@ -178,13 +177,6 @@ public class MetaChartController {
         view.addObject("categories", JSON.toJSONString(categories));
         view.addObject("data", JSON.toJSONString(dataResult));
         return view;
-    }
-
-    public Map<String, Object> getMetaTag(String metaType, String cmcode) {
-        List<QueryItem> queryItems = new ArrayList<>(1);
-        queryItems.add(new QueryItem("Eq_String_type", metaType));
-        queryItems.add(new QueryItem("Eq_String_code", cmcode));
-        return mongoLogic.findOne(metaTable, queryItems);
     }
 
 }
