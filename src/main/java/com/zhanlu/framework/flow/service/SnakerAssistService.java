@@ -62,17 +62,17 @@ public class SnakerAssistService {
             }
 
             Set<String> resultSet = null;
-            Map<String, Object> newTaskMap = newTask.getVariableMap();
+            Map<String, Object> taskMap = newTask.getVariableMap();
             String assigneeStr = newModel.getAssignee();
             if (assigneeStr.equals("creator")) {
-                if (newTaskMap.containsKey("creator")) {
-                    resultSet = actorStrategyRouter.findActors(operator, assigneeStr, newTaskMap);
+                if (taskMap.containsKey("creator")) {
+                    resultSet.add(taskMap.get("creator").toString());
                 } else {
                     Order order = snakerEngine.query().getOrder(newTask.getOrderId());
                     resultSet.add(order.getCreator());
                 }
             } else {
-                resultSet = actorStrategyRouter.findActors(operator, assigneeStr, newTaskMap);
+                resultSet = actorStrategyRouter.findActors(operator, assigneeStr, taskMap);
             }
             for (String username : resultSet) {
                 snakerEngine.task().addTaskActor(newTask.getId(), username);
