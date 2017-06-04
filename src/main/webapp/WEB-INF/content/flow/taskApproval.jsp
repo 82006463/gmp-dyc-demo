@@ -13,6 +13,7 @@
 
 <body>
 	<form id="inputForm" action="${ctx }/flow/task/exec" method="post">
+		<input type="hidden" id="id" name="id" value="${entity.id}"/>
 		<input type="hidden" id="processId" name="processId" value="${processId}"/>
 		<input type="hidden" id="orderId" name="orderId" value="${orderId}"/>
 		<input type="hidden" id="taskId" name="taskId" value="${taskId}"/>
@@ -22,16 +23,19 @@
 			</tr>
 		</table>
 
-		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
-			<tr align="left"><td colspan="1">
-			${jsonEdit}fsafasfsafs
-			</td></tr>
-		</table>
+		<c:if test="${empty includeFile}">
+			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
+					${jsonEdit}
+			</table>
+		</c:if>
+		<c:if test="${!empty includeFile}">
+			<jsp:include page="${includeFile}"></jsp:include>
+		</c:if>
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr align="left">
 				<td colspan="1">
-					<input type="button" class="button_70px" name="button" value="保存">&nbsp;&nbsp;
+					<input type="button" class="button_70px" name="submit" value="保存">&nbsp;&nbsp;
 					<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
 					<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 				</td>

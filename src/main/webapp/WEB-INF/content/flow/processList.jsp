@@ -49,7 +49,9 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<input type='button' onclick="addNew('${ctx}/flow/process/conf')" class='button_70px' value='配置'/>
+					<shiro:hasPermission name="flow_process_conf">
+						<input type='button' onclick="addNew('${ctx}/flow/process/conf')" class='button_70px' value='配置'/>
+					</shiro:hasPermission>
 					<%--<input type='button' onclick="addNew('${ctx}/flow/process/init')" class='button_70px' value='初始化'/>--%>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
@@ -70,16 +72,18 @@
 					<td class="td_list_2" align=left>${process.state == 1 ? '启用' : '禁用'}</td>
 					<td class="td_list_2" align=left>${process.version}</td>
 					<td class="td_list_2" align=left>
-						<a href="${ctx}/flow/task/approval?processId=${process.id}&processName=${process.name}" class="btnStart" title="启动流程">启动流程</a>
-						<%--<shiro:hasPermission name="flow_process_edit">--%>
+						<a href="${ctx}/flow/task/approval?processId=${process.id}&processName=${process.name}" title="启动流程">启动</a>
+
 							<%--<a href="${ctx}/flow/process/edit/${process.id }" class="btnEdit" title="编辑">编辑</a>--%>
 						<c:if test="${process.state != 0}">
-							<a href="${ctx}/flow/process/conf?processId=${process.id}&type=edit" title="配置流程">配置</a>
-							<a href="${ctx}/flow/process/conf?processId=${process.id}&type=upgrade" title="升级流程：版本+1">升级</a>
-							<a href="${ctx}/flow/process/conf?processId=${process.id}&type=copy" title="复制流程">复制</a>
-							<a href="${ctx}/flow/process/delete/${process.id }" title="删除" onclick="return confirmDel();">删除</a>
+							<shiro:hasPermission name="flow_process_conf">
+								<a href="${ctx}/flow/process/conf?processId=${process.id}&type=edit" title="配置流程">配置</a>
+								<a href="${ctx}/flow/process/conf?processId=${process.id}&type=upgrade" title="升级流程：版本+1">升级</a>
+								<a href="${ctx}/flow/process/conf?processId=${process.id}&type=copy" title="复制流程">复制</a>
+								<a href="${ctx}/flow/process/delete/${process.id }" title="删除" onclick="return confirmDel();">删除</a>
+							</shiro:hasPermission>
 						</c:if>
-						<%--</shiro:hasPermission>--%>
+
 					</td>
 				</tr>
 			</c:forEach>
