@@ -14,18 +14,18 @@
 <body>
 	<form id="inputForm" action="${ctx }/flow/task/exec" method="post">
 		<input type="hidden" id="id" name="id" value="${entity.id}"/>
-		<input type="hidden" id="processId" name="processId" value="${processId}"/>
+		<input type="hidden" id="processId" name="processId" value="${process.id}"/>
 		<input type="hidden" id="orderId" name="orderId" value="${orderId}"/>
-		<input type="hidden" id="taskId" name="taskId" value="${taskId}"/>
+		<input type="hidden" id="taskId" name="taskId" value="${task.id}"/>
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">${process.name}：${process.displayName}</td>
+				<td class="td_table_top" align="center">${process.name}：${process.displayName}：${empty task ? '开始':task.displayName}</td>
 			</tr>
 		</table>
 
 		<c:if test="${empty includeFile}">
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
-					${jsonEdit}
+				${jsonEdit}
 			</table>
 		</c:if>
 		<c:if test="${!empty includeFile}">

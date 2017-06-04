@@ -1,7 +1,11 @@
 package com.zhanlu.framework.flow.web;
 
+import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.flow.service.SnakerEngineFacets;
+import com.zhanlu.framework.logic.MongoLogic;
+import com.zhanlu.framework.nosql.item.QueryItem;
 import com.zhanlu.framework.security.shiro.ShiroUtils;
+import com.zhanlu.framework.util.MetaTagUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +17,7 @@ import org.snaker.engine.entity.Task;
 import org.snaker.engine.entity.WorkItem;
 import org.snaker.engine.model.TaskModel.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +42,15 @@ import java.util.Map;
 @RequestMapping(value = "/flow/task")
 public class TaskController {
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
+
+    @Resource(name = "jdbcTemplate")
+    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private DataDictService dataDictService;
+    @Autowired
+    private MongoLogic mongoLogic;
+    private String metaTable = "config_meta";
+
     @Autowired
     private SnakerEngineFacets facets;
 
@@ -128,8 +144,7 @@ public class TaskController {
         log.info(list.toString());
         String[] assignees = new String[list.size()];
         list.toArray(assignees);
-        facets.getEngine().query().getWorkItems(page,
-                new QueryFilter().setOperators(assignees).setTaskType(taskType));
+        facets.getEngine().query().getWorkItems(page, new QueryFilter().setOperators(assignees).setTaskType(taskType));
         model.addAttribute("page", page);
         model.addAttribute("taskType", taskType);
         return "flow/taskMore";
@@ -150,24 +165,32 @@ public class TaskController {
         return "flow/taskCCMore";
     }
 
+    /**
+     * 流程审批页面
+     */
     @RequestMapping(value = "approval", method = RequestMethod.GET)
-    public ModelAndView approval(HttpServletRequest req) {
+    public ModelAndView approval(HttpServletRequest req, String id) {
         String processId = req.getParameter("processId");
         String orderId = req.getParameter("orderId");
         String taskId = req.getParameter("taskId");
         Process process = facets.getEngine().process().getProcessById(processId);
-        String formCode = process.getInstanceUrl();
-        if (StringUtils.isNotEmpty(taskId)) {
-            Task task = facets.getEngine().query().getTask(taskId);
-            formCode = task.getActionUrl();
-        }
+        Task task = StringUtils.isNotEmpty(taskId) ? facets.getEngine().query().getTask(taskId) : null;
 
         ModelAndView mv = new ModelAndView("flow/taskApproval");
+        String formPage = task != null ? task.getActionUrl() : process.getInstanceUrl();
+        Map<String, Object> entity = task != null ? task.getVariableMap() : new HashMap<String, Object>();
+        if (formPage.contains("/")) {
+            mv.addObject("includeFile", formPage);
+        } else {
+            List<QueryItem> queryItems = new ArrayList<>(2);
+            queryItems.add(new QueryItem("Eq_String_code", formPage));
+            Map<String, Object> metaTag = mongoLogic.findOne(metaTable, queryItems);
+            mv.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, metaTag, entity));
+        }
         mv.addObject("process", process);
-        mv.addObject("processId", processId);
         mv.addObject("orderId", orderId);
-        mv.addObject("taskId", taskId);
-        mv.addObject("jsonEdit", taskId);
+        mv.addObject("task", task);
+        mv.addObject("entity", entity);
         return mv;
     }
 
@@ -182,10 +205,6 @@ public class TaskController {
 
     /**
      * 活动任务的驳回
-     *
-     * @param model
-     * @param taskId
-     * @return
      */
     @RequestMapping(value = "reject", method = RequestMethod.GET)
     public String activeTaskReject(Model model, String taskId) {
@@ -200,12 +219,9 @@ public class TaskController {
 
     /**
      * 历史完成任务查询列表
-     *
-     * @param model
-     * @return
      */
     @RequestMapping(value = "history", method = RequestMethod.GET)
-    public String historyTaskList(Model model, Page<WorkItem> page) {
+    public String historyList(Model model, Page<WorkItem> page) {
         facets.getEngine().query().getHistoryWorkItems(page, new QueryFilter().setOperator(ShiroUtils.getUsername()));
         model.addAttribute("page", page);
         return "flow/historyList";
@@ -213,9 +229,6 @@ public class TaskController {
 
     /**
      * 历史任务撤回
-     *
-     * @param taskId
-     * @return
      */
     @RequestMapping(value = "undo", method = RequestMethod.GET)
     public String historyTaskUndo(Model model, String taskId) {
