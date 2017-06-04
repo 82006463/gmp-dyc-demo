@@ -294,7 +294,7 @@
 					<stopKey>stop</stopKey>
 					<stopPort>5598</stopPort>
 					<webAppConfig>
-						<contextPath>/snaker-web</contextPath>
+						<contextPath>/dyc</contextPath>
 					</webAppConfig>
 					<scanIntervalSeconds>5</scanIntervalSeconds>
 				</configuration>
