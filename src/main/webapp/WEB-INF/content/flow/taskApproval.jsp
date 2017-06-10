@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<form id="inputForm" action="${ctx }/flow/task/approval" method="post">
+	<form id="inputForm" action="${ctx}/flow/task/approval" method="post">
 		<input type="hidden" id="id" name="id" value="${entity.id}"/>
 		<input type="hidden" id="processId" name="processId" value="${process.id}"/>
 		<input type="hidden" id="orderId" name="orderId" value="${orderId}"/>
@@ -23,14 +23,9 @@
 			</tr>
 		</table>
 
-		<c:if test="${empty includeFile}">
-			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
-				${jsonEdit}
-			</table>
-		</c:if>
-		<c:if test="${!empty includeFile}">
-			<jsp:include page="${includeFile}"></jsp:include>
-		</c:if>
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
+			${jsonEdit}
+		</table>
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr align="left">

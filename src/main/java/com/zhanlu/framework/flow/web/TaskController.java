@@ -181,7 +181,7 @@ public class TaskController {
         String formPage = task != null ? task.getActionUrl() : process.getInstanceUrl();
         Map<String, Object> entity = task != null ? task.getVariableMap() : new HashMap<String, Object>();
         if (formPage.contains("/")) {
-            mav.addObject("includeFile", formPage);
+            mav = new ModelAndView(formPage);
         } else {
             mav.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, this.getMetaTag(formPage), entity));
         }
