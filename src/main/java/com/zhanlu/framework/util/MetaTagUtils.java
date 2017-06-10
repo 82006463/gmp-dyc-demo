@@ -134,23 +134,24 @@ public class MetaTagUtils {
             } else if (tmpIndex == 2 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm"))) {
                 html += "</tr><tr>";
             }
+            String classAttr = required.equals("yes") ? " validate[required]" : "";
             html += "<td class='td_table_1'>" + entry.get("name") + (required.equals("yes") ? "<b class='requiredWarn'>*</b>" : "") + "</td><td class='td_table_2' ${" + itemIndex + "}>";
             if (tagType.equalsIgnoreCase("textarea")) {
-                html += "<textarea name='" + code + "' class='input_textarea_600" + (required.equals("yes") ? " validate[required]" : "") + "'>" + val + "</textarea>";
+                html += "<textarea name='" + code + "' class='input_textarea_600" + classAttr + "'>" + val + "</textarea>";
             } else if (tagType.equalsIgnoreCase("date")) {
                 if (dataMap.get(code) instanceof Date) {
                     html += "<input type='text' name='" + code + "' value='" + DateFormatUtils.format((Date) dataMap.get(code), "yyyy-MM-dd");
                 } else {
                     html += "<input type='text' name='" + code + "' value='" + val;
                 }
-                html += "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
+                html += "' class='input_240" + classAttr + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
             } else if (tagType.equalsIgnoreCase("timestamp")) {
                 if (dataMap.get(code) instanceof Timestamp) {
                     html += "<input type='text' name='" + code + "' value='" + DateFormatUtils.format((Timestamp) dataMap.get(code), "yyyy-MM-dd HH:mm:ss");
                 } else {
                     html += "<input type='text' name='" + code + "' value='" + val;
                 }
-                html += "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
+                html += "' class='input_240" + classAttr + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
             } else if (tagType.equalsIgnoreCase("subForm")) {
                 DataDict dataDict = dataDictService.findByCode(entry.get("subForm").toString());
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {
@@ -177,16 +178,16 @@ public class MetaTagUtils {
                         for (Map<String, Object> map : tagList) {
                             String tmpCode = map.get("code").toString();
                             String tmpTagType = map.get("tagType").toString();
-                            String tmpRequired = map.get("required").toString();
+                            String tmpClassAttr = map.get("required").toString().equals("yes") ? " validate[required]" : "";
                             html += "<td class='td_list_2'>";
                             if (tmpTagType.equalsIgnoreCase("date")) {
-                                html += "<input type='text' name='" + tmpCode + "' value='" + tagValMap.get(tmpCode).get(row) + "' class='input_240" + (tmpRequired.equals("true") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
+                                html += "<input type='text' name='" + tmpCode + "' value='" + tagValMap.get(tmpCode).get(row) + "' class='input_240" + tmpClassAttr + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
                             } else if (tmpTagType.equalsIgnoreCase("timestamp")) {
-                                html += "<input type='text' name='" + tmpCode + "' value='" + tagValMap.get(tmpCode).get(row) + "' class='input_240" + (tmpRequired.equals("true") ? " validate[required]" : "") + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
+                                html += "<input type='text' name='" + tmpCode + "' value='" + tagValMap.get(tmpCode).get(row) + "' class='input_240" + tmpClassAttr + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});\" readonly='readonly'/>";
                             } else if (tmpTagType.equalsIgnoreCase("textarea")) {
-                                html += "<textarea name='" + tmpCode + "' class='input_textarea_600" + (tmpRequired.equals("true") ? " validate[required]" : "") + "'>" + tagValMap.get(tmpCode).get(row) + "</textarea>";
+                                html += "<textarea name='" + tmpCode + "' class='input_textarea_600" + tmpClassAttr + "'>" + tagValMap.get(tmpCode).get(row) + "</textarea>";
                             } else {
-                                html += "<input type='text' name='" + tmpCode + "' value='" + tagValMap.get(tmpCode).get(row) + "' class='input_240" + (tmpRequired.equals("true") ? " validate[required]" : "") + "'/>";
+                                html += "<input type='text' name='" + tmpCode + "' value='" + tagValMap.get(tmpCode).get(row) + "' class='input_240" + tmpClassAttr + "'/>";
                             }
                         }
                         html += "</td><td class='td_list_2'>";
@@ -202,7 +203,7 @@ public class MetaTagUtils {
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource()) && dataDict.getDataSource().trim().toUpperCase().startsWith("SELECT ")) {
                     List<Map<String, Object>> itemList = ResultSetUtils.convertList(jdbcTemplate.queryForList(dataDict.getDataSource()));
                     if (tagType.startsWith("Select_")) {
-                        html += "<select name='" + code + "' class='input_select" + (required.equals("yes") ? " validate[required]" : "") + "' onchange=\"$('[name=" + code + "_val]').val($(this).find('option:selected').text());\">";
+                        html += "<select name='" + code + "' class='input_select" + classAttr + "' onchange=\"$('[name=" + code + "_val]').val($(this).find('option:selected').text());\">";
                         html += "<option value='' selected>--请选择--</option>";
                         for (Map<String, Object> item : itemList) {
                             html += "<option value='" + item.get("code") + "'" + (item.get("code").toString().equals(val) ? " selected='selected'" : "") + ">" + item.get("name") + "</option>";
@@ -211,18 +212,18 @@ public class MetaTagUtils {
                         html += "<input type='hidden' name='" + code + "_val' value='" + (dataMap.get(code + "_val") == null ? "" : dataMap.get(code + "_val")) + "' class='input_240'/>";
                     } else if (tagType.startsWith("Radio_")) {
                         for (Map<String, Object> item : itemList) {
-                            html += "<input type='radio' name='" + code + "' value='" + item.get("code") + "' class='input_radio" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
+                            html += "<input type='radio' name='" + code + "' value='" + item.get("code") + "' class='input_radio" + classAttr + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
                         }
                     } else if (tagType.startsWith("Checkbox_")) {
                         for (Map<String, Object> item : itemList) {
-                            html += "<input type='text' name='" + item.get("code") + "' value='" + val + "' class='input_checkbox" + (required.equals("yes") ? " validate[required]" : "") + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
+                            html += "<input type='text' name='" + item.get("code") + "' value='" + val + "' class='input_checkbox" + classAttr + "' " + (item.get("code").toString().equals(val) ? "checked='checked'" : "") + "/>" + item.get("name");
                         }
                     }
                 } else {
-                    html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' fuzzy='" + fuzzy + "'/>";
+                    html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + classAttr + "' fuzzy='" + fuzzy + "'/>";
                 }
             } else {
-                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + (required.equals("yes") ? " validate[required]" : "") + "' fuzzy='" + fuzzy + "'/>";
+                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + classAttr + "' fuzzy='" + fuzzy + "'/>";
             }
             html += "</td>";
 
