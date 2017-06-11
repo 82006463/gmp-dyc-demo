@@ -33,34 +33,33 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">文件版本<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">复审结论<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" class="input_240 validate[required,minSize[1],maxSize[10]]" name="fileVer" value="${entity.fileVer}" />
+						<input type="text" class="input_240 validate[required,minSize[1],maxSize[10]]" name="reapproveResult" value="${entity.reapproveResult}" />
 					</td>
-					<td class="td_table_1">批准日期<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">复审人<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" class="input_240 validate[required]" name="approveDate" value="${entity.approveDate}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly='readonly'/>
+						<input type="text" class="input_240 validate[required]" name="reapprovePerson" value="${entity.reapprovePerson}" />
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">复审周期<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">复审日期<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<select name="reapproveCycle" class="input_select validate[required]">
+						<input type="text" class="input_240 validate[required]" name="reapproveDate" value="${entity.reapproveDate}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly='readonly'/>
+					</td>
+					<td class="td_table_1">是否需要修订<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<select name="isEdit" class="input_select validate[required]">
 							<option value="">-请选择-</option>
-							<option value="1" <c:if test="${entity.reapproveCycle==1}">selected="selected"</c:if>>1年</option>
-							<option value="2" <c:if test="${entity.reapproveCycle==2}">selected="selected"</c:if>>2年</option>
-							<option value="3" <c:if test="${entity.reapproveCycle==3}">selected="selected"</c:if>>2年</option>
+							<option value="是" <c:if test="${entity.isEdit=='是'}">selected="selected"</c:if>>是</option>
+							<option value="否" <c:if test="${entity.isEdit=='否'}">selected="selected"</c:if>>否</option>
 						</select>
 					</td>
-					<td class="td_table_1">生效日期<b class="requiredWarn">*</b>：</td>
-					<td class="td_table_2">
-						<input type="text" class="input_240 validate[required]" name="effectiveDate" value="${entity.effectiveDate}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly='readonly'/>
-					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">上级文件编码：</td>
+					<td class="td_table_1">待修订日期<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" name="parentFileCode" value="${entity.parentFileCode}" />
+						<input type="text" class="input_240 validate[required]" name="nextEditDate" value="${entity.nextEditDate}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly='readonly'/>
 					</td>
 				</tr>
 			</table>
