@@ -131,6 +131,12 @@ public class ConfigMetaController {
                 }
                 entity.put("itemsMap", itemsMap);
                 entity.put("editItems", items);
+                if (!entity.containsKey("queryItems")) {
+                    entity.put("queryItems", items);
+                }
+                if (!entity.containsKey("listItems")) {
+                    entity.put("listItems", items);
+                }
             }
         }
         mongoLogic.saveOrUpdate(this.metaTable, id, entity);
