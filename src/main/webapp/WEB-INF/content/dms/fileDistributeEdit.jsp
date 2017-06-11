@@ -40,7 +40,9 @@
 						<input type="button" class="button_70px" name="submit" value="保存">&nbsp;&nbsp;
 						<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
 						<input type="submit" class="button_70px" name="submit" value="复核">&nbsp;&nbsp;
-						<input type="submit" class="button_70px" name="submit" value="拒绝">&nbsp;&nbsp;
+						<c:if test="${!empty task && task.displayName != '申请人'}">
+							<input type="submit" class="button_70px" name="submit" value="拒绝">&nbsp;&nbsp;
+						</c:if>
 						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>
