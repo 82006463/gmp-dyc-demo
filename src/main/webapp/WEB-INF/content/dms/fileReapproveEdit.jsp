@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 	<head>
-		<title>文件审批</title>
+		<title>文件复审</title>
 		<%@ include file="/common/common-edit.jsp"%>
 		<script type="text/javascript">
 
