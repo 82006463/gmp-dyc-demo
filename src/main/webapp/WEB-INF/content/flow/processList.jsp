@@ -78,7 +78,7 @@
 						<c:if test="${process.state != 0}">
 							<shiro:hasPermission name="flow_process_conf">
 								<a href="${ctx}/flow/process/conf?processId=${process.id}&type=edit" title="配置流程">配置</a>
-								<a href="${ctx}/flow/process/conf?processId=${process.id}&type=upgrade" title="升级流程：版本+1">升级</a>
+								<%--<a href="${ctx}/flow/process/conf?processId=${process.id}&type=upgrade" title="升级流程：版本+1">升级</a>--%>
 								<a href="${ctx}/flow/process/conf?processId=${process.id}&type=copy" title="复制流程">复制</a>
 								<a href="${ctx}/flow/process/delete/${process.id }" title="删除" onclick="return confirmDel();">删除</a>
 							</shiro:hasPermission>
