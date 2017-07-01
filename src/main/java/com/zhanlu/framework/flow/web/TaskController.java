@@ -23,7 +23,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -196,16 +198,16 @@ public class TaskController {
      * 测试任务的执行
      */
     @RequestMapping(value = "approval", method = RequestMethod.POST)
-    public ModelAndView doApproval(HttpServletRequest req) {
+    public ModelAndView doApproval(@RequestParam("file") CommonsMultipartFile file, HttpServletRequest req) {
         String processId = req.getParameter("processId");
         //String orderId = req.getParameter("orderId");
         String taskId = req.getParameter("taskId");
 
         Task task = StringUtils.isNotEmpty(taskId) ? facets.getEngine().query().getTask(taskId) : null;
         Process process = task == null ? facets.getEngine().process().getProcessById(processId) : null;
-        String formPage = task != null ? task.getActionUrl() : process.getInstanceUrl();
+        String pagePath = task != null ? task.getActionUrl() : process.getInstanceUrl();
         Map<String, Object> taskMap = task != null ? task.getVariableMap() : new HashMap<String, Object>();
-        Map<String, Object> metaTag = this.getMetaTag(formPage);
+        Map<String, Object> metaTag = this.getMetaTag(pagePath);
 
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), paramMap);
