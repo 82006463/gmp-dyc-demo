@@ -88,7 +88,7 @@ public class MetaAppController {
         cmcode = cmcode.startsWith(metaType + "_") ? cmcode : metaType + "_" + cmcode;
         Map<String, Object> metaTag = mongoLogic.findMetaByCode(cmcode);
         ModelAndView view = new ModelAndView("meta/metaAppEdit");
-        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
+        String tableName = metaTag.get("oneTable").equals("1") ? ("meta_" + metaType + "_" + cmcode) : ("meta_" + metaType);
         Map<String, Object> entity = mongoLogic.findOne(tableName, id);
         view.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, metaTag, entity));
         view.addObject("entity", entity);
@@ -106,7 +106,7 @@ public class MetaAppController {
         Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), req.getParameterMap());
         entity.put("metaType", metaType);
         entity.put("cmcode", cmcode);
-        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
+        String tableName = metaTag.get("oneTable").equals("1") ? ("meta_" + metaType + "_" + cmcode) : ("meta_" + metaType);
         mongoLogic.saveOrUpdate(tableName, id, entity);
         ModelAndView view = new ModelAndView("redirect:/meta/app/" + metaType + "/" + cmcode + "/list");
         return view;
@@ -120,7 +120,7 @@ public class MetaAppController {
         cmcode = cmcode.startsWith(metaType + "_") ? cmcode : metaType + "_" + cmcode;
         Map<String, Object> metaTag = mongoLogic.findMetaByCode(cmcode);
         ModelAndView view = new ModelAndView("meta/metaAppView");
-        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
+        String tableName = metaTag.get("oneTable").equals("1") ? ("meta_" + metaType + "_" + cmcode) : ("meta_" + metaType);
         Map<String, Object> entity = mongoLogic.findOne(tableName, id);
         view.addObject("entity", entity);
         view.addObject("jsonEdit", MetaTagUtils.view(dataDictService, metaTag, entity));
@@ -133,7 +133,8 @@ public class MetaAppController {
      */
     @RequestMapping(value = "{metaType}/{cmcode}/delete/{id}")
     public ModelAndView delete(@PathVariable("metaType") String metaType, @PathVariable("cmcode") String cmcode, @PathVariable("id") String id) {
-        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
+        Map<String, Object> metaTag = mongoLogic.findMetaByCode(cmcode);
+        String tableName = metaTag.get("oneTable").equals("1") ? ("meta_" + metaType + "_" + cmcode) : ("meta_" + metaType);
         mongoLogic.removeOne(tableName, id);
         ModelAndView view = new ModelAndView("redirect:/meta/app/" + metaType + "/" + cmcode + "/list");
         return view;

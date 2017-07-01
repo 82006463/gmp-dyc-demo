@@ -34,8 +34,8 @@
 					<td class="td_table_2" colspan="3">
 						<select class="input_select" id="oneTable" name="oneTable">
 							<option value='' selected>--请选择--</option>
-							<option value='1' selected>是</option>
-							<option value='0' selected>否</option>
+							<option value='1' ${entity.oneTable==1 ? 'selected="selected"':''}>是</option>
+							<option value='0' ${entity.oneTable==0 ? 'selected="selected"':''}>否</option>
 						</select>
 					</td>
 				</tr>
