@@ -117,6 +117,8 @@ public class ConfigMetaController {
                 String[] itemSubForms = paramMap.get("itemSubForms");
                 String[] itemFuzzys = paramMap.get("itemFuzzys");
                 String[] itemTagTypes = paramMap.get("itemTagTypes");
+                String[] itemArrays = paramMap.get("itemArrays");
+                String[] itemHiddens = paramMap.get("itemHiddens");
                 for (int i = 0; i < itemCodes.length; i++) {
                     Map<String, Object> itemMap = new LinkedHashMap<>(8);
                     itemMap.put("code", itemCodes[i]);
@@ -126,6 +128,8 @@ public class ConfigMetaController {
                     itemMap.put("tagType", itemTagTypes[i]);
                     itemMap.put("fuzzy", itemFuzzys[i]);
                     itemMap.put("subForm", itemSubForms[i]);
+                    itemMap.put("array", itemArrays[i]);
+                    itemMap.put("hidden", itemHiddens[i]);
                     items.add(itemMap);
                     itemsMap.put(itemCodes[i], itemNames[i]);
                 }

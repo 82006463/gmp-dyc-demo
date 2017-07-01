@@ -29,6 +29,16 @@
 						<input type="text" id="name" name="name" value="${entity.name}" class="input_240 validate[required]" />
 					</td>
 				</tr>
+				<tr>
+					<td class="td_table_1">是否独立表：</td>
+					<td class="td_table_2" colspan="3">
+						<select class="input_select" id="oneTable" name="oneTable">
+							<option value='' selected>--请选择--</option>
+							<option value='1' selected>是</option>
+							<option value='0' selected>否</option>
+						</select>
+					</td>
+				</tr>
 
 				<%--<tr>
 					<td class="td_table_1">列表搜索URL：</td>
@@ -86,6 +96,8 @@
 									<td align=center class="td_list_1">是否必填</td>
 									<td align=center class="td_list_1">子表单</td>
 									<td align=center class="td_list_1">模糊搜索</td>
+									<td align=center class="td_list_1">数组</td>
+                                    <td align=center class="td_list_1">隐藏域</td>
 								</c:if>
 								<td align=center width=6% class="td_list_1">操作</td>
 							</tr>
@@ -121,6 +133,12 @@
 									<td class="td_list_2">
 										<frame:dict name="itemFuzzys" type="select" typeCode="fuzzySearch" value="${itemTmp.fuzzy}" defaultVal="fuzzySearch_no" cssClass="validate[required]"/>
 									</td>
+									<td class="td_list_2">
+										<frame:dict name="itemArrays" type="select" typeCode="yesNo" value="${itemTmp.array}" defaultVal="yesNo_no" cssClass="validate[required]"/>
+									</td>
+                                    <td class="td_list_2">
+                                        <frame:dict name="itemHiddens" type="select" typeCode="yesNo" value="${itemTmp.hidden}" defaultVal="yesNo_no" cssClass="validate[required]"/>
+                                    </td>
 								</c:if>
 									<td class="td_list_2">
 										<a href='javascript:void(0)' onclick='Ops.removeTr(this,1);' class='btnDel' title='删除'>删除</a>
@@ -179,6 +197,12 @@
 					cell = row.insertCell(-1);
 					cell.innerHTML = "<frame:dict name="itemFuzzys" type="select" typeCode="fuzzySearch" value="" defaultVal="fuzzySearch_no" cssClass="validate[required]"/>";
 					cell.className = "td_list_2";
+                    cell = row.insertCell(-1);
+                    cell.innerHTML = "<frame:dict name="itemArrays" type="select" typeCode="yesNo" value="" defaultVal="yesNo_no" cssClass="validate[required]"/>";
+                    cell.className = "td_list_2";
+                    cell = row.insertCell(-1);
+                    cell.innerHTML = "<frame:dict name="itemHiddens" type="select" typeCode="yesNo" value="" defaultVal="yesNo_no" cssClass="validate[required]"/>";
+                    cell.className = "td_list_2";
 				}
 				cell = row.insertCell(-1);
 				cell.innerHTML = "<a href='javascript:void(0)' onclick='Ops.removeTr(this,1);' class='btnDel' title='删除'>删除</a><a onclick='return Ops.up(this);' title='上移'>上</a><a onclick='return Ops.down(this);' title='下移'>下</a>";
