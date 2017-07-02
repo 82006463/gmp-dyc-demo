@@ -45,11 +45,11 @@
 				<tr>
 					<td class="td_table_1">复审周期<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<select name="reapproveCycle" class="input_select validate[required]">
+						<select name="reviewCycle" class="input_select validate[required]">
 							<option value="">-请选择-</option>
-							<option value="1" <c:if test="${entity.reapproveCycle==1}">selected="selected"</c:if>>1年</option>
-							<option value="2" <c:if test="${entity.reapproveCycle==2}">selected="selected"</c:if>>2年</option>
-							<option value="3" <c:if test="${entity.reapproveCycle==3}">selected="selected"</c:if>>2年</option>
+							<option value="1" ${entity.reviewCycle==1 ? 'selected="selected"':''}>1年</option>
+							<option value="2" ${entity.reviewCycle==2 ? 'selected="selected"':''}>2年</option>
+							<option value="3" ${entity.reviewCycle==3 ? 'selected="selected"':''}>3年</option>
 						</select>
 					</td>
 					<td class="td_table_1">生效日期<b class="requiredWarn">*</b>：</td>

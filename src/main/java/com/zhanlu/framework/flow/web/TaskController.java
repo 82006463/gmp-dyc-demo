@@ -7,6 +7,7 @@ import com.zhanlu.framework.nosql.item.EditItem;
 import com.zhanlu.framework.nosql.item.QueryItem;
 import com.zhanlu.framework.security.shiro.ShiroUtils;
 import com.zhanlu.framework.util.MetaTagUtils;
+import com.zhanlu.meta.service.FlowService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.snaker.engine.entity.Task;
 import org.snaker.engine.entity.WorkItem;
 import org.snaker.engine.model.TaskModel.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,6 +48,9 @@ import java.util.*;
 @RequestMapping(value = "/flow/task")
 public class TaskController {
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Resource(name = "jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
@@ -227,7 +232,8 @@ public class TaskController {
         Map<String, Object> taskMap = task != null ? task.getVariableMap() : new HashMap<String, Object>();
         //页面的处理
         String tmpUrl = task != null ? task.getActionUrl() : process.getInstanceUrl();
-        Map<String, Object> metaTag = this.getMetaTag(tmpUrl.contains("/") ? tmpUrl.split("\\?")[1] : tmpUrl);
+        String pagePath = tmpUrl.contains("/") ? tmpUrl.split("\\?")[1] : tmpUrl;
+        Map<String, Object> metaTag = this.getMetaTag(pagePath);
 
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), paramMap);
@@ -244,6 +250,14 @@ public class TaskController {
         } else if (submitBtn.equals("提交")) {
             facets.startAndExecute(processId, ShiroUtils.getUsername(), entity);
         }
+
+        String[] pagePathArr = pagePath.split("_");
+        List<QueryItem> queryItems = new ArrayList<>(2);
+        //queryItems.add(new QueryItem("Eq_String_type", pagePathArr[0]));
+        queryItems.add(new QueryItem("Eq_String_code", pagePathArr[1].startsWith(pagePathArr[0] + "_") ? pagePathArr[1] : pagePathArr[0] + "_" + pagePathArr[1]));
+        FlowService flowService = applicationContext.getBean(pagePathArr[0], FlowService.class);
+        flowService.saveOrUpdate(mongoLogic.findOne("config_meta", queryItems), entity);
+
         ModelAndView mav = new ModelAndView("redirect:/flow/task/list");
         return mav;
     }
