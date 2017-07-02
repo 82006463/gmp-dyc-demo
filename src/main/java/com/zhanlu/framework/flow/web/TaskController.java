@@ -188,7 +188,7 @@ public class TaskController {
         String formPage = task != null ? task.getActionUrl() : process.getInstanceUrl();
         Map<String, Object> entity = task != null ? task.getVariableMap() : new HashMap<String, Object>();
         if (formPage.contains("/")) {
-            mav = new ModelAndView(formPage);
+            mav = new ModelAndView(formPage.split("\\?")[0]);
         } else {
             mav.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, this.getMetaTag(formPage), entity));
         }
@@ -224,9 +224,10 @@ public class TaskController {
 
         Task task = StringUtils.isNotEmpty(taskId) ? facets.getEngine().query().getTask(taskId) : null;
         Process process = task == null ? facets.getEngine().process().getProcessById(processId) : null;
-        String pagePath = task != null ? task.getActionUrl() : process.getInstanceUrl();
         Map<String, Object> taskMap = task != null ? task.getVariableMap() : new HashMap<String, Object>();
-        Map<String, Object> metaTag = this.getMetaTag(pagePath);
+        //页面的处理
+        String tmpUrl = task != null ? task.getActionUrl() : process.getInstanceUrl();
+        Map<String, Object> metaTag = this.getMetaTag(tmpUrl.contains("/") ? tmpUrl.split("\\?")[1] : tmpUrl);
 
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), paramMap);
