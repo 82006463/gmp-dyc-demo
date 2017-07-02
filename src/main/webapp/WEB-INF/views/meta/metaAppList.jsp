@@ -25,6 +25,10 @@
 					<c:if test="${!empty metaTag.list_create_url}">
 						<input type='button' onclick="addNew('${ctx}/meta/app/${metaType}/${cmcode}/create')" class='button_70px' value='新建'/>
 					</c:if>
+					<c:if test="${metaType == 'flowForm'}">
+						<c:set var="tmpVal" value="${metaType}_"></c:set>
+						<input type="button" onclick="addNew('${ctx}/flow/task/approval?processName=${cmcode, tmpVal, '')}')" class="button_70px" value="申请">
+					</c:if>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
 			</tr>

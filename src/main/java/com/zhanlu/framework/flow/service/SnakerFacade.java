@@ -77,6 +77,11 @@ public class SnakerFacade {
         return order;
     }
 
+    public Order startAndExecute(String name, Integer version, String operator, Map<String, Object> args) {
+        Process process = engine.process().getProcessByVersion(name, version);
+        return this.startAndExecute(process.getId(), operator, args);
+    }
+
     //批量执行流程
     @Transactional
     public List<Task> execute(String[] taskIds, String operator) {

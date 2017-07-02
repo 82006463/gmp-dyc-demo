@@ -25,15 +25,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 /**
  * Snaker流程引擎常用Controller
@@ -172,11 +173,15 @@ public class TaskController {
      * 流程审批页面
      */
     @RequestMapping(value = "approval", method = RequestMethod.GET)
-    public ModelAndView approval(HttpServletRequest req, String id) {
-        String processId = req.getParameter("processId");
+    public ModelAndView approvalGet(HttpServletRequest req, String processId, String processName, Integer processVersion) {
         String orderId = req.getParameter("orderId");
         String taskId = req.getParameter("taskId");
-        Process process = facets.getEngine().process().getProcessById(processId);
+        Process process = null;
+        if (processId != null && processId.trim().length() > 0) {
+            process = facets.getEngine().process().getProcessById(processId);
+        } else {
+            process = facets.getEngine().process().getProcessByVersion(processName, processVersion);
+        }
         Task task = StringUtils.isNotEmpty(taskId) ? facets.getEngine().query().getTask(taskId) : null;
 
         ModelAndView mav = new ModelAndView("flow/taskApproval");
@@ -187,8 +192,8 @@ public class TaskController {
         } else {
             mav.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, this.getMetaTag(formPage), entity));
         }
-        mav.addObject("process", process);
         mav.addObject("orderId", orderId);
+        mav.addObject("process", process);
         mav.addObject("task", task);
         mav.addObject("entity", entity);
         return mav;
@@ -198,7 +203,21 @@ public class TaskController {
      * 测试任务的执行
      */
     @RequestMapping(value = "approval", method = RequestMethod.POST)
-    public ModelAndView doApproval(@RequestParam("file") CommonsMultipartFile file, HttpServletRequest req) {
+    public ModelAndView approvalPost(@RequestParam(value = "file", required = false) CommonsMultipartFile file, HttpServletRequest req) throws Exception {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver(req.getSession().getServletContext());
+        if (resolver.isMultipart(req)) {
+            MultipartHttpServletRequest tmpReq = (MultipartHttpServletRequest) (req);
+            Iterator<String> files = tmpReq.getFileNames();
+            while (files.hasNext()) {
+                MultipartFile tmpFile = tmpReq.getFile(files.next());
+                if (tmpFile != null) {
+                    String fileName = UUID.randomUUID() + tmpFile.getOriginalFilename();
+                    String path = "d:/upload/" + fileName;
+                    File localFile = new File(path);
+                    tmpFile.transferTo(localFile);
+                }
+            }
+        }
         String processId = req.getParameter("processId");
         //String orderId = req.getParameter("orderId");
         String taskId = req.getParameter("taskId");
