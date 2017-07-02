@@ -44,10 +44,10 @@ public class MetaAppController {
      */
     @RequestMapping(value = "{metaType}/{cmcode}/list", method = RequestMethod.GET)
     public ModelAndView list(@PathVariable("metaType") String metaType, @PathVariable("cmcode") String cmcode, Page<Map<String, Object>> page, HttpServletRequest req) throws Exception {
-        Map<String, String[]> paramMap = req.getParameterMap();
-        cmcode = cmcode.startsWith(metaType + "_") ? cmcode : metaType + "_" + cmcode;
-        Map<String, Object> metaTag = mongoLogic.findMetaByCode(cmcode);
+        cmcode = cmcode.replace(metaType + "_", "");
+        Map<String, Object> metaTag = mongoLogic.findMetaByCode(metaType + "_" + cmcode);
 
+        Map<String, String[]> paramMap = req.getParameterMap();
         List<QueryItem> queryItems = QueryItem.buildSearchItems(paramMap);
         queryItems.add(new QueryItem("Eq_String_cmcode", cmcode));
         String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
@@ -68,8 +68,9 @@ public class MetaAppController {
      */
     @RequestMapping(value = "{metaType}/{cmcode}/create", method = RequestMethod.GET)
     public ModelAndView create(@PathVariable("metaType") String metaType, @PathVariable("cmcode") String cmcode) throws Exception {
-        cmcode = cmcode.startsWith(metaType + "_") ? cmcode : metaType + "_" + cmcode;
-        Map<String, Object> metaTag = mongoLogic.findMetaByCode(cmcode);
+        cmcode = cmcode.replace(metaType + "_", "");
+        Map<String, Object> metaTag = mongoLogic.findMetaByCode(metaType + "_" + cmcode);
+
         ModelAndView view = new ModelAndView("meta/metaAppEdit");
         Map<String, Object> entity = new HashMap<>();
         view.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, metaTag, entity));
@@ -85,8 +86,9 @@ public class MetaAppController {
      */
     @RequestMapping(value = "{metaType}/{cmcode}/update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("metaType") String metaType, @PathVariable("cmcode") String cmcode, @PathVariable("id") String id) throws Exception {
-        cmcode = cmcode.startsWith(metaType + "_") ? cmcode : metaType + "_" + cmcode;
-        Map<String, Object> metaTag = mongoLogic.findMetaByCode(cmcode);
+        cmcode = cmcode.replace(metaType + "_", "");
+        Map<String, Object> metaTag = mongoLogic.findMetaByCode(metaType + "_" + cmcode);
+
         ModelAndView view = new ModelAndView("meta/metaAppEdit");
         String tableName = metaTag.get("oneTable").equals("1") ? ("meta_" + metaType + "_" + cmcode) : ("meta_" + metaType);
         Map<String, Object> entity = mongoLogic.findOne(tableName, id);
@@ -101,8 +103,9 @@ public class MetaAppController {
      */
     @RequestMapping(value = "{metaType}/{cmcode}/update", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable("metaType") String metaType, @PathVariable("cmcode") String cmcode, String id, HttpServletRequest req) throws Exception {
-        cmcode = cmcode.startsWith(metaType + "_") ? cmcode : metaType + "_" + cmcode;
-        Map<String, Object> metaTag = mongoLogic.findMetaByCode(cmcode);
+        cmcode = cmcode.replace(metaType + "_", "");
+        Map<String, Object> metaTag = mongoLogic.findMetaByCode(metaType + "_" + cmcode);
+
         Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), req.getParameterMap());
         entity.put("metaType", metaType);
         entity.put("cmcode", cmcode);
@@ -117,8 +120,9 @@ public class MetaAppController {
      */
     @RequestMapping(value = "{metaType}/{cmcode}/view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("metaType") String metaType, @PathVariable("cmcode") String cmcode, @PathVariable("id") String id) throws Exception {
-        cmcode = cmcode.startsWith(metaType + "_") ? cmcode : metaType + "_" + cmcode;
-        Map<String, Object> metaTag = mongoLogic.findMetaByCode(cmcode);
+        cmcode = cmcode.replace(metaType + "_", "");
+        Map<String, Object> metaTag = mongoLogic.findMetaByCode(metaType + "_" + cmcode);
+
         ModelAndView view = new ModelAndView("meta/metaAppView");
         String tableName = metaTag.get("oneTable").equals("1") ? ("meta_" + metaType + "_" + cmcode) : ("meta_" + metaType);
         Map<String, Object> entity = mongoLogic.findOne(tableName, id);

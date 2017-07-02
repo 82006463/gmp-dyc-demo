@@ -233,10 +233,16 @@ public class TaskController {
         //页面的处理
         String tmpUrl = task != null ? task.getActionUrl() : process.getInstanceUrl();
         String pagePath = tmpUrl.contains("/") ? tmpUrl.split("\\?")[1] : tmpUrl;
-        Map<String, Object> metaTag = this.getMetaTag(pagePath);
+        String[] pagePathArr = pagePath.split("_");
+        String metaType = pagePathArr[0];
+        String cmcode = pagePathArr[1].replace(metaType + "_", "");
+        Map<String, Object> metaTag = this.getMetaTag(metaType + "_" + cmcode);
 
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), paramMap);
+        entity.put("metaType", metaType);
+        entity.put("cmcode", cmcode);
+
         String submitBtn = paramMap.containsKey("submit") ? paramMap.get("submit")[0] : "";
         if (task != null) {
             if (submitBtn.equals("保存")) {
@@ -251,10 +257,9 @@ public class TaskController {
             facets.startAndExecute(processId, ShiroUtils.getUsername(), entity);
         }
 
-        String[] pagePathArr = pagePath.split("_");
         List<QueryItem> queryItems = new ArrayList<>(2);
-        //queryItems.add(new QueryItem("Eq_String_type", pagePathArr[0]));
-        queryItems.add(new QueryItem("Eq_String_code", pagePathArr[1].startsWith(pagePathArr[0] + "_") ? pagePathArr[1] : pagePathArr[0] + "_" + pagePathArr[1]));
+        queryItems.add(new QueryItem("Eq_String_type", metaType));
+        queryItems.add(new QueryItem("Eq_String_code", metaType + "_" + cmcode));
         FlowService flowService = applicationContext.getBean(pagePathArr[0], FlowService.class);
         flowService.saveOrUpdate(mongoLogic.findOne("config_meta", queryItems), entity);
 
