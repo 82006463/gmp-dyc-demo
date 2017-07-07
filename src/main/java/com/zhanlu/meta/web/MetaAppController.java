@@ -50,7 +50,7 @@ public class MetaAppController {
         Map<String, String[]> paramMap = req.getParameterMap();
         List<QueryItem> queryItems = QueryItem.buildSearchItems(paramMap);
         queryItems.add(new QueryItem("Eq_String_cmcode", cmcode));
-        String tableName = metaType.equals("logBook") ? ("meta_" + metaType) : ("meta_" + metaType + "_" + cmcode);
+        String tableName = metaTag.get("oneTable").equals("1") ? ("meta_" + metaType + "_" + cmcode) : ("meta_" + metaType);
         mongoLogic.findByPage(tableName, queryItems, page);
 
         ModelAndView view = new ModelAndView("meta/metaAppList");
