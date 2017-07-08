@@ -43,7 +43,7 @@ public class EditItem {
                         try {
                             fieldVal = ConvertUtils.convertStringToObject(attrValArr[0], PageEnum.DataType.valueOf(dataType).getClazz());
                         } catch (Exception e) {
-                            fieldVal = attrValArr;
+                            fieldVal = attrValArr[0];
                         }
                     }
                 }
