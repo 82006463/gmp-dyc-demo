@@ -129,9 +129,9 @@ public class MetaTagUtils {
 
             itemIndex++;
             tmpIndex++;
-            if (tmpIndex == 3 || (tmpIndex == 1 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm")))) {
+            if (tmpIndex == 3 || (tmpIndex == 1 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("file") || tagType.equalsIgnoreCase("subForm")))) {
                 html += "<tr>";
-            } else if (tmpIndex == 2 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm"))) {
+            } else if (tmpIndex == 2 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("file") || tagType.equalsIgnoreCase("subForm"))) {
                 html += "</tr><tr>";
             }
             String classAttr = required.equals("yes") ? " validate[required]" : "";
@@ -222,12 +222,14 @@ public class MetaTagUtils {
                 } else {
                     html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + classAttr + "' fuzzy='" + fuzzy + "'/>";
                 }
+            } else if (tagType.equalsIgnoreCase("file")) {
+                html += "<input type='file' name='file' class='input_240'/>";
             } else {
                 html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + classAttr + "' fuzzy='" + fuzzy + "'/>";
             }
             html += "</td>";
 
-            if (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm")) {
+            if (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("file") || tagType.equalsIgnoreCase("subForm")) {
                 if (tmpIndex == 1) {
                     html = html.replace("${" + itemIndex + "}", " colspan='3'");
                 } else if (tmpIndex == 2) {
@@ -237,8 +239,7 @@ public class MetaTagUtils {
             } else if (tmpIndex == 1 && itemIndex == editList.size()) {
                 html = html.replace("${" + itemIndex + "}", " colspan='3'");
             }
-            if (tmpIndex == 2 || itemIndex == editList.size() ||
-                    (tmpIndex == 1 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("subForm")))) {
+            if (tmpIndex == 2 || itemIndex == editList.size() || (tmpIndex == 1 && (tagType.equalsIgnoreCase("textarea") || tagType.equalsIgnoreCase("file") || tagType.equalsIgnoreCase("subForm")))) {
                 html += "</tr>";
                 tmpIndex = 0;
             }

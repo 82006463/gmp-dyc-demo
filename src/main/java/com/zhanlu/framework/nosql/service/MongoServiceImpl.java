@@ -27,12 +27,10 @@ public class MongoServiceImpl implements MongoService {
 
     @Override
     public Map<String, Object> saveOrUpdate(String collectionName, String id, Map<String, Object> paramMap) {
-        DBObject entity = new BasicDBObject();
+        DBObject entity = new BasicDBObject(paramMap);
         if (id != null && id.length() > 0) {
-            entity.putAll(paramMap);
             mongoDao.update(collectionName, id, entity);
         } else {
-            entity.putAll(paramMap);
             entity = mongoDao.insert(collectionName, entity);
         }
         return entity.toMap();

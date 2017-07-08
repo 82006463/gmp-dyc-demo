@@ -209,6 +209,36 @@
 						</table>
 					</td>
 				</tr>
+
+				<%--<tr>
+					<td class="td_table_1" rowspan="2">编辑页面：流程按钮</td>
+					<td class="td_table_2" colspan="3">
+						<span style="font-weight: bold; color: red;">编辑页面</span>：<input type="button" class="button_70px" value="添加选项" onclick="listTable();">
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_2" colspan="3">
+						<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" id="listTable" style="margin: 0">
+							<tr>
+								<td align=center class="td_list_1">编号</td>
+								<td align=center class="td_list_1">标题</td>
+								<td align=center class="td_list_1">数据类型</td>
+								<td align=center width=6% class="td_list_1">操作</td>
+							</tr>
+							<c:forEach items="${entity.btnFlowItems}" var="item" varStatus="itemIndex">
+								<tr>
+									<td class="td_list_2">
+										<frame:dict name="btnFlowCodes" type="select" typeCode="btnFlow" value="${item.code}" defaultVal="btnFlow_submit" cssClass="validate[required]"/>
+										<input type="hidden" name='btnFlowNames' value='${item.name}' class='input_120 validate[required]'>
+									</td>
+									<td class="td_list_2">
+										<a href='javascript:void(0)' onclick='Ops.removeTr(this,1);' class='btnDel' title='删除'>删除</a>
+									</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</td>
+				</tr>--%>
 			</table>
 
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
