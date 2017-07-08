@@ -192,11 +192,7 @@ public class TaskController {
         ModelAndView mav = new ModelAndView("flow/taskApproval");
         String formPage = task != null ? task.getActionUrl() : process.getInstanceUrl();
         Map<String, Object> entity = task != null ? task.getVariableMap() : new HashMap<String, Object>();
-        if (formPage.contains("/")) {
-            mav = new ModelAndView(formPage.split("\\?")[0]);
-        } else {
-            mav.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, this.getMetaTag(formPage), entity));
-        }
+        mav.addObject("jsonEdit", MetaTagUtils.edit(jdbcTemplate, dataDictService, this.getMetaTag(formPage), entity));
         mav.addObject("orderId", orderId);
         mav.addObject("process", process);
         mav.addObject("task", task);
@@ -231,12 +227,11 @@ public class TaskController {
         Process process = task == null ? facets.getEngine().process().getProcessById(processId) : null;
         Map<String, Object> taskMap = task != null ? task.getVariableMap() : new HashMap<String, Object>();
         //页面的处理
-        String tmpUrl = task != null ? task.getActionUrl() : process.getInstanceUrl();
-        String pagePath = tmpUrl.contains("/") ? tmpUrl.split("\\?")[1] : tmpUrl;
+        String pagePath = task != null ? task.getActionUrl() : process.getInstanceUrl();
         String[] pagePathArr = pagePath.split("_");
         String metaType = pagePathArr[0];
         String cmcode = pagePathArr[1].replace(metaType + "_", "");
-        Map<String, Object> metaTag = this.getMetaTag(metaType + "_" + cmcode);
+        Map<String, Object> metaTag = this.getMetaTag(pagePath);
 
         Map<String, String[]> paramMap = req.getParameterMap();
         Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), paramMap);

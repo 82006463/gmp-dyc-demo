@@ -19,7 +19,7 @@
 		<input type="hidden" id="taskId" name="taskId" value="${task.id}"/>
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">${process.name}：${process.displayName}：${empty task ? '开始':task.displayName}</td>
+				<td class="td_table_top" align="center">${process.displayName}：${empty task ? '开始':task.displayName}</td>
 			</tr>
 		</table>
 
