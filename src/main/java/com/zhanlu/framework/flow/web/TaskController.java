@@ -197,6 +197,8 @@ public class TaskController {
         mav.addObject("process", process);
         mav.addObject("task", task);
         mav.addObject("entity", entity);
+        mav.addObject("buttons", facets.getButtons(task));
+
         return mav;
     }
 

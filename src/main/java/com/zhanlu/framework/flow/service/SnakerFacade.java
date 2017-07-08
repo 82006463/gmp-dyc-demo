@@ -46,6 +46,10 @@ public class SnakerFacade {
         return processNames;
     }
 
+    public Map<String,String> getButtons(Task task) {
+        return snakerHelper.getButtons(task);
+    }
+
     @Transactional
     public Order startAndExecute(String processId, String operator, Map<String, Object> args) {
         snakerHelper.preStart(operator, processId, args);

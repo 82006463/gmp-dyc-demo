@@ -30,10 +30,13 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr align="left">
 				<td colspan="1">
-					<input type="button" class="button_70px" name="submit" value="保存">&nbsp;&nbsp;
+					<c:forEach items="${buttons}" var="btn">
+						<input type="button" class="button_70px" name="submit" value="${btn.value}">&nbsp;&nbsp;
+					</c:forEach>
+					<%--<input type="button" class="button_70px" name="submit" value="保存">&nbsp;&nbsp;
 					<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
-					<input type="submit" class="button_70px" name="submit" value="拒绝">&nbsp;&nbsp;
-					<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
+					<input type="submit" class="button_70px" name="submit" value="拒绝">&nbsp;&nbsp;--%>
+					<input type="button" class="button_70px" name="submit" value="返回" onclick="history.back()">
 				</td>
 			</tr>
 		</table>

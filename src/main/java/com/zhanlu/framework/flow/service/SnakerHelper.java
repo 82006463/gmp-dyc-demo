@@ -86,6 +86,7 @@ public class SnakerHelper {
     public Map<String, String> getButtons(Task task) {
         Map<String, String> buttons = new LinkedHashMap<>(task == null ? 4 : 8);
         if (task == null) {
+            buttons.put("submit", "保存");
             buttons.put("submit", "提交");
         } else {
             List<TransitionModel> outputs = task.getModel().getOutputs();
