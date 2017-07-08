@@ -73,9 +73,9 @@
 
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="td_table_1" rowspan="2"><span style="font-weight: bold; color: red;">编辑页面</span>：选项列表</td>
+					<td class="td_table_1" rowspan="2">编辑页面：选项列表</td>
 					<td class="td_table_2" colspan="3">
-						<input type="button" class="button_70px" value="添加选项" onclick="editTable();">
+						<span style="font-weight: bold; color: red;">编辑页面</span>：<input type="button" class="button_70px" value="添加选项" onclick="editTable();">
 					</td>
 				</tr>
 				<tr>
@@ -132,9 +132,9 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1" rowspan="2"><span style="font-weight: bold; color: red;">搜索页面</span>：选项列表</td>
+					<td class="td_table_1" rowspan="2">搜索页面：选项列表</td>
 					<td class="td_table_2" colspan="3">
-						<input type="button" class="button_70px" value="添加选项" onclick="queryTable();">
+						<span style="font-weight: bold; color: red;">搜索页面</span>：<input type="button" class="button_70px" value="添加选项" onclick="queryTable();">
 					</td>
 				</tr>
 				<tr>
@@ -175,9 +175,9 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1" rowspan="2"><span style="font-weight: bold; color: red;">列表页面</span>：选项列表</td>
+					<td class="td_table_1" rowspan="2">列表页面：选项列表</td>
 					<td class="td_table_2" colspan="3">
-						<input type="button" class="button_70px" value="添加选项" onclick="listTable();">
+						<span style="font-weight: bold; color: red;">列表页面</span>：<input type="button" class="button_70px" value="添加选项" onclick="listTable();">
 					</td>
 				</tr>
 				<tr>
