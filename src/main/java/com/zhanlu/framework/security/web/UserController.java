@@ -74,10 +74,12 @@ public class UserController {
     public ModelAndView edit(@PathVariable("id") Long id) {
         User entity = userService.findById(id);
         List<Role> roles = roleService.findAll();
-        List<Role> roless = entity.getRoles();
+        List<Role> userRoles = entity.getRoles();
         for (Role role : roles) {
-            for (Role selRole : roless) {
-                role.setSelected(role.getId().longValue() == selRole.getId().longValue() ? 1 : 0);
+            role.setSelected(0);
+            for (Role userRole : userRoles) {
+                if (role.getId().longValue() == userRole.getId().longValue())
+                    role.setSelected(1);
             }
         }
         ModelAndView mv = new ModelAndView("security/userEdit");
@@ -149,7 +151,7 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
         byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), Digests.generateSalt(8), UserService.HASH_INTERATIONS);
         plainPassword = EncodeUtils.hexEncode(hashPassword);
-        if(password.equals(plainPassword)) {
+        if (password.equals(plainPassword)) {
             resultMap.put("result", 1);
         } else {
             resultMap.put("result", 0);
