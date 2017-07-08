@@ -36,100 +36,83 @@ import java.util.Map;
 public class SnakerFacade {
 
     @Autowired
-    private SnakerEngine engine;
+    private SnakerEngine snakerEngine;
     @Autowired
-    private SnakerAssistService assistService;
+    private SnakerHelper snakerHelper;
 
     public void initFlows() {
-        engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/leave.snaker"));
-        engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/borrow.snaker"));
+        snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("flows/leave.snaker"));
+        snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("flows/borrow.snaker"));
     }
 
     public SnakerEngine getEngine() {
-        return engine;
+        return snakerEngine;
     }
 
     public List<String> getAllProcessNames() {
-        List<Process> list = engine.process().getProcesss(new QueryFilter());
-        List<String> names = new ArrayList<>();
-        for (Process entity : list) {
-            if (names.contains(entity.getName()))
+        List<String> processNames = new ArrayList<>();
+        List<Process> processes = snakerEngine.process().getProcesss(new QueryFilter());
+        for (Process process : processes) {
+            if (processNames.contains(process.getName()))
                 continue;
-            names.add(entity.getName());
+            processNames.add(process.getName());
         }
-        return names;
+        return processNames;
     }
 
     @Transactional
     public Order startAndExecute(String processId, String operator, Map<String, Object> args) {
-        assistService.preStart(operator, processId, args);
-        Order order = engine.startInstanceById(processId, operator, args);
+        snakerHelper.preStart(operator, processId, args);
+        Order order = snakerEngine.startInstanceById(processId, operator, args);
         args.put("wf_processId", processId);
         args.put("wf_orderId", order.getId());
-        List<Task> tasks = engine.query().getActiveTasks(new QueryFilter().setOrderId(order.getId()));
+        List<Task> tasks = snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(order.getId()));
         List<Task> newTasks = new ArrayList<>();
         if (tasks != null && tasks.size() > 0) {
             for (Task task : tasks) {
-                newTasks.addAll(engine.executeTask(task.getId(), operator, args));
+                newTasks.addAll(snakerEngine.executeTask(task.getId(), operator, args));
             }
         }
-        assistService.addActors(operator, newTasks);
+        snakerHelper.addActors(operator, newTasks);
         return order;
-    }
-
-    public Order startAndExecute(String name, Integer version, String operator, Map<String, Object> args) {
-        Process process = engine.process().getProcessByVersion(name, version);
-        return this.startAndExecute(process.getId(), operator, args);
-    }
-
-    //批量执行流程
-    @Transactional
-    public List<Task> execute(String[] taskIds, String operator) {
-        for (String taskId : taskIds) {
-            execute(taskId, operator, null);
-        }
-        return null;
     }
 
     //单条执行流程
     @Transactional
     public List<Task> execute(String taskId, String operator, Map<String, Object> args) {
-        Task task = engine.query().getTask(taskId);
+        Task task = snakerEngine.query().getTask(taskId);
         if (args == null) {
             args = task.getVariableMap();
         }
         if (!args.containsKey("wf_orderId")) {
-            Order order = engine.query().getOrder(task.getOrderId());
+            Order order = snakerEngine.query().getOrder(task.getOrderId());
             args.put("wf_orderId", order.getId());
             args.put("v_creator", order.getCreator());
         }
-        List<Task> newTasks = engine.executeTask(taskId, operator, args);
-        assistService.addActors(operator, newTasks);
+        List<Task> newTasks = snakerEngine.executeTask(taskId, operator, args);
+        snakerHelper.addActors(operator, newTasks);
         return newTasks;
     }
 
     @Transactional
     public List<Task> executeAndJump(String taskId, String operator, Map<String, Object> args, String nodeName) {
-        if (StringUtils.isEmpty(nodeName)) {
-            nodeName = "申请人";
-        }
-        List<Task> newTasks = engine.executeAndJumpTask(taskId, operator, args, nodeName);
-        return newTasks;
+        nodeName = StringUtils.isEmpty(nodeName) ? "申请人" : nodeName;
+        return snakerEngine.executeAndJumpTask(taskId, operator, args, nodeName);
     }
 
     //转办
     @Transactional
     public List<Task> transferMajor(String taskId, String operator, String... actors) {
-        List<Task> tasks = engine.task().createNewTask(taskId, TaskType.Major.ordinal(), actors);
-        engine.task().complete(taskId, operator);
+        List<Task> tasks = snakerEngine.task().createNewTask(taskId, TaskType.Major.ordinal(), actors);
+        snakerEngine.task().complete(taskId, operator);
         return tasks;
     }
 
     //协办
     @Transactional
     public List<Task> transferAidant(String taskId, String operator, String... actors) {
-        List<Task> tasks = engine.task().createNewTask(taskId, TaskType.Aidant.ordinal(), actors);
-        engine.task().complete(taskId, operator);
+        List<Task> tasks = snakerEngine.task().createNewTask(taskId, TaskType.Aidant.ordinal(), actors);
+        snakerEngine.task().complete(taskId, operator);
         return tasks;
     }
 
@@ -137,18 +120,18 @@ public class SnakerFacade {
         if (entity.getState() == null) {
             entity.setState(1);
         }
-        engine.manager().saveOrUpdate(entity);
+        snakerEngine.manager().saveOrUpdate(entity);
     }
 
     public void deleteSurrogate(String id) {
-        engine.manager().deleteSurrogate(id);
+        snakerEngine.manager().deleteSurrogate(id);
     }
 
     public Surrogate getSurrogate(String id) {
-        return engine.manager().getSurrogate(id);
+        return snakerEngine.manager().getSurrogate(id);
     }
 
     public List<Surrogate> searchSurrogate(Page<Surrogate> page, QueryFilter filter) {
-        return engine.manager().getSurrogate(page, filter);
+        return snakerEngine.manager().getSurrogate(page, filter);
     }
 }

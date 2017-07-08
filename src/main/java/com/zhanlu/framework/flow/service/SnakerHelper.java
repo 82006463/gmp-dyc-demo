@@ -6,21 +6,19 @@ import com.zhanlu.framework.security.entity.User;
 import com.zhanlu.framework.security.service.OrgService;
 import com.zhanlu.framework.security.service.UserService;
 import org.snaker.engine.SnakerEngine;
-import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Task;
 import org.snaker.engine.model.TaskModel;
+import org.snaker.engine.model.TransitionModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * SnakerFacade助手Service
  */
 @Component
-public class SnakerAssistService {
+public class SnakerHelper {
 
     @Autowired
     private SnakerEngine snakerEngine;
@@ -61,16 +59,12 @@ public class SnakerAssistService {
                 continue;
             }
 
-            Set<String> resultSet = null;
+            Set<String> resultSet = new HashSet<>();
             Map<String, Object> taskMap = newTask.getVariableMap();
             String assigneeStr = newModel.getAssignee();
             if (assigneeStr.equals("creator")) {
-                if (taskMap.containsKey("creator")) {
-                    resultSet.add(taskMap.get("creator").toString());
-                } else {
-                    Order order = snakerEngine.query().getOrder(newTask.getOrderId());
-                    resultSet.add(order.getCreator());
-                }
+                String creator = taskMap.containsKey("creator") ? taskMap.get("creator").toString() : snakerEngine.query().getOrder(newTask.getOrderId()).getCreator();
+                resultSet.add(creator);
             } else {
                 resultSet = actorStrategyRouter.findActors(operator, assigneeStr, taskMap);
             }
@@ -81,5 +75,17 @@ public class SnakerAssistService {
         return newTasks;
     }
 
+    public Map<String, String> getButtons(Task task) {
+        Map<String, String> buttons = new LinkedHashMap<>(task == null ? 4 : 8);
+        if (task == null) {
+            buttons.put("submit", "提交");
+        } else {
+            List<TransitionModel> outputs = task.getModel().getOutputs();
+            for (TransitionModel output : outputs) {
+                buttons.put(output.getName(), output.getDisplayName());
+            }
+        }
+        return buttons;
+    }
 
 }
