@@ -36,13 +36,21 @@ public class SnakerHelper {
     public Map<String, Object> preStart(String operator, String processId, Map<String, Object> args) {
         User initUser = userService.findUserByName(operator); // 申请用户
         Org initOrg = orgService.findById(initUser.getOrg().getId()); // 申请部门
+        int deptLevel = initOrg.getLevel().intValue();
         args.put("creator", operator);
         args.put("v_creator", operator);
         args.put("v_username", initUser.getUsername());
         args.put("v_name", initUser.getFullname());
         args.put("v_deptCode", initOrg.getCode()); //本部门编号
         args.put("v_deptName", initOrg.getName()); //本部门名称
-        args.put("v_deptLevel", initOrg.getLevel()); //本部门层级
+        args.put("v_deptLevel", deptLevel); //本部门层级
+        for (int i = deptLevel; i > 0; i--) {
+            args.put("v_deptCode" + i, initOrg.getCode()); //本部门编号
+            args.put("v_deptName" + i, initOrg.getName()); //本部门名称
+            initOrg = orgService.findById(initOrg.getPid());
+            if (initOrg.getPid() == null || initOrg.getPid().longValue() <= 0)
+                break;
+        }
         return args;
     }
 
