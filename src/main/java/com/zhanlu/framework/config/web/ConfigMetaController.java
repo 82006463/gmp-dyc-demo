@@ -41,24 +41,21 @@ public class ConfigMetaController {
     }
 
     @RequestMapping(value = "{type}/create", method = RequestMethod.GET)
-    public ModelAndView create(@PathVariable("type") String type, String item) {
+    public ModelAndView create(@PathVariable("type") String type) {
         Map<String, Object> entity = new LinkedHashMap<>();
         entity.put("type", type);
 
         String jspPage = type.contains("chart") ? "metaChartEdit" : "metaTagEdit";
         ModelAndView view = new ModelAndView("config/" + jspPage);
-        view.addObject("item", item);
         view.addObject("entity", entity);
         return view;
     }
 
     @RequestMapping(value = "{type}/update/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("type") String type, @PathVariable("id") String id, String item) throws Exception {
+    public ModelAndView edit(@PathVariable("type") String type, @PathVariable("id") String id) throws Exception {
         Map<String, Object> entity = mongoLogic.findOne(this.metaTable, id);
-
         String jspPage = type.contains("chart") ? "metaChartEdit" : "metaTagEdit";
         ModelAndView view = new ModelAndView("config/" + jspPage);
-        view.addObject("item", item);
         view.addObject("entity", entity);
         return view;
     }
@@ -72,76 +69,76 @@ public class ConfigMetaController {
     }
 
     @RequestMapping(value = "{type}/update", method = RequestMethod.POST)
-    public ModelAndView update(@PathVariable("type") String type, String id, String item, String[] itemCodes, HttpServletRequest req) {
+    public ModelAndView update(@PathVariable("type") String type, String id, HttpServletRequest req) {
         Map<String, String[]> paramMap = req.getParameterMap();
-        Map<String, Object> entity = null;
-        if (id != null && id.trim().length() > 0) {
-            entity = mongoLogic.findOne(this.metaTable, id);
-        } else {
-            entity = new LinkedHashMap<>(itemCodes == null ? 16 : itemCodes.length + 16);
-        }
+        String[] editCodes = paramMap.get("editCodes");
+        String[] queryCodes = paramMap.get("queryCodes");
+        String[] listCodes = paramMap.get("listCodes");
+
+        Map<String, Object> entity = (id != null && id.trim().length() > 0) ? mongoLogic.findOne(this.metaTable, id) : new LinkedHashMap<String, Object>(editCodes == null ? 16 : editCodes.length + 16);
         for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
             if (!entry.getKey().equals("id") && !entry.getKey().startsWith("item")) {
                 entity.put(entry.getKey(), entry.getValue()[0]);
             }
         }
-        if (itemCodes != null && itemCodes.length > 0) {
-            String[] itemNames = paramMap.get("itemNames");
-            String[] itemDataTypes = paramMap.get("itemDataTypes");
-            List<Map<String, Object>> items = new ArrayList<>(itemCodes == null ? 0 : itemCodes.length);
-            if (item.equals("search")) {
-                String[] itemCompareTypes = paramMap.get("itemCompareTypes");
-                String[] itemTagTypes = paramMap.get("itemTagTypes");
-                for (int i = 0; i < itemCodes.length; i++) {
-                    Map<String, Object> itemMap = new LinkedHashMap<>(8);
-                    itemMap.put("code", itemCodes[i]);
-                    itemMap.put("name", itemNames[i]);
-                    itemMap.put("dataType", itemDataTypes[i]);
-                    itemMap.put("compareType", itemCompareTypes[i]);
-                    itemMap.put("tagType", itemTagTypes[i]);
-                    items.add(itemMap);
-                }
-                entity.put("queryItems", items);
-            } else if (item.equals("list")) {
-                for (int i = 0; i < itemCodes.length; i++) {
-                    Map<String, Object> itemMap = new LinkedHashMap<>(8);
-                    itemMap.put("code", itemCodes[i]);
-                    itemMap.put("name", itemNames[i]);
-                    itemMap.put("dataType", itemDataTypes[i]);
-                    items.add(itemMap);
-                }
-                entity.put("listItems", items);
-            } else if (item.equals("edit")) {
-                Map<String, String> itemsMap = new LinkedHashMap<>(itemCodes.length);
-                String[] itemRequireds = paramMap.get("itemRequireds");
-                String[] itemSubForms = paramMap.get("itemSubForms");
-                String[] itemFuzzys = paramMap.get("itemFuzzys");
-                String[] itemTagTypes = paramMap.get("itemTagTypes");
-                String[] itemArrays = paramMap.get("itemArrays");
-                String[] itemHiddens = paramMap.get("itemHiddens");
-                for (int i = 0; i < itemCodes.length; i++) {
-                    Map<String, Object> itemMap = new LinkedHashMap<>(8);
-                    itemMap.put("code", itemCodes[i]);
-                    itemMap.put("name", itemNames[i]);
-                    itemMap.put("required", itemRequireds[i]);
-                    itemMap.put("dataType", itemDataTypes[i]);
-                    itemMap.put("tagType", itemTagTypes[i]);
-                    itemMap.put("fuzzy", itemFuzzys[i]);
-                    itemMap.put("subForm", itemSubForms[i]);
-                    itemMap.put("array", itemArrays[i]);
-                    itemMap.put("hidden", itemHiddens[i]);
-                    items.add(itemMap);
-                    itemsMap.put(itemCodes[i], itemNames[i]);
-                }
-                entity.put("itemsMap", itemsMap);
-                entity.put("editItems", items);
-                if (!entity.containsKey("queryItems")) {
-                    entity.put("queryItems", items);
-                }
-                if (!entity.containsKey("listItems")) {
-                    entity.put("listItems", items);
-                }
+        if (editCodes != null && editCodes.length > 0) {
+            String[] names = paramMap.get("editNames");
+            String[] dataTypes = paramMap.get("editDataTypes");
+            String[] tagTypes = paramMap.get("editTagTypes");
+            String[] requireds = paramMap.get("editRequireds");
+            String[] subForms = paramMap.get("editSubForms");
+            String[] fuzzys = paramMap.get("editFuzzys");
+            String[] arrays = paramMap.get("editArrays");
+            String[] hiddens = paramMap.get("editHiddens");
+
+            List<Map<String, Object>> items = new ArrayList<>(listCodes.length);
+            Map<String, Object> itemsMap = new LinkedHashMap<>(8);
+            for (int i = 0; i < editCodes.length; i++) {
+                Map<String, Object> itemMap = new LinkedHashMap<>(8);
+                itemMap.put("code", editCodes[i]);
+                itemMap.put("name", names[i]);
+                itemMap.put("required", requireds[i]);
+                itemMap.put("dataType", dataTypes[i]);
+                itemMap.put("tagType", tagTypes[i]);
+                itemMap.put("fuzzy", fuzzys[i]);
+                itemMap.put("subForm", subForms[i]);
+                itemMap.put("array", arrays[i]);
+                itemMap.put("hidden", hiddens[i]);
+                items.add(itemMap);
+                itemsMap.put(editCodes[i], names[i]);
             }
+            entity.put("itemsMap", itemsMap);
+            entity.put("editItems", items);
+        }
+        if (queryCodes != null && queryCodes.length > 0) {
+            String[] names = paramMap.get("queryNames");
+            String[] dataTypes = paramMap.get("queryDataTypes");
+            String[] compareTypes = paramMap.get("queryCompareTypes");
+            String[] tagTypes = paramMap.get("queryTagTypes");
+            List<Map<String, Object>> items = new ArrayList<>(listCodes.length);
+            for (int i = 0; i < queryCodes.length; i++) {
+                Map<String, Object> itemMap = new LinkedHashMap<>(8);
+                itemMap.put("code", queryCodes[i]);
+                itemMap.put("name", names[i]);
+                itemMap.put("dataType", dataTypes[i]);
+                itemMap.put("compareType", compareTypes[i]);
+                itemMap.put("tagType", tagTypes[i]);
+                items.add(itemMap);
+            }
+            entity.put("queryItems", items);
+        }
+        if (listCodes != null && listCodes.length > 0) {
+            String[] names = paramMap.get("listNames");
+            String[] dataTypes = paramMap.get("listDataTypes");
+            List<Map<String, Object>> items = new ArrayList<>(listCodes.length);
+            for (int i = 0; i < listCodes.length; i++) {
+                Map<String, Object> itemMap = new LinkedHashMap<>(8);
+                itemMap.put("code", listCodes[i]);
+                itemMap.put("name", names[i]);
+                itemMap.put("dataType", dataTypes[i]);
+                items.add(itemMap);
+            }
+            entity.put("listItems", items);
         }
         mongoLogic.saveOrUpdate(this.metaTable, id, entity);
         ModelAndView view = new ModelAndView("redirect:/config/meta/" + type + "/list");
