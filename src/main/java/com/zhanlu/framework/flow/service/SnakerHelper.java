@@ -47,9 +47,9 @@ public class SnakerHelper {
         for (int i = deptLevel; i > 0; i--) {
             args.put("v_deptCode" + i, initOrg.getCode()); //本部门编号
             args.put("v_deptName" + i, initOrg.getName()); //本部门名称
-            initOrg = orgService.findById(initOrg.getPid());
             if (initOrg.getPid() == null || initOrg.getPid().longValue() <= 0)
                 break;
+            initOrg = orgService.findById(initOrg.getPid());
         }
         return args;
     }

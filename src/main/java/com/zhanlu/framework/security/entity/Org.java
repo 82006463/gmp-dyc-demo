@@ -24,8 +24,8 @@ public class Org extends TreeEntity {
 
     }
 
-    public Org(Long pid) {
-        super.pid = pid;
+    public Org(Long id) {
+        super.id = id;
     }
 
     //备用字段
