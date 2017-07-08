@@ -247,13 +247,13 @@ public class TaskController {
         if (task != null) {
             if (submitBtn.equals("保存")) {
                 taskMap.putAll(entity);
-            } else if (submitBtn.equals("提交")) {
+            } else if (submitBtn.contains("提交") || submitBtn.contains("审核")) {
                 taskMap.putAll(entity);
                 facets.execute(taskId, ShiroUtils.getUsername(), taskMap);
-            } else if (submitBtn.equals("拒绝")) {
+            } else if (submitBtn.contains("拒绝")) {
                 facets.executeAndJump(taskId, ShiroUtils.getUsername(), taskMap, null);
             }
-        } else if (submitBtn.equals("提交")) {
+        } else if (submitBtn.contains("提交") || submitBtn.contains("审核")) {
             facets.startAndExecute(processId, ShiroUtils.getUsername(), entity);
         }
 
@@ -261,7 +261,8 @@ public class TaskController {
         queryItems.add(new QueryItem("Eq_String_type", metaType));
         queryItems.add(new QueryItem("Eq_String_code", metaType + "_" + cmcode));
         FlowService flowService = applicationContext.getBean(pagePathArr[0], FlowService.class);
-        flowService.saveOrUpdate(mongoLogic.findOne("config_meta", queryItems), entity);
+        Map<String, Object> tableStruct = mongoLogic.findOne("config_meta", queryItems);
+        flowService.saveOrUpdate(tableStruct, req.getParameter("id"), entity);
 
         ModelAndView mav = new ModelAndView("redirect:/flow/task/list");
         return mav;

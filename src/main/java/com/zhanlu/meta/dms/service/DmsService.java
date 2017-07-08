@@ -20,18 +20,13 @@ public class DmsService implements FlowService {
     private String metaDmsFile = "meta_dms_file";
 
     @Override
-    public Map<String, Object> saveOrUpdate(Map<String, Object> tableStruct, Map<String, Object> newEntity) {
+    public Map<String, Object> saveOrUpdate(Map<String, Object> tableStruct, String rowId, Map<String, Object> newEntity) {
         if (tableStruct == null)
             return newEntity;
-        
-        List<QueryItem> queryItems = new ArrayList<>(2);
-        queryItems.add(new QueryItem("Eq_String_metaType", newEntity.get("metaType")));
-        queryItems.add(new QueryItem("Eq_String_cmcode", newEntity.get("cmcode")));
-        String metaDms = tableStruct.get("oneTable").equals("1") ? "meta_flowDms_" + newEntity.get("cmcode") : "meta_flowDms";
-        Map<String, Object> flowDms = mongoService.findOne(metaDms, queryItems);
-        flowDms.putAll(newEntity);
-        String _id = flowDms.get("_id") == null ? null : flowDms.get("_id").toString();
-        mongoService.saveOrUpdate(metaDms, _id, new BasicDBObject(newEntity));
+
+        String metaDmsTab = tableStruct.get("oneTable").equals("1") ? "meta_flowDms_" + newEntity.get("cmcode") : "meta_flowDms";
+        Map<String, Object> entity = (rowId == null || rowId.trim().length() == 0) ? newEntity : mongoService.findOne(metaDmsTab, rowId);
+        mongoService.saveOrUpdate(metaDmsTab, rowId, new BasicDBObject(entity));
         this.updateDmsFile(newEntity);
         return newEntity;
     }
