@@ -89,7 +89,7 @@ public class ConfigMetaController {
             String[] subForms = paramMap.get("editSubForms");
             String[] fuzzys = paramMap.get("editFuzzys");
             String[] arrays = paramMap.get("editArrays");
-            String[] hiddens = paramMap.get("editHiddens");
+            String[] displayModes = paramMap.get("editDisplayModes");
 
             List<Map<String, Object>> items = new ArrayList<>(listCodes.length);
             Map<String, Object> itemsMap = new LinkedHashMap<>(8);
@@ -103,7 +103,7 @@ public class ConfigMetaController {
                 itemMap.put("fuzzy", fuzzys[i]);
                 itemMap.put("subForm", subForms[i]);
                 itemMap.put("array", arrays[i]);
-                itemMap.put("hidden", hiddens[i]);
+                itemMap.put("displayMode", displayModes[i]);
                 items.add(itemMap);
                 itemsMap.put(editCodes[i], names[i]);
             }

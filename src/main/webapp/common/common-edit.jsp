@@ -24,6 +24,16 @@
         });
         //$('#inputForm').validationEngine();
 
+        $('input[displayMode=auto]').blur(function () {
+            if('${process.name}'.indexOf('flowDms_') > -1) {
+                $.getJSON('${ctx}/file/get',{'fileCode':$(this).val()},function (data) {
+                    for (var i = 0; i < data.size; i++) {
+                        var _file = data.data[i];
+                        $('[name=' + _file.key + ']').val( _file.value);
+                    }
+                });
+            }
+        });
         //模糊搜索
         $('input[fuzzy]').each(function () {
             var _fuzzy = $(this).attr('fuzzy');

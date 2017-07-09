@@ -123,6 +123,7 @@ public class MetaTagUtils {
         for (Map<String, String> entry : editList) {
             String tagType = entry.get("tagType").replace("tagType_", "");
             String required = entry.get("required").replace("yesNo_", "");
+            String displayMode = entry.get("displayMode").replace("displayMode_", "");
             String fuzzy = entry.get("fuzzy");
             String code = entry.get("code");
             String val = dataMap.get(code) == null ? "" : dataMap.get(code).toString();
@@ -135,9 +136,12 @@ public class MetaTagUtils {
                 html += "</tr><tr>";
             }
             String classAttr = required.equals("yes") ? " validate[required]" : "";
+            String readOnly = displayMode.equalsIgnoreCase("readonly") ? "readonly='readonly'" : "";
             html += "<td class='td_table_1'>" + entry.get("name") + (required.equals("yes") ? "<b class='requiredWarn'>*</b>" : "") + "</td><td class='td_table_2' ${" + itemIndex + "}>";
-            if (tagType.equalsIgnoreCase("textarea")) {
-                html += "<textarea name='" + code + "' class='input_textarea_600" + classAttr + "'>" + val + "</textarea>";
+            if (displayMode.equalsIgnoreCase("text")) {
+                html += val;
+            } else if (tagType.equalsIgnoreCase("textarea")) {
+                html += "<textarea name='" + code + "' class='input_textarea_600" + classAttr + "' " + readOnly + ">" + val + "</textarea>";
             } else if (tagType.equalsIgnoreCase("date")) {
                 if (dataMap.get(code) instanceof Long || dataMap.get(code) instanceof Date) {
                     Date date = dataMap.get(code) instanceof Long ? new Date((Long) dataMap.get(code)) : (Date) dataMap.get(code);
@@ -222,12 +226,12 @@ public class MetaTagUtils {
                         }
                     }
                 } else {
-                    html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + classAttr + "' fuzzy='" + fuzzy + "'/>";
+                    html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + classAttr + "' fuzzy='" + fuzzy + "' displayMode='" + displayMode + "' " + readOnly + "/>";
                 }
             } else if (tagType.equalsIgnoreCase("file")) {
                 html += "<input type='file' name='file' class='input_240'/>";
             } else {
-                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + classAttr + "' fuzzy='" + fuzzy + "'/>";
+                html += "<input type='text' name='" + code + "' value='" + val + "' class='input_240" + classAttr + "' fuzzy='" + fuzzy + "' displayMode='" + displayMode + "' " + readOnly + "/>";
             }
             html += "</td>";
 
