@@ -1,5 +1,6 @@
 package com.zhanlu.framework.flow.web;
 
+import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.flow.service.SnakerFacade;
 import com.zhanlu.framework.logic.MongoLogic;
@@ -8,7 +9,6 @@ import com.zhanlu.framework.nosql.item.QueryItem;
 import com.zhanlu.framework.security.shiro.ShiroUtils;
 import com.zhanlu.framework.util.MetaTagUtils;
 import com.zhanlu.meta.service.FlowService;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -246,13 +246,15 @@ public class TaskController {
         if (task != null) {
             if (submitBtn.equals("保存")) {
                 taskMap.putAll(entity);
-            } else if (submitBtn.contains("提交") || submitBtn.contains("审核")) {
-                taskMap.putAll(entity);
-                facets.execute(taskId, ShiroUtils.getUsername(), taskMap);
+                task.setVariable(JSON.toJSONString(taskMap));
+                facets.getEngine().task().updateTask(task);
             } else if (submitBtn.contains("拒绝")) {
                 facets.executeAndJump(taskId, ShiroUtils.getUsername(), taskMap, req.getParameter("nodeName"));
+            } else {
+                taskMap.putAll(entity);
+                facets.execute(taskId, ShiroUtils.getUsername(), taskMap);
             }
-        } else if (submitBtn.contains("提交") || submitBtn.contains("审核")) {
+        } else {
             facets.startAndExecute(processId, ShiroUtils.getUsername(), entity);
         }
 
