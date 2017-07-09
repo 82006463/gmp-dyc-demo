@@ -26,6 +26,27 @@
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			${jsonEdit}
 			<c:if test="${!empty task}">
+				<c:if test="${!empty entity.uploadFiles && fn:length(entity.uploadFiles)>0}">
+					<tr>
+						<td class="td_table_1">附件列表：</td>
+						<td class="td_table_2" colspan="3">
+							<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 0">
+								<tr>
+									<td align=center width=90% class="td_list_1">附件名</td>
+									<td align=center width=10% class="td_list_1">操作</td>
+								</tr>
+								<c:forEach items="${entity.uploadFiles}" var="_file">
+									<tr>
+										<td class="td_list_2">${_file.fileName}</td>
+										<td align="center" class="td_list_2">
+											<a href="${ctx}/file/download?fileName=${_file.fileName}" class="btnDownload" title="下载" target="_blank">下载</a>
+										</td>
+									</tr>
+								</c:forEach>
+							</table>
+						</td>
+					</tr>
+				</c:if>
 				<tr>
 					<td class="td_table_1">拒绝节点：</td>
 					<td class="td_table_2" colspan="3">

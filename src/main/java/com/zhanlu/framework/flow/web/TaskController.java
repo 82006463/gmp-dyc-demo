@@ -8,6 +8,7 @@ import com.zhanlu.framework.nosql.item.QueryItem;
 import com.zhanlu.framework.security.shiro.ShiroUtils;
 import com.zhanlu.framework.util.MetaTagUtils;
 import com.zhanlu.meta.service.FlowService;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,9 +69,9 @@ public class TaskController {
         String[] assignees = new String[list.size()];
         list.toArray(assignees);
 
-        Page<WorkItem> majorPage = new Page<WorkItem>(5);
-        Page<WorkItem> aidantPage = new Page<WorkItem>(3);
-        Page<HistoryOrder> ccorderPage = new Page<HistoryOrder>(3);
+        Page<WorkItem> majorPage = new Page<>(5);
+        Page<WorkItem> aidantPage = new Page<>(3);
+        Page<HistoryOrder> ccorderPage = new Page<>(3);
         List<WorkItem> majorWorks = facets.getEngine().query().getWorkItems(majorPage, new QueryFilter().setOperators(assignees).setTaskType(TaskType.Major.ordinal()));
         List<WorkItem> aidantWorks = facets.getEngine().query().getWorkItems(aidantPage, new QueryFilter().setOperators(assignees).setTaskType(TaskType.Aidant.ordinal()));
         List<HistoryOrder> ccWorks = facets.getEngine().query().getCCWorks(ccorderPage, new QueryFilter().setOperators(assignees).setState(1));
@@ -204,12 +205,19 @@ public class TaskController {
      */
     @RequestMapping(value = "approval", method = RequestMethod.POST)
     public ModelAndView approvalPost(@RequestParam(value = "file", required = false) CommonsMultipartFile[] files, HttpServletRequest req) throws Exception {
+        List<Map<String, String>> uploadFiles = new ArrayList<>();
         if (files != null && files.length > 0) {
+            String path = req.getSession().getServletContext().getRealPath("/") + "/upload/";
             for (CommonsMultipartFile file : files) {
-                String fileName = UUID.randomUUID() + file.getOriginalFilename();
-                String path = "d:/upload/" + fileName;
-                File localFile = new File(path);
-                file.transferTo(localFile);
+                File destFile = new File(path + file.getOriginalFilename());
+                if (!destFile.exists()) {
+                    destFile.mkdirs();
+                }
+                file.transferTo(destFile);
+                Map<String, String> fileMap = new LinkedHashMap<>(4);
+                fileMap.put("fileName", destFile.getName());
+                fileMap.put("filePath", destFile.getPath());
+                uploadFiles.add(fileMap);
             }
         }
         String processId = req.getParameter("processId");
@@ -230,6 +238,9 @@ public class TaskController {
         Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), paramMap);
         entity.put("metaType", metaType);
         entity.put("cmcode", cmcode);
+        if (uploadFiles.size() > 0) {
+            entity.put("uploadFiles", uploadFiles);
+        }
 
         String submitBtn = paramMap.containsKey("submit") ? paramMap.get("submit")[0] : "";
         if (task != null) {
