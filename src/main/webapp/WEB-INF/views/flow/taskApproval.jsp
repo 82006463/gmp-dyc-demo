@@ -25,17 +25,30 @@
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			${jsonEdit}
+			<tr>
+				<td class="td_table_1">拒绝节点：</td>
+				<td class="td_table_2" colspan="3">
+					<select name="nodeName" class="input_select">
+						<c:forEach items="${buttonsOfReject}" var="btn" varStatus="btnIndex">
+							<option value="${btn.key}" <c:if test="${btnIndex.index == 0}">selected="selected"</c:if>>${btn.value}</option>
+						</c:forEach>
+					</select>
+				</td>
+			</tr>
 		</table>
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr align="left">
 				<td colspan="1">
+					<c:if test="${!empty task}">
+						<input type="submit" class="button_70px" name="submit" value="保存">&nbsp;&nbsp;
+					</c:if>
 					<c:forEach items="${buttons}" var="btn">
-						<input type="button" class="button_70px" name="submit" value="${btn.value}">&nbsp;&nbsp;
+						<input type="submit" class="button_70px" name="submit" value="${btn.value}" onclick="return Ops.submit();">&nbsp;&nbsp;
 					</c:forEach>
-					<%--<input type="button" class="button_70px" name="submit" value="保存">&nbsp;&nbsp;
-					<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
-					<input type="submit" class="button_70px" name="submit" value="拒绝">&nbsp;&nbsp;--%>
+					<c:if test="${!empty task}">
+						<input type="submit" class="button_70px" name="submit" value="拒绝">&nbsp;&nbsp;
+					</c:if>
 					<input type="button" class="button_70px" name="submit" value="返回" onclick="history.back()">
 				</td>
 			</tr>

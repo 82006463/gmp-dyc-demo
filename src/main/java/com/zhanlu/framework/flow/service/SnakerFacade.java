@@ -46,8 +46,12 @@ public class SnakerFacade {
         return processNames;
     }
 
-    public Map<String,String> getButtons(Task task) {
+    public Map<String, String> getButtons(Task task) {
         return snakerHelper.getButtons(task);
+    }
+
+    public Map<String, String> getButtonsOfReject(Process process, Task task) {
+        return snakerHelper.getButtonsOfReject(process, task);
     }
 
     @Transactional
@@ -86,7 +90,7 @@ public class SnakerFacade {
 
     @Transactional
     public List<Task> executeAndJump(String taskId, String operator, Map<String, Object> args, String nodeName) {
-        nodeName = StringUtils.isEmpty(nodeName) ? "申请人" : nodeName;
+        nodeName = StringUtils.isEmpty(nodeName) || StringUtils.isEmpty(nodeName.trim()) ? "creator" : nodeName;
         return snakerEngine.executeAndJumpTask(taskId, operator, args, nodeName);
     }
 

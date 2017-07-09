@@ -6,7 +6,9 @@ import com.zhanlu.framework.security.entity.User;
 import com.zhanlu.framework.security.service.OrgService;
 import com.zhanlu.framework.security.service.UserService;
 import org.snaker.engine.SnakerEngine;
+import org.snaker.engine.entity.Process;
 import org.snaker.engine.entity.Task;
+import org.snaker.engine.model.ProcessModel;
 import org.snaker.engine.model.TaskModel;
 import org.snaker.engine.model.TransitionModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,15 +88,27 @@ public class SnakerHelper {
     public Map<String, String> getButtons(Task task) {
         Map<String, String> buttons = new LinkedHashMap<>(task == null ? 4 : 8);
         if (task == null) {
-            buttons.put("submit", "保存");
+            //buttons.put("submit", "保存");
             buttons.put("submit", "提交");
         } else {
-            List<TransitionModel> outputs = task.getModel().getOutputs();
-            for (TransitionModel output : outputs) {
+            List<TransitionModel> outputs = task.getModel() == null ? snakerEngine.task().getTaskModel(task.getId()).getOutputs() : task.getModel().getOutputs();
+            for (TransitionModel output : outputs)
                 buttons.put(output.getName(), output.getDisplayName());
-            }
         }
         return buttons;
     }
 
+    public Map<String, String> getButtonsOfReject(Process process, Task task) {
+        Map<String, String> buttons = new LinkedHashMap<>(task == null ? 4 : 8);
+        if (task == null)
+            return buttons;
+        ProcessModel processModel = process.getModel();
+        List<TaskModel> taskModels = processModel.getTaskModels();
+        for (TaskModel taskModel : taskModels) {
+            if (taskModel.getName().equals(task.getTaskName()))
+                break;
+            buttons.put(taskModel.getName(), taskModel.getDisplayName());
+        }
+        return buttons;
+    }
 }

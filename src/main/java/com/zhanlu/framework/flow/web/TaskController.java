@@ -198,7 +198,7 @@ public class TaskController {
         mav.addObject("task", task);
         mav.addObject("entity", entity);
         mav.addObject("buttons", facets.getButtons(task));
-
+        mav.addObject("buttonsOfReject", facets.getButtonsOfReject(process, task));
         return mav;
     }
 
@@ -248,7 +248,7 @@ public class TaskController {
                 taskMap.putAll(entity);
                 facets.execute(taskId, ShiroUtils.getUsername(), taskMap);
             } else if (submitBtn.contains("拒绝")) {
-                facets.executeAndJump(taskId, ShiroUtils.getUsername(), taskMap, null);
+                facets.executeAndJump(taskId, ShiroUtils.getUsername(), taskMap, req.getParameter("nodeName"));
             }
         } else if (submitBtn.contains("提交") || submitBtn.contains("审核")) {
             facets.startAndExecute(processId, ShiroUtils.getUsername(), entity);
