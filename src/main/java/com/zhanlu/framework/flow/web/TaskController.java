@@ -27,10 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -206,19 +203,13 @@ public class TaskController {
      * 测试任务的执行
      */
     @RequestMapping(value = "approval", method = RequestMethod.POST)
-    public ModelAndView approvalPost(@RequestParam(value = "file", required = false) CommonsMultipartFile file, HttpServletRequest req) throws Exception {
-        CommonsMultipartResolver resolver = new CommonsMultipartResolver(req.getSession().getServletContext());
-        if (resolver.isMultipart(req)) {
-            MultipartHttpServletRequest tmpReq = (MultipartHttpServletRequest) (req);
-            Iterator<String> files = tmpReq.getFileNames();
-            while (files.hasNext()) {
-                MultipartFile tmpFile = tmpReq.getFile(files.next());
-                if (tmpFile != null) {
-                    String fileName = UUID.randomUUID() + tmpFile.getOriginalFilename();
-                    String path = "d:/upload/" + fileName;
-                    File localFile = new File(path);
-                    tmpFile.transferTo(localFile);
-                }
+    public ModelAndView approvalPost(@RequestParam(value = "file", required = false) CommonsMultipartFile[] files, HttpServletRequest req) throws Exception {
+        if (files != null && files.length > 0) {
+            for (CommonsMultipartFile file : files) {
+                String fileName = UUID.randomUUID() + file.getOriginalFilename();
+                String path = "d:/upload/" + fileName;
+                File localFile = new File(path);
+                file.transferTo(localFile);
             }
         }
         String processId = req.getParameter("processId");

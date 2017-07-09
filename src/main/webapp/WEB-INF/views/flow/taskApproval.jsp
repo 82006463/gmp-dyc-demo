@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<form id="inputForm" action="${ctx}/flow/task/approval" method="post">
+	<form id="inputForm" action="${ctx}/flow/task/approval" enctype="multipart/form-data" method="post">
 		<input type="hidden" id="id" name="id" value="${entity.id}"/>
 		<input type="hidden" id="processId" name="processId" value="${process.id}"/>
 		<input type="hidden" id="orderId" name="orderId" value="${orderId}"/>
