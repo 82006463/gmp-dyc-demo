@@ -139,15 +139,17 @@ public class MetaTagUtils {
             if (tagType.equalsIgnoreCase("textarea")) {
                 html += "<textarea name='" + code + "' class='input_textarea_600" + classAttr + "'>" + val + "</textarea>";
             } else if (tagType.equalsIgnoreCase("date")) {
-                if (dataMap.get(code) instanceof Date) {
-                    html += "<input type='text' name='" + code + "' value='" + DateFormatUtils.format((Date) dataMap.get(code), "yyyy-MM-dd");
+                if (dataMap.get(code) instanceof Long || dataMap.get(code) instanceof Date) {
+                    Date date = dataMap.get(code) instanceof Long ? new Date((Long) dataMap.get(code)) : (Date) dataMap.get(code);
+                    html += "<input type='text' name='" + code + "' value='" + DateFormatUtils.format(date, "yyyy-MM-dd");
                 } else {
                     html += "<input type='text' name='" + code + "' value='" + val;
                 }
                 html += "' class='input_240" + classAttr + "' onclick=\"WdatePicker({dateFmt:'yyyy-MM-dd'});\" readonly='readonly'/>";
             } else if (tagType.equalsIgnoreCase("timestamp")) {
-                if (dataMap.get(code) instanceof Timestamp) {
-                    html += "<input type='text' name='" + code + "' value='" + DateFormatUtils.format((Timestamp) dataMap.get(code), "yyyy-MM-dd HH:mm:ss");
+                if (dataMap.get(code) instanceof Long || dataMap.get(code) instanceof Timestamp) {
+                    Date date = dataMap.get(code) instanceof Long ? new Date((Long) dataMap.get(code)) : (Timestamp) dataMap.get(code);
+                    html += "<input type='text' name='" + code + "' value='" + DateFormatUtils.format(date, "yyyy-MM-dd HH:mm:ss");
                 } else {
                     html += "<input type='text' name='" + code + "' value='" + val;
                 }
