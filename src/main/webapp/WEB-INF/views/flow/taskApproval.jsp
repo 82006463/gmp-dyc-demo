@@ -25,16 +25,18 @@
 
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			${jsonEdit}
-			<tr>
-				<td class="td_table_1">拒绝节点：</td>
-				<td class="td_table_2" colspan="3">
-					<select name="nodeName" class="input_select">
-						<c:forEach items="${buttonsOfReject}" var="btn" varStatus="btnIndex">
-							<option value="${btn.key}" <c:if test="${btnIndex.index == 0}">selected="selected"</c:if>>${btn.value}</option>
-						</c:forEach>
-					</select>
-				</td>
-			</tr>
+			<c:if test="${!empty task}">
+				<tr>
+					<td class="td_table_1">拒绝节点：</td>
+					<td class="td_table_2" colspan="3">
+						<select name="nodeName" class="input_select">
+							<c:forEach items="${buttonsOfReject}" var="btn" varStatus="btnIndex">
+								<option value="${btn.key}" <c:if test="${btnIndex.index == 0}">selected="selected"</c:if>>${btn.value}</option>
+							</c:forEach>
+						</select>
+					</td>
+				</tr>
+			</c:if>
 		</table>
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0">

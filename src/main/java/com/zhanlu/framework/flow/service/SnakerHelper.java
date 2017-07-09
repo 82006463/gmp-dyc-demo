@@ -85,11 +85,12 @@ public class SnakerHelper {
         return newTasks;
     }
 
-    public Map<String, String> getButtons(Task task) {
+    public Map<String, String> getButtons(Process process, Task task) {
         Map<String, String> buttons = new LinkedHashMap<>(task == null ? 4 : 8);
         if (task == null) {
-            //buttons.put("submit", "保存");
-            buttons.put("submit", "提交");
+            List<TransitionModel> outputs = process.getModel().getTaskModels().get(0).getOutputs();
+            for (TransitionModel output : outputs)
+                buttons.put(output.getName(), output.getDisplayName());
         } else {
             List<TransitionModel> outputs = task.getModel() == null ? snakerEngine.task().getTaskModel(task.getId()).getOutputs() : task.getModel().getOutputs();
             for (TransitionModel output : outputs)

@@ -46,8 +46,8 @@ public class SnakerFacade {
         return processNames;
     }
 
-    public Map<String, String> getButtons(Task task) {
-        return snakerHelper.getButtons(task);
+    public Map<String, String> getButtons(Process process, Task task) {
+        return snakerHelper.getButtons(process, task);
     }
 
     public Map<String, String> getButtonsOfReject(Process process, Task task) {
