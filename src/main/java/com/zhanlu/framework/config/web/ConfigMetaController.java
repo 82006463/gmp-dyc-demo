@@ -106,6 +106,10 @@ public class ConfigMetaController {
                 itemMap.put("displayMode", displayModes[i]);
                 items.add(itemMap);
                 itemsMap.put(editCodes[i], names[i]);
+                if (itemsMap.get("unq_code") == null && editCodes[i].toLowerCase().endsWith("code") && names[i].contains("编号")) {
+                    itemsMap.put("unq_code", editCodes[i]);
+                    itemsMap.put("unq_name", names[i]);
+                }
             }
             entity.put("itemsMap", itemsMap);
             entity.put("editItems", items);

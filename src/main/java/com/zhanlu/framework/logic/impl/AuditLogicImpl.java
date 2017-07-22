@@ -28,7 +28,7 @@ public class AuditLogicImpl implements AuditLogic {
         if (newEntity.get("metaType") != null && newEntity.get("cmcode") != null) {
             List<QueryItem> queryItems = new ArrayList<>(2);
             queryItems.add(new QueryItem("Eq_String_type", newEntity.get("metaType")));
-            queryItems.add(new QueryItem("Eq_String_code", newEntity.get("cmcode")));
+            queryItems.add(new QueryItem("Eq_String_code", newEntity.get("metaType") + "_" + newEntity.get("cmcode")));
             tableStruct = mongoService.findOne(configMeta, queryItems);
         }
         if (tableStruct != null) {
@@ -44,7 +44,7 @@ public class AuditLogicImpl implements AuditLogic {
             docMap.put("moduleType", tableStruct.get("type"));
             StringBuilder buf = new StringBuilder();
             if (oldEntity == null) {
-                buf.append(itemsMap.get("code") + "：【" + newEntity.get("code") + "】," + itemsMap.get("name") + "：【" + newEntity.get("name") + "】被添加");
+                buf.append(itemsMap.get("unq_name") + "：【" + newEntity.get(itemsMap.get("unq_code")) + "】被添加");
             } else {
                 for (Map.Entry<String, Object> entry : newEntity.entrySet()) {
                     if (entry.getKey().startsWith("sec_create") || entry.getKey().startsWith("sec_update")) {
