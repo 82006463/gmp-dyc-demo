@@ -330,7 +330,7 @@
 
     var _search = function(){
         var that = this,
-            keyword = this.inputView.val(),
+            keyword = this.inputView ? this.inputView.val():'',
             data = [],
             loadDataFlag = true,
             result = [];
