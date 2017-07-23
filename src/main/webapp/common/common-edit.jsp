@@ -82,7 +82,7 @@
 
     Ops.checkUser = function () {
         if ($('#inputForm').validationEngine('validate')) {
-            $.getJSON('${ctx}/security/user/checkUser', {'username':$('#base_username').val(), "password":$('#base_password').val()}, function (data) {
+            $.getJSON('${ctx}/security/user/checkUser', {'electron_sign_username':$('#electron_sign_username').val(), "electron_sign_password":$('#electron_sign_password').val(), "electron_sign_reason":$('#electron_sign_reason').val()}, function (data) {
                 if (data.result == 0) {
                     alert(data.msg);
                 } else {

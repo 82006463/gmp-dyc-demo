@@ -90,11 +90,15 @@ public class EditItem {
         }
         List<EditItem> items = new ArrayList<>(paramMap.size());
         for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
+            String key = entry.getKey();
+            EditItem editItem = null;
             if (!dataTypeMap.containsKey(entry.getKey())) {
+                //(String dataType, String tagType, String isArray, String attrName, String[] attrValArr)
+                editItem = EditItem.buildEditItem("String", "Input", "0", key, entry.getValue());
+                items.add(editItem);
                 continue;
             }
-            String key = entry.getKey();
-            EditItem editItem = EditItem.buildEditItem(dataTypeMap.get(key), tagTypeMap.get(key), arrayMap.get(key), key, entry.getValue());
+            editItem = EditItem.buildEditItem(dataTypeMap.get(key), tagTypeMap.get(key), arrayMap.get(key), key, entry.getValue());
             if (editItem == null) {
                 continue;
             }

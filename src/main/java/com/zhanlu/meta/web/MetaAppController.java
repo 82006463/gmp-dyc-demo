@@ -1,5 +1,6 @@
 package com.zhanlu.meta.web;
 
+import com.mongodb.BasicDBObject;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.logic.MongoLogic;
@@ -106,7 +107,8 @@ public class MetaAppController {
         cmcode = cmcode.replace(metaType + "_", "");
         Map<String, Object> metaTag = mongoLogic.findMetaByCode(metaType + "_" + cmcode);
 
-        Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), req.getParameterMap());
+        Map<String, String[]> paramMap = req.getParameterMap();
+        Map<String, Object> entity = EditItem.toMap(dataDictService, (List<Map<String, String>>) metaTag.get("editItems"), paramMap);
         entity.put("metaType", metaType);
         entity.put("cmcode", cmcode);
         String tableName = metaTag.get("oneTable").equals("1") ? ("meta_" + metaType + "_" + cmcode) : ("meta_" + metaType);

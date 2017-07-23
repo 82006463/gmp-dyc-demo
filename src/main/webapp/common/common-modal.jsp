@@ -9,15 +9,15 @@
             <div class="modal-body">
                 <div class="input-group">
                     <span class="input-group-addon">账号</span>
-                    <input type="text" id="base_username" name="base_username" value="" class="form-control">
+                    <input type="text" id="electron_sign_username" name="electron_sign_username" value="" class="form-control">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">密码</span>
-                    <input type="text" id="base_password" name="base_password" value="" class="form-control">
+                    <input type="text" id="electron_sign_password" name="electron_sign_password" value="" class="form-control">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">意见</span>
-                    <textarea rows="5" id="base_reason" name="base_reason" class="form-control"></textarea>
+                    <textarea rows="5" id="electron_sign_reason" name="electron_sign_reason" class="form-control"></textarea>
                 </div>
             </div>
             <div class="modal-footer">

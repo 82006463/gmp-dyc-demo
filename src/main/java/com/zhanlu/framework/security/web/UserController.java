@@ -11,7 +11,6 @@ import com.zhanlu.framework.security.service.RoleService;
 import com.zhanlu.framework.security.service.UserService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -165,26 +164,26 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "checkUser", method = RequestMethod.GET)
-    public Object checkUser(String username, String password) {
+    public Object checkUser(String electron_sign_username, String electron_sign_password, String electron_sign_reason) {
         Map<String, Object> resultMap = new HashedMap();
-        if (StringUtils.isBlank(username) || StringUtils.isBlank(username.trim()) || StringUtils.isBlank(password) || StringUtils.isBlank(password.trim())) {
-            resultMap.put("result", 0);
-            resultMap.put("msg", "用户名和密码不能为空");
-            return resultMap;
+        resultMap.put("result", 0);
+        if (StringUtils.isBlank(electron_sign_username) || StringUtils.isBlank(electron_sign_username.trim())) {
+            resultMap.put("msg", "用户名不能为空");
+        } else if (StringUtils.isBlank(electron_sign_password) || StringUtils.isBlank(electron_sign_password.trim())) {
+            resultMap.put("msg", "密码不能为空");
+        } else if (StringUtils.isBlank(electron_sign_reason) || StringUtils.isBlank(electron_sign_reason.trim())) {
+            resultMap.put("msg", "意见不能为空");
+        } else {
+            User user = userService.findUserByName(electron_sign_username);
+            String password = EncodeUtils.hexEncode(Digests.sha1(electron_sign_password.getBytes(), EncodeUtils.hexDecode(user.getSalt()), UserService.HASH_INTERATIONS));
+            if (user == null) {
+                resultMap.put("msg", "用户不存在");
+            } else if (!password.equals(user.getPassword())) {
+                resultMap.put("msg", "密码不正确");
+            } else {
+                resultMap.put("result", 1);
+            }
         }
-        User user = userService.findUserByName(username);
-        if (user == null) {
-            resultMap.put("result", 0);
-            resultMap.put("msg", "用户不存在");
-            return resultMap;
-        }
-        password = EncodeUtils.hexEncode(Digests.sha1(password.getBytes(), EncodeUtils.hexDecode(user.getSalt()), UserService.HASH_INTERATIONS));
-        if (!password.equals(user.getPassword())) {
-            resultMap.put("result", 0);
-            resultMap.put("msg", "密码不正确");
-            return resultMap;
-        }
-        resultMap.put("result", 1);
         return resultMap;
     }
 }
