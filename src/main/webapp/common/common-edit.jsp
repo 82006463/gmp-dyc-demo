@@ -86,7 +86,7 @@
                 if (data.result == 0) {
                     alert(data.msg);
                 } else {
-                    $('#inputForm').submit();
+                    $('#modal-submit').click();
                 }
             });
         } else {
