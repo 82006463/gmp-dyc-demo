@@ -1,14 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/common/taglibs.jsp"%>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 <head>
 	<title>${process.name}：${process.displayName}</title>
 	<%@ include file="/common/common-edit.jsp"%>
-	<script type="text/javascript">
-
-	</script>
 </head>
 
 <body>
@@ -50,7 +46,7 @@
 				<tr>
 					<td class="td_table_1">拒绝节点：</td>
 					<td class="td_table_2" colspan="3">
-						<select name="nodeName" class="input_select">
+						<select name="nodeNameDest" class="input_select">
 							<c:forEach items="${buttonsOfReject}" var="btn" varStatus="btnIndex">
 								<option value="${btn.key}" <c:if test="${btnIndex.index == 0}">selected="selected"</c:if>>${btn.value}</option>
 							</c:forEach>
@@ -64,18 +60,22 @@
 			<tr align="left">
 				<td colspan="1">
 					<c:if test="${!empty task}">
-						<input type="submit" class="button_70px" name="submit" value="保存">&nbsp;&nbsp;
+						<%--<input type="submit" class="button_70px" name="submit" value="保存">&nbsp;&nbsp;--%>
+						<input type="button" class="button_70px" name="submit" value="保存" data-toggle="modal" data-target="#myModal">&nbsp;&nbsp;
 					</c:if>
 					<c:forEach items="${buttons}" var="btn">
-						<input type="submit" class="button_70px" name="submit" value="${btn.value}" onclick="return Ops.submit();">&nbsp;&nbsp;
+						<%--<input type="submit" class="button_70px" name="submit" value="${btn.value}" onclick="return Ops.submit();">&nbsp;&nbsp;--%>
+						<input type="button" class="button_70px" name="submit" value="${btn.value}" data-toggle="modal" data-target="#myModal">&nbsp;&nbsp;
 					</c:forEach>
 					<c:if test="${!empty task}">
-						<input type="submit" class="button_70px" name="submit" value="拒绝">&nbsp;&nbsp;
+						<%--<input type="submit" class="button_70px" name="submit" value="拒绝">&nbsp;&nbsp;--%>
+						<input type="button" class="button_70px" name="submit" value="拒绝" data-toggle="modal" data-target="#myModal">&nbsp;&nbsp;
 					</c:if>
 					<input type="button" class="button_70px" name="submit" value="返回" onclick="history.back()">
 				</td>
 			</tr>
 		</table>
+		<%@ include file="/common/common-modal.jsp"%>
 	</form>
 </body>
 </html>

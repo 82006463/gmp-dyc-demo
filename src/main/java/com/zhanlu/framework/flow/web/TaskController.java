@@ -249,7 +249,7 @@ public class TaskController {
                 task.setVariable(JSON.toJSONString(taskMap));
                 facets.getEngine().task().updateTask(task);
             } else if (submitBtn.contains("拒绝")) {
-                facets.executeAndJump(taskId, ShiroUtils.getUsername(), taskMap, req.getParameter("nodeName"));
+                facets.executeAndJump(taskId, ShiroUtils.getUsername(), taskMap, req.getParameter("nodeNameDest"));
             } else {
                 taskMap.putAll(entity);
                 facets.execute(taskId, ShiroUtils.getUsername(), taskMap);

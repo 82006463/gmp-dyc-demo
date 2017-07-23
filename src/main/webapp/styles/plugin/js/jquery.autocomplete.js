@@ -229,8 +229,10 @@
     };
 
     var _emptySearchView = function(){
-        this.searchView.find('ul').empty();
-        this.searchView.hide();
+        if(this.searchView) {
+            this.searchView.find('ul').empty();
+            this.searchView.hide();
+        }
     };
 
     var _move = function(dir){

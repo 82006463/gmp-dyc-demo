@@ -118,7 +118,7 @@
     }
 
     //设置Select标签对应的隐藏域
-    Qps.setVal = function (selectTag) {
+    Ops.setVal = function (selectTag) {
         $('[name=' + $(selectTag).prop('name') + '_val]').val($(selectTag).find('option:selected').text());
     }
 </script>
