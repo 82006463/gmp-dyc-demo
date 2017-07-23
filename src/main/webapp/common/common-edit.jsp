@@ -82,18 +82,15 @@
 
     Ops.checkUser = function () {
         if ($('#inputForm').validationEngine('validate')) {
-            $.getJSON('${ctx}/security/user/checkUser',{'username':$('#base_username').val(),"password":$('#base_password').val()},function (data) {
+            $.getJSON('${ctx}/security/user/checkUser', {'username':$('#base_username').val(), "password":$('#base_password').val()}, function (data) {
                 if (data.result == 0) {
                     alert(data.msg);
-                    return false;
                 } else {
                     $('#inputForm').submit();
-                    return true;
                 }
             });
         } else {
             $('#modal-close').click();
-            return false;
         }
     }
 

@@ -4,7 +4,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">确认</h4>
+                <h4 class="modal-title" id="myModalLabel">电子签名</h4>
             </div>
             <div class="modal-body">
                 <div class="input-group">
@@ -22,7 +22,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" id="modal-close">关闭</button>
-                <button type="submit" class="btn btn-primary" onclick="return Ops.checkUser();">提交</button>
+                <button type="button" class="btn btn-primary" onclick="Ops.checkUser();">提交</button>
             </div>
         </div><!-- /.modal-content -->
     </div>
