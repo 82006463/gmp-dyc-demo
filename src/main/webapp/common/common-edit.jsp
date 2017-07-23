@@ -6,7 +6,10 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/styles/wbox/wbox/wbox.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/styles/plugin/css/jquery.autocomplete.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/styles/plugin/css/validationEngine.jquery.css" />
-<script type="text/javascript" src="${ctx}/styles/js/jquery-1.8.3.min.js"></script>
+<link type="text/css" rel="stylesheet" href="${ctx}/styles/bootstrap-3.3.7/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/styles/bootstrap-3.3.7/css/bootstrap-theme.min.css" />
+<script type="text/javascript" src="${ctx}/styles/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="${ctx}/styles/bootstrap-3.3.7/js/bootstrap.min.js" />
 <script type="text/javascript" src="${ctx}/styles/wbox/wbox.js"></script>
 <script type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${ctx}/styles/plugin/js/jquery.autocomplete.js"></script>
@@ -75,6 +78,20 @@
         var _tr = $(thisTag).parent().parent();
         _tr.next().after(_tr);
         return false;
+    }
+
+    Ops.checkUser = function () {
+        if ($('#inputForm').validationEngine('validate')) {
+            $.getJSON('${ctx}/security/user/checkUser',{'username':$('#base_username').val(),"password":$('#base_password').val()},function (data) {
+                if (data.result == 0) {
+                    alert(data.msg);
+                } else {
+                    $('#inputForm').submit();
+                }
+            });
+        } else {
+            $('#modal-close').click();
+        }
     }
 
     //添加表中的行

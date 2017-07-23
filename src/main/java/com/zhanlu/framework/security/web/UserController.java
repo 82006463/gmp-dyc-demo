@@ -9,6 +9,9 @@ import com.zhanlu.framework.security.entity.User;
 import com.zhanlu.framework.security.service.OrgService;
 import com.zhanlu.framework.security.service.RoleService;
 import com.zhanlu.framework.security.service.UserService;
+import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -157,6 +160,31 @@ public class UserController {
             resultMap.put("result", 0);
             resultMap.put("msg", "旧密码不正确");
         }
+        return resultMap;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "checkUser", method = RequestMethod.GET)
+    public Object checkUser(String username, String password) {
+        Map<String, Object> resultMap = new HashedMap();
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(username.trim()) || StringUtils.isBlank(password) || StringUtils.isBlank(password.trim())) {
+            resultMap.put("result", 0);
+            resultMap.put("msg", "用户名和密码不能为空");
+            return resultMap;
+        }
+        User user = userService.findUserByName(username);
+        if (user == null) {
+            resultMap.put("result", 0);
+            resultMap.put("msg", "用户不存在");
+            return resultMap;
+        }
+        password = EncodeUtils.hexEncode(Digests.sha1(password.getBytes(), EncodeUtils.hexDecode(user.getSalt()), UserService.HASH_INTERATIONS));
+        if (!password.equals(user.getPassword())) {
+            resultMap.put("result", 0);
+            resultMap.put("msg", "密码不正确");
+            return resultMap;
+        }
+        resultMap.put("result", 1);
         return resultMap;
     }
 }
