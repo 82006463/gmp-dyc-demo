@@ -76,6 +76,11 @@ public class AuditLogicImpl implements AuditLogic {
                 mongoService.saveOrUpdate(metaLogsAudit, null, new BasicDBObject(docMap));
             }
             if (newEntity.get("electron_sign_username") != null && newEntity.get("electron_sign_reason") != null) {
+                char[] reasonArr = ((String) newEntity.get("electron_sign_reason")).toCharArray();
+                StringBuilder reasonBuf = new StringBuilder(reasonArr.length);
+                for (int i = 0; i < reasonArr.length; i++) {
+                    reasonBuf.append((i > 0 && i % 50 == 0 ? "<br/>" : "") + reasonArr[i]);
+                }
                 docMap.put("content", "审批意见：" + newEntity.get("electron_sign_reason"));
                 mongoService.saveOrUpdate(metaLogsAudit, null, new BasicDBObject(docMap));
             }

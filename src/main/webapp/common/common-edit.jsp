@@ -16,7 +16,7 @@
 <script type="text/javascript" src="${ctx}/styles/plugin/js/languages/jquery.validationEngine-zh_CN.js"></script>
 <script type="text/javascript" src="${ctx}/styles/bootstrap-3.3.7/js/bootstrap.min.js" />
 <script type="text/javascript" charset="UTF-8">
-    $(function() {
+    $(document).ready(function() {
         var _action = $('#inputForm').prop('action');
         _action = _action.split('${ctx}/')[1].replace('/update','') + '/' + $('#id').val();
         $.extend($.validationEngineLanguage.allRules,{"ajaxCodeCheck": {
