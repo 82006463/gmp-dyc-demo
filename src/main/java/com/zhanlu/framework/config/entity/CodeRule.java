@@ -30,4 +30,75 @@ public class CodeRule extends CodeEntity {
     //规则值
     private String ruleValue;
 
+    @Column(length = 20)
+    public String getOrgCode() {
+        return orgCode;
+    }
+
+    public void setOrgCode(String orgCode) {
+        this.orgCode = orgCode;
+    }
+
+    @Column(length = 2)
+    public String getOrgSeparator() {
+        return orgSeparator;
+    }
+
+    public void setOrgSeparator(String orgSeparator) {
+        this.orgSeparator = orgSeparator;
+    }
+
+    @Column(length = 20)
+    public String getFuncCode() {
+        return funcCode;
+    }
+
+    public void setFuncCode(String funcCode) {
+        this.funcCode = funcCode;
+    }
+
+    @Column(length = 2)
+    public String getFuncSeparator() {
+        return funcSeparator;
+    }
+
+    public void setFuncSeparator(String funcSeparator) {
+        this.funcSeparator = funcSeparator;
+    }
+
+    @Column(length = 10)
+    public String getTimePattern() {
+        return timePattern;
+    }
+
+    public void setTimePattern(String timePattern) {
+        this.timePattern = timePattern;
+    }
+
+    @Column(length = 2)
+    public String getTimeSeparator() {
+        return timeSeparator;
+    }
+
+    public void setTimeSeparator(String timeSeparator) {
+        this.timeSeparator = timeSeparator;
+    }
+
+    @Column(length = 10)
+    public Integer getSerialLength() {
+        return serialLength;
+    }
+
+    public void setSerialLength(Integer serialLength) {
+        this.serialLength = serialLength;
+    }
+
+    @Column(length = 200)
+    public String getRuleValue() {
+        return ruleValue;
+    }
+
+    public void setRuleValue(String ruleValue) {
+        this.ruleValue = ruleValue;
+    }
 }
