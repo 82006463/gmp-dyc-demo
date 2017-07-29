@@ -9,12 +9,12 @@
 <link type="text/css" rel="stylesheet" href="${ctx}/styles/bootstrap-3.3.7/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/styles/bootstrap-3.3.7/css/bootstrap-theme.min.css" />
 <script type="text/javascript" src="${ctx}/styles/js/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="${ctx}/styles/bootstrap-3.3.7/js/bootstrap.min.js" />
 <script type="text/javascript" src="${ctx}/styles/wbox/wbox.js"></script>
 <script type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${ctx}/styles/plugin/js/jquery.autocomplete.js"></script>
 <script type="text/javascript" src="${ctx}/styles/plugin/js/jquery.validationEngine.js"></script>
 <script type="text/javascript" src="${ctx}/styles/plugin/js/languages/jquery.validationEngine-zh_CN.js"></script>
+<script type="text/javascript" src="${ctx}/styles/bootstrap-3.3.7/js/bootstrap.min.js" />
 <script type="text/javascript" charset="UTF-8">
     $(function() {
         var _action = $('#inputForm').prop('action');
