@@ -31,6 +31,7 @@
 <body>
 	<form id="inputForm" action="${ctx }/security/org/update" method="post">
 		<input type="hidden" id="id" name="id" value="${entity.id}"/>
+		<input type="hidden" id="status" name="status" value="${entity.status}"/>
 		<input type="hidden" id="rootId" name="rootId" value="${entity.rootId}"/>
 		<input type="hidden" id="level" name="level" value="${entity.level}"/>
 		<input type="hidden" id="levelNo" name="levelNo" value="${entity.levelNo}"/>

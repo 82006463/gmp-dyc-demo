@@ -10,6 +10,7 @@
 	<body>
 		<form id="inputForm" action="${ctx}/config/dictionary/update" method="post">
 			<input type="hidden" name="id" id="id" value="${entity.id}"/>
+			<input type="hidden" id="status" name="status" value="${entity.status}"/>
 			<input type="hidden" id="rootId" name="rootId" value="${entity.rootId}"/>
 			<input type="hidden" id="pid" name="pid" value="${entity.pid}">
 			<input type="hidden" id="level" name="level" value="${entity.level}"/>
@@ -54,6 +55,7 @@
 								<tr>
 									<td class="td_list_2">
 										<input type="hidden" value='${item.id}' name='itemIds' class='input_50'>
+										<input type="hidden" value='${item.status}' name='itemStatuses' class='input_50'>
 										<input type="text" value='${item.code}' name='itemCodes' class='input_240'>
 									</td>
 									<td class="td_list_2">
@@ -88,7 +90,7 @@
 				var table = document.getElementById("itemTable");
 				var row = table.insertRow(-1);
 				var cell = row.insertCell(-1);
-				cell.innerHTML = "<input type='hidden' name='itemIds' value='' class='input_50'><input type='text' name='itemCodes' value='' class='input_240'>";
+				cell.innerHTML = "<input type='hidden' name='itemIds' value='' class='input_50'><input type='hidden' name='itemStatuses' value='1' class='input_50'><input type='text' name='itemCodes' value='' class='input_240'>";
 				cell.className = "td_list_2";
 				
 				cell = row.insertCell(-1);

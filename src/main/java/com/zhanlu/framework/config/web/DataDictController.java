@@ -32,11 +32,6 @@ public class DataDictController {
 
     /**
      * 分页查询配置，返回配置字典列表视图
-     *
-     * @param model
-     * @param page
-     * @param request
-     * @return
      */
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, Page<DataDict> page, HttpServletRequest request) {
@@ -54,9 +49,6 @@ public class DataDictController {
 
     /**
      * 新建配置字典时，返回配置字典编辑视图
-     *
-     * @param model
-     * @return
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
@@ -66,10 +58,6 @@ public class DataDictController {
 
     /**
      * 编辑配置字典时，返回配置字典编辑视图
-     *
-     * @param id
-     * @param model
-     * @return
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
@@ -81,10 +69,6 @@ public class DataDictController {
 
     /**
      * 编辑配置字典时，返回配置字典查看视图
-     *
-     * @param id
-     * @param model
-     * @return
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
@@ -100,7 +84,7 @@ public class DataDictController {
      * @return
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(DataDict dataDict, Long[] itemIds, String[] itemCodes, String[] itemNames, String[] itemDataSources) {
+    public String update(DataDict dataDict, Long[] itemIds, String[] itemCodes, String[] itemNames, Integer[] itemStatuses, String[] itemDataSources) {
         List<DataDict> items = new ArrayList<>();
         if (itemCodes != null && itemCodes.length > 0) {
             for (int i = 0; i < itemCodes.length; i++) {
@@ -108,6 +92,7 @@ public class DataDictController {
                 item.setId(itemIds.length == 0 ? null : itemIds[i]);
                 item.setCode(itemCodes[i]);
                 item.setName(itemNames[i]);
+                item.setStatus(itemStatuses == null || itemStatuses[i] == null ? 1 : itemStatuses[i]);
                 item.setDataSource(itemDataSources.length == 0 ? null : itemDataSources[i]);
                 items.add(item);
             }
