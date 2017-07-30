@@ -41,20 +41,17 @@
 							<option value="yyMMdd" ${entity.timePattern=='yyMMdd' ? 'selected="selected"':''}>两位年两位月两位日</option>
 						</select>
 					</td>
-					<td class="td_table_1">时间模式分隔符：</td>
+					<td class="td_table_1">流水号长度<b class='requiredWarn'>*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="timeSeparator" name="timeSeparator" value="${entity.timeSeparator}" class="input_240 validate[required]"/>
+						<input type="text" id="serialLength" name="serialLength" value="${entity.serialLength}" class="input_240 validate[required,custom[integer],min[1],max[10]]"/>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="td_table_1">流水号长度<b class='requiredWarn'>*</b>：</td>
-					<td class="td_table_2">
-						<input type="text" id="serialLength" name="serialLength" value="${entity.serialLength}" class="input_240 validate[required,custom[integer],min[1]]"/>
-					</td>
 					<td class="td_table_1">规则字符串<b class='requiredWarn'>*</b>：</td>
-					<td class="td_table_2">
+					<td class="td_table_2" colspan="3">
 						<input type="text" id="ruleValue" name="ruleValue" value="${entity.ruleValue}" class="input_520 validate[required]"/>
+						(orgCode|funcCode|timePattern|serialLength)
 					</td>
 				</tr>
 			</table>

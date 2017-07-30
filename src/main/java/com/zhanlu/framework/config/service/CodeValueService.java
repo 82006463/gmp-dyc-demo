@@ -72,49 +72,59 @@ public class CodeValueService extends CommonService<CodeValue, Long> {
         if (codeValue.getId() == null) {
             for (int i = 0; i < ruleValueArr.length; i++) {
                 String ruleItem = ruleValueArr[0];
-                if (ruleItem.contains("${orgCode}")) {
+                if (ruleItem.startsWith("orgCode")) {
                     curValue += codeValueParam.getOrgCode();
                     if (ruleItem.contains("&"))
                         curValue += ruleItem.split("\\&")[1];
-                } else if (ruleItem.contains("${funcCode}")) {
+                } else if (ruleItem.startsWith("funcCode")) {
                     curValue += codeValueParam.getFuncCode();
                     if (ruleItem.contains("&"))
                         curValue += ruleItem.split("\\&")[1];
-                } else if (ruleItem.contains("${timePattern}")) {
+                } else if (ruleItem.startsWith("timePattern")) {
                     curValue += timeVal;
                     if (ruleItem.contains("&"))
                         curValue += ruleItem.split("\\&")[1];
+                    codeValue.setTimeValue(timeVal);
                 } else {
+                    codeValue.setSerialValue(1);
                     for (int j = 1; j < rule.getSerialLength(); j++)
                         curValue += "0";
-                    curValue += "1";
+                    curValue += codeValue.getSerialValue();
                 }
             }
         } else {
             boolean timeChanged = false;
             for (int i = 0; i < ruleValueArr.length; i++) {
                 String ruleItem = ruleValueArr[0];
-                if (ruleItem.contains("${orgCode}")) {
+                if (ruleItem.startsWith("orgCode")) {
                     curValue += codeValueParam.getOrgCode();
                     if (ruleItem.contains("&"))
                         curValue += ruleItem.split("\\&")[1];
-                } else if (ruleItem.contains("${funcCode}")) {
+                } else if (ruleItem.startsWith("funcCode")) {
                     curValue += codeValueParam.getFuncCode();
                     if (ruleItem.contains("&"))
                         curValue += ruleItem.split("\\&")[1];
-                } else if (ruleItem.contains("${timePattern}")) {
+                } else if (ruleItem.startsWith("timePattern")) {
                     curValue += timeVal;
-                    if (!timeVal.equals(codeValue.getTimeValue().toString())) {
+                    if (!timeVal.equals(codeValue.getTimeValue())) {
                         timeChanged = true;
                         for (int j = 1; j < rule.getSerialLength(); j++)
                             curValue += "0";
                         curValue += "1";
+                        codeValue.setTimeValue(timeVal);
                     }
                     if (ruleItem.contains("&"))
                         curValue += ruleItem.split("\\&")[1];
+                    if (timeChanged) {
+                        codeValue.setSerialValue(1);
+                        for (int j = 1; j < rule.getSerialLength(); j++)
+                            curValue += "0";
+                        curValue += codeValue.getSerialValue();
+                    }
                 }
                 if (ruleItem.contains("${serialLength}") && !timeChanged) {
-                    curValue += (codeValue.getSerialValue() + 1);
+                    codeValue.setSerialValue(codeValue.getSerialValue() + 1);
+                    curValue += codeValue.getSerialValue();
                 }
             }
         }

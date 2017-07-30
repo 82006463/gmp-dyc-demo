@@ -51,12 +51,12 @@
 				</tr>
 
 				<tr>
-					<td class="td_table_1">编码规则：</td>
+					<td class="td_table_1">编码规则<b class='requiredWarn'>*</b>：</td>
 					<td class="td_table_2">
-						<select class="input_select" id="ruleId" name="ruleId">
+						<select id="ruleId" name="ruleId" class="input_select validate[required]">
 							<option value=''>--请选择--</option>
 							<c:forEach items="${codeRules}" var="rule">
-								<option value="${rule.id}" ${entity.ruleId==rule.id ? 'selected="selected"':''}>${rule.code}:${rule.name}</option>
+								<option value="${rule.id}" ${entity.ruleId==rule.id ? 'selected="selected"':''}>${rule.name}</option>
 							</c:forEach>
 						</select>
 					</td>

@@ -36,9 +36,9 @@
 			<tr>
 				<td align="left">
 					<c:if test="${empty lookup}">
-						<%--<shiro:hasPermission name="config_codeValue_edit">
+						<%--<shiro:hasPermission name="config_codeValue_edit">--%>
 							<input type='button' onclick="addNew('${ctx}/config/codeValue/create')" class='button_70px' value='新建'/>
-						</shiro:hasPermission>--%>
+						<%--</shiro:hasPermission>--%>
 					</c:if>
 					<c:if test="${!empty lookup}">
 						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
@@ -62,15 +62,15 @@
 					<td class="td_list_2" align=left>${item.remark}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
-							<%--<shiro:hasPermission name="config_codeValue_edit">
+							<%--<shiro:hasPermission name="config_codeValue_edit">--%>
 								<a href="${ctx}/config/codeValue/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-							</shiro:hasPermission>
-							<shiro:hasPermission name="config_codeValue_edit">
+							<%--</shiro:hasPermission>--%>
+							<%--<shiro:hasPermission name="config_codeValue_edit">--%>
 								<a href="${ctx}/config/codeValue/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
-							</shiro:hasPermission>
-							<shiro:hasPermission name="config_codeValue_view">
+							<%--</shiro:hasPermission>--%>
+							<%--<shiro:hasPermission name="config_codeValue_view">--%>
 								<a href="${ctx}/config/codeValue/view/${item.id}" class="btnView" title="查看">查看</a>
-							</shiro:hasPermission>--%>hasPermission
+							<%--</shiro:hasPermission>--%>
 						</c:if>
 						<c:if test="${!empty lookup}">
 							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>

@@ -163,17 +163,20 @@ public class MetaTagUtils {
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {
                     html += "<table class='table_all' align='center' border='0' cellpadding='0' cellspacing='0' id='" + code + "' style='margin: 0'><tr>";
                     List<Map<String, Object>> tagList = JSON.parseObject(dataDict.getDataSource(), List.class);
-                    Map<String, List<String>> tagValMap = new HashMap<>();
+                    Map<String, List<Object>> tagValMap = new HashMap<>();
                     int rowCount = 0;
                     for (Map<String, Object> map : tagList) {
                         html += "<td align='center' class='td_list_1'>" + map.get("name") + (map.get("required").toString().equals("true") ? "<b class='requiredWarn'>*</b>" : "") + "</td>";
                         String tmpCode = map.get("code").toString();
-                        List<String> tmpVals = null;
-                        if (dataMap.get(tmpCode) == null) {
-                            tmpVals = new ArrayList<>(1);
+                        List<Object> tmpVals = new ArrayList<>(1);
+                        if (dataMap.get(tmpCode) == null || !(dataMap.get(tmpCode) instanceof List || dataMap.get(tmpCode) instanceof String)) {
                             tmpVals.add("");
                         } else {
-                            tmpVals = (List) dataMap.get(tmpCode);
+                            if(dataMap.get(tmpCode) instanceof List) {
+                                tmpVals = (List) dataMap.get(tmpCode);
+                            } else {
+                                tmpVals.add(dataMap.get(tmpCode));
+                            }
                         }
                         rowCount = rowCount == 0 ? tmpVals.size() : rowCount;
                         tagValMap.put(tmpCode, tmpVals);

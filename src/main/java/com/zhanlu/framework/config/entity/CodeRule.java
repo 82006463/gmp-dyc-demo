@@ -23,8 +23,6 @@ public class CodeRule extends CodeEntity {
 //    private String funcSeparator;
     //时间模式：yyyy | yyyyMM | yyyyMMdd
     private String timePattern;
-    //时间模式分隔符
-    private String timeSeparator;
     //流水号长度
     private Integer serialLength;
     //规则值
@@ -37,15 +35,6 @@ public class CodeRule extends CodeEntity {
 
     public void setTimePattern(String timePattern) {
         this.timePattern = timePattern;
-    }
-
-    @Column(length = 2)
-    public String getTimeSeparator() {
-        return timeSeparator;
-    }
-
-    public void setTimeSeparator(String timeSeparator) {
-        this.timeSeparator = timeSeparator;
     }
 
     @Column(length = 10)

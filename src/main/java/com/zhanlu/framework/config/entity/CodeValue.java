@@ -14,14 +14,13 @@ public class CodeValue extends CodeEntity {
 
     //规则ID、编号
     private Long ruleId;
-    private CodeRule rule;
 
     //部门编号
     private String orgCode;
     //功能编号
     private String funcCode;
     //时间模式下的当前时间值
-    private Integer timeValue;
+    private String timeValue;
     //当前流水号
     private Integer serialValue;
     //当前值的编码规则：年+月+日+部门编号+流水号
@@ -34,16 +33,6 @@ public class CodeValue extends CodeEntity {
 
     public void setRuleId(Long ruleId) {
         this.ruleId = ruleId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "rule_id")
-    public CodeRule getRule() {
-        return rule;
-    }
-
-    public void setRule(CodeRule rule) {
-        this.rule = rule;
     }
 
     @Column(length = 20)
@@ -65,11 +54,11 @@ public class CodeValue extends CodeEntity {
     }
 
     @Column(length = 20)
-    public Integer getTimeValue() {
+    public String getTimeValue() {
         return timeValue;
     }
 
-    public void setTimeValue(Integer timeValue) {
+    public void setTimeValue(String timeValue) {
         this.timeValue = timeValue;
     }
 
