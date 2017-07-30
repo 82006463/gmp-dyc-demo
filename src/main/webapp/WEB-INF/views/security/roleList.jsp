@@ -51,9 +51,10 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=45% class="td_list_1">角色编号</td>
-				<td align=center width=45% class="td_list_1">角色名称</td>
-				<td align=center width=45% class="td_list_1">角色描述</td>
+				<td align=center width=20% class="td_list_1">角色编号</td>
+				<td align=center width=25% class="td_list_1">角色名称</td>
+				<td align=center width=35% class="td_list_1">角色描述</td>
+				<td align=center width=10% class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="role">

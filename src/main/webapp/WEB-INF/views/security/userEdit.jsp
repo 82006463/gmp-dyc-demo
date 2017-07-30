@@ -122,10 +122,10 @@
  				<tr>
 					<td class="td_table_1">是否可用<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<select name="enabled" class="input_select validate[required]">
+						<select name="status" class="input_select validate[required]">
 							<option value="">-请选择-</option>
-							<option value="1" <c:if test="${empty entity.enabled || entity.enabled=='1'}">selected="selected"</c:if>>是</option>
-							<option value="0" <c:if test="${entity.enabled=='0'}">selected="selected"</c:if>>否</option>
+							<option value="1" <c:if test="${empty entity.status || entity.status==1}">selected="selected"</c:if>>是</option>
+							<option value="0" <c:if test="${entity.status==0}">selected="selected"</c:if>>否</option>
 						</select>
 					</td>
 					<td class="td_table_1">部门<b class="requiredWarn">*</b>：</td>

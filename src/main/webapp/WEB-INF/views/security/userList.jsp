@@ -52,7 +52,7 @@
 			<tr>
 				<td align=center width=20% class="td_list_1">账号</td>
 				<td align=center width=20% class="td_list_1">姓名</td>
-				<td align=center width=30% class="td_list_1">是否可用</td>
+				<td align=center width=30% class="td_list_1">状态</td>
 				<td align=center width=20% class="td_list_1">部门</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
@@ -60,7 +60,7 @@
 				<tr>
 					<td class="td_list_2" align=left>${user.username}</td>
 					<td class="td_list_2" align=left>${user.fullname}</td>
-					<td class="td_list_2" align=left>${user.enabled=='1' ? '是':user.enabled=='0' ? '否':''}</td>
+					<td class="td_list_2" align=left>${user.status==1 ? '是':user.status==0 ? '否':''}</td>
 					<td class="td_list_2" align=left>${user.org.name}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">

@@ -22,9 +22,12 @@ import java.util.List;
  */
 @Service
 public class UserService extends CommonService<User, Long> {
+
     public static final String HASH_ALGORITHM = "SHA-1";
     public static final int HASH_INTERATIONS = 1024;
     public static final int SALT_SIZE = 8;
+
+    private static final String INIT_PASSWD = "123456";
 
     @Autowired
     private UserDao userDao;
@@ -43,9 +46,10 @@ public class UserService extends CommonService<User, Long> {
     @Transactional
     @Override
     public User saveOrUpdate(User entity) {
-        if (StringUtils.isNotBlank(entity.getPlainPassword())) {
+        if (entity.getId() == null)
+            entity.setPlainPassword(INIT_PASSWD);
+        if (StringUtils.isNotBlank(entity.getPlainPassword()))
             entryptPassword(entity);
-        }
         entity.setPlainPassword(null);
         super.saveOrUpdate(entity);
         return entity;

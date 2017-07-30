@@ -27,6 +27,7 @@ public abstract class CommonService<T extends IdEntity, PK extends Serializable>
      */
     @Transactional
     public T save(T entity) {
+        entity.setStatus(1);
         return commonDao.save(entity);
     }
 
@@ -38,6 +39,9 @@ public abstract class CommonService<T extends IdEntity, PK extends Serializable>
      */
     @Transactional
     public T saveOrUpdate(T entity) {
+        if (entity.getId() == null) {
+            entity.setStatus(1);
+        }
         return commonDao.saveOrUpdate(entity);
     }
 
@@ -49,7 +53,10 @@ public abstract class CommonService<T extends IdEntity, PK extends Serializable>
      */
     @Transactional
     public boolean delete(PK id) {
-        commonDao.delete(id);
+        T entity = this.findById(id);
+        entity.setStatus(0);
+        this.saveOrUpdate(entity);
+        //commonDao.delete(id);
         return true;
     }
 
@@ -94,6 +101,9 @@ public abstract class CommonService<T extends IdEntity, PK extends Serializable>
             for (Map.Entry<String, Object> entry : params.entrySet()) {
                 hql += " AND " + entry.getKey() + "=:" + entry.getKey();
             }
+        }
+        if (!params.containsKey("status")) {
+            hql += " AND status IS NOT NULL AND status > 0";
         }
         return this.commonDao.find(hql, params);
     }
