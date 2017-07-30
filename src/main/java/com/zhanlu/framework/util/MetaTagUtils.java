@@ -98,15 +98,9 @@ public class MetaTagUtils {
                 html += "</td>";
             }
             html += "<td class='td_list_2' align=left>";
-            if (metaTag.get("list_delete_url") != null) {
-                html += "<a href='" + contextPath + "/meta/app/" + metaTag.get("type") + "/" + metaTag.get("code") + "/delete/" + entry.get("_id") + "' class='btnDel' title='删除' onclick='return confirmDel();'>删除</a>";
-            }
-            if (metaTag.get("list_update_url") != null) {
-                html += "<a href='" + contextPath + "/meta/app/" + metaTag.get("type") + "/" + metaTag.get("code") + "/update/" + entry.get("_id") + "' class='btnEdit'' title='编辑'>编辑</a>";
-            }
-            if (metaTag.get("list_view_url") != null) {
-                html += "<a href='" + contextPath + "/meta/app/" + metaTag.get("type") + "/" + metaTag.get("code") + "/view/" + entry.get("_id") + "' class='btnView'' title='查看'>查看</a>";
-            }
+            //html += "<a href='" + contextPath + "/meta/app/" + metaTag.get("type") + "/" + metaTag.get("code") + "/delete/" + entry.get("_id") + "' class='btnDel' title='删除' onclick='return confirmDel();'>删除</a>";
+            html += "<a href='" + contextPath + "/meta/app/" + metaTag.get("type") + "/" + metaTag.get("code") + "/update/" + entry.get("_id") + "' class='btnEdit'' title='编辑'>编辑</a>";
+            html += "<a href='" + contextPath + "/meta/app/" + metaTag.get("type") + "/" + metaTag.get("code") + "/view/" + entry.get("_id") + "' class='btnView'' title='查看'>查看</a>";
             html += "</td></tr>";
         }
         return html;
@@ -172,7 +166,7 @@ public class MetaTagUtils {
                         if (dataMap.get(tmpCode) == null || !(dataMap.get(tmpCode) instanceof List || dataMap.get(tmpCode) instanceof String)) {
                             tmpVals.add("");
                         } else {
-                            if(dataMap.get(tmpCode) instanceof List) {
+                            if (dataMap.get(tmpCode) instanceof List) {
                                 tmpVals = (List) dataMap.get(tmpCode);
                             } else {
                                 tmpVals.add(dataMap.get(tmpCode));

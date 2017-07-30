@@ -132,9 +132,9 @@ public class UserController {
 
     @RequestMapping(value = "uppwd/{username}", method = RequestMethod.GET)
     public ModelAndView uppwdGet(@PathVariable("username") String username) {
-        User userByName = userService.findUserByName(username);
+        User entity = userService.findUserByName(username);
         ModelAndView mv = new ModelAndView("security/userPwd");
-        mv.addObject("entity", userByName);
+        mv.addObject("entity", entity);
         return mv;
     }
 
@@ -149,15 +149,17 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "checkpwd", method = RequestMethod.GET)
-    private Map<String, Object> checkpwd(String password, String plainPassword) {
+    private Map<String, Object> checkpwd(Long userId, String oldPlainPassword, String plainPassword) {
         Map<String, Object> resultMap = new HashMap<>();
-        byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), Digests.generateSalt(8), UserService.HASH_INTERATIONS);
-        plainPassword = EncodeUtils.hexEncode(hashPassword);
-        if (password.equals(plainPassword)) {
-            resultMap.put("result", 1);
-        } else {
+        User entity = userService.findById(userId);
+        String password = EncodeUtils.hexEncode(Digests.sha1(oldPlainPassword.getBytes(), EncodeUtils.hexDecode(entity.getSalt()), UserService.HASH_INTERATIONS));
+        if (!password.equals(entity.getPassword())) {
             resultMap.put("result", 0);
             resultMap.put("msg", "旧密码不正确");
+        } else {
+            entity.setPlainPassword(plainPassword);
+            userService.saveOrUpdate(entity);
+            resultMap.put("result", 1);
         }
         return resultMap;
     }

@@ -1,5 +1,6 @@
 package com.zhanlu.framework.nosql.item;
 
+import com.alibaba.fastjson.JSON;
 import com.zhanlu.framework.common.utils.ConvertUtils;
 import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.config.service.DataDictService;
@@ -29,7 +30,7 @@ public class EditItem {
             } else {
                 if (dataType.equalsIgnoreCase("String")) {
                     fieldVal = isArray.equals("1") ? attrValArr : attrValArr[0];
-                } else if (isArray.equals("1")) {
+                } else if (isArray.equals("1") || isArray.contains("yes")) {
                     Object[] tmpArr = new Object[attrValArr.length];
                     for (int i = 0; i < tmpArr.length; i++) {
                         if (attrValArr[i] == null || attrValArr[i].trim().length() == 0) {
@@ -69,12 +70,11 @@ public class EditItem {
             if (tagType.equals("subForm")) {
                 DataDict dataDict = dataDictService.findByCode(struct.get("subForm"));
                 if (dataDict != null && StringUtils.isNotBlank(dataDict.getDataSource())) {
-                    String[] fieldArr = dataDict.getDataSource().split(",");
-                    for (String field : fieldArr) {
-                        String[] tmpField = field.split(":");
-                        tagTypeMap.put(tmpField[0], "subForm");
-                        dataTypeMap.put(tmpField[0], "String");
-                        arrayMap.put(tmpField[0], "1");
+                    List<Map<String, Object>> tagList = JSON.parseObject(dataDict.getDataSource(), List.class);
+                    for (Map<String, Object> map : tagList) {
+                        tagTypeMap.put((String)map.get("code"), "subForm");
+                        dataTypeMap.put((String)map.get("code"), (String)map.get("dataType"));
+                        arrayMap.put((String)map.get("code"), (String)map.get("array"));
                     }
                 }
             } else {

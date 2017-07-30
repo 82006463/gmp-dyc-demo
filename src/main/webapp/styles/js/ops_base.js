@@ -43,17 +43,3 @@ Ops.removeTr = function (thisObj, level) {
 Ops.setVal = function (selectTag) {
     $('[name=' + $(selectTag).prop('name') + '_val]').val($(selectTag).find('option:selected').text());
 }
-
-Ops.checkUser = function() {
-    if ($('#inputForm').validationEngine('validate')) {
-        $.getJSON('${ctx}/security/user/checkUser', {'electron_sign_username':$('#electron_sign_username').val(), "electron_sign_password":$('#electron_sign_password').val(), "electron_sign_reason":$('#electron_sign_reason').val()}, function (data) {
-            if (data.result == 0) {
-                alert(data.msg);
-            } else {
-                $('#modal-submit').click();
-            }
-        });
-    } else {
-        $('#modal-close').click();
-    }
-}

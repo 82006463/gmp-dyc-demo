@@ -48,6 +48,7 @@
 		<form id="inputForm" action="${ctx }/security/user/update" method="post">
 			<input type="hidden" id="id" name="id" value="${entity.id}"/>
 			<input type="hidden" id="status" name="status" value="${entity.status}"/>
+			<input type="hidden" id="enabled" name="enabled" value="1"/>
 			<input type="hidden" id="password" name="password" value="${entity.password}"/>
 			<input type="hidden" id="salt" name="salt" value="${entity.salt}"/>
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
@@ -66,16 +67,19 @@
 						<input type="text" class="input_240 validate[required,minSize[1],maxSize[50]]" id="fullname" name="fullname" value="${entity.fullname}" />
 					</td>
 				</tr>
-				<tr>
-					<td class="td_table_1">密码：</td>
-					<td class="td_table_2">
-						<input type="password" class="input_240" id="plainPassword" name="plainPassword" value="${entity.plainPassword}" />
-					</td>
-					<td class="td_table_1">确认密码：</td>
-					<td class="td_table_2">
-						<input type="password" class="input_240" id="passwordConfirm" name="passwordConfirm" value="${entity.plainPassword}" />
-					</td>
-				</tr>
+
+				<c:if test="${!empty entity.id}">
+					<tr>
+						<td class="td_table_1">重置密码：</td>
+						<td class="td_table_2">
+							<input type="password" class="input_240" id="plainPassword" name="plainPassword" value="${entity.plainPassword}" />
+						</td>
+						<td class="td_table_1">确认密码：</td>
+						<td class="td_table_2">
+							<input type="password" class="input_240" id="passwordConfirm" name="passwordConfirm" value="${entity.plainPassword}" />
+						</td>
+					</tr>
+				</c:if>
 				<tr>
 					<td class="td_table_1">出生年月：</td>
 					<td class="td_table_2">

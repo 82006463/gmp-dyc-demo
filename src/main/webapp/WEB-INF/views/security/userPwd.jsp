@@ -24,9 +24,10 @@
 					alert('密码和确认密码不一致,请重新输入');
 					$('#passwordConfirm').focus();
 				} else {
-					$.getJSON('${ctx}/security/user/checkpwd', {password:'${entity.password}', plainPassword:$('#oldPlainPassword').val()},function (data) {
-						if(data.result == 1) {
-							$('#inputForm').submit();
+					$.getJSON('${ctx}/security/user/checkpwd', {userId:'${entity.id}', oldPlainPassword:$('#oldPlainPassword').val(), plainPassword:$('#plainPassword').val()},function (data) {
+					    if(data.result == 1) {
+					        window.location.href = '${ctx}/logout';
+							//$('#inputForm').submit();
 						} else {
 							alert(data.msg);
 						}
@@ -66,7 +67,7 @@
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
-						<input type="button" class="button_70px" name="submit" value="提交" onclick="updateForm();">&nbsp;&nbsp;
+						<input type="button" class="button_70px" id="submit" name="submit" value="提交" onclick="updateForm();">&nbsp;&nbsp;
 						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>

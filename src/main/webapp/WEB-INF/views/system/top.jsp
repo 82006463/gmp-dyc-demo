@@ -15,11 +15,10 @@
                 <img src="${ctx}/styles/images/logo_dyc.gif" alt="DYC" style="height: 80px;"/>
         </div>
         <ul class="qj">
-            <li>
-                <span><shiro:principal/></span>
-                <%--<a href="javascript:void(0)" onclick="window.parent.location.href='${ctx}/security/user/uppwd/${username}'" title="修改密码"><shiro:principal/></a>--%>
+            <li class="top_aqtc">
+                <%--<span><shiro:principal/></span>--%>
+                <a href="javascript:void(0)" onclick="window.parent.location.href='${ctx}/security/user/uppwd/${username}'" title="修改密码"><shiro:principal/></a>
             </li>
-            <li></li>
             <li class="top_aqtc">
                 <a href="javascript:void(0)" onclick="window.parent.location.href='${ctx}/logout'">安全退出</a>
             </li>
