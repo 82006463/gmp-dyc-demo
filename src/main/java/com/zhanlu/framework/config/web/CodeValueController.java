@@ -29,6 +29,8 @@ public class CodeValueController {
 
     @Autowired
     private CodeValueService codeValueService;
+    @Autowired
+    private CodeRuleService codeRuleService;
 
     /**
      * 分页查询配置，返回配置字典列表视图
@@ -52,6 +54,7 @@ public class CodeValueController {
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
         model.addAttribute("entity", new CodeValue());
+        model.addAttribute("codeRules", codeRuleService.findAll());
         return "config/codeValueEdit";
     }
 
@@ -62,6 +65,7 @@ public class CodeValueController {
     public String edit(@PathVariable("id") Long id, Model model) {
         CodeValue entity = codeValueService.findById(id);
         model.addAttribute("entity", entity);
+        model.addAttribute("codeRules", codeRuleService.findAll());
         return "config/codeValueEdit";
     }
 

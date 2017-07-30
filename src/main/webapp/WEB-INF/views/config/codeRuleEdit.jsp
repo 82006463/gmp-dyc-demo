@@ -28,28 +28,6 @@
 					</td>
 				</tr>
 
-				<%--<tr>
-					<td class="td_table_1">部门编号：</td>
-					<td class="td_table_2">
-						<input type="text" id="orgCode" name="orgCode" value="${entity.orgCode}" class="input_240" />
-					</td>
-					<td class="td_table_1">部门编号分隔符：</td>
-					<td class="td_table_2">
-						<input type="text" id="orgSeparator" name="orgSeparator" value="${entity.orgSeparator}" class="input_240" />
-					</td>
-				</tr>
-
-				<tr>
-					<td class="td_table_1">功能编号：</td>
-					<td class="td_table_2">
-						<input type="text" id="funcCode" name="funcCode" value="${entity.funcCode}" class="input_240" />
-					</td>
-					<td class="td_table_1">功能编号分隔符：</td>
-					<td class="td_table_2">
-						<input type="text" id="funcSeparator" name="funcSeparator" value="${entity.funcSeparator}" class="input_240" />
-					</td>
-				</tr>--%>
-
 				<tr>
 					<td class="td_table_1">时间模式<b class='requiredWarn'>*</b>：</td>
 					<td class="td_table_2">

@@ -37,16 +37,13 @@ public class CodeValueService extends CommonService<CodeValue, Long> {
 
     @Transactional
     public String getCodeValue(CodeValue codeValueParam) {
-        if (codeValueParam.getRuleId() == null && codeValueParam.getRuleCode() == null) {
-            throw new RuntimeException("Code Rule is empty.");
+        if (codeValueParam.getRuleId() == null) {
+            throw new RuntimeException("CodeRule.id is empty.");
         }
 
         Map<String, Object> params = new LinkedHashMap<>(8);
         if (codeValueParam.getRuleId() != null) {
             params.put("ruleId", codeValueParam.getRuleId());
-        }
-        if (codeValueParam.getRuleCode() != null) {
-            params.put("ruleCode", codeValueParam.getRuleCode());
         }
         List<CodeRule> rules = codeRuleService.findList(params);
         if (rules == null || rules.size() == 0) {
@@ -54,11 +51,11 @@ public class CodeValueService extends CommonService<CodeValue, Long> {
         }
 
         CodeRule rule = rules.get(0);
-        if (StringUtils.isNotBlank(codeValueParam.getOrgValue())) {
-            params.put("orgValue", codeValueParam.getOrgValue());
+        if (StringUtils.isNotBlank(codeValueParam.getOrgCode())) {
+            params.put("orgValue", codeValueParam.getOrgCode());
         }
-        if (StringUtils.isNotBlank(codeValueParam.getFuncValue())) {
-            params.put("funcValue", codeValueParam.getFuncValue());
+        if (StringUtils.isNotBlank(codeValueParam.getFuncCode())) {
+            params.put("funcValue", codeValueParam.getFuncCode());
         }
         List<CodeValue> list = super.findList(params);
         CodeValue codeValue = list == null || list.size() == 0 ? null : list.get(0);
@@ -66,7 +63,6 @@ public class CodeValueService extends CommonService<CodeValue, Long> {
             codeValue = new CodeValue();
             BeanUtils.copyProperties(codeValueParam, codeValue);
             codeValue.setRuleId(rule.getId());
-            codeValue.setRuleCode(rule.getCode());
         }
 
         DateFormat dateFormat = new SimpleDateFormat(rule.getTimePattern());
@@ -77,11 +73,11 @@ public class CodeValueService extends CommonService<CodeValue, Long> {
             for (int i = 0; i < ruleValueArr.length; i++) {
                 String ruleItem = ruleValueArr[0];
                 if (ruleItem.contains("${orgCode}")) {
-                    curValue += codeValueParam.getOrgValue();
+                    curValue += codeValueParam.getOrgCode();
                     if (ruleItem.contains("&"))
                         curValue += ruleItem.split("\\&")[1];
                 } else if (ruleItem.contains("${funcCode}")) {
-                    curValue += codeValueParam.getFuncValue();
+                    curValue += codeValueParam.getFuncCode();
                     if (ruleItem.contains("&"))
                         curValue += ruleItem.split("\\&")[1];
                 } else if (ruleItem.contains("${timePattern}")) {
@@ -99,11 +95,11 @@ public class CodeValueService extends CommonService<CodeValue, Long> {
             for (int i = 0; i < ruleValueArr.length; i++) {
                 String ruleItem = ruleValueArr[0];
                 if (ruleItem.contains("${orgCode}")) {
-                    curValue += codeValueParam.getOrgValue();
+                    curValue += codeValueParam.getOrgCode();
                     if (ruleItem.contains("&"))
                         curValue += ruleItem.split("\\&")[1];
                 } else if (ruleItem.contains("${funcCode}")) {
-                    curValue += codeValueParam.getFuncValue();
+                    curValue += codeValueParam.getFuncCode();
                     if (ruleItem.contains("&"))
                         curValue += ruleItem.split("\\&")[1];
                 } else if (ruleItem.contains("${timePattern}")) {
