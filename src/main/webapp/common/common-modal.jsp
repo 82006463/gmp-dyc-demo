@@ -22,7 +22,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" id="modal-close">关闭</button>
-                <button type="button" class="btn btn-primary" onclick="return Ops.checkUser();">提交</button>
+                <button type="button" class="btn btn-primary" onclick="checkUser();">提交</button>
                 <button type="submit" id="modal-submit" style="display: none;"></button>
             </div>
         </div><!-- /.modal-content -->

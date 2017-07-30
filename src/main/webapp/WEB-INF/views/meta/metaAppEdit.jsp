@@ -6,6 +6,21 @@
 <head>
 	<title>${metaTag.name}</title>
 	<%@ include file="/common/common-edit.jsp"%>
+	<script type="text/javascript">
+        function checkUser () {
+            if ($('#inputForm').validationEngine('validate')) {
+                $.getJSON('${ctx}/security/user/checkUser', {'electron_sign_username':$('#electron_sign_username').val(), "electron_sign_password":$('#electron_sign_password').val(), "electron_sign_reason":$('#electron_sign_reason').val()}, function (data) {
+                    if (data.result == 0) {
+                        alert(data.msg);
+                    } else {
+                        $('#modal-submit').click();
+                    }
+                });
+            } else {
+                $('#modal-close').click();
+            }
+        }
+	</script>
 </head>
 
 <body>
