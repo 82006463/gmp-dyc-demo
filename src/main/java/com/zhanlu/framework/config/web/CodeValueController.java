@@ -24,7 +24,7 @@ import java.util.List;
  * @since 0.1
  */
 @Controller
-@RequestMapping(value = "/config/code/value")
+@RequestMapping(value = "/config/codeValue")
 public class CodeValueController {
 
     @Autowired

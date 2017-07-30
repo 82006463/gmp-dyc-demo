@@ -22,9 +22,9 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<c:if test="${!empty metaTag.list_create_url}">
+					<%--<c:if test="${!empty metaTag.list_create_url}">--%>
 						<input type='button' onclick="addNew('${ctx}/meta/app/${metaType}/${cmcode}/create')" class='button_70px' value='新建'/>
-					</c:if>
+					<%--</c:if>--%>
 					<c:if test="${fn:contains(metaType,'flow')}">
 						<input type="button" onclick="addNew('${ctx}/flow/task/approval?processName=${metaType}_${cmcode}')" class="button_70px" value="申请">
 					</c:if>
