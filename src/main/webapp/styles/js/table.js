@@ -49,8 +49,10 @@ function exportExcel(url) {
     window.location.href = url;
 }
 
-function confirmDel() {
-    if (confirm("请确定是否删除?")) {
+function confirmDel(ops) {
+    if(ops && ops==1) { //更新
+        return true;
+    } else if (confirm("请确定是否删除?")) {
         return true;
     } else {
         return false;

@@ -2,7 +2,6 @@ package com.zhanlu.framework.security.web;
 
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
-import com.zhanlu.framework.config.entity.DataDict;
 import com.zhanlu.framework.security.entity.Authority;
 import com.zhanlu.framework.security.entity.Menu;
 import com.zhanlu.framework.security.service.AuthorityService;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -75,7 +73,6 @@ public class AuthorityController {
 
     /**
      * 编辑权限时，返回权限查看视图
-     *
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
@@ -102,7 +99,7 @@ public class AuthorityController {
      * 根据主键ID删除权限实体，并返回权限列表视图
      */
     @RequestMapping(value = "delete/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    public String delete(@PathVariable("id") Long id, Integer status) {
         authorityService.delete(id);
         return "redirect:/security/authority";
     }

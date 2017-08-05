@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,14 +80,18 @@ public class UserController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("id") Long id) {
         User entity = userService.findById(id);
-        List<Role> roles = roleService.findAll();
+        List<Role> rolesTmp = roleService.findAll();
+        List<Role> roles = new ArrayList<>(rolesTmp.size());
         List<Role> userRoles = entity.getRoles();
-        for (Role role : roles) {
+        for (Role role : rolesTmp) {
+            if (role.getStatus() != null && role.getStatus().intValue() == 0)
+                continue;
             role.setSelected(0);
             for (Role userRole : userRoles) {
                 if (role.getId().longValue() == userRole.getId().longValue())
                     role.setSelected(1);
             }
+            roles.add(role);
         }
         ModelAndView mv = new ModelAndView("security/userEdit");
         mv.addObject("entity", userService.findById(id));

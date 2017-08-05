@@ -64,15 +64,15 @@
 					<td class="td_list_2" align=left>${item.org.name}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
+							<c:if test="${item.status==1}">
 							<shiro:hasPermission name="sec_user_delete">
 								<a href="${ctx}/security/user/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="sec_user_edit">
 								<a href="${ctx}/security/user/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
 							</shiro:hasPermission>
-							<shiro:hasPermission name="sec_user_view">
-								<a href="${ctx}/security/user/view/${item.id}" class="btnView" title="查看">查看</a>
-							</shiro:hasPermission>
+							</c:if>
+							<a href="${ctx}/security/user/view/${item.id}" class="btnView" title="查看">查看</a>
 						</c:if>
 					</td>
 				</tr>

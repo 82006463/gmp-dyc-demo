@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,17 +68,18 @@ public class RoleController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
         Role entity = roleService.findById(id);
-        List<Authority> authorities = authorityService.findAll();
+        List<Authority> authoritiesTmp = authorityService.findAll();
+        List<Authority> authorities = new ArrayList<>(authoritiesTmp.size());
         List<Authority> auths = entity.getAuthorities();
-        for (Authority auth : authorities) {
+        for (Authority auth : authoritiesTmp) {
+            if (auth.getStatus() != null && auth.getStatus().intValue() == 0)
+                continue;
+            auth.setSelected(0);
             for (Authority selAuth : auths) {
-                if (auth.getId().longValue() == selAuth.getId().longValue()) {
+                if (auth.getId().longValue() == selAuth.getId().longValue())
                     auth.setSelected(1);
-                }
-                if (auth.getSelected() == null) {
-                    auth.setSelected(0);
-                }
             }
+            authorities.add(auth);
         }
         model.addAttribute("entity", entity);
         model.addAttribute("authorities", authorities);
