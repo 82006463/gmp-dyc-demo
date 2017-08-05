@@ -47,6 +47,9 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<User> page, HttpServletRequest request) {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
+        String lookup = request.getParameter("lookup");
+        if (lookup != null && lookup.equals("1"))
+            filters.add(new PropertyFilter("EQI_status", "1"));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");
@@ -55,6 +58,7 @@ public class UserController {
         page = userService.findPage(page, filters);
         ModelAndView mv = new ModelAndView("security/userList");
         mv.addObject("page", page);
+        mv.addObject("lookup", lookup);
         return mv;
     }
 

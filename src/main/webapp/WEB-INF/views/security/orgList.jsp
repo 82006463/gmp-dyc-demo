@@ -48,6 +48,7 @@
 				<td align=center class="td_list_1">部门名称</td>
 				<td align=center class="td_list_1">部门层级</td>
 				<td align=center class="td_list_1">上级部门名称</td>
+				<td align=center class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item">
@@ -56,6 +57,7 @@
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>${item.level}</td>
 					<td class="td_list_2" align=left>${item.parent.name}</td>
+					<td class="td_list_2" align=left>${item.status==0 ? '删除':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<shiro:hasPermission name="sec_org_delete">

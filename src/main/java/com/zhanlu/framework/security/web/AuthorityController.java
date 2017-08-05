@@ -32,15 +32,13 @@ public class AuthorityController {
 
     /**
      * 分页查询权限，返回权限列表视图
-     *
-     * @param model
-     * @param page
-     * @param request
-     * @return
      */
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, Page<Authority> page, HttpServletRequest request) {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
+        String lookup = request.getParameter("lookup");
+        if (lookup != null && lookup.equals("1"))
+            filters.add(new PropertyFilter("EQI_status", "1"));
         //filters.add(new PropertyFilter("EQL_pid", "0"));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
@@ -49,14 +47,12 @@ public class AuthorityController {
         }
         page = authorityService.findPage(page, filters);
         model.addAttribute("page", page);
+        model.addAttribute("lookup", lookup);
         return "security/authorityList";
     }
 
     /**
      * 新建权限时，返回权限编辑视图
-     *
-     * @param model
-     * @return
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
@@ -68,10 +64,6 @@ public class AuthorityController {
 
     /**
      * 编辑权限时，返回权限编辑视图
-     *
-     * @param id
-     * @param model
-     * @return
      */
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model model) {
@@ -84,9 +76,6 @@ public class AuthorityController {
     /**
      * 编辑权限时，返回权限查看视图
      *
-     * @param id
-     * @param model
-     * @return
      */
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") Long id, Model model) {
@@ -98,8 +87,6 @@ public class AuthorityController {
 
     /**
      * 新增、编辑权限页面的提交处理。保存权限实体，并返回权限列表视图
-     *
-     * @return
      */
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(Authority entity, Long menuId) {
@@ -113,9 +100,6 @@ public class AuthorityController {
 
     /**
      * 根据主键ID删除权限实体，并返回权限列表视图
-     *
-     * @param id
-     * @return
      */
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable("id") Long id) {

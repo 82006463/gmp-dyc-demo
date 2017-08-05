@@ -33,6 +33,9 @@ public class OrgController {
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, Page<Org> page, HttpServletRequest request) {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
+        String lookup = request.getParameter("lookup");
+        if (lookup != null && lookup.equals("1"))
+            filters.add(new PropertyFilter("EQI_status", "1"));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");
@@ -40,7 +43,7 @@ public class OrgController {
         }
         page = orgService.findPage(page, filters);
         model.addAttribute("page", page);
-        model.addAttribute("lookup", request.getParameter("lookup"));
+        model.addAttribute("lookup", lookup);
         return "security/orgList";
     }
 

@@ -45,13 +45,15 @@
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align=center width=45% class="td_list_1">菜单名称</td>
-				<td align=center width=45% class="td_list_1">上级菜单名称</td>
+				<td align=center width=40% class="td_list_1">上级菜单名称</td>
+				<td align=center width=5% class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item">
 				<tr>
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>${item.parentMenu.name}</td>
+					<td class="td_list_2" align=left>${item.status==0 ? '删除':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<shiro:hasPermission name="sec_menu_delete">
