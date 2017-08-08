@@ -5,6 +5,7 @@
 	<head>
 		<title>配置管理-伸缩表-${item=='search' ? '搜索项':item=='list' ? '列表项':'编辑页'}</title>
 		<%@ include file="/common/common-edit.jsp"%>
+		<script type="text/javascript" src="${ctx}/styles/js/ops_base.js"></script>
 	</head>
 
 	<body>
