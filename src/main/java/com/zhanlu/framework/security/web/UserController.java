@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,9 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<User> page, HttpServletRequest request) {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
+        String lookup = request.getParameter("lookup");
+        if (lookup != null && lookup.equals("1"))
+            filters.add(new PropertyFilter("EQI_status", "1"));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");
@@ -55,6 +59,7 @@ public class UserController {
         page = userService.findPage(page, filters);
         ModelAndView mv = new ModelAndView("security/userList");
         mv.addObject("page", page);
+        mv.addObject("lookup", lookup);
         return mv;
     }
 
@@ -75,14 +80,18 @@ public class UserController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("id") Long id) {
         User entity = userService.findById(id);
-        List<Role> roles = roleService.findAll();
+        List<Role> rolesTmp = roleService.findAll();
+        List<Role> roles = new ArrayList<>(rolesTmp.size());
         List<Role> userRoles = entity.getRoles();
-        for (Role role : roles) {
+        for (Role role : rolesTmp) {
+            if (role.getStatus() != null && role.getStatus().intValue() == 0)
+                continue;
             role.setSelected(0);
             for (Role userRole : userRoles) {
                 if (role.getId().longValue() == userRole.getId().longValue())
                     role.setSelected(1);
             }
+            roles.add(role);
         }
         ModelAndView mv = new ModelAndView("security/userEdit");
         mv.addObject("entity", userService.findById(id));

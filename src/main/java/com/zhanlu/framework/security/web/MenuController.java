@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * 菜单管理Controller
+ *
  * @author yuqs
  * @since 0.1
  */
@@ -24,74 +25,78 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/security/menu")
 public class MenuController {
 
-	@Autowired
-	private MenuService menuService;
-	
-	/**
-	 * 分页查询菜单，返回菜单列表视图
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model, Page<Menu> page, HttpServletRequest request) {
-		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
-		//设置默认排序方式
-		if (!page.isOrderBySetted()) {
-			page.setOrderBy("id");
-			page.setOrder(Page.ASC);
-		}
-		page = menuService.findPage(page, filters);
-		model.addAttribute("page", page);
-		model.addAttribute("lookup", request.getParameter("lookup"));
-		return "security/menuList";
-	}
-	
-	/**
-	 * 新建菜单时，返回菜单编辑视图
-	 */
-	@RequestMapping(value = "create", method = RequestMethod.GET)
-	public String create(Model model) {
-		model.addAttribute("entity", new Menu());
-		return "security/menuEdit";
-	}
+    @Autowired
+    private MenuService menuService;
 
-	/**
-	 * 编辑菜单时，返回菜单编辑视图
-	 */
-	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-	public String edit(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("entity", menuService.findById(id));
-		return "security/menuEdit";
-	}
-	
-	/**
-	 * 编辑菜单时，返回菜单查看视图
-	 */
-	@RequestMapping(value = "view/{id}", method = RequestMethod.GET)
-	public String view(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("entity", menuService.findById(id));
-		return "security/menuView";
-	}
-	
-	/**
-	 * 新增、编辑菜单页面的提交处理。保存菜单实体，并返回菜单列表视图
-	 */
-	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String update(Menu menu, Long parentMenuId) {
-		if(parentMenuId != null && parentMenuId.longValue() > 0) {
-			Menu parent = new Menu(parentMenuId);
-			menu.setParentMenu(parent);
-		}
-		menuService.saveOrUpdate(menu);
-		return "redirect:/security/menu";
-	}
-	
-	/**
-	 * 根据主键ID删除菜单实体，并返回菜单列表视图
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping(value = "delete/{id}")
-	public String delete(@PathVariable("id") Long id) {
-		menuService.delete(id);
-		return "redirect:/security/menu";
-	}
+    /**
+     * 分页查询菜单，返回菜单列表视图
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public String list(Model model, Page<Menu> page, HttpServletRequest request) {
+        List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
+        String lookup = request.getParameter("lookup");
+        if (lookup != null && lookup.equals("1"))
+            filters.add(new PropertyFilter("EQI_status", "1"));
+        //设置默认排序方式
+        if (!page.isOrderBySetted()) {
+            page.setOrderBy("id");
+            page.setOrder(Page.ASC);
+        }
+        page = menuService.findPage(page, filters);
+        model.addAttribute("page", page);
+        model.addAttribute("lookup", lookup);
+        return "security/menuList";
+    }
+
+    /**
+     * 新建菜单时，返回菜单编辑视图
+     */
+    @RequestMapping(value = "create", method = RequestMethod.GET)
+    public String create(Model model) {
+        model.addAttribute("entity", new Menu());
+        return "security/menuEdit";
+    }
+
+    /**
+     * 编辑菜单时，返回菜单编辑视图
+     */
+    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+    public String edit(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("entity", menuService.findById(id));
+        return "security/menuEdit";
+    }
+
+    /**
+     * 编辑菜单时，返回菜单查看视图
+     */
+    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
+    public String view(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("entity", menuService.findById(id));
+        return "security/menuView";
+    }
+
+    /**
+     * 新增、编辑菜单页面的提交处理。保存菜单实体，并返回菜单列表视图
+     */
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public String update(Menu menu, Long parentMenuId) {
+        if (parentMenuId != null && parentMenuId.longValue() > 0) {
+            Menu parent = new Menu(parentMenuId);
+            menu.setParentMenu(parent);
+        }
+        menuService.saveOrUpdate(menu);
+        return "redirect:/security/menu";
+    }
+
+    /**
+     * 根据主键ID删除菜单实体，并返回菜单列表视图
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        menuService.delete(id);
+        return "redirect:/security/menu";
+    }
 }

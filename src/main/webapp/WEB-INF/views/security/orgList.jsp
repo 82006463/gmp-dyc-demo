@@ -48,6 +48,7 @@
 				<td align=center class="td_list_1">部门名称</td>
 				<td align=center class="td_list_1">部门层级</td>
 				<td align=center class="td_list_1">上级部门名称</td>
+				<td align=center class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item">
@@ -56,17 +57,18 @@
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>${item.level}</td>
 					<td class="td_list_2" align=left>${item.parent.name}</td>
+					<td class="td_list_2" align=left>${item.status==0 ? '删除':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
+							<c:if test="${item.status==1}">
 							<shiro:hasPermission name="sec_org_delete">
 								<a href="${ctx}/security/org/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="sec_org_edit">
 								<a href="${ctx}/security/org/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
 							</shiro:hasPermission>
-							<shiro:hasPermission name="sec_org_view">
-								<a href="${ctx}/security/org/view/${item.id}" class="btnView" title="查看">查看</a>
-							</shiro:hasPermission>
+							</c:if>
+							<a href="${ctx}/security/org/view/${item.id}" class="btnView" title="查看">查看</a>
 						</c:if>
 						<c:if test="${!empty lookup}">
 							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>

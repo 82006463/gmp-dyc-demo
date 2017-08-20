@@ -13,7 +13,7 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">密码<b class='requiredWarn'>*</b></span>
-                    <input type="text" id="electron_sign_password" name="electron_sign_password" value="" class="form-control">
+                    <input type="password" id="electron_sign_password" name="electron_sign_password" value="" class="form-control">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">意见<b class='requiredWarn'>*</b></span>

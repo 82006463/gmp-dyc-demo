@@ -53,28 +53,30 @@
 			<tr>
 				<td align=center width=15% class="td_list_1">权限编号</td>
 				<td align=center width=20% class="td_list_1">权限名称</td>
-				<td align=center width=55% class="td_list_1">资源值</td>
+				<td align=center width=50% class="td_list_1">资源值</td>
+				<td align=center width=5% class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
-			<c:forEach items="${page.result}" var="authority">
+			<c:forEach items="${page.result}" var="item">
 				<tr>
-					<td class="td_list_2" align=left>${authority.code}</td>
-					<td class="td_list_2" align=left>${authority.name}</td>
-					<td class="td_list_2" align=left>${authority.source}</td>
+					<td class="td_list_2" align=left>${item.code}</td>
+					<td class="td_list_2" align=left>${item.name}</td>
+					<td class="td_list_2" align=left>${item.source}</td>
+					<td class="td_list_2" align=left>${item.status==0 ? '删除':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
+							<c:if test="${item.status==1}">
 							<shiro:hasPermission name="sec_auth_delete">
-								<a href="${ctx}/security/authority/delete/${authority.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+								<a href="${ctx}/security/authority/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="sec_auth_edit">
-								<a href="${ctx}/security/authority/update/${authority.id}" class="btnEdit" title="编辑">编辑</a>
+								<a href="${ctx}/security/authority/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
 							</shiro:hasPermission>
-							<shiro:hasPermission name="sec_auth_view">
-								<a href="${ctx}/security/authority/view/${authority.id}" class="btnView" title="查看">查看</a>
-							</shiro:hasPermission>
+							</c:if>
+							<a href="${ctx}/security/authority/view/${item.id}" class="btnView" title="查看">查看</a>
 						</c:if>
 						<c:if test="${!empty lookup}">
-							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${authority.id}','${authority.name}')">选择</a>
+							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>
 						</c:if>
 					</td>
 				</tr>

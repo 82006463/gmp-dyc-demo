@@ -5,6 +5,7 @@
 	<head>
 		<title>配置管理-数据字典</title>
 		<%@ include file="/common/common-edit.jsp"%>
+		<script type="text/javascript" src="${ctx}/styles/js/ops_base.js"></script>
 	</head>
 
 	<body>
