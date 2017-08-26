@@ -17,6 +17,11 @@
 <script type="text/javascript">
 	$(function () {
 		$('#sidebar').height(document.body.clientHeight + 40);
+
+		$('[id=sidebar_goods_manage]').on('click', function () {
+			var _dd = $(this).next('dd');
+			if(_dd.css('display') == 'none') {_dd.show();} else {_dd.hide();}
+		});
 	});
 
     $("li").click(function() {
