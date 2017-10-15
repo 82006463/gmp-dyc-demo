@@ -2,13 +2,10 @@ package com.zhanlu.custom.cms.entity;
 
 import com.zhanlu.framework.common.entity.CodeEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 /**
- * Created by Administrator on 2017/10/15.
+ * 用户
  */
 @Entity
 @Table(name = "cms_comp_user")
@@ -32,7 +29,8 @@ public class CompUser extends CodeEntity {
         this.measureCompId = measureCompId;
     }
 
-    @Transient
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "measure_comp_id", insertable = false, updatable = false)
     public MeasureComp getMeasureComp() {
         return measureComp;
     }
@@ -50,7 +48,8 @@ public class CompUser extends CodeEntity {
         this.customerCompId = customerCompId;
     }
 
-    @Transient
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_comp_id", insertable = false, updatable = false)
     public CustomerComp getCustomerComp() {
         return customerComp;
     }

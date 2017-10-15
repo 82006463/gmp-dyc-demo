@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * Created by Administrator on 2017/10/15.
+ * 计量公司
  */
 @Entity
 @Table(name = "cms_measure_comp")

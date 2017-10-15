@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Created by Administrator on 2017/10/15.
+ * 客户公司
  */
 @Entity
 @Table(name = "cms_customer_comp")

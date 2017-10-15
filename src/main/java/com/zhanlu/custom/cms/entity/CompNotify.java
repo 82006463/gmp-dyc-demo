@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Created by Administrator on 2017/10/15.
+ * 通知
  */
 @Entity
 @Table(name = "cms_comp_notify")
