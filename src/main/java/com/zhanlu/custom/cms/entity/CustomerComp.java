@@ -14,12 +14,36 @@ import javax.persistence.Table;
 public class CustomerComp extends CodeEntity {
 
     //信用代码
-    @Column(name = "credit_code", length = 50)
     private String creditCode;
     //网址
-    @Column(name = "url", length = 50)
     private String url;
     //地址
-    @Column(name = "addr", length = 100)
     private String addr;
+
+    @Column(name = "credit_code", length = 50)
+    public String getCreditCode() {
+        return creditCode;
+    }
+
+    public void setCreditCode(String creditCode) {
+        this.creditCode = creditCode;
+    }
+
+    @Column(name = "url", length = 50)
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @Column(name = "addr", length = 100)
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
 }

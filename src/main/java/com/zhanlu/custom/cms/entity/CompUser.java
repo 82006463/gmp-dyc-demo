@@ -14,18 +14,66 @@ import javax.persistence.Transient;
 @Table(name = "cms_comp_user")
 public class CompUser extends CodeEntity {
 
-    @Column(name = "measure_comp_id")
     private Long measureCompId;
-    @Transient
     private MeasureComp measureComp;
-    @Column(name = "customer_comp_id")
     private Long customerCompId;
-    @Transient
     private CustomerComp customerComp;
 
     //岗位
-    @Column(name = "post", length = 50)
     private String post;
-    @Column(name = "email", length = 50)
     private String email;
+
+    @Column(name = "measure_comp_id")
+    public Long getMeasureCompId() {
+        return measureCompId;
+    }
+
+    public void setMeasureCompId(Long measureCompId) {
+        this.measureCompId = measureCompId;
+    }
+
+    @Transient
+    public MeasureComp getMeasureComp() {
+        return measureComp;
+    }
+
+    public void setMeasureComp(MeasureComp measureComp) {
+        this.measureComp = measureComp;
+    }
+
+    @Column(name = "customer_comp_id")
+    public Long getCustomerCompId() {
+        return customerCompId;
+    }
+
+    public void setCustomerCompId(Long customerCompId) {
+        this.customerCompId = customerCompId;
+    }
+
+    @Transient
+    public CustomerComp getCustomerComp() {
+        return customerComp;
+    }
+
+    public void setCustomerComp(CustomerComp customerComp) {
+        this.customerComp = customerComp;
+    }
+
+    @Column(name = "post", length = 50)
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    @Column(name = "email", length = 50)
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

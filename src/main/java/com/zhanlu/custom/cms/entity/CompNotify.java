@@ -13,9 +13,24 @@ import javax.persistence.Table;
 @Table(name = "cms_comp_notify")
 public class CompNotify extends IdEntity {
 
-    @Column(name = "notify_type")
     private Integer notifyType;
-    @Column(name = "content", length = 200)
     private String content;
 
+    @Column(name = "notify_type")
+    public Integer getNotifyType() {
+        return notifyType;
+    }
+
+    public void setNotifyType(Integer notifyType) {
+        this.notifyType = notifyType;
+    }
+
+    @Column(name = "content", length = 200)
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

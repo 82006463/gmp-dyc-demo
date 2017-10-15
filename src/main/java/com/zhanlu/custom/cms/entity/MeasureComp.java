@@ -15,25 +15,80 @@ import java.util.Date;
 public class MeasureComp extends CodeEntity {
 
     //信用代码
-    @Column(name = "credit_code", length = 50)
     private String creditCode;
     //网址
-    @Column(name = "url", length = 50)
     private String url;
     //地址
-    @Column(name = "addr", length = 100)
     private String addr;
     //审计报告
-    @Column(name = "audit_report", length = 200)
     private String auditReport;
     //建标数量
-    @Column(name = "build_count")
     private Integer buildCount;
     //企业简称
-    @Column(name = "enterprise_short", length = 50)
     private String enterpriseShort;
     //认可有效期
-    @Column(name = "expire_date")
     private Date expireDate;
 
+    @Column(name = "credit_code", length = 50)
+    public String getCreditCode() {
+        return creditCode;
+    }
+
+    public void setCreditCode(String creditCode) {
+        this.creditCode = creditCode;
+    }
+
+    @Column(name = "url", length = 50)
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @Column(name = "addr", length = 100)
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+
+    @Column(name = "audit_report", length = 200)
+    public String getAuditReport() {
+        return auditReport;
+    }
+
+    public void setAuditReport(String auditReport) {
+        this.auditReport = auditReport;
+    }
+
+    @Column(name = "build_count")
+    public Integer getBuildCount() {
+        return buildCount;
+    }
+
+    public void setBuildCount(Integer buildCount) {
+        this.buildCount = buildCount;
+    }
+
+    @Column(name = "enterprise_short", length = 50)
+    public String getEnterpriseShort() {
+        return enterpriseShort;
+    }
+
+    public void setEnterpriseShort(String enterpriseShort) {
+        this.enterpriseShort = enterpriseShort;
+    }
+
+    @Column(name = "expire_date")
+    public Date getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
+    }
 }
