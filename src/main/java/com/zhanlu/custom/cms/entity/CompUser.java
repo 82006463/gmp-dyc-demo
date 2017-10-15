@@ -24,8 +24,8 @@ public class CompUser extends CodeEntity {
     private CustomerComp customerComp;
 
     //岗位
-    @Column(name = "post")
+    @Column(name = "post", length = 50)
     private String post;
-    @Column(name = "email")
+    @Column(name = "email", length = 50)
     private String email;
 }

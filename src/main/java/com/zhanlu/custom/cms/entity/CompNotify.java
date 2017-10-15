@@ -15,7 +15,7 @@ public class CompNotify extends IdEntity {
 
     @Column(name = "notify_type")
     private Integer notifyType;
-    @Column(name = "content")
+    @Column(name = "content", length = 200)
     private String content;
 
 }
