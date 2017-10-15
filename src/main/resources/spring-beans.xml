@@ -51,9 +51,8 @@
 		<property name="packagesToScan">
 			<list>
 			    <value>com.zhanlu.framework.security.entity</value>
-                <value>com.zhanlu.framework.flow.entity</value>
                 <value>com.zhanlu.framework.config.entity</value>
-                <value>com.zhanlu.app.modules.entity</value>
+                <value>com.zhanlu.custom.cms.entity</value>
 			</list>
 		</property>
 		<property name="mappingResources">
