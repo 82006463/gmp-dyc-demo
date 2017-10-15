@@ -35,11 +35,21 @@
 				<tr>
 					<td class="td_table_1">计量公司<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="measureCompId" name="measureCompId" value="${entity.measureCompId}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+						<select id="measureCompId" name="measureCompId" class="input_select validate[required]">
+							<option value="">-请选择-</option>
+							<c:forEach items="${measureComps}" var="item">
+								<option value="${item.id}" <c:if test="${entity.measureCompId==item.id}">selected="selected"</c:if>>${item.name}</option>
+							</c:forEach>
+						</select>
 					</td>
 					<td class="td_table_1">客户公司<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="customerCompId" name="customerCompId" value="${entity.customerCompId}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+						<select id="customerCompId" name="customerCompId" class="input_select validate[required]">
+							<option value="">-请选择-</option>
+							<c:forEach items="${customerComps}" var="item">
+								<option value="${item.id}" <c:if test="${entity.customerCompId==item.id}">selected="selected"</c:if>>${item.name}</option>
+							</c:forEach>
+						</select>
 					</td>
 				</tr>
 				<tr>

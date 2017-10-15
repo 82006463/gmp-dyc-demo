@@ -12,6 +12,11 @@
 
 	<body>
 		<form id="inputForm" action="" method="post">
+			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
+				<tr>
+					<td class="td_table_top" align="center">计量公司</td>
+				</tr>
+			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
 					<td class="td_table_1">编号：</td>

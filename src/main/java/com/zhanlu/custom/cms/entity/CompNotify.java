@@ -13,7 +13,9 @@ import javax.persistence.Table;
 @Table(name = "cms_comp_notify")
 public class CompNotify extends IdEntity {
 
+    //接收人
     private Integer notifyType;
+    //通知内容
     private String content;
 
     @Column(name = "notify_type")

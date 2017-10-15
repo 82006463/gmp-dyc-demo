@@ -55,7 +55,7 @@
 				<tr>
 					<td class="td_table_1">建标数量<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="buildCount" name="buildCount" value="${entity.buildCount}" class="input_240 validate[required,min[1],max[4]]" />
+						<input type="text" id="buildCount" name="buildCount" value="${entity.buildCount}" class="input_240 validate[required,custom[number],min[1],max[4]]" />
 					</td>
 					<td class="td_table_1">企业简称<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">

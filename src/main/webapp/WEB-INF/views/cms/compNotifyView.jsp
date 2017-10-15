@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 	<head>
-		<title>客户公司</title>
+		<title>通知</title>
 		<%@ include file="/common/meta.jsp"%>
 		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
 		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
@@ -14,25 +14,17 @@
 		<form id="inputForm" action="" method="post">
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
-					<td class="td_table_top" align="center">客户公司</td>
+					<td class="td_table_top" align="center">通知</td>
 				</tr>
 			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="td_table_1">编号：</td>
-					<td class="td_table_2">${entity.code}</td>
-					<td class="td_table_1">企业名称：</td>
-					<td class="td_table_2">${entity.name}</td>
+					<td class="td_table_1">接收人：</td>
+					<td class="td_table_2">${entity.notifyType==1 ? '所有客户':entity.notifyType==2 ? '所有计量服务商':entity.notifyType==3 ? '所有系统用户':''}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">信用代码：</td>
-					<td class="td_table_2">${entity.creditCode}</td>
-					<td class="td_table_1">网址：</td>
-					<td class="td_table_2">${entity.url}</td>
-				</tr>
-				<tr>
-					<td class="td_table_1">地址：</td>
-					<td class="td_table_2" colspan="3">${entity.addr}</td>
+					<td class="td_table_1">通知内容：</td>
+					<td class="td_table_2">${entity.content}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">

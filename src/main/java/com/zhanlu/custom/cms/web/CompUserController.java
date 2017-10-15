@@ -1,7 +1,11 @@
 package com.zhanlu.custom.cms.web;
 
 import com.zhanlu.custom.cms.entity.CompUser;
+import com.zhanlu.custom.cms.entity.CustomerComp;
+import com.zhanlu.custom.cms.entity.MeasureComp;
 import com.zhanlu.custom.cms.service.CompUserService;
+import com.zhanlu.custom.cms.service.CustomerCompService;
+import com.zhanlu.custom.cms.service.MeasureCompService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,10 @@ public class CompUserController {
 
     @Autowired
     private CompUserService compUserService;
+    @Autowired
+    private MeasureCompService measureCompService;
+    @Autowired
+    private CustomerCompService customerCompService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<CompUser> page, HttpServletRequest request) {
@@ -42,6 +50,8 @@ public class CompUserController {
     public ModelAndView create() {
         ModelAndView mv = new ModelAndView("cms/compUserEdit");
         mv.addObject("entity", new CompUser());
+        mv.addObject("measureComps", measureCompService.findAll());
+        mv.addObject("customerComps", customerCompService.findAll());
         return mv;
     }
 
@@ -50,6 +60,8 @@ public class CompUserController {
         CompUser entity = compUserService.findById(id);
         ModelAndView mv = new ModelAndView("cms/compUserEdit");
         mv.addObject("entity", entity);
+        mv.addObject("measureComps", measureCompService.findAll());
+        mv.addObject("customerComps", customerCompService.findAll());
         return mv;
     }
 
