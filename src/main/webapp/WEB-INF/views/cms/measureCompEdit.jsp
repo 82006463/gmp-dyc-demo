@@ -6,6 +6,7 @@
 	<head>
 		<title>计量公司</title>
 		<%@ include file="/common/common-edit.jsp"%>
+		<script type="text/javascript" src="${ctx}/styles/js/ops_base.js"></script>
 		<script type="text/javascript">
 
 		</script>

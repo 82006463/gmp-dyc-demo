@@ -6,10 +6,10 @@ import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,7 +25,7 @@ public class CompNotifyController {
     private CompNotifyService compNotifyService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String list(Model model, Page<CompNotify> page, HttpServletRequest request) {
+    public ModelAndView list(Page<CompNotify> page, HttpServletRequest request) {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
@@ -33,40 +33,46 @@ public class CompNotifyController {
             page.setOrder(Page.ASC);
         }
         page = compNotifyService.findPage(page, filters);
-        model.addAttribute("page", page);
-        return "cms/compNotifyList";
+        ModelAndView mv = new ModelAndView("cms/compNotifyList");
+        mv.addObject("page", page);
+        return mv;
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String create(Model model) {
-        model.addAttribute("entity", new CompNotify());
-        return "cms/compNotifyEdit";
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView create() {
+        ModelAndView mv = new ModelAndView("cms/compNotifyEdit");
+        mv.addObject("entity", new CompNotify());
+        return mv;
     }
 
-    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable("id") Long id, Model model) {
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable("id") Long id) {
         CompNotify entity = compNotifyService.findById(id);
-        model.addAttribute("entity", entity);
-        return "cms/compNotifyEdit";
+        ModelAndView mv = new ModelAndView("cms/compNotifyEdit");
+        mv.addObject("entity", entity);
+        return mv;
     }
 
-    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
-    public String view(@PathVariable("id") Long id, Model model) {
+    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+    public ModelAndView view(@PathVariable("id") Long id) {
         CompNotify entity = compNotifyService.findById(id);
-        model.addAttribute("entity", entity);
-        return "cms/compNotifyView";
+        ModelAndView mv = new ModelAndView("cms/compNotifyView");
+        mv.addObject("entity", entity);
+        return mv;
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(CompNotify entity) {
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ModelAndView update(CompNotify entity) {
         compNotifyService.saveOrUpdate(entity);
-        return "redirect:/cms/compNotify/list";
+        ModelAndView mv = new ModelAndView("redirect:/custom/cms/compNotify");
+        return mv;
     }
 
-    @RequestMapping(value = "delete/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    @RequestMapping(value = "/delete/{id}")
+    public ModelAndView delete(@PathVariable("id") Long id) {
         compNotifyService.delete(id);
-        return "redirect:/cms/compNotify/list";
+        ModelAndView mv = new ModelAndView("redirect:/custom/cms/compNotify");
+        return mv;
     }
 
 }

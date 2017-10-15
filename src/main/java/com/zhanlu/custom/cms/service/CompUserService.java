@@ -7,6 +7,8 @@ import com.zhanlu.framework.config.dao.CodeRuleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 /**
  * 用户
  */
@@ -16,6 +18,7 @@ public class CompUserService extends CommonService<CompUser, Long> {
     @Autowired
     private CompUserDao compUserDao;
 
+    @PostConstruct
     @Override
     public void initDao() {
         super.commonDao = compUserDao;

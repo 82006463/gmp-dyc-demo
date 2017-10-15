@@ -6,6 +6,8 @@ import com.zhanlu.framework.common.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 /**
  * 客户公司
  */
@@ -15,6 +17,7 @@ public class CustomerCompService extends CommonService<CustomerComp, Long> {
     @Autowired
     private CustomerCompDao customerCompDao;
 
+    @PostConstruct
     @Override
     public void initDao() {
         super.commonDao = customerCompDao;

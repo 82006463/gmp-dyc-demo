@@ -7,6 +7,8 @@ import com.zhanlu.framework.config.dao.CodeRuleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 /**
  * 通知
  */
@@ -16,6 +18,7 @@ public class CompNotifyService extends CommonService<CompNotify, Long> {
     @Autowired
     private CompNotifyDao compNotifyDao;
 
+    @PostConstruct
     @Override
     public void initDao() {
         super.commonDao = compNotifyDao;

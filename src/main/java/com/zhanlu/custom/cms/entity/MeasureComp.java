@@ -1,6 +1,7 @@
 package com.zhanlu.custom.cms.entity;
 
 import com.zhanlu.framework.common.entity.CodeEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -83,6 +84,7 @@ public class MeasureComp extends CodeEntity {
         this.enterpriseShort = enterpriseShort;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "expire_date")
     public Date getExpireDate() {
         return expireDate;

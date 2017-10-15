@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,7 +26,7 @@ public class CustomerCompController {
     private CustomerCompService customerCompService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String list(Model model, Page<CustomerComp> page, HttpServletRequest request) {
+    public ModelAndView list(Page<CustomerComp> page, HttpServletRequest request) {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
@@ -33,40 +34,46 @@ public class CustomerCompController {
             page.setOrder(Page.ASC);
         }
         page = customerCompService.findPage(page, filters);
-        model.addAttribute("page", page);
-        return "cms/customerCompList";
+        ModelAndView mv = new ModelAndView("cms/customerCompList");
+        mv.addObject("page", page);
+        return mv;
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String create(Model model) {
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView create(Model model) {
         model.addAttribute("entity", new CustomerComp());
-        return "cms/customerCompEdit";
+        ModelAndView mv = new ModelAndView("cms/customerCompEdit");
+        return mv;
     }
 
-    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable("id") Long id, Model model) {
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable("id") Long id) {
         CustomerComp entity = customerCompService.findById(id);
-        model.addAttribute("entity", entity);
-        return "cms/customerCompEdit";
+        ModelAndView mv = new ModelAndView("cms/customerCompEdit");
+        mv.addObject("entity", entity);
+        return mv;
     }
 
-    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
-    public String view(@PathVariable("id") Long id, Model model) {
+    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+    public ModelAndView view(@PathVariable("id") Long id) {
         CustomerComp entity = customerCompService.findById(id);
-        model.addAttribute("entity", entity);
-        return "cms/customerCompView";
+        ModelAndView mv = new ModelAndView("cms/customerCompView");
+        mv.addObject("entity", entity);
+        return mv;
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(CustomerComp entity) {
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ModelAndView update(CustomerComp entity) {
         customerCompService.saveOrUpdate(entity);
-        return "redirect:/cms/customerComp/list";
+        ModelAndView mv = new ModelAndView("redirect:/custom/cms/customerComp");
+        return mv;
     }
 
-    @RequestMapping(value = "delete/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    @RequestMapping(value = "/delete/{id}")
+    public ModelAndView delete(@PathVariable("id") Long id) {
         customerCompService.delete(id);
-        return "redirect:/cms/customerComp/list";
+        ModelAndView mv = new ModelAndView("redirect:/custom/cms/customerComp");
+        return mv;
     }
 
 }
