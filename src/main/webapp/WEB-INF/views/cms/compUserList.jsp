@@ -12,7 +12,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/custom/cms/customerComp" method="get">
+	<form id="mainForm" action="${ctx}/custom/cms/compUser" method="get">
 		<input type="hidden" name="lookup" value="${lookup}" />
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
@@ -39,7 +39,7 @@
 				<td align="left">
 					<c:if test="${empty lookup}">
 						<shiro:hasPermission name="sec_auth_edit">
-							<input type='button' onclick="addNew('${ctx}/custom/cms/customerComp/create')" class='button_70px' value='新建'/>
+							<input type='button' onclick="addNew('${ctx}/custom/cms/compUser/create')" class='button_70px' value='新建'/>
 						</shiro:hasPermission>
 					</c:if>
 					<c:if test="${!empty lookup}">
@@ -64,10 +64,10 @@
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<c:if test="${item.status==1}">
-								<a href="${ctx}/custom/cms/customerComp/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-								<a href="${ctx}/custom/cms/customerComp/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
+								<a href="${ctx}/custom/cms/compUser/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+								<a href="${ctx}/custom/cms/compUser/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
 							</c:if>
-							<a href="${ctx}/custom/cms/customerComp/view/${item.id}" class="btnView" title="查看">查看</a>
+							<a href="${ctx}/custom/cms/compUser/view/${item.id}" class="btnView" title="查看">查看</a>
 						</c:if>
 						<c:if test="${!empty lookup}">
 							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>
