@@ -1,7 +1,7 @@
 package com.zhanlu.custom.cms.service;
 
-import com.zhanlu.custom.cms.dao.CustomerCompDao;
-import com.zhanlu.custom.cms.entity.CustomerComp;
+import com.zhanlu.custom.cms.dao.DrugCompDao;
+import com.zhanlu.custom.cms.entity.DrugComp;
 import com.zhanlu.framework.common.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 
 /**
- * 客户公司
+ * 药企
  */
 @Service
-public class CustomerCompService extends CommonService<CustomerComp, Long> {
+public class DrugCompService extends CommonService<DrugComp, Long> {
 
     @Autowired
-    private CustomerCompDao customerCompDao;
+    private DrugCompDao drugCompDao;
 
     @PostConstruct
     @Override
     public void initDao() {
-        super.commonDao = customerCompDao;
+        super.commonDao = drugCompDao;
     }
 }

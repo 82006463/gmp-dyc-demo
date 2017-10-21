@@ -1,10 +1,8 @@
 package com.zhanlu.custom.cms.web;
 
 import com.zhanlu.custom.cms.entity.CompUser;
-import com.zhanlu.custom.cms.entity.CustomerComp;
-import com.zhanlu.custom.cms.entity.MeasureComp;
 import com.zhanlu.custom.cms.service.CompUserService;
-import com.zhanlu.custom.cms.service.CustomerCompService;
+import com.zhanlu.custom.cms.service.DrugCompService;
 import com.zhanlu.custom.cms.service.MeasureCompService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
@@ -30,7 +28,7 @@ public class CompUserController {
     @Autowired
     private MeasureCompService measureCompService;
     @Autowired
-    private CustomerCompService customerCompService;
+    private DrugCompService drugCompService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<CompUser> page, HttpServletRequest request) {
@@ -51,7 +49,7 @@ public class CompUserController {
         ModelAndView mv = new ModelAndView("cms/compUserEdit");
         mv.addObject("entity", new CompUser());
         mv.addObject("measureComps", measureCompService.findAll());
-        mv.addObject("customerComps", customerCompService.findAll());
+        mv.addObject("drugComps", drugCompService.findAll());
         return mv;
     }
 
@@ -61,7 +59,7 @@ public class CompUserController {
         ModelAndView mv = new ModelAndView("cms/compUserEdit");
         mv.addObject("entity", entity);
         mv.addObject("measureComps", measureCompService.findAll());
-        mv.addObject("customerComps", customerCompService.findAll());
+        mv.addObject("drugComps", drugCompService.findAll());
         return mv;
     }
 

@@ -13,8 +13,8 @@ public class CompUser extends CodeEntity {
 
     private Long measureCompId;
     private MeasureComp measureComp;
-    private Long customerCompId;
-    private CustomerComp customerComp;
+    private Long drugCompId;
+    private DrugComp drugComp;
 
     //岗位
     private String post;
@@ -39,23 +39,23 @@ public class CompUser extends CodeEntity {
         this.measureComp = measureComp;
     }
 
-    @Column(name = "customer_comp_id")
-    public Long getCustomerCompId() {
-        return customerCompId;
+    @Column(name = "drug_comp_id")
+    public Long getDrugCompId() {
+        return drugCompId;
     }
 
-    public void setCustomerCompId(Long customerCompId) {
-        this.customerCompId = customerCompId;
+    public void setDrugCompId(Long drugCompId) {
+        this.drugCompId = drugCompId;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_comp_id", insertable = false, updatable = false)
-    public CustomerComp getCustomerComp() {
-        return customerComp;
+    @JoinColumn(name = "drug_comp_id", insertable = false, updatable = false)
+    public DrugComp getDrugComp() {
+        return drugComp;
     }
 
-    public void setCustomerComp(CustomerComp customerComp) {
-        this.customerComp = customerComp;
+    public void setDrugComp(DrugComp drugComp) {
+        this.drugComp = drugComp;
     }
 
     @Column(name = "post", length = 50)

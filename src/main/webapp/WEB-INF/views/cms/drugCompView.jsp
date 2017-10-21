@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 	<head>
-		<title>客户公司</title>
+		<title>药企</title>
 		<%@ include file="/common/meta.jsp"%>
 		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
 		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
@@ -14,7 +14,7 @@
 		<form id="inputForm" action="" method="post">
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
-					<td class="td_table_top" align="center">客户公司</td>
+					<td class="td_table_top" align="center">药企</td>
 				</tr>
 			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">

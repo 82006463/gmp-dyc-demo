@@ -15,6 +15,8 @@ public class CompNotify extends IdEntity {
 
     //接收人
     private Integer notifyType;
+    //通知标题
+    private String subject;
     //通知内容
     private String content;
 
@@ -27,7 +29,16 @@ public class CompNotify extends IdEntity {
         this.notifyType = notifyType;
     }
 
-    @Column(name = "content", length = 200)
+    @Column(name = "subject", length = 100)
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    @Column(name = "content", length = 500)
     public String getContent() {
         return content;
     }

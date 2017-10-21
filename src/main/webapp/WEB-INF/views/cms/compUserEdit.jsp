@@ -42,12 +42,12 @@
 							</c:forEach>
 						</select>
 					</td>
-					<td class="td_table_1">客户公司<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">药企<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<select id="customerCompId" name="customerCompId" class="input_select validate[required]">
+						<select id="drugCompId" name="drugCompId" class="input_select validate[required]">
 							<option value="">-请选择-</option>
-							<c:forEach items="${customerComps}" var="item">
-								<option value="${item.id}" <c:if test="${entity.customerCompId==item.id}">selected="selected"</c:if>>${item.name}</option>
+							<c:forEach items="${drugComps}" var="item">
+								<option value="${item.id}" <c:if test="${entity.drugCompId==item.id}">selected="selected"</c:if>>${item.name}</option>
 							</c:forEach>
 						</select>
 					</td>

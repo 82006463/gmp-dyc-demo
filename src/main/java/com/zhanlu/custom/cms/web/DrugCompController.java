@@ -1,7 +1,7 @@
 package com.zhanlu.custom.cms.web;
 
-import com.zhanlu.custom.cms.entity.CustomerComp;
-import com.zhanlu.custom.cms.service.CustomerCompService;
+import com.zhanlu.custom.cms.entity.DrugComp;
+import com.zhanlu.custom.cms.service.DrugCompService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,63 +16,63 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 客户公司
+ * 药企
  */
 @Controller
-@RequestMapping(value = "/custom/cms/customerComp")
-public class CustomerCompController {
+@RequestMapping(value = "/custom/cms/drugComp")
+public class DrugCompController {
 
     @Autowired
-    private CustomerCompService customerCompService;
+    private DrugCompService drugCompService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView list(Page<CustomerComp> page, HttpServletRequest request) {
+    public ModelAndView list(Page<DrugComp> page, HttpServletRequest request) {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");
             page.setOrder(Page.ASC);
         }
-        page = customerCompService.findPage(page, filters);
-        ModelAndView mv = new ModelAndView("cms/customerCompList");
+        page = drugCompService.findPage(page, filters);
+        ModelAndView mv = new ModelAndView("cms/drugCompList");
         mv.addObject("page", page);
         return mv;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView create(Model model) {
-        model.addAttribute("entity", new CustomerComp());
-        ModelAndView mv = new ModelAndView("cms/customerCompEdit");
+        model.addAttribute("entity", new DrugComp());
+        ModelAndView mv = new ModelAndView("cms/drugCompEdit");
         return mv;
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("id") Long id) {
-        CustomerComp entity = customerCompService.findById(id);
-        ModelAndView mv = new ModelAndView("cms/customerCompEdit");
+        DrugComp entity = drugCompService.findById(id);
+        ModelAndView mv = new ModelAndView("cms/drugCompEdit");
         mv.addObject("entity", entity);
         return mv;
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("id") Long id) {
-        CustomerComp entity = customerCompService.findById(id);
-        ModelAndView mv = new ModelAndView("cms/customerCompView");
+        DrugComp entity = drugCompService.findById(id);
+        ModelAndView mv = new ModelAndView("cms/drugCompView");
         mv.addObject("entity", entity);
         return mv;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update(CustomerComp entity) {
-        customerCompService.saveOrUpdate(entity);
-        ModelAndView mv = new ModelAndView("redirect:/custom/cms/customerComp");
+    public ModelAndView update(DrugComp entity) {
+        drugCompService.saveOrUpdate(entity);
+        ModelAndView mv = new ModelAndView("redirect:/custom/cms/drugComp");
         return mv;
     }
 
     @RequestMapping(value = "/delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id) {
-        customerCompService.delete(id);
-        ModelAndView mv = new ModelAndView("redirect:/custom/cms/customerComp");
+        drugCompService.delete(id);
+        ModelAndView mv = new ModelAndView("redirect:/custom/cms/drugComp");
         return mv;
     }
 

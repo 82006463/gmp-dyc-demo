@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 	<head>
-		<title>客户公司</title>
+		<title>药企</title>
 		<%@ include file="/common/common-edit.jsp"%>
 		<script type="text/javascript" src="${ctx}/styles/js/ops_base.js"></script>
 		<script type="text/javascript">
@@ -18,18 +18,18 @@
 			<input type="hidden" name="status" id="status" value="${entity.status}"/>
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
-					<td class="td_table_top" align="center">客户公司</td>
+					<td class="td_table_top" align="center">药企</td>
 				</tr>
 			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
 					<td class="td_table_1">编号<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" class="input_240 validate[required,minSize[1],maxSize[50]]" id="code" name="code" value="${entity.code}" />
+						<input type="text" id="code" name="code" value="${entity.code}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
 					</td>
 					<td class="td_table_1">企业名称<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" class="input_520 validate[required,minSize[1],maxSize[100]]" id="name" name="name" value="${entity.name}" />
+						<input type="text" id="name" name="name" value="${entity.name}" class="input_520 validate[required,minSize[1],maxSize[100]]" />
 					</td>
 				</tr>
 				<tr>

@@ -28,7 +28,7 @@
 					<td class="td_table_1">计量公司：</td>
 					<td class="td_table_2">${entity.measureComp.name}</td>
 					<td class="td_table_1">客户公司：</td>
-					<td class="td_table_2">${entity.customerComp.name}</td>
+					<td class="td_table_2">${entity.drugComp.name}</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">岗位：</td>

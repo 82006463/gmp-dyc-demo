@@ -7,11 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * 客户公司
+ * 药企
  */
 @Entity
-@Table(name = "cms_customer_comp")
-public class CustomerComp extends CodeEntity {
+@Table(name = "cms_drug_comp")
+public class DrugComp extends CodeEntity {
 
     //信用代码
     private String creditCode;

@@ -34,9 +34,15 @@
 					</td>
 				</tr>
 				<tr>
+					<td class="td_table_1">通知标题<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="subject" name="subject" value="${entity.subject}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					</td>
+				</tr>
+				<tr>
 					<td class="td_table_1">通知内容<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<textarea class="input_textarea_600 validate[maxSize[150]]" id="content" name="content">${entity.content}</textarea>
+						<textarea id="content" name="content" class="input_textarea_600 validate[required,minSize[1],maxSize[490]]">${entity.content}</textarea>
 					</td>
 				</tr>
 			</table>
