@@ -109,7 +109,7 @@
 
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice" pointcut="execution(* org.snaker.engine.core..*.*(..))
-		or execution(* com.zhanlu.app.modules.service..*.*(..))
+		or execution(* com.zhanlu.custom.cms.service..*.*(..))
 		or execution(* com.zhanlu.framework.*.service..*.*(..))"/>
 	</aop:config>
 
