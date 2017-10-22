@@ -15,10 +15,12 @@ public class DrugComp extends CodeEntity {
 
     //信用代码
     private String creditCode;
-    //网址
-    private String url;
+    //企业简称
+    private String enterpriseShort;
     //地址
     private String addr;
+    //网址
+    private String url;
 
     @Column(name = "credit_code", length = 50)
     public String getCreditCode() {
@@ -27,6 +29,15 @@ public class DrugComp extends CodeEntity {
 
     public void setCreditCode(String creditCode) {
         this.creditCode = creditCode;
+    }
+
+    @Column(name = "enterprise_short", length = 50)
+    public String getEnterpriseShort() {
+        return enterpriseShort;
+    }
+
+    public void setEnterpriseShort(String enterpriseShort) {
+        this.enterpriseShort = enterpriseShort;
     }
 
     @Column(name = "url", length = 50)

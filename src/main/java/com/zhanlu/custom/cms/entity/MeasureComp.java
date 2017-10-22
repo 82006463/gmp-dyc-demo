@@ -17,18 +17,18 @@ public class MeasureComp extends CodeEntity {
 
     //信用代码
     private String creditCode;
-    //网址
-    private String url;
-    //地址
-    private String addr;
-    //审计报告
-    private String auditReport;
-    //建标数量
-    private Integer buildCount;
     //企业简称
     private String enterpriseShort;
+    //地址
+    private String addr;
+    //网址
+    private String url;
     //认可有效期
     private Date expireDate;
+    //建标数量
+    private Integer buildCount;
+    //审计报告
+    private String auditReport;
 
     @Column(name = "credit_code", length = 50)
     public String getCreditCode() {

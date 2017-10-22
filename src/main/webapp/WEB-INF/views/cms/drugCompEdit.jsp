@@ -13,7 +13,7 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx}/custom/cms/customerComp/update" method="post">
+		<form id="inputForm" action="${ctx}/custom/cms/drugComp/update" method="post">
 			<input type="hidden" name="id" id="id" value="${entity.id}"/>
 			<input type="hidden" name="status" id="status" value="${entity.status}"/>
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
@@ -37,15 +37,19 @@
 					<td class="td_table_2">
 						<input type="text" id="creditCode" name="creditCode" value="${entity.creditCode}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
 					</td>
-					<td class="td_table_1">网址<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">企业简称<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="url" name="url" value="${entity.url}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+						<input type="text" id="enterpriseShort" name="enterpriseShort" value="${entity.enterpriseShort}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">地址<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2" colspan="3">
 						<input type="text" id="addr" name="addr" value="${entity.addr}" class="input_240 validate[required,minSize[1],maxSize[100]]" />
+					</td>
+					<td class="td_table_1">网址<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="url" name="url" value="${entity.url}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
 					</td>
 				</tr>
 			</table>

@@ -19,7 +19,7 @@
 			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="td_table_1">编号：</td>
+					<td class="td_table_1">企业编号：</td>
 					<td class="td_table_2">${entity.code}</td>
 					<td class="td_table_1">企业名称：</td>
 					<td class="td_table_2">${entity.name}</td>
@@ -27,24 +27,24 @@
 				<tr>
 					<td class="td_table_1">信用代码：</td>
 					<td class="td_table_2">${entity.creditCode}</td>
-					<td class="td_table_1">网址：</td>
-					<td class="td_table_2">${entity.url}</td>
-				</tr>
-				<tr>
-					<td class="td_table_1">地址：</td>
-					<td class="td_table_2">${entity.addr}</td>
-					<td class="td_table_1">审计报告：</td>
-					<td class="td_table_2">${entity.auditReport}</td>
-				</tr>
-				<tr>
-					<td class="td_table_1">建标数量：</td>
-					<td class="td_table_2">${entity.buildCount}</td>
 					<td class="td_table_1">企业简称：</td>
 					<td class="td_table_2">${entity.enterpriseShort}</td>
 				</tr>
 				<tr>
+					<td class="td_table_1">地址：</td>
+					<td class="td_table_2">${entity.addr}</td>
+					<td class="td_table_1">网址：</td>
+					<td class="td_table_2">${entity.url}</td>
+				</tr>
+				<tr>
 					<td class="td_table_1">认可有效期：</td>
-					<td class="td_table_2" colspan="3"><fmt:formatDate value="${entity.expireDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_table_2"><fmt:formatDate value="${entity.expireDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_table_1">建标数量：</td>
+					<td class="td_table_2">${entity.buildCount}</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">审计报告：</td>
+					<td class="td_table_2" colspan="3">${entity.auditReport}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">

@@ -23,7 +23,7 @@
 			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
-					<td class="td_table_1">编号<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">企业编号<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
 						<input type="text" class="input_240 validate[required,minSize[1],maxSize[50]]" id="code" name="code" value="${entity.code}" />
 					</td>
@@ -37,9 +37,9 @@
 					<td class="td_table_2">
 						<input type="text" id="creditCode" name="creditCode" value="${entity.creditCode}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
 					</td>
-					<td class="td_table_1">网址<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">企业简称<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="url" name="url" value="${entity.url}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+						<input type="text" id="enterpriseShort" name="enterpriseShort" value="${entity.enterpriseShort}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
 					</td>
 				</tr>
 				<tr>
@@ -47,25 +47,25 @@
 					<td class="td_table_2">
 						<input type="text" id="addr" name="addr" value="${entity.addr}" class="input_240 validate[required,minSize[1],maxSize[100]]" />
 					</td>
-					<td class="td_table_1">审计报告<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">网址<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="auditReport" name="auditReport" value="${entity.auditReport}" class="input_240 validate[required,minSize[1],maxSize[200]]" />
-					</td>
-				</tr>
-				<tr>
-					<td class="td_table_1">建标数量<b class="requiredWarn">*</b>：</td>
-					<td class="td_table_2">
-						<input type="text" id="buildCount" name="buildCount" value="${entity.buildCount}" class="input_240 validate[required,custom[number],min[1],max[4]]" />
-					</td>
-					<td class="td_table_1">企业简称<b class="requiredWarn">*</b>：</td>
-					<td class="td_table_2">
-						<input type="text" id="enterpriseShort" name="enterpriseShort" value="${entity.enterpriseShort}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+						<input type="text" id="url" name="url" value="${entity.url}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">认可有效期<b class="requiredWarn">*</b>：</td>
-					<td class="td_table_2" colspan="3">
+					<td class="td_table_2">
 						<input type="text" id="expireDate" name="expireDate" value="<fmt:formatDate value="${entity.expireDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>
+					</td>
+					<td class="td_table_1">建标数量<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="buildCount" name="buildCount" value="${entity.buildCount}" class="input_240 validate[required,custom[number],min[1],max[4]]" />
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">审计报告<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2" colspan="3">
+						<input type="text" id="auditReport" name="auditReport" value="${entity.auditReport}" class="input_240 validate[required,minSize[1],maxSize[200]]" />
 					</td>
 				</tr>
 			</table>

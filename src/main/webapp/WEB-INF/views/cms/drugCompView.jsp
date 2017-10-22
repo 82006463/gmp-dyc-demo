@@ -27,12 +27,14 @@
 				<tr>
 					<td class="td_table_1">信用代码：</td>
 					<td class="td_table_2">${entity.creditCode}</td>
-					<td class="td_table_1">网址：</td>
-					<td class="td_table_2">${entity.url}</td>
+					<td class="td_table_1">企业简称：</td>
+					<td class="td_table_2">${entity.enterpriseShort}</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">地址：</td>
-					<td class="td_table_2" colspan="3">${entity.addr}</td>
+					<td class="td_table_2">${entity.addr}</td>
+					<td class="td_table_1">网址：</td>
+					<td class="td_table_2">${entity.url}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
