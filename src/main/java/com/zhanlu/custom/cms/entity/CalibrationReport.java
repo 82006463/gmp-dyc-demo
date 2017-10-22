@@ -7,11 +7,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * 月度临校
+ * 校准报告
  */
 @Entity
-@Table(name = "cms_calibration_tmp")
-public class CalibrationTmp extends IdEntity {
+@Table(name = "cms_calibration_report")
+public class CalibrationReport extends IdEntity {
 
     //器具
     private Long equipmentId;
@@ -94,5 +94,4 @@ public class CalibrationTmp extends IdEntity {
     public void setCalibrationResult(String calibrationResult) {
         this.calibrationResult = calibrationResult;
     }
-
 }

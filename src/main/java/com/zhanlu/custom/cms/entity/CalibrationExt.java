@@ -16,10 +16,14 @@ public class CalibrationExt extends IdEntity {
     //器具
     private Long equipmentId;
     private Equipment equipment;
+    //上次待校准时间
+    private Date lastExpectDate;
+    //上次实际校准时间
+    private Date lastActualDate;
     //待校准时间
-    private Date expectCalibrationDate;
+    private Date expectDate;
     //实际校准时间
-    private Date actualCalibrationDate;
+    private Date actualDate;
     //校准结果
     private String calibrationResult;
 
@@ -43,23 +47,43 @@ public class CalibrationExt extends IdEntity {
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "expect_calibration_date")
-    public Date getExpectCalibrationDate() {
-        return expectCalibrationDate;
+    @Column(name = "last_expect_calibration_date")
+    public Date getLastExpectDate() {
+        return lastExpectDate;
     }
 
-    public void setExpectCalibrationDate(Date expectCalibrationDate) {
-        this.expectCalibrationDate = expectCalibrationDate;
+    public void setLastExpectDate(Date lastExpectDate) {
+        this.lastExpectDate = lastExpectDate;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "last_actual_calibration_date")
+    public Date getLastActualDate() {
+        return lastActualDate;
+    }
+
+    public void setLastActualDate(Date lastActualDate) {
+        this.lastActualDate = lastActualDate;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "expect_calibration_date")
+    public Date getExpectDate() {
+        return expectDate;
+    }
+
+    public void setExpectDate(Date expectDate) {
+        this.expectDate = expectDate;
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "actual_calibration_date")
-    public Date getActualCalibrationDate() {
-        return actualCalibrationDate;
+    public Date getActualDate() {
+        return actualDate;
     }
 
-    public void setActualCalibrationDate(Date actualCalibrationDate) {
-        this.actualCalibrationDate = actualCalibrationDate;
+    public void setActualDate(Date actualDate) {
+        this.actualDate = actualDate;
     }
 
     @Column(name = "calibration_result", length = 10)

@@ -7,25 +7,25 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * 月度临校
+ * 校准历史
  */
 @Entity
-@Table(name = "cms_calibration_tmp")
-public class CalibrationTmp extends IdEntity {
+@Table(name = "cms_calibration_hist")
+public class CalibrationHist extends IdEntity {
 
     //器具
     private Long equipmentId;
     private Equipment equipment;
-    //上次待校准时间
-    private Date lastExpectDate;
-    //上次实际校准时间
-    private Date lastActualDate;
+    //校准方式：1:内校, 2:外校, 3:临校
+    private Integer calibrationMode;
     //待校准时间
     private Date expectDate;
     //实际校准时间
     private Date actualDate;
     //校准结果
     private String calibrationResult;
+    //校准证书编号
+    private String certCode;
 
     @Column(name = "equipment_id")
     public Long getEquipmentId() {
@@ -46,24 +46,13 @@ public class CalibrationTmp extends IdEntity {
         this.equipment = equipment;
     }
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "last_expect_calibration_date")
-    public Date getLastExpectDate() {
-        return lastExpectDate;
+    @Column(name = "calibration_mode")
+    public Integer getCalibrationMode() {
+        return calibrationMode;
     }
 
-    public void setLastExpectDate(Date lastExpectDate) {
-        this.lastExpectDate = lastExpectDate;
-    }
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "last_actual_calibration_date")
-    public Date getLastActualDate() {
-        return lastActualDate;
-    }
-
-    public void setLastActualDate(Date lastActualDate) {
-        this.lastActualDate = lastActualDate;
+    public void setCalibrationMode(Integer calibrationMode) {
+        this.calibrationMode = calibrationMode;
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -95,4 +84,12 @@ public class CalibrationTmp extends IdEntity {
         this.calibrationResult = calibrationResult;
     }
 
+    @Column(name = "cert_code", length = 50)
+    public String getCertCode() {
+        return certCode;
+    }
+
+    public void setCertCode(String certCode) {
+        this.certCode = certCode;
+    }
 }
