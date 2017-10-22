@@ -73,6 +73,15 @@ public class CompUserController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ModelAndView update(CompUser entity) {
+        if (entity.getCompType() != null) {
+            if (entity.getCompType().intValue() == 2) {
+                entity.setMeasureCompId(null);
+            } else {
+                entity.setDrugCompId(null);
+            }
+        } else {
+            entity.setDrugCompId(null);
+        }
         compUserService.saveOrUpdate(entity);
         ModelAndView mv = new ModelAndView("redirect:/custom/cms/compUser");
         return mv;

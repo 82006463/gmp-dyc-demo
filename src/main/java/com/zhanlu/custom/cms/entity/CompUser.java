@@ -11,6 +11,8 @@ import javax.persistence.*;
 @Table(name = "cms_comp_user")
 public class CompUser extends CodeEntity {
 
+    //公司类型：1:计量公司, 2:药企
+    private Integer compType;
     private Long measureCompId;
     private MeasureComp measureComp;
     private Long drugCompId;
@@ -18,7 +20,17 @@ public class CompUser extends CodeEntity {
 
     //岗位
     private String post;
+    //邮箱
     private String email;
+
+    @Column(name = "comp_type")
+    public Integer getCompType() {
+        return compType;
+    }
+
+    public void setCompType(Integer compType) {
+        this.compType = compType;
+    }
 
     @Column(name = "measure_comp_id")
     public Long getMeasureCompId() {

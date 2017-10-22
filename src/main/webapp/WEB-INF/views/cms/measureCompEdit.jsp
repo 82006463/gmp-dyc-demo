@@ -6,9 +6,23 @@
 	<head>
 		<title>计量公司</title>
 		<%@ include file="/common/common-edit.jsp"%>
-		<script type="text/javascript" src="${ctx}/styles/js/ops_base.js"></script>
 		<script type="text/javascript">
+			var iframewbox;
+			function standardItemList() {
+				iframewbox = $("#editStandardItem").wBox({
+					requestType: "iframe",
+					iframeWH:{width:1200,height:600},
+					show: true,
+					title:"编辑标准项",
+					target:"${ctx}/custom/cms/measureComp/standardItem?measureCompId=${entity.id}"
+				});
+			}
 
+			function callbackProcess(id, name) {
+				if(iframewbox) {
+					iframewbox.close();
+				}
+			}
 		</script>
 	</head>
 
@@ -75,10 +89,16 @@
 						<shiro:hasPermission name="cms_measureComp_edit">
 							<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
 						</shiro:hasPermission>
+						<c:if test="${!empty entity.id}">
+							<shiro:hasPermission name="cms_measureComp_edit">
+								<input type="button" class="button_70px" id="editStandardItem" value="编辑标准项" onclick="standardItemList();">&nbsp;&nbsp;
+							</shiro:hasPermission>
+						</c:if>
 						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>
 			</table>
 		</form>
 	</body>
+
 </html>
