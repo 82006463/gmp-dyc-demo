@@ -38,7 +38,7 @@
 			<tr>
 				<td align="left">
 					<c:if test="${empty lookup}">
-						<shiro:hasPermission name="sec_auth_edit">
+						<shiro:hasPermission name="cms_compUser_edit">
 							<input type='button' onclick="addNew('${ctx}/custom/cms/compUser/create')" class='button_70px' value='新建'/>
 						</shiro:hasPermission>
 					</c:if>
@@ -64,8 +64,12 @@
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<c:if test="${item.status==1}">
-								<a href="${ctx}/custom/cms/compUser/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-								<a href="${ctx}/custom/cms/compUser/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
+								<shiro:hasPermission name="cms_compUser_delete">
+									<a href="${ctx}/custom/cms/compUser/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+								</shiro:hasPermission>
+								<shiro:hasPermission name="cms_compUser_edit">
+									<a href="${ctx}/custom/cms/compUser/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
+								</shiro:hasPermission>
 							</c:if>
 							<a href="${ctx}/custom/cms/compUser/view/${item.id}" class="btnView" title="查看">查看</a>
 						</c:if>
