@@ -36,7 +36,7 @@ public class Equipment extends IdEntity {
     private Integer calibrationMode;
     //校准周期：单位月
     private Integer calibrationCycle;
-    //测量范围
+    //测量范围上限、测量范围下限
     private Integer measureRangeMin;
     private Integer measureRangeMax;
     //上次校准时间
@@ -89,7 +89,7 @@ public class Equipment extends IdEntity {
         this.func = func;
     }
 
-    @Column(name = "precision", length = 20)
+    @Column(name = "precision_", length = 20)
     public String getPrecision() {
         return precision;
     }
