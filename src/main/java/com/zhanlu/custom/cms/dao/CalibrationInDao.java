@@ -5,7 +5,7 @@ import com.zhanlu.framework.common.dao.CommonDao;
 import org.springframework.stereotype.Repository;
 
 /**
- * 通知
+ * 月度内校
  */
 @Repository
 public class CalibrationInDao extends CommonDao<CalibrationIn, Long> {

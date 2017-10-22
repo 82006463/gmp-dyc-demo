@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 
 /**
- * 通知
+ * 校准历史
  */
 @Service
 public class CalibrationHistService extends CommonService<CalibrationHist, Long> {

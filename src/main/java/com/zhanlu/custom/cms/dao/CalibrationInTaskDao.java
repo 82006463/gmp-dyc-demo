@@ -5,7 +5,7 @@ import com.zhanlu.framework.common.dao.CommonDao;
 import org.springframework.stereotype.Repository;
 
 /**
- * 通知
+ * 月度内校任务
  */
 @Repository
 public class CalibrationInTaskDao extends CommonDao<CalibrationInTask, Long> {

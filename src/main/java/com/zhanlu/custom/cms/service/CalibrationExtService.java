@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 
 /**
- * 通知
+ * 月度外校
  */
 @Service
 public class CalibrationExtService extends CommonService<CalibrationExt, Long> {
