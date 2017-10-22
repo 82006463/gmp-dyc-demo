@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 	<head>
-		<title>计量公司</title>
+		<title>器具</title>
 		<%@ include file="/common/common-edit.jsp"%>
 		<script type="text/javascript" src="${ctx}/styles/js/ops_base.js"></script>
 		<script type="text/javascript">
@@ -18,54 +18,88 @@
 			<input type="hidden" name="status" id="status" value="${entity.status}"/>
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
-					<td class="td_table_top" align="center">计量公司</td>
+					<td class="td_table_top" align="center">器具</td>
 				</tr>
 			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
-					<td class="td_table_1">编号<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">器具编号<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
 						<input type="text" class="input_240 validate[required,minSize[1],maxSize[50]]" id="code" name="code" value="${entity.code}" />
 					</td>
-					<td class="td_table_1">企业名称<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">器具名称<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
 						<input type="text" class="input_520 validate[required,minSize[1],maxSize[100]]" id="name" name="name" value="${entity.name}" />
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">信用代码<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">型号<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="creditCode" name="creditCode" value="${entity.creditCode}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+						<input type="text" id="model" name="model" value="${entity.model}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
 					</td>
-					<td class="td_table_1">网址<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">出厂编号<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="url" name="url" value="${entity.url}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
-					</td>
-				</tr>
-				<tr>
-					<td class="td_table_1">地址<b class="requiredWarn">*</b>：</td>
-					<td class="td_table_2">
-						<input type="text" id="addr" name="addr" value="${entity.addr}" class="input_240 validate[required,minSize[1],maxSize[100]]" />
-					</td>
-					<td class="td_table_1">审计报告<b class="requiredWarn">*</b>：</td>
-					<td class="td_table_2">
-						<input type="text" id="auditReport" name="auditReport" value="${entity.auditReport}" class="input_240 validate[required,minSize[1],maxSize[200]]" />
+						<input type="text" id="factoryCode" name="factoryCode" value="${entity.factoryCode}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">建标数量<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">所在房间<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="buildCount" name="buildCount" value="${entity.buildCount}" class="input_240 validate[required,custom[number],min[1],max[4]]" />
+						<input type="text" id="room" name="room" value="${entity.room}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
 					</td>
-					<td class="td_table_1">企业简称<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">所属设备<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="enterpriseShort" name="enterpriseShort" value="${entity.enterpriseShort}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+						<input type="text" id="equipment" name="equipment" value="${entity.equipment}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">认可有效期<b class="requiredWarn">*</b>：</td>
-					<td class="td_table_2" colspan="3">
-						<input type="text" id="expireDate" name="expireDate" value="<fmt:formatDate value="${entity.expireDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>
+					<td class="td_table_1">功能<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="func" name="func" value="${entity.func}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					</td>
+					<td class="td_table_1">精度<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="precision" name="precision" value="${entity.precision}" class="input_240 validate[required,minSize[1],maxSize[20]]" />
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">校准<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="calibration" name="calibration" value="${entity.calibration}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					</td>
+					<td class="td_table_1">校准名称<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="calibrationName" name="calibrationName" value="${entity.calibrationName}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">校准方式<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="calibrationMode" name="calibrationMode" value="${entity.calibrationMode}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					</td>
+					<td class="td_table_1">校准周期<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="calibrationCycle" name="calibrationCycle" value="${entity.calibrationCycle}" class="input_240 validate[required,custom[number]]" />
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">测量范围上限<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="measureRangeMin" name="measureRangeMin" value="${entity.measureRangeMin}" class="input_240 validate[required,custom[number]]" />
+					</td>
+					<td class="td_table_1">测量范围下限<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="measureRangeMax" name="measureRangeMax" value="${entity.measureRangeMax}" class="input_240 validate[required,custom[number]]" />
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">上次校准时间<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="lastCalibrationDate" name="lastCalibrationDate" value="${entity.lastCalibrationDate}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					</td>
+					<td class="td_table_1">待校准时间<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="expectCalibrationDate" name="expectCalibrationDate" value="${entity.expectCalibrationDate}" class="input_240 validate[required,minSize[1],maxSize[20]]" />
 					</td>
 				</tr>
 			</table>

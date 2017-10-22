@@ -15,6 +15,10 @@ import java.util.Date;
 @Table(name = "cms_equipment")
 public class Equipment extends IdEntity {
 
+    //器具编号
+    private String code;
+    //器具名称
+    private String name;
     //型号
     private String model;
     //出厂编号
@@ -43,6 +47,24 @@ public class Equipment extends IdEntity {
     private Date lastCalibrationDate;
     //待校准时间
     private Date expectCalibrationDate;
+
+    @Column(name = "code", length = 50)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @Column(name = "name", length = 100)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Column(name = "model", length = 50)
     public String getModel() {

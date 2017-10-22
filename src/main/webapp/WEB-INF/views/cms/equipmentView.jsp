@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 	<head>
-		<title>计量公司</title>
+		<title>器具</title>
 		<%@ include file="/common/meta.jsp"%>
 		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
 		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
@@ -14,37 +14,58 @@
 		<form id="inputForm" action="" method="post">
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
-					<td class="td_table_top" align="center">计量公司</td>
+					<td class="td_table_top" align="center">器具</td>
 				</tr>
 			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="td_table_1">编号：</td>
+					<td class="td_table_1">器具编号：</td>
 					<td class="td_table_2">${entity.code}</td>
-					<td class="td_table_1">企业名称：</td>
+					<td class="td_table_1">器具名称：</td>
 					<td class="td_table_2">${entity.name}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">信用代码：</td>
-					<td class="td_table_2">${entity.creditCode}</td>
-					<td class="td_table_1">网址：</td>
-					<td class="td_table_2">${entity.url}</td>
+					<td class="td_table_1">型号：</td>
+					<td class="td_table_2">${entity.model}</td>
+					<td class="td_table_1">出厂编号：</td>
+					<td class="td_table_2">${entity.factoryCode}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">地址：</td>
-					<td class="td_table_2">${entity.addr}</td>
-					<td class="td_table_1">审计报告：</td>
-					<td class="td_table_2">${entity.auditReport}</td>
+					<td class="td_table_1">所在房间：</td>
+					<td class="td_table_2">${entity.room}</td>
+					<td class="td_table_1">所属设备：</td>
+					<td class="td_table_2">${entity.equipment}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">建标数量：</td>
-					<td class="td_table_2">${entity.buildCount}</td>
-					<td class="td_table_1">企业简称：</td>
-					<td class="td_table_2">${entity.enterpriseShort}</td>
+					<td class="td_table_1">功能：</td>
+					<td class="td_table_2">${entity.func}</td>
+					<td class="td_table_1">精度：</td>
+					<td class="td_table_2">${entity.precision}</td>
+				</tr>
+
+				<tr>
+					<td class="td_table_1">校准：</td>
+					<td class="td_table_2">${entity.calibration}</td>
+					<td class="td_table_1">校准名称：</td>
+					<td class="td_table_2">${entity.calibrationName}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">认可有效期：</td>
-					<td class="td_table_2" colspan="3"><fmt:formatDate value="${entity.expireDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_table_1">校准方式：</td>
+					<td class="td_table_2">${entity.calibrationMode}</td>
+					<td class="td_table_1">校准周期：</td>
+					<td class="td_table_2">${entity.calibrationCycle}</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">测量范围上限：</td>
+					<td class="td_table_2">${entity.measureRangeMin}</td>
+					<td class="td_table_1">测量范围下限：</td>
+					<td class="td_table_2">${entity.measureRangeMax}</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">上次校准时间：</td>
+					<td class="td_table_2">${entity.lastCalibrationDate}</td>
+					<td class="td_table_1">待校准时间：</td>
+					<td class="td_table_2">${entity.expectCalibrationDate}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
