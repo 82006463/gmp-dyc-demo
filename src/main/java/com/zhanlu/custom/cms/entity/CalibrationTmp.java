@@ -13,6 +13,8 @@ import java.util.Date;
 @Table(name = "cms_calibration_tmp")
 public class CalibrationTmp extends IdEntity {
 
+    //租户ID
+    private Long tenantId;
     //器具
     private Long equipmentId;
     private Equipment equipment;
@@ -26,6 +28,15 @@ public class CalibrationTmp extends IdEntity {
     private Date actualDate;
     //校准结果
     private String calibrationResult;
+
+    @Column(name = "tenant_id")
+    public Long getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Long tenantId) {
+        this.tenantId = tenantId;
+    }
 
     @Column(name = "equipment_id")
     public Long getEquipmentId() {

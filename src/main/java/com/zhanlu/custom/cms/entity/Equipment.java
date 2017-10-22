@@ -15,6 +15,8 @@ import java.util.Date;
 @Table(name = "cms_equipment")
 public class Equipment extends IdEntity {
 
+    //租户ID
+    private Long tenantId;
     //器具编号
     private String code;
     //器具名称
@@ -47,6 +49,15 @@ public class Equipment extends IdEntity {
     private Date lastCalibrationDate;
     //待校准时间
     private Date expectCalibrationDate;
+
+    @Column(name = "tenant_id")
+    public Long getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Long tenantId) {
+        this.tenantId = tenantId;
+    }
 
     @Column(name = "code", length = 50)
     public String getCode() {
