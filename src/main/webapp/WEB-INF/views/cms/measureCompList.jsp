@@ -51,8 +51,10 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=15% class="td_list_1">企业编号</td>
-				<td align=center width=20% class="td_list_1">企业名称</td>
+				<td align=center width=20% class="td_list_1">企业编号</td>
+				<td align=center width=25% class="td_list_1">企业名称</td>
+				<td align=center width=20% class="td_list_1">信用代码</td>
+				<td align=center width=20% class="td_list_1">企业简称</td>
 				<td align=center width=5% class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
@@ -60,6 +62,8 @@
 				<tr>
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.name}</td>
+					<td class="td_list_2" align=left>${item.creditCode}</td>
+					<td class="td_list_2" align=left>${item.enterpriseShort}</td>
 					<td class="td_list_2" align=left>${item.status==0 ? '删除':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
