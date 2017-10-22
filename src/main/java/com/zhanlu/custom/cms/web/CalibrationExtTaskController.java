@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 通知
+ * 月度外校任务
  */
 @Controller
 @RequestMapping(value = "/custom/cms/calibrationExtTask")

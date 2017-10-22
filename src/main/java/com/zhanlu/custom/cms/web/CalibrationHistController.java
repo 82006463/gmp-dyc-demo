@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 通知
+ * 校准历史
  */
 @Controller
 @RequestMapping(value = "/custom/cms/calibrationHist")
