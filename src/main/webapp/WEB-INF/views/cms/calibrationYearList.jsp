@@ -12,14 +12,14 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/custom/cms/calibrationExt" method="get">
+	<form id="mainForm" action="${ctx}/custom/cms/calibrationYear" method="get">
 		<input type="hidden" name="lookup" value="${lookup}" />
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="order" id="order" value="${page.order}"/>
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">月度外校</td>
+				<td class="td_table_top" align="center">年度校准</td>
 			</tr>
 			<tr>
 				<td align="center">

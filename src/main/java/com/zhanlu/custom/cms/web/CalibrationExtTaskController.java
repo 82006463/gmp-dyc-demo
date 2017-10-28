@@ -35,8 +35,8 @@ public class CalibrationExtTaskController {
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
-            page.setOrderBy("id");
-            page.setOrder(Page.ASC);
+            page.setOrderBy("createTime");
+            page.setOrder(Page.DESC);
         }
         page = calibrationExtTaskService.findPage(page, filters);
         ModelAndView mv = new ModelAndView("cms/calibrationExtTaskList");
