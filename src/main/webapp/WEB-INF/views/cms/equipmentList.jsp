@@ -52,7 +52,11 @@
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align=center width=15% class="td_list_1">器具编号</td>
-				<td align=center width=20% class="td_list_1">器具名称</td>
+				<td align=center width=25% class="td_list_1">器具名称</td>
+				<td align=center width=15% class="td_list_1">测量范围上限-下限</td>
+				<td align=center width=5% class="td_list_1">校准方式</td>
+				<td align=center width=10% class="td_list_1">上次校准时间</td>
+				<td align=center width=10% class="td_list_1">待校准时间</td>
 				<td align=center width=5% class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
@@ -60,7 +64,11 @@
 				<tr>
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.name}</td>
-					<td class="td_list_2" align=left>${item.status==0 ? '删除':item.status == 1 ? '复核中':'正常'}</td>
+					<td class="td_list_2" align=left>【${item.measureRangeMin}】至【${item.measureRangeMax}】</td>
+					<td class="td_list_2" align=left>${item.calibrationMode == 1 ? '内校':item.calibrationMode == 2 ? '外校':''}</td>
+					<td class="td_list_2" align=left><fmt:formatDate value="${item.lastCalibrationDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectCalibrationDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left>${item.status == 0 ? '删除':item.status == 1 ? '复核中':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<c:if test="${item.status > 0}">

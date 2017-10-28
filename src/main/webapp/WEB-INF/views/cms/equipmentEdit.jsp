@@ -92,7 +92,8 @@
 				<tr>
 					<td class="td_table_1">校准方式<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="calibrationMode" name="calibrationMode" value="${entity.calibrationMode}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+						<input type="radio" id="calibrationMode1" name="calibrationMode" value="1" class="validate[required]" ${entity.calibrationMode==1 ? 'checked="checked"':''}/>&nbsp;内校
+						<input type="radio" id="calibrationMode2" name="calibrationMode" value="2" class="validate[required]" ${entity.calibrationMode==2 ? 'checked="checked"':''}/>&nbsp;外校
 					</td>
 					<td class="td_table_1">校准周期<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
