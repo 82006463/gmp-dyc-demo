@@ -55,7 +55,7 @@
 					<td class="td_list_2" align=left>${item.status==0 ? '删除':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
-							<c:if test="${item.status==1}">
+							<c:if test="${item.status > 0}">
 								<a href="${ctx}/custom/cms/compNotify/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 								<a href="${ctx}/custom/cms/compNotify/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
 							</c:if>

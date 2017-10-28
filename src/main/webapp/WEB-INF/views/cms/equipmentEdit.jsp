@@ -17,6 +17,7 @@
 			<input type="hidden" name="id" id="id" value="${entity.id}"/>
 			<input type="hidden" name="status" id="status" value="${entity.status}"/>
 
+			<input type="hidden" id="op" name="op" value="${op}"/>
 			<input type="hidden" id="tenantId" name="tenantId" value="${entity.tenantId}"/>
 			<input type="hidden" id="createrId" name="createrId" value="${entity.createrId}"/>
 			<input type="hidden" id="createTime" name="createTime" value="<fmt:formatDate value="${entity.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
@@ -112,9 +113,16 @@
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
-						<shiro:hasPermission name="cms_equipment_edit">
-							<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
-						</shiro:hasPermission>
+						<c:if test="${entity.status > 0}">
+							<shiro:hasPermission name="cms_equipment_edit">
+								<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
+							</shiro:hasPermission>
+						</c:if>
+						<c:if test="${entity.status == 1}">
+							<shiro:hasPermission name="cms_equipment_review">
+								<input type="submit" class="button_70px" name="submit" value="复核" onclick="$('#status').val(2); return Ops.submit();">&nbsp;&nbsp;
+							</shiro:hasPermission>
+						</c:if>
 						<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
 					</td>
 				</tr>

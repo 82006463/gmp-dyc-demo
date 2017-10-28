@@ -60,16 +60,21 @@
 				<tr>
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.name}</td>
-					<td class="td_list_2" align=left>${item.status==0 ? '删除':'正常'}</td>
+					<td class="td_list_2" align=left>${item.status==0 ? '删除':item.status == 1 ? '复核中':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
-							<c:if test="${item.status==1}">
+							<c:if test="${item.status > 0}">
 								<shiro:hasPermission name="cms_equipment_delete">
 									<a href="${ctx}/custom/cms/equipment/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 								</shiro:hasPermission>
 								<shiro:hasPermission name="cms_equipment_edit">
 									<a href="${ctx}/custom/cms/equipment/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
 								</shiro:hasPermission>
+								<c:if test="${item.status == 1}">
+									<shiro:hasPermission name="cms_equipment_review">
+										<a href="${ctx}/custom/cms/equipment/update/${item.id}?op=2" class="btnEdit" title="复核">复核</a>
+									</shiro:hasPermission>
+								</c:if>
 							</c:if>
 							<a href="${ctx}/custom/cms/equipment/view/${item.id}" class="btnView" title="查看">查看</a>
 						</c:if>

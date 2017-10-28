@@ -103,7 +103,7 @@ public class MeasureCompController {
             page.setOrderBy("id");
             page.setOrder(Page.ASC);
         }
-        filters.add(new PropertyFilter("EQI_status", "1"));
+        filters.add(new PropertyFilter("EQI_status", "2"));
         page = standardItemService.findPage(page, filters);
         ModelAndView mv = new ModelAndView("cms/measureCompStandardItemList");
         mv.addObject("page", page);
