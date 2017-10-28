@@ -29,36 +29,21 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
+				<td align=center width=5% class="td_list_1">序号</td>
 				<td align=center width=25% class="td_list_1">器具编号</td>
-				<td align=center width=30% class="td_list_1">器具名称</td>
+				<td align=center width=35% class="td_list_1">器具名称</td>
 				<td align=center width=20% class="td_list_1">所在房间</td>
 				<td align=center width=10% class="td_list_1">待校准日期</td>
 				<td align=center width=5% class="td_list_1">状态</td>
-				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
-			<c:forEach items="${page.result}" var="item">
+			<c:forEach items="${page.result}" var="item" varStatus="index">
 				<tr>
+					<td class="td_list_2" align=left>${index.count}</td>
 					<td class="td_list_2" align=left>${item.equipment.code}</td>
 					<td class="td_list_2" align=left>${item.equipment.name}</td>
 					<td class="td_list_2" align=left>${item.equipment.room}</td>
-					<td class="td_list_2" align=left><fmt:formatDate value="${item.equipment.expectDate}" pattern="yyyy-MM-dd"/></td>
-					<td class="td_list_2" align=left>${item.status==0 ? '删除':'正常'}</td>
-					<td class="td_list_2" align=left>
-						<c:if test="${empty lookup}">
-							<c:if test="${item.status==1}">
-								<shiro:hasPermission name="cms_equipment_delete">
-									<a href="${ctx}/custom/cms/equipment/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
-								</shiro:hasPermission>
-								<shiro:hasPermission name="cms_equipment_edit">
-									<a href="${ctx}/custom/cms/equipment/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
-								</shiro:hasPermission>
-							</c:if>
-							<a href="${ctx}/custom/cms/equipment/view/${item.id}" class="btnView" title="查看">查看</a>
-						</c:if>
-						<c:if test="${!empty lookup}">
-							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>
-						</c:if>
-					</td>
+					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left>${item.status == 0 ? '删除':item.status == 1 ? '待生成任务':item.status == 2 ? '任务执行中':item.status == 3 ? '正常':''}</td>
 				</tr>
 			</c:forEach>
 			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup}"/>

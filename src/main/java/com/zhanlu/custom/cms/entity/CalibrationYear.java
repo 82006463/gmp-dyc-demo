@@ -26,6 +26,8 @@ public class CalibrationYear extends IdEntity {
     private Date expectDate;
     //实际校准时间
     private Date actualDate;
+    //校准方式：1:内校, 2:外校, 3:临校, 4:年校
+    private Integer calibrationMode;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -99,6 +101,15 @@ public class CalibrationYear extends IdEntity {
 
     public void setActualDate(Date actualDate) {
         this.actualDate = actualDate;
+    }
+
+    @Column(name = "calibration_mode")
+    public Integer getCalibrationMode() {
+        return calibrationMode;
+    }
+
+    public void setCalibrationMode(Integer calibrationMode) {
+        this.calibrationMode = calibrationMode;
     }
 
     @Column(name = "creater_id")
