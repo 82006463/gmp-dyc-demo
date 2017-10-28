@@ -13,8 +13,8 @@
 		function editStandardItem(item) {
 			var $item = $(item);
 			var checked = $item.prop('checked');
-			$.getJSON('${ctx}/custom/cms/measureComp/editStandardItem',{standrardItemId:$item.prop('id'), measureCompId:$item.val(), checked:$item.prop('checked')}, function (data) {
-				if(data.result==0) {
+			$.getJSON('${ctx}/custom/cms/measureComp/editStandardItem',{standardItemId:$item.prop('id'), measureCompId:$item.val(), checked:$item.prop('checked')}, function (data) {
+				if(data.result == 0) {
 					alert(data.msg);
 				}
 			});
@@ -67,7 +67,7 @@
 					<td class="td_list_2" align=left>
 						<c:set var="checked" value="false"></c:set>
 						<c:forEach items="${standardItems}" var="standardItem">
-							<c:if test="${item.id == standardItem.measureCompId}"><c:set var="checked" value="true"></c:set></c:if>
+							<c:if test="${item.id == standardItem.standardItemId}"><c:set var="checked" value="true"></c:set></c:if>
 						</c:forEach>
 						<input type="checkbox" id="${item.id}" value="${measureCompId}" ${checked ? 'checked="checked"':''} onclick="editStandardItem(this);">
 					</td>

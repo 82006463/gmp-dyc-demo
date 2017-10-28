@@ -110,7 +110,7 @@ public class MeasureCompController {
         mv.addObject("measureCompId", measureCompIdStr);
         Map<String, Object> params = new HashedMap();
         params.put("measureCompId", Long.parseLong(measureCompIdStr));
-        mv.addObject("standardItems", standardItemService.findList(params));
+        mv.addObject("standardItems", measureCompStandardItemService.findList(params));
         return mv;
     }
 
@@ -119,23 +119,23 @@ public class MeasureCompController {
     public Object editStandardItem(HttpServletRequest req) {
         Map<String, Object> resultMap = new LinkedHashMap<>();
         resultMap.put("result", 1);
-        String standrardItemId = req.getParameter("standrardItemId");
+        String standardItemId = req.getParameter("standardItemId");
         String measureCompId = req.getParameter("measureCompId");
         String checked = req.getParameter("checked");
-        if (StringUtils.isBlank(standrardItemId) || StringUtils.isBlank(measureCompId) || StringUtils.isBlank(checked)) {
+        if (StringUtils.isBlank(standardItemId) || StringUtils.isBlank(measureCompId) || StringUtils.isBlank(checked)) {
             resultMap.put("result", 0);
-            resultMap.put("msg", "standrardItemId OR measureCompId OR checked is null");
+            resultMap.put("msg", "standardItemId OR measureCompId OR checked is null");
             return resultMap;
         }
         Map<String, Object> params = new LinkedHashMap<>();
-        params.put("standrardItemId", Long.parseLong(standrardItemId));
+        params.put("standardItemId", Long.parseLong(standardItemId));
         params.put("measureCompId", Long.parseLong(measureCompId));
         List<MeasureCompStandardItem> items = measureCompStandardItemService.findList(params);
         if (items == null || items.isEmpty()) {
             if (checked.equals("true")) {
                 MeasureCompStandardItem entity = new MeasureCompStandardItem();
                 entity.setStatus(1);
-                entity.setStandrardItemId(Long.parseLong(standrardItemId));
+                entity.setStandardItemId(Long.parseLong(standardItemId));
                 entity.setMeasureCompId(Long.parseLong(measureCompId));
                 measureCompStandardItemService.saveOrUpdate(entity);
             }

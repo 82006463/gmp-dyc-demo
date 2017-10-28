@@ -62,7 +62,7 @@ public abstract class CommonService<T extends IdEntity, PK extends Serializable>
 
     @Transactional
     public boolean delete(T entity) {
-        this.delete(entity);
+        commonDao.delete(entity);
         return true;
     }
 

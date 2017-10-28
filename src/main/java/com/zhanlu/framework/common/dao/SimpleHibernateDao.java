@@ -26,13 +26,12 @@ import java.util.Map;
 
 /**
  * 封装Hibernate原生API的DAO泛型基类.
- *
+ * <p>
  * 可在Service层直接使用, 也可以扩展泛型DAO子类使用, 见两个构造函数的注释.
  * 参考Spring2.5自带的Petlinc例子, 取消了HibernateTemplate, 直接使用Hibernate原生API.
  *
- * @param <T> DAO操作的对象类型
+ * @param <T>  DAO操作的对象类型
  * @param <PK> 主键类型
- *
  * @author calvin
  */
 @SuppressWarnings("unchecked")
@@ -143,14 +142,14 @@ public class SimpleHibernateDao<T, PK extends Serializable> {
     }
 
     /**
-     *	获取全部对象.
+     * 获取全部对象.
      */
     public List<T> getAll() {
         return find();
     }
 
     /**
-     *	获取全部对象, 支持按属性行序.
+     * 获取全部对象, 支持按属性行序.
      */
     public List<T> getAll(String orderByProperty, boolean isAsc) {
         Criteria c = createCriteria();
@@ -274,7 +273,13 @@ public class SimpleHibernateDao<T, PK extends Serializable> {
         Assert.hasText(queryString, "queryString不能为空");
         Query query = getSession().createQuery(queryString);
         if (values != null) {
-            query.setProperties(values);
+            if (queryString.contains("=:")) {
+                for (Map.Entry<String, ?> entry : values.entrySet()) {
+                    query.setParameter(entry.getKey(), entry.getValue());
+                }
+            } else {
+                query.setProperties(values);
+            }
         }
         return query;
     }
@@ -358,7 +363,7 @@ public class SimpleHibernateDao<T, PK extends Serializable> {
 
     /**
      * 判断对象的属性值在数据库内是否唯一.
-     *
+     * <p>
      * 在修改对象的情景下,如果属性新修改的值(value)等于属性原来的值(orgValue)则不作比较.
      */
     public boolean isPropertyUnique(final String propertyName, final Object newValue, final Object oldValue) {

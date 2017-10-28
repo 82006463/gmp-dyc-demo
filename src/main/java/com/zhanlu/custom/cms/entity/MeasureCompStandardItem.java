@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class MeasureCompStandardItem extends IdEntity {
 
     private Long measureCompId;
-    private Long standrardItemId;
+    private Long standardItemId;
 
     @Column(name = "measure_comp_id")
     public Long getMeasureCompId() {
@@ -25,12 +25,12 @@ public class MeasureCompStandardItem extends IdEntity {
         this.measureCompId = measureCompId;
     }
 
-    @Column(name = "standrard_item_id")
-    public Long getStandrardItemId() {
-        return standrardItemId;
+    @Column(name = "standard_item_id")
+    public Long getStandardItemId() {
+        return standardItemId;
     }
 
-    public void setStandrardItemId(Long standrardItemId) {
-        this.standrardItemId = standrardItemId;
+    public void setStandardItemId(Long standardItemId) {
+        this.standardItemId = standardItemId;
     }
 }
