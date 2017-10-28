@@ -31,7 +31,6 @@
 			<input type="hidden" name="id" id="id" value="${entity.id}"/>
 			<input type="hidden" name="status" id="status" value="${entity.status}"/>
 
-			<input type="hidden" id="tenantId" name="tenantId" value="${entity.tenantId}"/>
 			<input type="hidden" id="createrId" name="createrId" value="${entity.createrId}"/>
 			<input type="hidden" id="createTime" name="createTime" value="<fmt:formatDate value="${entity.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
 			<input type="hidden" id="updaterId" name="updaterId" value="${entity.updaterId}"/>

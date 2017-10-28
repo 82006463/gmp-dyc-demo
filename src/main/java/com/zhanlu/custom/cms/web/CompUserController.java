@@ -39,7 +39,6 @@ public class CompUserController {
     public ModelAndView list(Page<CompUser> page, HttpServletRequest request) {
         User user = cmsService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
-        filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");

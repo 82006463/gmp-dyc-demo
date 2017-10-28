@@ -3,15 +3,26 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-	<head>
-		<title>标准项</title>
-		<%@ include file="/common/meta.jsp"%>
-		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
-		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
-	</head>
+<head>
+	<title>标准项</title>
+	<%@ include file="/common/meta.jsp"%>
+	<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
+	<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+	<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		function editStandardItem(item) {
+			var $item = $(item);
+			var checked = $item.prop('checked');
+			$.getJSON('${ctx}/custom/cms/measureComp/editStandardItem',{standrardItemId:$item.prop('id'), measureCompId:$item.val(), checked:$item.prop('checked')}, function (data) {
+				if(data.result==0) {
+					alert(data.msg);
+				}
+			});
+		}
+	</script>
+</head>
 
-	<body>
+<body>
 	<form id="mainForm" action="${ctx}/custom/cms/measureComp/standardItem" method="get">
 		<input type="hidden" name="lookup" value="${lookup}" />
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
@@ -39,7 +50,6 @@
 			<tr>
 				<td align="left">
 					<input type='submit' class='button_70px' value='查询'/>
-					<input type='button' onclick="addNew('${ctx}/custom/cms/measureComp/add')" class='button_70px' value='添加'/>
 				</td>
 			</tr>
 		</table>
@@ -57,9 +67,9 @@
 					<td class="td_list_2" align=left>
 						<c:set var="checked" value="false"></c:set>
 						<c:forEach items="${standardItems}" var="standardItem">
-							<c:if test="${item.id==standardItem.measureCompId}"><c:set var="checked" value="true"></c:set></c:if>
+							<c:if test="${item.id == standardItem.measureCompId}"><c:set var="checked" value="true"></c:set></c:if>
 						</c:forEach>
-						<input type="checkbox" id="standardItemIds" name="standardItemIds" value="${item.id}" ${checked ? 'checked="checked"':''}>
+						<input type="checkbox" id="${item.id}" value="${measureCompId}" ${checked ? 'checked="checked"':''} onclick="editStandardItem(this);">
 					</td>
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.name}</td>
@@ -71,5 +81,5 @@
 			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup}"/>
 		</table>
 	</form>
-	</body>
+</body>
 </html>

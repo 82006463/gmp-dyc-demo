@@ -1,6 +1,7 @@
 package com.zhanlu.custom.cms.web;
 
 import com.zhanlu.custom.cms.entity.MeasureComp;
+import com.zhanlu.custom.cms.entity.MeasureCompStandardItem;
 import com.zhanlu.custom.cms.entity.StandardItem;
 import com.zhanlu.custom.cms.service.CmsService;
 import com.zhanlu.custom.cms.service.MeasureCompService;
@@ -10,15 +11,18 @@ import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -106,8 +110,41 @@ public class MeasureCompController {
         mv.addObject("measureCompId", measureCompIdStr);
         Map<String, Object> params = new HashedMap();
         params.put("measureCompId", Long.parseLong(measureCompIdStr));
-        mv.addObject("standardItems", measureCompStandardItemService.findAll());
+        mv.addObject("standardItems", standardItemService.findList(params));
         return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/editStandardItem", method = RequestMethod.GET)
+    public Object editStandardItem(HttpServletRequest req) {
+        Map<String, Object> resultMap = new LinkedHashMap<>();
+        resultMap.put("result", 1);
+        String standrardItemId = req.getParameter("standrardItemId");
+        String measureCompId = req.getParameter("measureCompId");
+        String checked = req.getParameter("checked");
+        if (StringUtils.isBlank(standrardItemId) || StringUtils.isBlank(measureCompId) || StringUtils.isBlank(checked)) {
+            resultMap.put("result", 0);
+            resultMap.put("msg", "standrardItemId OR measureCompId OR checked is null");
+            return resultMap;
+        }
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("standrardItemId", Long.parseLong(standrardItemId));
+        params.put("measureCompId", Long.parseLong(measureCompId));
+        List<MeasureCompStandardItem> items = measureCompStandardItemService.findList(params);
+        if (items == null || items.isEmpty()) {
+            if (checked.equals("true")) {
+                MeasureCompStandardItem entity = new MeasureCompStandardItem();
+                entity.setStatus(1);
+                entity.setStandrardItemId(Long.parseLong(standrardItemId));
+                entity.setMeasureCompId(Long.parseLong(measureCompId));
+                measureCompStandardItemService.saveOrUpdate(entity);
+            }
+        } else {
+            if (checked.equals("false")) {
+                measureCompStandardItemService.delete(items.get(0));
+            }
+        }
+        return resultMap;
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)

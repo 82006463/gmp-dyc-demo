@@ -60,6 +60,12 @@ public abstract class CommonService<T extends IdEntity, PK extends Serializable>
         return true;
     }
 
+    @Transactional
+    public boolean delete(T entity) {
+        this.delete(entity);
+        return true;
+    }
+
     /**
      * 根据对象主键查询实体对象
      *
