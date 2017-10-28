@@ -52,12 +52,9 @@ public class CompUserController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ModelAndView create(HttpServletRequest request) {
+    public ModelAndView create() {
         ModelAndView mv = new ModelAndView("cms/compUserEdit");
         CompUser entity = new CompUser();
-        User user = cmsService.getUser(request);
-        entity.setCreaterId(user.getId());
-        entity.setCreateTime(new Date());
         mv.addObject("entity", entity);
 
         mv.addObject("measureComps", measureCompService.findAll());
@@ -75,16 +72,16 @@ public class CompUserController {
         return mv;
     }
 
-    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
-    public ModelAndView view(@PathVariable("id") Long id) {
-        CompUser entity = compUserService.findById(id);
-        ModelAndView mv = new ModelAndView("cms/compUserView");
-        mv.addObject("entity", entity);
-        return mv;
-    }
-
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update(CompUser entity) {
+    public ModelAndView update(CompUser entity, HttpServletRequest req) {
+        User user = cmsService.getUser(req);
+        if (entity.getId() == null) {
+            entity.setCreaterId(user.getId());
+            entity.setCreateTime(new Date());
+        } else {
+            entity.setUpdaterId(user.getId());
+            entity.setUpdateTime(new Date());
+        }
         if (entity.getCompType() != null) {
             if (entity.getCompType().intValue() == 2) {
                 entity.setMeasureCompId(null);
@@ -100,10 +97,17 @@ public class CompUserController {
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id) {
-        compUserService.delete(id);
-        ModelAndView mv = new ModelAndView("redirect:/custom/cms/compUser");
-        return mv;
+    public ModelAndView delete(@PathVariable("id") Long id, HttpServletRequest req) {
+        CompUser entity = compUserService.findById(id);
+        entity.setStatus(0);
+        return this.update(entity, req);
     }
 
+    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+    public ModelAndView view(@PathVariable("id") Long id) {
+        CompUser entity = compUserService.findById(id);
+        ModelAndView mv = new ModelAndView("cms/compUserView");
+        mv.addObject("entity", entity);
+        return mv;
+    }
 }

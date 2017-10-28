@@ -46,13 +46,9 @@ public class CompNotifyController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ModelAndView create(HttpServletRequest request) {
+    public ModelAndView create() {
         ModelAndView mv = new ModelAndView("cms/compNotifyEdit");
         CompNotify entity = new CompNotify();
-        User user = cmsService.getUser(request);
-        entity.setCreaterId(user.getId());
-        entity.setCreateTime(new Date());
-        entity.setTenantId(user.getOrg().getId());
         mv.addObject("entity", entity);
         return mv;
     }
@@ -65,6 +61,29 @@ public class CompNotifyController {
         return mv;
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ModelAndView update(CompNotify entity, HttpServletRequest req) {
+        User user = cmsService.getUser(req);
+        if (entity.getId() == null) {
+            entity.setCreaterId(user.getId());
+            entity.setCreateTime(new Date());
+            entity.setTenantId(user.getOrg().getId());
+        } else {
+            entity.setUpdaterId(user.getId());
+            entity.setUpdateTime(new Date());
+        }
+        compNotifyService.saveOrUpdate(entity);
+        ModelAndView mv = new ModelAndView("redirect:/custom/cms/compNotify");
+        return mv;
+    }
+
+    @RequestMapping(value = "/delete/{id}")
+    public ModelAndView delete(@PathVariable("id") Long id, HttpServletRequest req) {
+        CompNotify entity = compNotifyService.findById(id);
+        entity.setStatus(0);
+        return this.update(entity, req);
+    }
+
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("id") Long id) {
         CompNotify entity = compNotifyService.findById(id);
@@ -72,19 +91,4 @@ public class CompNotifyController {
         mv.addObject("entity", entity);
         return mv;
     }
-
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update(CompNotify entity) {
-        compNotifyService.saveOrUpdate(entity);
-        ModelAndView mv = new ModelAndView("redirect:/custom/cms/compNotify");
-        return mv;
-    }
-
-    @RequestMapping(value = "/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id) {
-        compNotifyService.delete(id);
-        ModelAndView mv = new ModelAndView("redirect:/custom/cms/compNotify");
-        return mv;
-    }
-
 }

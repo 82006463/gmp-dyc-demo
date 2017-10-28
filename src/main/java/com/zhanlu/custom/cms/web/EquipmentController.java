@@ -46,13 +46,9 @@ public class EquipmentController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ModelAndView create(HttpServletRequest request) {
+    public ModelAndView create() {
         ModelAndView mv = new ModelAndView("cms/equipmentEdit");
         Equipment entity = new Equipment();
-        User user = cmsService.getUser(request);
-        entity.setCreaterId(user.getId());
-        entity.setCreateTime(new Date());
-        entity.setTenantId(user.getOrg().getId());
         mv.addObject("entity", entity);
         return mv;
     }
@@ -65,6 +61,29 @@ public class EquipmentController {
         return mv;
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ModelAndView update(Equipment entity, HttpServletRequest req) {
+        User user = cmsService.getUser(req);
+        if (entity.getId() == null) {
+            entity.setCreaterId(user.getId());
+            entity.setCreateTime(new Date());
+            entity.setTenantId(user.getOrg().getId());
+        } else {
+            entity.setUpdaterId(user.getId());
+            entity.setUpdateTime(new Date());
+        }
+        equipmentService.saveOrUpdate(entity);
+        ModelAndView mv = new ModelAndView("redirect:/custom/cms/equipment");
+        return mv;
+    }
+
+    @RequestMapping(value = "/delete/{id}")
+    public ModelAndView delete(@PathVariable("id") Long id, HttpServletRequest req) {
+        Equipment entity = equipmentService.findById(id);
+        entity.setStatus(0);
+        return this.update(entity, req);
+    }
+
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("id") Long id) {
         Equipment entity = equipmentService.findById(id);
@@ -72,19 +91,4 @@ public class EquipmentController {
         mv.addObject("entity", entity);
         return mv;
     }
-
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update(Equipment entity) {
-        equipmentService.saveOrUpdate(entity);
-        ModelAndView mv = new ModelAndView("redirect:/custom/cms/equipment");
-        return mv;
-    }
-
-    @RequestMapping(value = "/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id) {
-        equipmentService.delete(id);
-        ModelAndView mv = new ModelAndView("redirect:/custom/cms/equipment");
-        return mv;
-    }
-
 }

@@ -31,9 +31,7 @@ public class StandardItemController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<StandardItem> page, HttpServletRequest request) {
-        User user = cmsService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
-        filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");
@@ -46,12 +44,9 @@ public class StandardItemController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ModelAndView create(HttpServletRequest request) {
+    public ModelAndView create() {
         ModelAndView mv = new ModelAndView("cms/standardItemEdit");
         StandardItem entity = new StandardItem();
-        User user = cmsService.getUser(request);
-        entity.setCreaterId(user.getId());
-        entity.setCreateTime(new Date());
         mv.addObject("entity", entity);
         return mv;
     }
@@ -64,6 +59,28 @@ public class StandardItemController {
         return mv;
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ModelAndView update(StandardItem entity, HttpServletRequest req) {
+        User user = cmsService.getUser(req);
+        if (entity.getId() == null) {
+            entity.setCreaterId(user.getId());
+            entity.setCreateTime(new Date());
+        } else {
+            entity.setUpdaterId(user.getId());
+            entity.setUpdateTime(new Date());
+        }
+        standardItemService.saveOrUpdate(entity);
+        ModelAndView mv = new ModelAndView("redirect:/custom/cms/standardItem");
+        return mv;
+    }
+
+    @RequestMapping(value = "/delete/{id}")
+    public ModelAndView delete(@PathVariable("id") Long id, HttpServletRequest req) {
+        StandardItem entity = standardItemService.findById(id);
+        entity.setStatus(0);
+        return this.update(entity, req);
+    }
+
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("id") Long id) {
         StandardItem entity = standardItemService.findById(id);
@@ -71,19 +88,4 @@ public class StandardItemController {
         mv.addObject("entity", entity);
         return mv;
     }
-
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update(StandardItem entity) {
-        standardItemService.saveOrUpdate(entity);
-        ModelAndView mv = new ModelAndView("redirect:/custom/cms/standardItem");
-        return mv;
-    }
-
-    @RequestMapping(value = "/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id) {
-        standardItemService.delete(id);
-        ModelAndView mv = new ModelAndView("redirect:/custom/cms/standardItem");
-        return mv;
-    }
-
 }

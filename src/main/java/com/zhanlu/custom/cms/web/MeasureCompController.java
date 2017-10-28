@@ -40,9 +40,7 @@ public class MeasureCompController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<MeasureComp> page, HttpServletRequest request) {
-        User user = cmsService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
-        filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");
@@ -55,12 +53,9 @@ public class MeasureCompController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ModelAndView create(HttpServletRequest request) {
+    public ModelAndView create() {
         ModelAndView mv = new ModelAndView("cms/measureCompEdit");
         MeasureComp entity = new MeasureComp();
-        User user = cmsService.getUser(request);
-        entity.setCreaterId(user.getId());
-        entity.setCreateTime(new Date());
         mv.addObject("entity", entity);
         return mv;
     }
@@ -73,26 +68,26 @@ public class MeasureCompController {
         return mv;
     }
 
-    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
-    public ModelAndView view(@PathVariable("id") Long id) {
-        MeasureComp entity = measureCompService.findById(id);
-        ModelAndView mv = new ModelAndView("cms/measureCompView");
-        mv.addObject("entity", entity);
-        return mv;
-    }
-
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update(MeasureComp entity) {
+    public ModelAndView update(MeasureComp entity, HttpServletRequest req) {
+        User user = cmsService.getUser(req);
+        if (entity.getId() == null) {
+            entity.setCreaterId(user.getId());
+            entity.setCreateTime(new Date());
+        } else {
+            entity.setUpdaterId(user.getId());
+            entity.setUpdateTime(new Date());
+        }
         measureCompService.saveOrUpdate(entity);
         ModelAndView mv = new ModelAndView("redirect:/custom/cms/measureComp");
         return mv;
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id) {
-        measureCompService.delete(id);
-        ModelAndView mv = new ModelAndView("redirect:/custom/cms/measureComp");
-        return mv;
+    public ModelAndView delete(@PathVariable("id") Long id, HttpServletRequest req) {
+        MeasureComp entity = measureCompService.findById(id);
+        entity.setStatus(0);
+        return this.update(entity, req);
     }
 
     @RequestMapping(value = "/standardItem", method = RequestMethod.GET)
@@ -115,4 +110,11 @@ public class MeasureCompController {
         return mv;
     }
 
+    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+    public ModelAndView view(@PathVariable("id") Long id) {
+        MeasureComp entity = measureCompService.findById(id);
+        ModelAndView mv = new ModelAndView("cms/measureCompView");
+        mv.addObject("entity", entity);
+        return mv;
+    }
 }
