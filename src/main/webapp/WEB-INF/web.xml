@@ -12,6 +12,7 @@
 			classpath*:/spring-security.xml
 			classpath*:/spring-snaker.xml
 			classpath*:/spring-nosql.xml
+			classpath*:/spring-quartz.xml
 		</param-value>
 	</context-param>
 

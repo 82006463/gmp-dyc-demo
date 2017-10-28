@@ -95,7 +95,7 @@
 						<input type="radio" id="calibrationMode1" name="calibrationMode" value="1" class="validate[required]" ${entity.calibrationMode==1 ? 'checked="checked"':''}/>&nbsp;内校
 						<input type="radio" id="calibrationMode2" name="calibrationMode" value="2" class="validate[required]" ${entity.calibrationMode==2 ? 'checked="checked"':''}/>&nbsp;外校
 					</td>
-					<td class="td_table_1">校准周期<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">校准周期(单位:月)<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
 						<input type="text" id="calibrationCycle" name="calibrationCycle" value="${entity.calibrationCycle}" class="input_240 validate[required,custom[number]]" />
 					</td>
@@ -103,11 +103,11 @@
 				<tr>
 					<td class="td_table_1">上次校准时间<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="lastCalibrationDate" name="lastCalibrationDate" value="<fmt:formatDate value="${entity.lastCalibrationDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[50]]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>
+						<input type="text" id="lastCalibrationDate" name="lastCalibrationDate" value="<fmt:formatDate value="${entity.lastCalibrationDate}" pattern="yyyy-MM-dd"/>" class="input_240" readonly="readonly"/>
 					</td>
 					<td class="td_table_1">待校准时间<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="expectCalibrationDate" name="expectCalibrationDate" value="<fmt:formatDate value="${entity.expectCalibrationDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>
+						<input type="text" id="expectCalibrationDate" name="expectCalibrationDate" value="<fmt:formatDate value="${entity.expectCalibrationDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
 					</td>
 				</tr>
 			</table>

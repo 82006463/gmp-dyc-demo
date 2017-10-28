@@ -74,7 +74,7 @@
 				<tr>
 					<td class="td_table_1">认可有效期<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="expireDate" name="expireDate" value="<fmt:formatDate value="${entity.expireDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>
+						<input type="text" id="expireDate" name="expireDate" value="<fmt:formatDate value="${entity.expireDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-%d'});" readonly="readonly"/>
 					</td>
 					<td class="td_table_1">建标数量<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
