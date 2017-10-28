@@ -54,10 +54,11 @@ public class CompNotifyController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") Long id) {
+    public ModelAndView edit(@PathVariable("id") Long id, String op) {
         CompNotify entity = compNotifyService.findById(id);
         ModelAndView mv = new ModelAndView("cms/compNotifyEdit");
         mv.addObject("entity", entity);
+        mv.addObject("op", op);
         return mv;
     }
 

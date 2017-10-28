@@ -52,10 +52,11 @@ public class DrugCompController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") Long id) {
+    public ModelAndView edit(@PathVariable("id") Long id, String op) {
         DrugComp entity = drugCompService.findById(id);
         ModelAndView mv = new ModelAndView("cms/drugCompEdit");
         mv.addObject("entity", entity);
+        mv.addObject("op", op);
         return mv;
     }
 

@@ -65,10 +65,11 @@ public class MeasureCompController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") Long id) {
+    public ModelAndView edit(@PathVariable("id") Long id, String op) {
         MeasureComp entity = measureCompService.findById(id);
         ModelAndView mv = new ModelAndView("cms/measureCompEdit");
         mv.addObject("entity", entity);
+        mv.addObject("op", op);
         return mv;
     }
 

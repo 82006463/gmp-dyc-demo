@@ -80,16 +80,6 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">校准方式<b class="requiredWarn">*</b>：</td>
-					<td class="td_table_2">
-						<input type="text" id="calibrationMode" name="calibrationMode" value="${entity.calibrationMode}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
-					</td>
-					<td class="td_table_1">校准周期<b class="requiredWarn">*</b>：</td>
-					<td class="td_table_2">
-						<input type="text" id="calibrationCycle" name="calibrationCycle" value="${entity.calibrationCycle}" class="input_240 validate[required,custom[number]]" />
-					</td>
-				</tr>
-				<tr>
 					<td class="td_table_1">测量范围上限<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
 						<input type="text" id="measureRangeMin" name="measureRangeMin" value="${entity.measureRangeMin}" class="input_240 validate[required,custom[number]]" />
@@ -97,6 +87,16 @@
 					<td class="td_table_1">测量范围下限<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
 						<input type="text" id="measureRangeMax" name="measureRangeMax" value="${entity.measureRangeMax}" class="input_240 validate[required,custom[number]]" />
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">校准方式<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="calibrationMode" name="calibrationMode" value="${entity.calibrationMode}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					</td>
+					<td class="td_table_1">校准周期<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="calibrationCycle" name="calibrationCycle" value="${entity.calibrationCycle}" class="input_240 validate[required,custom[number]]" />
 					</td>
 				</tr>
 				<tr>
@@ -113,12 +113,12 @@
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr align="left">
 					<td colspan="1">
-						<c:if test="${entity.status > 0}">
+						<c:if test="${(empty entity.status || entity.status > 0) && op != 2}">
 							<shiro:hasPermission name="cms_equipment_edit">
 								<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
 							</shiro:hasPermission>
 						</c:if>
-						<c:if test="${entity.status == 1}">
+						<c:if test="${entity.status == 1 && op == 2}">
 							<shiro:hasPermission name="cms_equipment_review">
 								<input type="submit" class="button_70px" name="submit" value="复核" onclick="$('#status').val(2); return Ops.submit();">&nbsp;&nbsp;
 							</shiro:hasPermission>

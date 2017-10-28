@@ -52,10 +52,11 @@ public class StandardItemController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") Long id) {
+    public ModelAndView edit(@PathVariable("id") Long id, String op) {
         StandardItem entity = standardItemService.findById(id);
         ModelAndView mv = new ModelAndView("cms/standardItemEdit");
         mv.addObject("entity", entity);
+        mv.addObject("op", op);
         return mv;
     }
 

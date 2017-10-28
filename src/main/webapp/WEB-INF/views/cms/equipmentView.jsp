@@ -50,16 +50,16 @@
 					<td class="td_table_2">${entity.calibrationName}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">校准方式：</td>
-					<td class="td_table_2">${entity.calibrationMode}</td>
-					<td class="td_table_1">校准周期：</td>
-					<td class="td_table_2">${entity.calibrationCycle}</td>
-				</tr>
-				<tr>
 					<td class="td_table_1">测量范围上限：</td>
 					<td class="td_table_2">${entity.measureRangeMin}</td>
 					<td class="td_table_1">测量范围下限：</td>
 					<td class="td_table_2">${entity.measureRangeMax}</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">校准方式：</td>
+					<td class="td_table_2">${entity.calibrationMode}</td>
+					<td class="td_table_1">校准周期：</td>
+					<td class="td_table_2">${entity.calibrationCycle}</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">上次校准时间：</td>

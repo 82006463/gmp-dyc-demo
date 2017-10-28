@@ -62,10 +62,12 @@ public class CompUserController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") Long id) {
+    public ModelAndView edit(@PathVariable("id") Long id, String op) {
         CompUser entity = compUserService.findById(id);
         ModelAndView mv = new ModelAndView("cms/compUserEdit");
         mv.addObject("entity", entity);
+        mv.addObject("op", op);
+
         mv.addObject("measureComps", measureCompService.findAll());
         mv.addObject("drugComps", drugCompService.findAll());
         return mv;
