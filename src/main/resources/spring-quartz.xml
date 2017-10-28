@@ -6,7 +6,8 @@
     <bean id="schedulerQuartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="calibrationMonthQtzGenerateMonthTrigger"></ref>
+				<ref bean="calibrationMonthQtzGenerateMonthTrigger" />
+				<ref bean="calibrationMonthQtzGenerateYearTrigger" />
 			</list>
 		</property>
 	</bean>
@@ -18,6 +19,16 @@
 	</bean>
 	<bean id="calibrationMonthQtzGenerateMonthTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="calibrationMonthQtzGenerateMonthJob" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+
+	<bean id="calibrationMonthQtzGenerateYearJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="calibrationMonthQtz"></property>
+		<property name="targetMethod" value="generateYear"></property>
+		<property name="concurrent" value="false"></property>
+	</bean>
+	<bean id="calibrationMonthQtzGenerateYearTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="calibrationMonthQtzGenerateYearJob" />
 		<property name="cronExpression" value="0/5 * * * * ?" />
 	</bean>
 
