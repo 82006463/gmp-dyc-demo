@@ -43,10 +43,10 @@
 					<td class="td_list_2" align=left>${item.equipment.name}</td>
 					<td class="td_list_2" align=left>${item.equipment.room}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
-					<td class="td_list_2" align=left>${item.status == 0 ? '删除':item.status == 1 ? '待生成任务':item.status == 2 ? '任务执行中':item.status == 3 ? '正常':''}</td>
+					<td class="td_list_2" align=left>${item.status == 0 ? '删除':item.status > 0 ? '正常':''}</td>
 				</tr>
 			</c:forEach>
-			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup}"/>
+			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages}" totalRecords="${page.totalCount}" lookup="${lookup}"/>
 		</table>
 	</form>
 	</body>

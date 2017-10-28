@@ -12,10 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 月度外校
@@ -44,6 +47,20 @@ public class CalibrationExtController {
         ModelAndView mv = new ModelAndView("cms/calibrationExtList");
         mv.addObject("page", page);
         return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/generateTask", method = RequestMethod.GET)
+    public Object generateTask(HttpServletRequest request) {
+        Map<String, Object> resultMap = new LinkedHashMap<>();
+        resultMap.put("result", 1);
+        User user = cmsService.getUser(request);
+        boolean result = calibrationExtService.generateTask(user);
+        if (!result) {
+            resultMap.put("result", 0);
+            resultMap.put("msg", "任务生成失败");
+        }
+        return resultMap;
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
