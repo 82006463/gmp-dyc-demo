@@ -2,21 +2,22 @@
 <%@ include file="/common/taglibs.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-    	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    	<title>德亦诚全面质量管理平台</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<link href="${ctx}/styles/bootstrap/2.2.2/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-		<link href="${ctx}/styles/css/login.css" type="text/css" rel="stylesheet" />
-		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
-		<script src="${ctx}/styles/bootstrap/2.2.2/js/bootstrap.min.js" type="text/javascript"></script>
-	</head>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>德亦诚全面质量管理平台</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link href="${ctx}/styles/bootstrap/2.2.2/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+	<link href="${ctx}/styles/css/login.css" type="text/css" rel="stylesheet" />
+	<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+	<script src="${ctx}/styles/bootstrap/2.2.2/js/bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		if(window != top) {
 			top.location.href = location.href;
 		}
 	</script>
-	<body>
+</head>
+
+<body style="width: 100%; height: 100%; background:url(/styles/images/dyc-bg.jpg)">
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -41,9 +42,8 @@
 		<div id="login-header">
 			<h3>登录</h3>
 		</div>
-
 		<div id="login-content" class="clearfix">
-			<form action="${ctx }/login" method="post">
+			<form action="${ctx}/login" method="post">
 				<fieldset>
 					<div class="control-group">
 						<label class="control-label" for="username">账号：</label>
@@ -80,5 +80,5 @@
 			</p>
 		</div>
 	</div>
-	</body>
+</body>
 </html>
