@@ -103,11 +103,21 @@
 				<tr>
 					<td class="td_table_1">上次校准时间<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="lastCalibrationDate" name="lastCalibrationDate" value="<fmt:formatDate value="${entity.lastCalibrationDate}" pattern="yyyy-MM-dd"/>" class="input_240" readonly="readonly"/>
+						<c:if test="${empty entity.lastCalibrationDate}">N.A.</c:if>
+						<c:if test="${!empty entity.lastCalibrationDate}">
+							<fmt:formatDate value="${entity.lastCalibrationDate}" pattern="yyyy-MM-dd"/>
+							<input type="hidden" id="lastCalibrationDate" name="lastCalibrationDate" value="<fmt:formatDate value="${entity.lastCalibrationDate}" pattern="yyyy-MM-dd"/>" class="input_240" readonly="readonly"/>
+						</c:if>
 					</td>
 					<td class="td_table_1">待校准时间<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
-						<input type="text" id="expectCalibrationDate" name="expectCalibrationDate" value="<fmt:formatDate value="${entity.expectCalibrationDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
+						<c:if test="${empty entity.lastCalibrationDate}">
+							<input type="text" id="expectCalibrationDate" name="expectCalibrationDate" value="<fmt:formatDate value="${entity.expectCalibrationDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
+						</c:if>
+						<c:if test="${!empty entity.lastCalibrationDate}">
+							<fmt:formatDate value="${entity.expectCalibrationDate}" pattern="yyyy-MM-dd"/>
+							<input type="hidden" id="expectCalibrationDate" name="expectCalibrationDate" value="<fmt:formatDate value="${entity.expectCalibrationDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" readonly="readonly"/>
+						</c:if>
 					</td>
 				</tr>
 			</table>
