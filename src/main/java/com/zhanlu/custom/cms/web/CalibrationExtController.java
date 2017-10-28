@@ -2,8 +2,11 @@ package com.zhanlu.custom.cms.web;
 
 import com.zhanlu.custom.cms.entity.CalibrationExt;
 import com.zhanlu.custom.cms.service.CalibrationExtService;
+import com.zhanlu.custom.cms.service.CmsService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.security.entity.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,16 +20,21 @@ import java.util.List;
 /**
  * 月度外校
  */
+@Slf4j
 @Controller
 @RequestMapping(value = "/custom/cms/calibrationExt")
 public class CalibrationExtController {
 
     @Autowired
     private CalibrationExtService calibrationExtService;
+    @Autowired
+    private CmsService cmsService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<CalibrationExt> page, HttpServletRequest request) {
+        User user = cmsService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
+        filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");

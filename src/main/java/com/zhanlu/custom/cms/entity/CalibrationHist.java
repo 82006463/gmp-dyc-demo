@@ -29,6 +29,12 @@ public class CalibrationHist extends IdEntity {
     //校准证书编号
     private String certCode;
 
+    //创建者ID、创建时间、修改者ID、修改时间
+    private Long createrId;
+    private Date createTime;
+    private Long updaterId;
+    private Date updateTime;
+
     @Column(name = "tenant_id")
     public Long getTenantId() {
         return tenantId;
@@ -102,5 +108,43 @@ public class CalibrationHist extends IdEntity {
 
     public void setCertCode(String certCode) {
         this.certCode = certCode;
+    }
+
+    @Column(name = "creater_id")
+    public Long getCreaterId() {
+        return createrId;
+    }
+
+    public void setCreaterId(Long createrId) {
+        this.createrId = createrId;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "create_time")
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Column(name = "updater_id")
+    public Long getUpdaterId() {
+        return updaterId;
+    }
+
+    public void setUpdaterId(Long updaterId) {
+        this.updaterId = updaterId;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "update_time")
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
