@@ -4,7 +4,7 @@
 <html lang="en">
 	<head>
     	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    	<title>Snaker</title>
+    	<title>德亦诚全面质量管理平台</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link href="${ctx}/styles/bootstrap/2.2.2/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 		<link href="${ctx}/styles/css/login.css" type="text/css" rel="stylesheet" />
@@ -23,7 +23,7 @@
 				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="./" style="font-weight: bold; ">德亦诚全面质量管理系统</a>
+				<a class="brand" href="./" style="font-weight: bold; ">德亦诚全面质量管理平台</a>
 				<div class="nav-collapse">
 					<!-- 
 						<ul class="nav pull-right">

@@ -115,8 +115,10 @@ public class CalibrationMonthQtz {
             filters.add(new PropertyFilter("LED_expectDate", DateFormatUtils.format(eq.getExpectCalibrationDate(), "yyyy-MM-dd") + " 23:59:59"));
             saveYear(eq, eq.getExpectCalibrationDate(), pageYear, filters);
 
+            year = (Integer.parseInt(year) + 1) + "";
             Date tmpDate = eq.getExpectCalibrationDate();
             Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.YEAR, 1);
             for (int i = 1; i <= 12; i++) {
                 cal.setTime(tmpDate);
                 cal.add(Calendar.MONTH, eq.getCalibrationCycle());
