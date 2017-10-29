@@ -59,7 +59,7 @@
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td class="td_list_2" align=left>
 						<a href="${ctx}/custom/cms/calibrationTask/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
-						<a href="${ctx}/custom/cms/calibrationTask/view/${item.id}" class="btnView" title="查看">查看</a>
+						<%--<a href="${ctx}/custom/cms/calibrationTask/view/${item.id}" class="btnView" title="查看">查看</a>--%>
 					</td>
 				</tr>
 			</c:forEach>

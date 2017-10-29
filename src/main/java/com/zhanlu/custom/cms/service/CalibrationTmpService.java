@@ -71,7 +71,7 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
             task.setStatus(1);
             task.setMeasureCompId(measureCompId);
             task.setApprover(approver);
-            task.setCalibrationMode(2);
+            task.setCalibrationMode(3);
             calibrationTaskService.save(task);
             for (CalibrationTmp entity : page.getResult()) {
                 entity.setStatus(3);
