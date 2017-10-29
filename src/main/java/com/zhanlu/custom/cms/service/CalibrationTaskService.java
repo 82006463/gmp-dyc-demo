@@ -1,7 +1,7 @@
 package com.zhanlu.custom.cms.service;
 
-import com.zhanlu.custom.cms.dao.CalibrationTmpTaskDao;
-import com.zhanlu.custom.cms.entity.CalibrationTmpTask;
+import com.zhanlu.custom.cms.dao.CalibrationTaskDao;
+import com.zhanlu.custom.cms.entity.CalibrationTask;
 import com.zhanlu.framework.common.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 
 /**
- * 月度临校任务
+ * 月度外校任务
  */
 @Service
-public class CalibrationTmpTaskService extends CommonService<CalibrationTmpTask, Long> {
+public class CalibrationTaskService extends CommonService<CalibrationTask, Long> {
 
     @Autowired
-    private CalibrationTmpTaskDao calibrationTmpTaskDao;
+    private CalibrationTaskDao calibrationTaskDao;
 
     @PostConstruct
     @Override
     public void initDao() {
-        super.commonDao = calibrationTmpTaskDao;
+        super.commonDao = calibrationTaskDao;
     }
 }

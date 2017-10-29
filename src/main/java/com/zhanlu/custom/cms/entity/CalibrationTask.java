@@ -7,21 +7,19 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * 月度临校任务
+ * 待办任务
  */
 @Entity
-@Table(name = "cms_calibration_tmp_task")
-public class CalibrationTmpTask extends IdEntity {
+@Table(name = "cms_calibration_task")
+public class CalibrationTask extends IdEntity {
 
     //租户ID
     private Long tenantId;
-    //器具
-    private Long equipmentId;
-    private Equipment equipment;
-    //实际校准时间
-    private Date actualDate;
-    //校准结果
-    private String calibrationResult;
+    //计量公司
+    private Long measureCompId;
+    private MeasureComp measureComp;
+    //校准方式：1:内校, 2:外校, 3:临校
+    private Integer calibrationMode;
     //审核人
     private String approver;
 
@@ -40,42 +38,32 @@ public class CalibrationTmpTask extends IdEntity {
         this.tenantId = tenantId;
     }
 
-    @Column(name = "equipment_id")
-    public Long getEquipmentId() {
-        return equipmentId;
+    @Column(name = "measure_comp_id")
+    public Long getMeasureCompId() {
+        return measureCompId;
     }
 
-    public void setEquipmentId(Long equipmentId) {
-        this.equipmentId = equipmentId;
+    public void setMeasureCompId(Long measureCompId) {
+        this.measureCompId = measureCompId;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "equipment_id", insertable = false, updatable = false)
-    public Equipment getEquipment() {
-        return equipment;
+    @JoinColumn(name = "measure_comp_id", insertable = false, updatable = false)
+    public MeasureComp getMeasureComp() {
+        return measureComp;
     }
 
-    public void setEquipment(Equipment equipment) {
-        this.equipment = equipment;
+    public void setMeasureComp(MeasureComp measureComp) {
+        this.measureComp = measureComp;
     }
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "actual_calibration_date")
-    public Date getActualDate() {
-        return actualDate;
+    @Column(name = "calibration_mode")
+    public Integer getCalibrationMode() {
+        return calibrationMode;
     }
 
-    public void setActualDate(Date actualDate) {
-        this.actualDate = actualDate;
-    }
-
-    @Column(name = "calibration_result", length = 10)
-    public String getCalibrationResult() {
-        return calibrationResult;
-    }
-
-    public void setCalibrationResult(String calibrationResult) {
-        this.calibrationResult = calibrationResult;
+    public void setCalibrationMode(Integer calibrationMode) {
+        this.calibrationMode = calibrationMode;
     }
 
     @Column(name = "approver", length = 20)

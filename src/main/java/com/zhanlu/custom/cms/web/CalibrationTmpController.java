@@ -29,26 +29,31 @@ public class CalibrationTmpController {
     @Autowired
     private CmsService cmsService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView list(Page<CalibrationTmp> page, HttpServletRequest request) {
+    @RequestMapping(value = "/{status}", method = RequestMethod.GET)
+    public ModelAndView list(Page<CalibrationTmp> page, @PathVariable Integer status, HttpServletRequest request) {
         User user = cmsService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
+        ModelAndView mv = new ModelAndView("cms/calibrationPlanList");
+        if (status != null && status.intValue() == 2) {
+            filters.add(new PropertyFilter("EQL_status", status.toString()));
+            mv.addObject("type", "calibrationTmp2");
+        } else {
+            mv.addObject("type", "calibrationTmp");
+        }
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("createTime");
             page.setOrder(Page.DESC);
         }
         page = calibrationTmpService.findPage(page, filters);
-        ModelAndView mv = new ModelAndView("cms/calibrationPlanList");
         mv.addObject("page", page);
-        mv.addObject("type", "calibrationTmp");
         return mv;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/generateTask", method = RequestMethod.GET)
-    public Object generateTask(HttpServletRequest request) {
+    @RequestMapping(value = "/{status}/generateTask", method = RequestMethod.GET)
+    public Object generateTask(@PathVariable Integer status, HttpServletRequest request) {
         User user = cmsService.getUser(request);
         return calibrationTmpService.generateTask(user);
     }

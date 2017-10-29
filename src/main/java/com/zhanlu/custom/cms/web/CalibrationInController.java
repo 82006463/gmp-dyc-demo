@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 月度内校
@@ -31,26 +29,31 @@ public class CalibrationInController {
     @Autowired
     private CmsService cmsService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView list(Page<CalibrationIn> page, HttpServletRequest request) {
+    @RequestMapping(value = "/{status}", method = RequestMethod.GET)
+    public ModelAndView list(Page<CalibrationIn> page, @PathVariable Integer status, HttpServletRequest request) {
         User user = cmsService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
+        ModelAndView mv = new ModelAndView("cms/calibrationPlanList");
+        if (status != null && status.intValue() == 2) {
+            filters.add(new PropertyFilter("EQL_status", status.toString()));
+            mv.addObject("type", "calibrationIn2");
+        } else {
+            mv.addObject("type", "calibrationIn");
+        }
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("createTime");
             page.setOrder(Page.DESC);
         }
         page = calibrationInService.findPage(page, filters);
-        ModelAndView mv = new ModelAndView("cms/calibrationPlanList");
         mv.addObject("page", page);
-        mv.addObject("type", "calibrationIn");
         return mv;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/generateTask", method = RequestMethod.GET)
-    public Object generateTask(HttpServletRequest request) {
+    @RequestMapping(value = "/{status}/generateTask", method = RequestMethod.GET)
+    public Object generateTask(@PathVariable Integer status, HttpServletRequest request) {
         User user = cmsService.getUser(request);
         return calibrationInService.generateTask(user);
     }

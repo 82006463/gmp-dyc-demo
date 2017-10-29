@@ -2,7 +2,6 @@ package com.zhanlu.custom.cms.service;
 
 import com.zhanlu.custom.cms.dao.CalibrationInDao;
 import com.zhanlu.custom.cms.entity.CalibrationIn;
-import com.zhanlu.custom.cms.entity.CalibrationInTask;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.common.service.CommonService;
@@ -12,7 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 月度内校
@@ -23,7 +25,7 @@ public class CalibrationInService extends CommonService<CalibrationIn, Long> {
     @Autowired
     private CalibrationInDao calibrationInDao;
     @Autowired
-    private CalibrationInTaskService calibrationInTaskService;
+    private CalibrationTaskService calibrationTaskService;
 
     @PostConstruct
     @Override
@@ -42,13 +44,13 @@ public class CalibrationInService extends CommonService<CalibrationIn, Long> {
         Map<String, Object> resultMap = new LinkedHashMap<>();
         if (page != null && page.getResult().size() > 0) {
             for (CalibrationIn entity : page.getResult()) {
-                CalibrationInTask task = new CalibrationInTask();
+                /*CalibrationInTask task = new CalibrationInTask();
                 task.setTenantId(entity.getTenantId());
                 task.setCreaterId(entity.getCreaterId());
                 task.setCreateTime(new Date());
                 task.setStatus(1);
                 task.setEquipmentId(entity.getEquipmentId());
-                calibrationInTaskService.save(task);
+                calibrationInTaskService.save(task);*/
                 entity.setStatus(2);
             }
             resultMap.put("result", 1);

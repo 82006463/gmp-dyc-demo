@@ -1,10 +1,7 @@
 package com.zhanlu.custom.cms.service;
 
 import com.zhanlu.custom.cms.dao.CalibrationTmpDao;
-import com.zhanlu.custom.cms.entity.CalibrationExt;
-import com.zhanlu.custom.cms.entity.CalibrationExtTask;
 import com.zhanlu.custom.cms.entity.CalibrationTmp;
-import com.zhanlu.custom.cms.entity.CalibrationTmpTask;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.common.service.CommonService;
@@ -14,7 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 月度临校
@@ -25,7 +25,7 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
     @Autowired
     private CalibrationTmpDao calibrationTmpDao;
     @Autowired
-    private CalibrationTmpTaskService calibrationTmpTaskService;
+    private CalibrationTaskService calibrationTaskService;
 
     @PostConstruct
     @Override
@@ -44,13 +44,13 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
         Map<String, Object> resultMap = new LinkedHashMap<>();
         if (page != null && page.getResult().size() > 0) {
             for (CalibrationTmp entity : page.getResult()) {
-                CalibrationTmpTask task = new CalibrationTmpTask();
+               /* CalibrationTmpTask task = new CalibrationTmpTask();
                 task.setTenantId(entity.getTenantId());
                 task.setCreaterId(entity.getCreaterId());
                 task.setCreateTime(new Date());
                 task.setStatus(1);
                 task.setEquipmentId(entity.getEquipmentId());
-                calibrationTmpTaskService.save(task);
+                calibrationTmpTaskService.save(task);*/
                 entity.setStatus(2);
             }
             resultMap.put("result", 1);
