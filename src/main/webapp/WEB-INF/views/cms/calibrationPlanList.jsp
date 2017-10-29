@@ -15,6 +15,17 @@
 					alert(data.msg);
 				});
 			}
+			function sendask(item) {
+				if($('#measureCompId').val()=='') {
+					alert('请选择计量公司');
+				} else if($('#approver').val()=='') {
+					alert('请输入计量公司负责人');
+				} else {
+					$.getJSON('${ctx}/custom/cms/${type}/sendask',{}, function (data) {
+						alert(data.msg);
+					});
+				}
+			}
 		</script>
 	</head>
 
@@ -30,9 +41,32 @@
 			</tr>
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
+			<c:if test="${status == 2}">
+				<tr>
+					<td class="td_table_1">计量公司：</td>
+					<td class="td_table_2">
+						<select id="measureCompId" name="measureCompId" class="input_select">
+							<option value="">-请选择-</option>
+							<c:forEach items="${measureComps}" var="item">
+								<option value="${item.id}">${item.name}</option>
+							</c:forEach>
+						</select>
+					</td>
+					<td class="td_table_1">计量公司负责人：</td>
+					<td class="td_table_2">
+						<input type="text" id="approver" name="approver" class="input_240" value=""/>
+					</td>
+				</tr>
+			</c:if>
 			<tr>
-				<td class="td_table_2" align="center">
-					<input type="button" class='button_70px' value="生成任务" onclick="generateTask(this);"/>
+				<td class="td_table_2" align="center" colspan="4">
+					<c:if test="${status != 2}">
+						<input type="button" class='button_70px' value="生成任务" onclick="generateTask(this);"/>
+					</c:if>
+					<c:if test="${status == 2}">
+						<input type="button" class='button_70px' value="发送任务" onclick="sendask(this);"/>
+						<input type="button" class='button_70px' value="导出Excel"/>
+					</c:if>
 				</td>
 			</tr>
 		</table>

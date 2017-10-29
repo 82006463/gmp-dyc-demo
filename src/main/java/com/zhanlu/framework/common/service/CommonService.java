@@ -108,7 +108,7 @@ public abstract class CommonService<T extends IdEntity, PK extends Serializable>
                 hql += " AND " + entry.getKey() + "=:" + entry.getKey();
             }
         }
-        if (!params.containsKey("status")) {
+        if (params == null || !params.containsKey("status")) {
             hql += " AND status IS NOT NULL AND status > 0";
         }
         return this.commonDao.find(hql, params);

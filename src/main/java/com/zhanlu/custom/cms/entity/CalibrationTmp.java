@@ -34,6 +34,8 @@ public class CalibrationTmp extends IdEntity {
     private Date createTime;
     private Long updaterId;
     private Date updateTime;
+    //任务ID
+    private Long taskId;
 
     @Column(name = "tenant_id")
     public Long getTenantId() {
@@ -148,5 +150,14 @@ public class CalibrationTmp extends IdEntity {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Column(name = "task_id")
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
     }
 }

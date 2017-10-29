@@ -25,10 +25,16 @@ public class CmsService {
         if (StringUtils.isBlank(username)) {
             throw new NullPointerException("username is null");
         }
-        User user = userService.findUserByName(username);
+        User user = getUser(username);
         if (user == null) {
             throw new NullPointerException("user is null");
         }
         return user;
+    }
+
+    public User getUser(String username) {
+        if (StringUtils.isBlank(username))
+            return null;
+        return userService.findUserByName(username);
     }
 }
