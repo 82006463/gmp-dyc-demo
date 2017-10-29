@@ -42,8 +42,9 @@ public class CalibrationInController {
             page.setOrder(Page.DESC);
         }
         page = calibrationInService.findPage(page, filters);
-        ModelAndView mv = new ModelAndView("cms/calibrationInList");
+        ModelAndView mv = new ModelAndView("cms/calibrationPlanList");
         mv.addObject("page", page);
+        mv.addObject("type", "calibrationIn");
         return mv;
     }
 
@@ -52,6 +53,7 @@ public class CalibrationInController {
     public Object generateTask(HttpServletRequest request) {
         Map<String, Object> resultMap = new LinkedHashMap<>();
         resultMap.put("result", 1);
+        resultMap.put("msg", "任务生成成功");
         User user = cmsService.getUser(request);
         boolean result = calibrationInService.generateTask(user);
         if (!result) {

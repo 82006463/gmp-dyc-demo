@@ -39,8 +39,9 @@ public class CalibrationTmpTaskController {
             page.setOrder(Page.DESC);
         }
         page = calibrationTmpTaskService.findPage(page, filters);
-        ModelAndView mv = new ModelAndView("cms/calibrationTmpTaskList");
+        ModelAndView mv = new ModelAndView("cms/calibrationTaskList");
         mv.addObject("page", page);
+        mv.addObject("type", "calibrationTmpTask");
         return mv;
     }
 

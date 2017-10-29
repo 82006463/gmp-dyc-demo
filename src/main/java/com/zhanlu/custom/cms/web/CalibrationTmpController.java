@@ -42,8 +42,9 @@ public class CalibrationTmpController {
             page.setOrder(Page.DESC);
         }
         page = calibrationTmpService.findPage(page, filters);
-        ModelAndView mv = new ModelAndView("cms/calibrationTmpList");
+        ModelAndView mv = new ModelAndView("cms/calibrationPlanList");
         mv.addObject("page", page);
+        mv.addObject("type", "calibrationTmp");
         return mv;
     }
 
@@ -52,6 +53,7 @@ public class CalibrationTmpController {
     public Object generateTask(HttpServletRequest request) {
         Map<String, Object> resultMap = new LinkedHashMap<>();
         resultMap.put("result", 1);
+        resultMap.put("msg", "任务生成成功");
         User user = cmsService.getUser(request);
         boolean result = calibrationTmpService.generateTask(user);
         if (!result) {

@@ -39,8 +39,9 @@ public class CalibrationExtTaskController {
             page.setOrder(Page.DESC);
         }
         page = calibrationExtTaskService.findPage(page, filters);
-        ModelAndView mv = new ModelAndView("cms/calibrationExtTaskList");
+        ModelAndView mv = new ModelAndView("cms/calibrationTaskList");
         mv.addObject("page", page);
+        mv.addObject("type", "calibrationExtTask");
         return mv;
     }
 

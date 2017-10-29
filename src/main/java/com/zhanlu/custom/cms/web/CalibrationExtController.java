@@ -44,8 +44,9 @@ public class CalibrationExtController {
             page.setOrder(Page.DESC);
         }
         page = calibrationExtService.findPage(page, filters);
-        ModelAndView mv = new ModelAndView("cms/calibrationExtList");
+        ModelAndView mv = new ModelAndView("cms/calibrationPlanList");
         mv.addObject("page", page);
+        mv.addObject("type", "calibrationExt");
         return mv;
     }
 
@@ -54,6 +55,7 @@ public class CalibrationExtController {
     public Object generateTask(HttpServletRequest request) {
         Map<String, Object> resultMap = new LinkedHashMap<>();
         resultMap.put("result", 1);
+        resultMap.put("msg", "任务生成成功");
         User user = cmsService.getUser(request);
         boolean result = calibrationExtService.generateTask(user);
         if (!result) {
