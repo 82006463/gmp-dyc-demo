@@ -75,6 +75,8 @@ public class CalibrationMonthQtz {
         entity.setCreateTime(new Date());
         entity.setStatus(1);
         entity.setEquipmentId(eq.getId());
+        entity.setLastExpectDate(eq.getLastExpectDate());
+        entity.setLastActualDate(eq.getLastActualDate());
         entity.setExpectDate(eq.getExpectDate());
         calibrationExtService.save(entity);
         return entity;
@@ -90,6 +92,8 @@ public class CalibrationMonthQtz {
         entity.setCreateTime(new Date());
         entity.setStatus(1);
         entity.setEquipmentId(eq.getId());
+        entity.setLastExpectDate(eq.getLastExpectDate());
+        entity.setLastActualDate(eq.getLastActualDate());
         entity.setExpectDate(eq.getExpectDate());
         calibrationInService.save(entity);
         return entity;
@@ -98,7 +102,9 @@ public class CalibrationMonthQtz {
     public void generateYear() {
         Page<Equipment> pageEq = new Page<>(Integer.MAX_VALUE);
         List<PropertyFilter> filters = new ArrayList<>(4);
-        String year = DateFormatUtils.format(new Date(), "yyyy");
+        Calendar cal = Calendar.getInstance();
+        String year = DateFormatUtils.format(cal.getTime(), "yyyy");
+        String nextYear = (Integer.parseInt(year) + 1) + "";
         filters.add(new PropertyFilter("GED_expectDate", year + "-01-01 00:00:00"));
         filters.add(new PropertyFilter("LED_expectDate", year + "-12-31 23:59:59"));
         pageEq = equipmentService.findPage(pageEq, filters);
@@ -107,33 +113,29 @@ public class CalibrationMonthQtz {
             return;
         }
 
-        Calendar cal = Calendar.getInstance();
         Page<CalibrationYear> pageYear = new Page<>(Integer.MAX_VALUE);
         for (Equipment eq : equipments) {
             if (eq.getCalibrationMode() == null)
                 continue;
             cal.setTime(eq.getExpectDate());
-            filters.clear();
-            filters.add(new PropertyFilter("EQL_equipmentId", eq.getId().toString()));
-            filters.add(new PropertyFilter("GED_expectDate", DateFormatUtils.format(cal.getTime(), "yyyy-MM") + "-01 00:00:00"));
-            filters.add(new PropertyFilter("LED_expectDate", DateFormatUtils.format(cal.getTime(), "yyyy-MM") + "-" + cal.getActualMaximum(Calendar.DATE) + " 23:59:59"));
-            saveYear(eq, eq.getExpectDate(), pageYear, filters);
-
-            year = (Integer.parseInt(year) + 1) + "";
-            Date tmpDate = eq.getExpectDate();
             cal.add(Calendar.YEAR, 1);
             for (int i = 1; i <= 12; i++) {
-                cal.setTime(tmpDate);
-                cal.add(Calendar.MONTH, eq.getCalibrationCycle());
-                tmpDate = cal.getTime();
-                if (!year.equals(DateFormatUtils.format(tmpDate, "yyyy"))) {
+                cal.add(Calendar.MONTH, -eq.getCalibrationCycle());
+                if (year.equals(DateFormatUtils.format(cal.getTime(), "yyyy"))) {
+                    cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                    break;
+                }
+            }
+            for (int i = 1; i <= 12; i++) {
+                if (!nextYear.equals(DateFormatUtils.format(cal.getTime(), "yyyy"))) {
                     break;
                 }
                 filters.clear();
                 filters.add(new PropertyFilter("EQL_equipmentId", eq.getId().toString()));
-                filters.add(new PropertyFilter("GED_expectDate", DateFormatUtils.format(tmpDate, "yyyy-MM") + "-01 00:00:00"));
-                filters.add(new PropertyFilter("LED_expectDate", DateFormatUtils.format(tmpDate, "yyyy-MM") + "-" + cal.getActualMaximum(Calendar.DATE) + " 23:59:59"));
-                saveYear(eq, tmpDate, pageYear, filters);
+                filters.add(new PropertyFilter("GED_expectDate", DateFormatUtils.format(cal.getTime(), "yyyy-MM") + "-01 00:00:00"));
+                filters.add(new PropertyFilter("LED_expectDate", DateFormatUtils.format(cal.getTime(), "yyyy-MM") + "-" + cal.getActualMaximum(Calendar.DATE) + " 23:59:59"));
+                saveYear(eq, cal.getTime(), pageYear, filters);
+                cal.add(Calendar.MONTH, eq.getCalibrationCycle());
             }
         }
     }

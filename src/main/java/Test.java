@@ -1,16 +1,13 @@
-import com.mongodb.*;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.apache.commons.lang.time.DateFormatUtils;
 
-import java.util.List;
-import java.util.Set;
+import java.util.Calendar;
 
 /**
  * Created by Administrator on 2017/5/1.
  */
 public class Test {
     public static void main(String[] args) {
-        MongoClient outClient = new MongoClient("101.200.36.213", 27017);
+        /*MongoClient outClient = new MongoClient("101.200.36.213", 27017);
         MongoDbFactory outFactory = new SimpleMongoDbFactory(outClient, "dyc_uc");
         DB outDB = outFactory.getDb();
 
@@ -31,6 +28,11 @@ public class Test {
             }
         }
         outClient.close();
-        inClient.close();
+        inClient.close();*/
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, 1);
+        System.err.println(cal.get(Calendar.MONTH));
+        System.err.println(DateFormatUtils.format(cal.getTime(), "yyyy-MM-dd"));
     }
 }
