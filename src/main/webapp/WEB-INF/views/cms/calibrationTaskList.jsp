@@ -29,30 +29,38 @@
 			<tr>
 				<td class="td_table_1">计量公司：</td>
 				<td class="td_table_2">
-					<input type="text" class="input_240" name="filter_EQS_code" value="${param['filter_EQS_code']}"/>
+					<select id="filter_EQL_measureCompId" name="filter_EQL_measureCompId" class="input_select">
+						<option value="">-请选择-</option>
+						<c:forEach items="${measureComps}" var="item">
+							<option value="${item.id}">${item.name}</option>
+						</c:forEach>
+					</select>
 				</td>
 				<td class="td_table_1">计量公司负责人：</td>
 				<td class="td_table_2">
-					<input type="text" class="input_240" name="filter_EQS_code" value="${param['filter_EQS_code']}"/>
+					<input type="text" id="filter_EQS_approver" name="filter_EQS_approver" value="${param['filter_EQS_approver']}" class="input_240"/>
 				</td>
 				<td class="td_table_2">
-					<input type="button" class='button_70px' value="发送任务"/>
+					<input type='submit' id="searchBtn" class='button_70px' value='查询'/>
 				</td>
 			</tr>
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=20% class="td_list_1">任务编号</td>
-				<td align=center width=30% class="td_list_1">计量公司</td>
-				<td align=center width=10% class="td_list_1">任务日期</td>
+				<td align=center width=10% class="td_list_1">任务编号</td>
+				<td align=center width=70% class="td_list_1">计量公司</td>
+				<td align=center width=10% class="td_list_1">任务生成日期</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item" varStatus="index">
 				<tr>
 					<td class="td_list_2" align=left>${index.count}</td>
 					<td class="td_list_2" align=left>${item.measureComp.name}</td>
-					<td class="td_list_2" align=left>${index.count}</td>
-					<td class="td_list_2" align=left>${item.status == 0 ? '删除':item.status > 0 ? '正常':''}</td>
+					<td class="td_list_2" align=left><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+					<td class="td_list_2" align=left>
+						<a href="${ctx}/custom/cms/calibrationTask/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
+						<a href="${ctx}/custom/cms/calibrationTask/view/${item.id}" class="btnView" title="查看">查看</a>
+					</td>
 				</tr>
 			</c:forEach>
 			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages}" totalRecords="${page.totalCount}" lookup="${lookup}"/>

@@ -3,6 +3,7 @@ package com.zhanlu.custom.cms.web;
 import com.zhanlu.custom.cms.entity.CalibrationTask;
 import com.zhanlu.custom.cms.service.CalibrationTaskService;
 import com.zhanlu.custom.cms.service.CmsService;
+import com.zhanlu.custom.cms.service.MeasureCompService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
@@ -24,6 +25,8 @@ import java.util.List;
 public class CalibrationTaskController {
 
     @Autowired
+    private MeasureCompService measureCompService;
+    @Autowired
     private CalibrationTaskService calibrationTaskService;
     @Autowired
     private CmsService cmsService;
@@ -41,6 +44,7 @@ public class CalibrationTaskController {
         page = calibrationTaskService.findPage(page, filters);
         ModelAndView mv = new ModelAndView("cms/calibrationTaskList");
         mv.addObject("page", page);
+        mv.addObject("measureComps", measureCompService.findList(null));
         return mv;
     }
 

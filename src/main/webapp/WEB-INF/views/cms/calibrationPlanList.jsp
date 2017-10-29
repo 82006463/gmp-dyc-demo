@@ -21,8 +21,11 @@
 				} else if($('#approver').val()=='') {
 					alert('请输入计量公司负责人');
 				} else {
-					$.getJSON('${ctx}/custom/cms/${type}/sendask',{}, function (data) {
+					$.getJSON('${ctx}/custom/cms/${type}/sendTask',{measureCompId:$('#measureCompId').val(), approver:$('#approver').val()}, function (data) {
 						alert(data.msg);
+						if (data.result == 1) {
+							$('#searchBtn').click();
+						}
 					});
 				}
 			}
@@ -64,6 +67,7 @@
 						<input type="button" class='button_70px' value="生成任务" onclick="generateTask(this);"/>
 					</c:if>
 					<c:if test="${status == 2}">
+						<input type='submit' id="searchBtn" class='button_70px' value='查询'/>
 						<input type="button" class='button_70px' value="发送任务" onclick="sendask(this);"/>
 						<input type="button" class='button_70px' value="导出Excel"/>
 					</c:if>
