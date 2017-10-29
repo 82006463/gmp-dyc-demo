@@ -21,11 +21,6 @@
 			<tr>
 				<td class="td_table_top" align="center">年度校准</td>
 			</tr>
-			<tr>
-				<td align="center">
-					<input type="button" class='button_70px' value="生成任务"/>
-				</td>
-			</tr>
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>

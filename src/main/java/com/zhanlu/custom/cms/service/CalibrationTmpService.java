@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 月度临校
@@ -36,12 +34,14 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
     }
 
     @Transactional
-    public boolean generateTask(User user) {
+    public Map<String, Object> generateTask(User user) {
         Page<CalibrationTmp> page = new Page<>(Integer.MAX_VALUE);
         List<PropertyFilter> filters = new ArrayList<>();
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         filters.add(new PropertyFilter("EQI_status", "1"));
         page = this.findPage(page, filters);
+
+        Map<String, Object> resultMap = new LinkedHashMap<>();
         if (page != null && page.getResult().size() > 0) {
             for (CalibrationTmp entity : page.getResult()) {
                 CalibrationTmpTask task = new CalibrationTmpTask();
@@ -53,7 +53,12 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
                 calibrationTmpTaskService.save(task);
                 entity.setStatus(2);
             }
+            resultMap.put("result", 1);
+            resultMap.put("msg", "任务生成成功");
+        } else {
+            resultMap.put("result", 0);
+            resultMap.put("msg", "暂时没有要生成的任务");
         }
-        return true;
+        return resultMap;
     }
 }

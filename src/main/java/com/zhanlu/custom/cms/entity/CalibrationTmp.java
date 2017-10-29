@@ -64,7 +64,7 @@ public class CalibrationTmp extends IdEntity {
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "last_expect_calibration_date")
+    @Column(name = "last_expect_date")
     public Date getLastExpectDate() {
         return lastExpectDate;
     }
@@ -74,7 +74,7 @@ public class CalibrationTmp extends IdEntity {
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "last_actual_calibration_date")
+    @Column(name = "last_actual_date")
     public Date getLastActualDate() {
         return lastActualDate;
     }
@@ -84,7 +84,7 @@ public class CalibrationTmp extends IdEntity {
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "expect_calibration_date")
+    @Column(name = "expect_date")
     public Date getExpectDate() {
         return expectDate;
     }
@@ -94,7 +94,7 @@ public class CalibrationTmp extends IdEntity {
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "actual_calibration_date")
+    @Column(name = "actual_date")
     public Date getActualDate() {
         return actualDate;
     }

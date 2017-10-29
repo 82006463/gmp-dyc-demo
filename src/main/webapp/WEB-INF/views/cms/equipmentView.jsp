@@ -63,9 +63,9 @@
 				</tr>
 				<tr>
 					<td class="td_table_1">上次校准时间：</td>
-					<td class="td_table_2"><fmt:formatDate value="${entity.lastCalibrationDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_table_2"><fmt:formatDate value="${entity.lastExpectDate}" pattern="yyyy-MM-dd"/></td>
 					<td class="td_table_1">待校准时间：</td>
-					<td class="td_table_2"><fmt:formatDate value="${entity.expectCalibrationDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_table_2"><fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/></td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">

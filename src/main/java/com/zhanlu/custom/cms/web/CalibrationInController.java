@@ -51,16 +51,8 @@ public class CalibrationInController {
     @ResponseBody
     @RequestMapping(value = "/generateTask", method = RequestMethod.GET)
     public Object generateTask(HttpServletRequest request) {
-        Map<String, Object> resultMap = new LinkedHashMap<>();
-        resultMap.put("result", 1);
-        resultMap.put("msg", "任务生成成功");
         User user = cmsService.getUser(request);
-        boolean result = calibrationInService.generateTask(user);
-        if (!result) {
-            resultMap.put("result", 0);
-            resultMap.put("msg", "任务生成失败");
-        }
-        return resultMap;
+        return calibrationInService.generateTask(user);
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)

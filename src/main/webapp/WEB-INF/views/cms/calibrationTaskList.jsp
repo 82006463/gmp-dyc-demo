@@ -30,28 +30,40 @@
 			<tr>
 				<td class="td_table_top" align="center">月度${type=='calibrationExtTask' ? '外校':type=='calibrationInTask' ? '内校':type=='calibrationTmpTask' ? '临校':''}任务</td>
 			</tr>
+		</table>
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td align="center">
-					<input type="button" class='button_70px' value="生成任务"/>
+				<td class="td_table_1">计量公司：</td>
+				<td class="td_table_2">
+					<input type="text" class="input_240" name="filter_EQS_code" value="${param['filter_EQS_code']}"/>
+				</td>
+				<td class="td_table_1">计量公司负责人：</td>
+				<td class="td_table_2">
+					<input type="text" class="input_240" name="filter_EQS_code" value="${param['filter_EQS_code']}"/>
+				</td>
+				<td class="td_table_2">
+					<input type="button" class='button_70px' value="发送任务"/>
 				</td>
 			</tr>
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=5% class="td_list_1">序号</td>
-				<td align=center width=25% class="td_list_1">器具编号</td>
-				<td align=center width=35% class="td_list_1">器具名称</td>
-				<td align=center width=20% class="td_list_1">所在房间</td>
+				<td align=center width=20% class="td_list_1">器具编号</td>
+				<td align=center width=30% class="td_list_1">器具名称</td>
+				<td align=center width=10% class="td_list_1">所在房间</td>
+				<td align=center width=10% class="td_list_1">上次校准时间</td>
+				<td align=center width=10% class="td_list_1">上次校准公司</td>
 				<td align=center width=10% class="td_list_1">待校准日期</td>
-				<td align=center width=5% class="td_list_1">状态</td>
+				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item" varStatus="index">
 				<tr>
-					<td class="td_list_2" align=left>${index.count}</td>
 					<td class="td_list_2" align=left>${item.equipment.code}</td>
 					<td class="td_list_2" align=left>${item.equipment.name}</td>
 					<td class="td_list_2" align=left>${item.equipment.room}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left>${item.equipment.code}</td>
+					<td class="td_list_2" align=left>${item.equipment.name}</td>
 					<td class="td_list_2" align=left>${item.status == 0 ? '删除':item.status > 0 ? '正常':''}</td>
 				</tr>
 			</c:forEach>

@@ -10,9 +10,7 @@
 		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
 		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
 		<script type="text/javascript">
-			function editStandardItem(item) {
-				var $item = $(item);
-				var checked = $item.prop('checked');
+			function generateTask(item) {
 				$.getJSON('${ctx}/custom/cms/${type}/generateTask',{}, function (data) {
 					alert(data.msg);
 				});
@@ -30,9 +28,11 @@
 			<tr>
 				<td class="td_table_top" align="center">月度${type=='calibrationExt' ? '外校':type=='calibrationIn' ? '内校':type=='calibrationTmp' ? '临校':''}</td>
 			</tr>
+		</table>
+		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td align="center">
-					<input type="button" class='button_70px' value="生成任务"/>
+				<td class="td_table_2" align="center">
+					<input type="button" class='button_70px' value="生成任务" onclick="generateTask(this);"/>
 				</td>
 			</tr>
 		</table>

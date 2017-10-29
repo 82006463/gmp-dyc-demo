@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 月度临校
@@ -51,16 +49,8 @@ public class CalibrationTmpController {
     @ResponseBody
     @RequestMapping(value = "/generateTask", method = RequestMethod.GET)
     public Object generateTask(HttpServletRequest request) {
-        Map<String, Object> resultMap = new LinkedHashMap<>();
-        resultMap.put("result", 1);
-        resultMap.put("msg", "任务生成成功");
         User user = cmsService.getUser(request);
-        boolean result = calibrationTmpService.generateTask(user);
-        if (!result) {
-            resultMap.put("result", 0);
-            resultMap.put("msg", "任务生成失败");
-        }
-        return resultMap;
+        return calibrationTmpService.generateTask(user);
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)

@@ -46,9 +46,11 @@ public class Equipment extends IdEntity {
     private Integer measureRangeMin;
     private Integer measureRangeMax;
     //上次校准时间
-    private Date lastCalibrationDate;
+    private Date lastExpectDate;
+    //上次校准时间
+    private Date lastActualDate;
     //待校准时间
-    private Date expectCalibrationDate;
+    private Date expectDate;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -192,23 +194,33 @@ public class Equipment extends IdEntity {
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "last_calibration_date")
-    public Date getLastCalibrationDate() {
-        return lastCalibrationDate;
+    @Column(name = "last_expect_date")
+    public Date getLastExpectDate() {
+        return lastExpectDate;
     }
 
-    public void setLastCalibrationDate(Date lastCalibrationDate) {
-        this.lastCalibrationDate = lastCalibrationDate;
+    public void setLastExpectDate(Date lastExpectDate) {
+        this.lastExpectDate = lastExpectDate;
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "expect_calibration_date")
-    public Date getExpectCalibrationDate() {
-        return expectCalibrationDate;
+    @Column(name = "last_actual_date")
+    public Date getLastActualDate() {
+        return lastActualDate;
     }
 
-    public void setExpectCalibrationDate(Date expectCalibrationDate) {
-        this.expectCalibrationDate = expectCalibrationDate;
+    public void setLastActualDate(Date lastActualDate) {
+        this.lastActualDate = lastActualDate;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "expect_date")
+    public Date getExpectDate() {
+        return expectDate;
+    }
+
+    public void setExpectDate(Date expectDate) {
+        this.expectDate = expectDate;
     }
 
     @Column(name = "creater_id")

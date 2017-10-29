@@ -20,6 +20,10 @@ public class CalibrationHist extends IdEntity {
     private Equipment equipment;
     //校准方式：1:内校, 2:外校, 3:临校
     private Integer calibrationMode;
+    //上次待校准时间
+    private Date lastExpectDate;
+    //上次实际校准时间
+    private Date lastActualDate;
     //待校准时间
     private Date expectDate;
     //实际校准时间
@@ -73,7 +77,27 @@ public class CalibrationHist extends IdEntity {
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "expect_calibration_date")
+    @Column(name = "last_expect_date")
+    public Date getLastExpectDate() {
+        return lastExpectDate;
+    }
+
+    public void setLastExpectDate(Date lastExpectDate) {
+        this.lastExpectDate = lastExpectDate;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "last_actual_date")
+    public Date getLastActualDate() {
+        return lastActualDate;
+    }
+
+    public void setLastActualDate(Date lastActualDate) {
+        this.lastActualDate = lastActualDate;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "expect_date")
     public Date getExpectDate() {
         return expectDate;
     }
@@ -83,7 +107,7 @@ public class CalibrationHist extends IdEntity {
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "actual_calibration_date")
+    @Column(name = "actual_date")
     public Date getActualDate() {
         return actualDate;
     }

@@ -38,8 +38,8 @@ public class CalibrationMonthQtz {
         Page<Equipment> pageEq = new Page<>(Integer.MAX_VALUE);
         List<PropertyFilter> filters = new ArrayList<>(4);
         String year = DateFormatUtils.format(new Date(), "yyyy");
-        filters.add(new PropertyFilter("GED_expectCalibrationDate", year + "-01-01 00:00:00"));
-        filters.add(new PropertyFilter("LED_expectCalibrationDate", year + "-12-31 23:59:59"));
+        filters.add(new PropertyFilter("GED_expectDate", year + "-01-01 00:00:00"));
+        filters.add(new PropertyFilter("LED_expectDate", year + "-12-31 23:59:59"));
         pageEq = equipmentService.findPage(pageEq, filters);
         List<Equipment> equipments = pageEq.getResult();
         if (equipments == null || equipments.isEmpty()) {
@@ -52,7 +52,7 @@ public class CalibrationMonthQtz {
         for (Equipment eq : equipments) {
             if (eq.getCalibrationMode() == null)
                 continue;
-            cal.setTime(eq.getExpectCalibrationDate());
+            cal.setTime(eq.getExpectDate());
             filters.clear();
             filters.add(new PropertyFilter("EQL_equipmentId", eq.getId().toString()));
             filters.add(new PropertyFilter("GED_expectDate", DateFormatUtils.format(cal.getTime(), "yyyy-MM") + "-01 00:00:00"));
@@ -75,7 +75,7 @@ public class CalibrationMonthQtz {
         entity.setCreateTime(new Date());
         entity.setStatus(1);
         entity.setEquipmentId(eq.getId());
-        entity.setExpectDate(eq.getExpectCalibrationDate());
+        entity.setExpectDate(eq.getExpectDate());
         calibrationExtService.save(entity);
         return entity;
     }
@@ -90,7 +90,7 @@ public class CalibrationMonthQtz {
         entity.setCreateTime(new Date());
         entity.setStatus(1);
         entity.setEquipmentId(eq.getId());
-        entity.setExpectDate(eq.getExpectCalibrationDate());
+        entity.setExpectDate(eq.getExpectDate());
         calibrationInService.save(entity);
         return entity;
     }
@@ -99,8 +99,8 @@ public class CalibrationMonthQtz {
         Page<Equipment> pageEq = new Page<>(Integer.MAX_VALUE);
         List<PropertyFilter> filters = new ArrayList<>(4);
         String year = DateFormatUtils.format(new Date(), "yyyy");
-        filters.add(new PropertyFilter("GED_expectCalibrationDate", year + "-01-01 00:00:00"));
-        filters.add(new PropertyFilter("LED_expectCalibrationDate", year + "-12-31 23:59:59"));
+        filters.add(new PropertyFilter("GED_expectDate", year + "-01-01 00:00:00"));
+        filters.add(new PropertyFilter("LED_expectDate", year + "-12-31 23:59:59"));
         pageEq = equipmentService.findPage(pageEq, filters);
         List<Equipment> equipments = pageEq.getResult();
         if (equipments == null || equipments.isEmpty()) {
@@ -112,15 +112,15 @@ public class CalibrationMonthQtz {
         for (Equipment eq : equipments) {
             if (eq.getCalibrationMode() == null)
                 continue;
-            cal.setTime(eq.getExpectCalibrationDate());
+            cal.setTime(eq.getExpectDate());
             filters.clear();
             filters.add(new PropertyFilter("EQL_equipmentId", eq.getId().toString()));
             filters.add(new PropertyFilter("GED_expectDate", DateFormatUtils.format(cal.getTime(), "yyyy-MM") + "-01 00:00:00"));
             filters.add(new PropertyFilter("LED_expectDate", DateFormatUtils.format(cal.getTime(), "yyyy-MM") + "-" + cal.getActualMaximum(Calendar.DATE) + " 23:59:59"));
-            saveYear(eq, eq.getExpectCalibrationDate(), pageYear, filters);
+            saveYear(eq, eq.getExpectDate(), pageYear, filters);
 
             year = (Integer.parseInt(year) + 1) + "";
-            Date tmpDate = eq.getExpectCalibrationDate();
+            Date tmpDate = eq.getExpectDate();
             cal.add(Calendar.YEAR, 1);
             for (int i = 1; i <= 12; i++) {
                 cal.setTime(tmpDate);
