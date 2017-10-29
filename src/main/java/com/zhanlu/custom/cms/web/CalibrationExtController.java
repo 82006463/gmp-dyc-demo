@@ -38,10 +38,12 @@ public class CalibrationExtController {
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         ModelAndView mv = new ModelAndView("cms/calibrationPlanList");
         if (status != null && status.intValue() == 2) {
-            filters.add(new PropertyFilter("EQL_status", status.toString()));
+            filters.add(new PropertyFilter("EQI_status", status.toString()));
             mv.addObject("type", "calibrationExt2");
+            mv.addObject("status", 2);
         } else {
             mv.addObject("type", "calibrationExt");
+            mv.addObject("status", 1);
         }
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
