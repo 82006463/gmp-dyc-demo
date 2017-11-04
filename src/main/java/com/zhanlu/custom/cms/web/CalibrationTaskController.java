@@ -48,7 +48,7 @@ public class CalibrationTaskController {
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
-            page.setOrderBy("createTime");
+            page.setOrderBy("id");
             page.setOrder(Page.DESC);
         }
         page = calibrationTaskService.findPage(page, filters);

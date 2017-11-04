@@ -1,4 +1,5 @@
 var Ops = {};
+
 Ops.submit = function () {
     if ($('#inputForm').validationEngine('validate')) {
         return true;

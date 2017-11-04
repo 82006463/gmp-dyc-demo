@@ -53,7 +53,7 @@ public class CalibrationExtController {
         }
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
-            page.setOrderBy("createTime");
+            page.setOrderBy("id");
             page.setOrder(Page.DESC);
         }
         page = calibrationExtService.findPage(page, filters);
