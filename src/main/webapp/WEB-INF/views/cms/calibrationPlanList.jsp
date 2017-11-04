@@ -90,6 +90,7 @@
 				<td align=center width=20% class="td_list_1">所在房间</td>
 				<td align=center width=10% class="td_list_1">待校准日期</td>
 				<td align=center width=5% class="td_list_1">状态</td>
+				<td align=center width=5% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item" varStatus="index">
 				<tr>
@@ -99,6 +100,13 @@
 					<td class="td_list_2" align=left>${item.equipment.room}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
 					<td class="td_list_2" align=left>${item.status == 0 ? '删除':item.status > 0 ? '正常':''}</td>
+					<td class="td_list_2" align=left>
+						<c:if test="${status == 2}">
+						<shiro:hasPermission name="cms_${type}2_edit">
+							<a href="${ctx}/custom/cms/${type}/delete/${item.id}?status=${status}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+						</shiro:hasPermission>
+						</c:if>
+					</td>
 				</tr>
 			</c:forEach>
 			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages}" totalRecords="${page.totalCount}" lookup="${lookup}"/>

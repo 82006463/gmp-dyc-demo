@@ -88,6 +88,15 @@ public class CalibrationInController {
         return resultMap;
     }
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public ModelAndView delete(@PathVariable("id") Long id, Integer status) {
+        CalibrationIn entity = calibrationInService.findById(id);
+        entity.setStatus(1);
+        calibrationInService.saveOrUpdate(entity);
+        ModelAndView mv = new ModelAndView("redirect:/custom/cms/calibrationIn/" + status);
+        return mv;
+    }
+
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("id") Long id) {
         CalibrationIn entity = calibrationInService.findById(id);
