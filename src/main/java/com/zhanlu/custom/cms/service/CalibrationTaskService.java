@@ -66,18 +66,27 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 plan.setActualDate(actualDates == null ? null : DateUtils.parseDate(actualDates[i], new String[]{"yyyy-MM-dd"}));
                 if (StringUtils.isNotBlank(tmpPath))
                     plan.setFilePath(tmpPath);
+                if (calibrationResults != null && calibrationResults[i].equals("0")) {
+                    plan.getEquipment().setTmpStatus(1);
+                }
             } else if (entity.getCalibrationMode().intValue() == 2) {
                 CalibrationExt plan = calibrationExtService.findById(Long.parseLong(planId));
                 plan.setCalibrationResult(calibrationResults == null ? null : calibrationResults[i]);
                 plan.setActualDate(actualDates == null ? null : DateUtils.parseDate(actualDates[i], new String[]{"yyyy-MM-dd"}));
                 if (StringUtils.isNotBlank(tmpPath))
                     plan.setFilePath(tmpPath);
+                if (calibrationResults != null && calibrationResults[i].equals("0")) {
+                    plan.getEquipment().setTmpStatus(1);
+                }
             } else if (entity.getCalibrationMode().intValue() == 3) {
                 CalibrationTmp plan = calibrationTmpService.findById(Long.parseLong(planId));
                 plan.setCalibrationResult(calibrationResults == null ? null : calibrationResults[i]);
                 plan.setActualDate(actualDates == null ? null : DateUtils.parseDate(actualDates[i], new String[]{"yyyy-MM-dd"}));
                 if (StringUtils.isNotBlank(tmpPath))
                     plan.setFilePath(tmpPath);
+                if (calibrationResults != null && calibrationResults[i].equals("0")) {
+                    plan.getEquipment().setTmpStatus(1);
+                }
             }
         }
         return entity;
