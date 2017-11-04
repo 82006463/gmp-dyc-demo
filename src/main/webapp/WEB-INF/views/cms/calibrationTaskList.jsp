@@ -32,7 +32,7 @@
 					<select id="filter_EQL_measureCompId" name="filter_EQL_measureCompId" class="input_select">
 						<option value="">-请选择-</option>
 						<c:forEach items="${measureComps}" var="item">
-							<option value="${item.id}">${item.name}</option>
+							<option value="${item.id}" ${param['filter_EQL_measureCompId']==item.id ? 'selected="selected"':''}>${item.name}</option>
 						</c:forEach>
 					</select>
 				</td>
@@ -59,7 +59,7 @@
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td class="td_list_2" align=left>
 						<a href="${ctx}/custom/cms/calibrationTask/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
-						<%--<a href="${ctx}/custom/cms/calibrationTask/view/${item.id}" class="btnView" title="查看">查看</a>--%>
+						<a href="${ctx}/custom/cms/calibrationTask/view/${item.id}" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>
 			</c:forEach>
