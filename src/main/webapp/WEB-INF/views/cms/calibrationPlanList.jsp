@@ -48,8 +48,8 @@
 			<tr>
 				<td class="td_table_1">待校准日期：</td>
 				<td class="td_table_2" colspan="3">
-					<input type="text" name="filter_GED_expectDate" value="${param['filter_GED_expectDate']}" class="input_240" onclick="WdatePicker({dateFmt:'yyyy-MM'});" readonly="readonly"/>~
-					<input type="text" name="filter_LED_expectDate" value="${param['filter_LED_expectDate']}" class="input_240" onclick="WdatePicker({dateFmt:'yyyy-MM'});" readonly="readonly"/>
+					<input type="text" name="filter_GED_expectDate" value="${param['filter_GED_expectDate']}" class="input_240" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>~
+					<input type="text" name="filter_LED_expectDate" value="${param['filter_LED_expectDate']}" class="input_240" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>
 				</td>
 			</tr>
 			<c:if test="${status == 2}">
@@ -71,12 +71,11 @@
 			</c:if>
 			<tr>
 				<td class="td_table_2" align="center" colspan="4">
-					<input type='submit' class='button_70px' value='查询'/>
+					<input type='submit' id="searchBtn" class='button_70px' value='查询'/>
 					<c:if test="${status != 2}">
 						<input type="button" class='button_70px' value="生成任务" onclick="generateTask(this);"/>
 					</c:if>
 					<c:if test="${status == 2}">
-						<input type='submit' id="searchBtn" class='button_70px' value='查询'/>
 						<input type="button" class='button_70px' value="发送任务" onclick="sendask(this);"/>
 						<input type="button" class='button_70px' value="导出Excel"/>
 					</c:if>

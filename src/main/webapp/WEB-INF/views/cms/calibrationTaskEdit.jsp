@@ -11,13 +11,16 @@
 		<script type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
 		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
 		<script type="text/javascript">
-
+			function updateTask() {
+				bringback('${item.id}','${item.name}');
+			}
 		</script>
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/custom/cms/calibrationTask/update" method="post">
+	<form id="mainForm" enctype="multipart/form-data" action="${ctx}/custom/cms/calibrationTask/update" method="post">
 		<input type="hidden" name="id" value="${entity.id}" class="input_240" />
+		<input type="hidden" name="status" value="${entity.status}" class="input_240" />
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="center">待办任务</td>
@@ -37,7 +40,10 @@
 			</tr>
 			<c:forEach items="${children}" var="item" varStatus="index">
 				<tr>
-					<td class="td_list_2" align=left>${item.equipment.code}</td>
+					<td class="td_list_2" align=left>
+						${item.equipment.code}
+						<input type="hidden" name="planId" value="${item.id}" class="input_240" />
+					</td>
 					<td class="td_list_2" align=left>${item.equipment.name}</td>
 					<td class="td_list_2" align=left>${item.equipment.room}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.lastActualDate}" pattern="yyyy-MM-dd"/></td>
@@ -51,10 +57,10 @@
 						</select>
 					</td>
 					<td class="td_list_2" align=left>
-						<input type="text" name="expectDate" value="<fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240" style="width: 100%;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
+						<input type="text" name="actualDate" value="<fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/>" class="input_240" style="width: 100%;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
 					</td>
 					<td class="td_list_2" align=left>
-
+						<input type="file" name="files" class="input_240" style="width: 100%;"/>
 					</td>
 				</tr>
 			</c:forEach>
@@ -63,11 +69,11 @@
 				<td class="td_table_2">
 				</td>
 				<td class="td_table_2" colspan="8">
-					<c:if test="${!empty entity.current && entity.current == approver}">
+					<c:if test="${!empty entity.current && entity.current == entity.approver && (entity.status==1 || entity.status==2)}">
 						<input type='submit' id="tempBtn" class='button_70px' value="暂存"/>
 						<input type='submit' id="submitBtn" class='button_70px' value="提交"/>
 					</c:if>
-					<c:if test="${!empty entity.current && entity.current == reviewer}">
+					<c:if test="${!empty entity.current && entity.current == entity.reviewer && entity.status==3}">
 						<input type='submit' id="reviewBtn" class='button_70px' value="复核"/>
 						<input type='submit' id="rejectBtn" class='button_70px' value="拒绝"/>
 					</c:if>

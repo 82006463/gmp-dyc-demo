@@ -10,16 +10,13 @@ import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 月度外校任务
@@ -85,11 +82,16 @@ public class CalibrationTaskController {
 
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Object update(Long id, HttpServletRequest req) {
+    public ModelAndView update(Long id, Integer status, @RequestParam(value = "files", required = false) CommonsMultipartFile[] files, HttpServletRequest req) {
         CalibrationTask entity = calibrationTaskService.findById(id);
-        Map<String, String[]> paramMap = req.getParameterMap();
-        String[] ids = paramMap.get("ids");
-        return null;
+        entity.setStatus(status);
+        try {
+            calibrationTaskService.updateTask(entity, files, req.getParameterMap());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ModelAndView mv = new ModelAndView("redirect:/custom/cms/calibrationTask");
+        return mv;
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)

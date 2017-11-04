@@ -38,9 +38,9 @@ public class CalibrationExtController {
     private CmsService cmsService;
 
     @RequestMapping(value = "/{status}", method = RequestMethod.GET)
-    public ModelAndView list(Page<CalibrationExt> page, @PathVariable Integer status, HttpServletRequest request) {
-        User user = cmsService.getUser(request);
-        List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
+    public ModelAndView list(Page<CalibrationExt> page, @PathVariable Integer status, HttpServletRequest req) {
+        User user = cmsService.getUser(req);
+        List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(req);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         ModelAndView mv = new ModelAndView("cms/calibrationPlanList");
         mv.addObject("type", "calibrationExt");

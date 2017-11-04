@@ -58,7 +58,10 @@
 				<td class="td_table_2">
 					<input type="text" id="filter_EQS_approver" name="filter_EQS_approver" value="${param['filter_EQS_approver']}" class="input_240"/>
 				</td>
-				<td class="td_table_2">
+
+			</tr>
+			<tr>
+				<td class="td_table_2" align="center" colspan="4">
 					<input type='submit' id="searchBtn" class='button_70px' value='查询'/>
 				</td>
 			</tr>
@@ -76,7 +79,9 @@
 					<td class="td_list_2" align=left>${item.measureComp.name}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td class="td_list_2" align=left>
-						<a href="#" class="btnEdit" title="编辑" onclick="return openTasks(this, 'update', ${item.id});">编辑</a>
+						<c:if test="${item.current == username && item.status < 4}">
+							<a href="${ctx}/custom/cms/calibrationTask/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
+						</c:if>
 						<a href="#" class="btnView" title="查看" onclick="return openTasks(this, 'view', ${item.id});">查看</a>
 					</td>
 				</tr>
