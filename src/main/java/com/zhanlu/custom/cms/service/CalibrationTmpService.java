@@ -39,7 +39,6 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
         Page<Equipment> page = new Page<>(Integer.MAX_VALUE);
         List<PropertyFilter> filters = new ArrayList<>();
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
-        filters.add(new PropertyFilter("EQI_status", "1"));
         filters.add(new PropertyFilter("EQI_tmpStatus", "1"));
         equipmentService.findPage(page, filters);
         if (page != null && page.getResult().size() > 0) {
