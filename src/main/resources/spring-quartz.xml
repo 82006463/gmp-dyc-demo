@@ -19,7 +19,7 @@
 	</bean>
 	<bean id="calibrationMonthQtzGenerateMonthTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="calibrationMonthQtzGenerateMonthJob" />
-		<property name="cronExpression" value="0/5 * * * * ?" />
+		<property name="cronExpression" value="1 1 1 1 * ?" />
 	</bean>
 
 	<bean id="calibrationMonthQtzGenerateYearJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -29,7 +29,7 @@
 	</bean>
 	<bean id="calibrationMonthQtzGenerateYearTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="calibrationMonthQtzGenerateYearJob" />
-		<property name="cronExpression" value="0/5 * * * * ?" />
+		<property name="cronExpression" value="59 23 31 12 * ?" />
 	</bean>
 
 </beans>
