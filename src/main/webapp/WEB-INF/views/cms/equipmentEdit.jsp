@@ -16,6 +16,7 @@
 		<form id="inputForm" action="${ctx}/custom/cms/equipment/update" method="post">
 			<input type="hidden" name="id" id="id" value="${entity.id}"/>
 			<input type="hidden" name="status" id="status" value="${entity.status}"/>
+			<input type="hidden" name="tmpStatus" id="tmpStatus" value="${entity.tmpStatus}"/>
 
 			<input type="hidden" id="op" name="op" value="${op}"/>
 			<input type="hidden" id="tenantId" name="tenantId" value="${entity.tenantId}"/>

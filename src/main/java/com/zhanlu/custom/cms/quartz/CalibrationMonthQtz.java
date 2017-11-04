@@ -13,6 +13,7 @@ import com.zhanlu.framework.common.page.PropertyFilter;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,6 +35,7 @@ public class CalibrationMonthQtz {
     @Autowired
     private CalibrationYearService calibrationYearService;
 
+    @Transactional
     public void generateMonth() {
         Page<Equipment> pageEq = new Page<>(Integer.MAX_VALUE);
         List<PropertyFilter> filters = new ArrayList<>(4);
@@ -52,6 +54,7 @@ public class CalibrationMonthQtz {
         for (Equipment eq : equipments) {
             if (eq.getCalibrationMode() == null)
                 continue;
+            eq.setTmpStatus(2);
             cal.setTime(eq.getExpectDate());
             filters.clear();
             filters.add(new PropertyFilter("EQL_equipmentId", eq.getId().toString()));
@@ -99,6 +102,7 @@ public class CalibrationMonthQtz {
         return entity;
     }
 
+    @Transactional
     public void generateYear() {
         Page<Equipment> pageEq = new Page<>(Integer.MAX_VALUE);
         List<PropertyFilter> filters = new ArrayList<>(4);

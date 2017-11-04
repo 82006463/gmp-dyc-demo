@@ -40,6 +40,8 @@ public class Equipment extends IdEntity {
     private String calibrationName;
     //校准方式：1:内校, 2:外校
     private Integer calibrationMode;
+    //临时校准的辅助状态
+    private Integer tmpStatus;
     //校准周期：单位月
     private Integer calibrationCycle;
     //测量范围上限、测量范围下限
@@ -164,6 +166,15 @@ public class Equipment extends IdEntity {
 
     public void setCalibrationMode(Integer calibrationMode) {
         this.calibrationMode = calibrationMode;
+    }
+
+    @Column(name = "tmp_status")
+    public Integer getTmpStatus() {
+        return tmpStatus;
+    }
+
+    public void setTmpStatus(Integer tmpStatus) {
+        this.tmpStatus = tmpStatus;
     }
 
     @Column(name = "calibration_cycle")

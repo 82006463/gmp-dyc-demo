@@ -3,6 +3,7 @@ package com.zhanlu.custom.cms.service;
 import com.zhanlu.custom.cms.dao.CalibrationTmpDao;
 import com.zhanlu.custom.cms.entity.CalibrationTask;
 import com.zhanlu.custom.cms.entity.CalibrationTmp;
+import com.zhanlu.custom.cms.entity.Equipment;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.common.service.CommonService;
@@ -24,11 +25,40 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
     private CalibrationTmpDao calibrationTmpDao;
     @Autowired
     private CalibrationTaskService calibrationTaskService;
+    @Autowired
+    private EquipmentService equipmentService;
 
     @PostConstruct
     @Override
     public void initDao() {
         super.commonDao = calibrationTmpDao;
+    }
+
+    @Transactional
+    public boolean init(User user) {
+        Page<Equipment> page = new Page<>(Integer.MAX_VALUE);
+        List<PropertyFilter> filters = new ArrayList<>();
+        filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
+        filters.add(new PropertyFilter("EQI_status", "1"));
+        filters.add(new PropertyFilter("EQI_tmpStatus", "1"));
+        equipmentService.findPage(page, filters);
+        if (page != null && page.getResult().size() > 0) {
+            for (Equipment eq : page.getResult()) {
+                eq.setTmpStatus(2);
+
+                CalibrationTmp entity = new CalibrationTmp();
+                entity.setTenantId(eq.getTenantId());
+                entity.setCreaterId(user.getId());
+                entity.setCreateTime(new Date());
+                entity.setStatus(1);
+                entity.setEquipmentId(eq.getId());
+                entity.setLastExpectDate(eq.getLastExpectDate());
+                entity.setLastActualDate(eq.getLastActualDate());
+                entity.setExpectDate(eq.getExpectDate());
+                this.save(entity);
+            }
+        }
+        return true;
     }
 
     @Transactional

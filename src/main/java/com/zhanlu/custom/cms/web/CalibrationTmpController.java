@@ -47,6 +47,7 @@ public class CalibrationTmpController {
             mv.addObject("status", 2);
             mv.addObject("measureComps", measureCompService.findList(null));
         } else {
+            calibrationTmpService.init(user);
             mv.addObject("status", 1);
         }
         //设置默认排序方式

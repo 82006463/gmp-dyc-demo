@@ -49,6 +49,7 @@ public class EquipmentController {
     public ModelAndView create() {
         ModelAndView mv = new ModelAndView("cms/equipmentEdit");
         Equipment entity = new Equipment();
+        entity.setTmpStatus(1);
         mv.addObject("entity", entity);
         return mv;
     }
