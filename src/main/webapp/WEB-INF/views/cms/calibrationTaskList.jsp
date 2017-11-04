@@ -38,11 +38,6 @@
 						</c:forEach>
 					</select>
 				</td>
-				<td class="td_table_1">计量公司负责人：</td>
-				<td class="td_table_2">
-					<input type="text" id="filter_EQS_approver" name="filter_EQS_approver" value="${param['filter_EQS_approver']}" class="input_240"/>
-				</td>
-
 			</tr>
 			<tr>
 				<td class="td_table_2" align="center" colspan="4">
