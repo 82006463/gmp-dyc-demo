@@ -12,7 +12,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/custom/cms/customerComp" method="get">
+	<form id="mainForm" action="${ctx}/custom/cms/drugComp" method="get">
 		<input type="hidden" name="lookup" value="${lookup}" />
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>

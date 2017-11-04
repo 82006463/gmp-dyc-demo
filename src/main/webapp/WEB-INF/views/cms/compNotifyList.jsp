@@ -23,6 +23,21 @@
 			</tr>
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
+			<tr>
+				<td class="td_table_1">接收人：</td>
+				<td class="td_table_2">
+					<select name="filter_EQI_notifyType" class="input_select">
+						<option value="">--请选择--</option>
+						<option value="1" ${param['filter_EQI_notifyType']==1 ? 'selected="selected"':''}>所有客户</option>
+						<option value="2" ${param['filter_EQI_notifyType']==2 ? 'selected="selected"':''}>所有计量服务商</option>
+						<option value="3" ${param['filter_EQI_notifyType']==3 ? 'selected="selected"':''}>所有系统用户</option>
+					</select>
+				</td>
+				<td class="td_table_1">通知标题：</td>
+				<td class="td_table_2">
+					<input type="text" class="input_240" name="filter_LIKES_subject" value="${param['filter_LIKES_subject']}"/>
+				</td>
+			</tr>
 		</table>
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
