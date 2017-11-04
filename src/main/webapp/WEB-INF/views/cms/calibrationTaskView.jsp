@@ -28,6 +28,7 @@
 				<td align=center width=10% class="td_list_1">校准有效期</td>
 				<td align=center width=10% class="td_list_1">校准结果</td>
 				<td align=center width=10% class="td_list_1">实际校准时间</td>
+				<td align=center width=10% class="td_list_1">动作</td>
 			</tr>
 			<c:forEach items="${children}" var="item" varStatus="index">
 				<tr>
@@ -39,8 +40,19 @@
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
 					<td class="td_list_2" align=left>${item.calibrationResult}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left>
+						<a href="${ctx}/custom/cms/calibrationTask/download/${entity.id}?planId=${item.id}" title="下载" target="_blank">下载</a>
+					</td>
 				</tr>
 			</c:forEach>
+		</table>
+
+		<table align="center" border="0" cellpadding="0" cellspacing="0">
+			<tr align="left">
+				<td colspan="1">
+					<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
+				</td>
+			</tr>
 		</table>
 	</form>
 	</body>

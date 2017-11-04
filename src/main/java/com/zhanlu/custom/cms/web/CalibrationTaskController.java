@@ -8,6 +8,8 @@ import com.zhanlu.custom.cms.service.*;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,6 +105,7 @@ public class CalibrationTaskController {
     public ModelAndView view(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView("cms/calibrationTaskView");
         CalibrationTask entity = calibrationTaskService.findById(id);
+        mv.addObject("entity", entity);
         List<PropertyFilter> filters = new ArrayList<>();
         filters.add(new PropertyFilter("EQL_taskId", id.toString()));
         if (entity.getCalibrationMode().intValue() == 1) {
@@ -114,6 +122,31 @@ public class CalibrationTaskController {
             mv.addObject("children", page.getResult());
         }
         return mv;
+    }
+
+    @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
+    public ModelAndView download(@PathVariable("id") Long id, Long planId, HttpServletResponse resp) {
+        CalibrationTask entity = calibrationTaskService.findById(id);
+        String filePath = null;
+        if (entity.getCalibrationMode().intValue() == 1) {
+            filePath = calibrationInService.findById(planId).getFilePath();
+        } else if (entity.getCalibrationMode().intValue() == 2) {
+            filePath = calibrationExtService.findById(planId).getFilePath();
+        } else if (entity.getCalibrationMode().intValue() == 3) {
+            filePath = calibrationTmpService.findById(planId).getFilePath();
+        }
+        if (StringUtils.isNotBlank(filePath)) {
+            File file = new File(filePath);
+            if (file.exists()) {
+                resp.setContentType("application/force-download");// 设置强制下载不打开
+                try (OutputStream out = resp.getOutputStream(); FileInputStream fis = new FileInputStream(file)) {
+                    resp.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(filePath.substring(filePath.lastIndexOf("/") + 1), "UTF-8"));
+                    IOUtils.copy(fis, out);
+                } catch (Exception e) {
+                }
+            }
+        }
+        return null;
     }
 
 }

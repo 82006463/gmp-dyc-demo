@@ -20,7 +20,7 @@
 	<body>
 	<form id="mainForm" enctype="multipart/form-data" action="${ctx}/custom/cms/calibrationTask/update" method="post">
 		<input type="hidden" name="id" value="${entity.id}" class="input_240" />
-		<input type="hidden" name="status" value="${entity.status}" class="input_240" />
+		<input type="hidden" id="status" name="status" value="${entity.status}" class="input_240" />
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="center">待办任务</td>
@@ -71,11 +71,11 @@
 				<td class="td_table_2" colspan="8">
 					<c:if test="${!empty entity.current && entity.current == entity.approver && (entity.status==1 || entity.status==2)}">
 						<input type='submit' id="tempBtn" class='button_70px' value="暂存"/>
-						<input type='submit' id="submitBtn" class='button_70px' value="提交"/>
+						<input type='submit' id="submitBtn" class='button_70px' value="提交" onclick="$('#status').val(3);"/>
 					</c:if>
 					<c:if test="${!empty entity.current && entity.current == entity.reviewer && entity.status==3}">
-						<input type='submit' id="reviewBtn" class='button_70px' value="复核"/>
-						<input type='submit' id="rejectBtn" class='button_70px' value="拒绝"/>
+						<input type='submit' id="reviewBtn" class='button_70px' value="复核" onclick="$('#status').val(4);"/>
+						<input type='submit' id="rejectBtn" class='button_70px' value="拒绝" onclick="$('#status').val(2);"/>
 					</c:if>
 				</td>
 			</tr>

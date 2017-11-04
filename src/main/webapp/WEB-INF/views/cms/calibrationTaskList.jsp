@@ -12,23 +12,7 @@
 		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
 		<script type="text/javascript" src="${ctx}/styles/wbox/wbox.js"></script>
 		<script type="text/javascript">
-			var iframewbox;
-			function openTasks(opTag, op, taskId) {
-				iframewbox = $(opTag).wBox({
-					requestType: "iframe",
-					iframeWH: {width: 1200, height: 500},
-					title: "任务审批",
-					show: true,
-					target: "${ctx}/custom/cms/calibrationTask/"+ op +"/" + taskId
-				});
-				return false;
-			}
 
-			function callbackProcess(id, name) {
-				if (iframewbox) {
-					iframewbox.close();
-				}
-			}
 		</script>
 	</head>
 
@@ -71,6 +55,7 @@
 				<td align=center width=10% class="td_list_1">任务编号</td>
 				<td align=center width=70% class="td_list_1">计量公司</td>
 				<td align=center width=10% class="td_list_1">任务生成日期</td>
+				<td align=center width=10% class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item" varStatus="index">
@@ -78,11 +63,12 @@
 					<td class="td_list_2" align=left>${index.count}</td>
 					<td class="td_list_2" align=left>${item.measureComp.name}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+					<td class="td_list_2" align=left>${item.status==1 ? '审核中':item.status==2 ? '拒绝中':item.status==3 ? '复核中':item.status==4 ? '完成':''}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${item.current == username && item.status < 4}">
 							<a href="${ctx}/custom/cms/calibrationTask/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
 						</c:if>
-						<a href="#" class="btnView" title="查看" onclick="return openTasks(this, 'view', ${item.id});">查看</a>
+						<a href="${ctx}/custom/cms/calibrationTask/view/${item.id}" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>
 			</c:forEach>
