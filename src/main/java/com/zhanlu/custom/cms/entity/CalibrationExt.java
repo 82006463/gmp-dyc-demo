@@ -28,6 +28,8 @@ public class CalibrationExt extends IdEntity {
     private Date actualDate;
     //校准结果
     private String calibrationResult;
+    //附件路径
+    private String filePath;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -112,6 +114,15 @@ public class CalibrationExt extends IdEntity {
 
     public void setCalibrationResult(String calibrationResult) {
         this.calibrationResult = calibrationResult;
+    }
+
+    @Column(name = "file_path", length = 100)
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     @Column(name = "creater_id")

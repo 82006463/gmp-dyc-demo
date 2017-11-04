@@ -60,6 +60,7 @@ public class SystemContoller {
 	@RequestMapping(value = "/right" ,method=RequestMethod.GET)
 	public String right(Model model) {
 		//return "system/right";
-		return "redirect:/flow/task/list";
+		//return "redirect:/flow/task/list";
+		return "redirect:/custom/cms/calibrationTask";
 	}
 }

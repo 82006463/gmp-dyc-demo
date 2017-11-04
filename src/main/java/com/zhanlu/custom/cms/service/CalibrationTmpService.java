@@ -1,7 +1,6 @@
 package com.zhanlu.custom.cms.service;
 
 import com.zhanlu.custom.cms.dao.CalibrationTmpDao;
-import com.zhanlu.custom.cms.entity.CalibrationExt;
 import com.zhanlu.custom.cms.entity.CalibrationTask;
 import com.zhanlu.custom.cms.entity.CalibrationTmp;
 import com.zhanlu.framework.common.page.Page;
@@ -71,6 +70,8 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
             task.setStatus(1);
             task.setMeasureCompId(measureCompId);
             task.setApprover(approver);
+            task.setReviewer(user.getUsername());
+            task.setCurrent(task.getApprover());
             task.setCalibrationMode(3);
             calibrationTaskService.save(task);
             for (CalibrationTmp entity : page.getResult()) {

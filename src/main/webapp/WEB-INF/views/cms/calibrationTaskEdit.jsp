@@ -8,6 +8,7 @@
 		<%@ include file="/common/meta.jsp"%>
 		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
 		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
 		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
 		<script type="text/javascript">
 
@@ -15,7 +16,8 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/custom/cms/calibrationTask/update" method="get">
+	<form id="mainForm" action="${ctx}/custom/cms/calibrationTask/update" method="post">
+		<input type="hidden" name="id" value="${entity.id}" class="input_240" />
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
 				<td class="td_table_top" align="center">待办任务</td>
@@ -41,13 +43,36 @@
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.lastActualDate}" pattern="yyyy-MM-dd"/></td>
 					<td class="td_list_2" align=left>${item.equipment.calibrationCycle}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
-					<td class="td_list_2" align=left>${item.calibrationResult}</td>
-					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left>
+						<select name="calibrationResult" class="input_select" style="width: 100%;">
+							<option value="">-请选择-</option>
+							<option value="1" ${item.calibrationResult==1 ? 'selected="selected"':''}>合格</option>
+							<option value="0" ${item.calibrationResult==0 ? 'selected="selected"':''}>不合格</option>
+						</select>
+					</td>
+					<td class="td_list_2" align=left>
+						<input type="text" name="expectDate" value="<fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240" style="width: 100%;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
+					</td>
 					<td class="td_list_2" align=left>
 
 					</td>
 				</tr>
 			</c:forEach>
+
+			<tr>
+				<td class="td_table_2">
+				</td>
+				<td class="td_table_2" colspan="8">
+					<c:if test="${!empty entity.current && entity.current == approver}">
+						<input type='submit' id="tempBtn" class='button_70px' value="暂存"/>
+						<input type='submit' id="submitBtn" class='button_70px' value="提交"/>
+					</c:if>
+					<c:if test="${!empty entity.current && entity.current == reviewer}">
+						<input type='submit' id="reviewBtn" class='button_70px' value="复核"/>
+						<input type='submit' id="rejectBtn" class='button_70px' value="拒绝"/>
+					</c:if>
+				</td>
+			</tr>
 		</table>
 	</form>
 	</body>
