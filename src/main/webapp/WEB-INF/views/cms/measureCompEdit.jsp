@@ -23,6 +23,26 @@
 					iframewbox.close();
 				}
 			}
+
+			function check() {
+				var result = false;
+				if(Ops.submit()) {
+					$.ajax({
+						type: 'POST',
+						async: false,
+						url: '${ctx}/custom/cms/measureComp/check',
+						data: {id:$('#id').val(), code:$('#code').val(), name:$('#name').val(), creditCode:$('#creditCode').val()},
+						success: function(data){
+							if(data.result == 1){
+								result = true;
+							} else {
+								alert(data.msg);
+							}
+						}
+					});
+				}
+				return result;
+			}
 		</script>
 	</head>
 
@@ -93,12 +113,12 @@
 					<td colspan="1">
 						<c:if test="${(empty entity.status || entity.status > 0) && op != 2}">
 							<shiro:hasPermission name="cms_measureComp_edit">
-								<input type="submit" class="button_70px" name="submit" value="提交" onclick="return Ops.submit();">&nbsp;&nbsp;
+								<input type="submit" class="button_70px" name="submit" value="提交" onclick="return check();">&nbsp;&nbsp;
 							</shiro:hasPermission>
 						</c:if>
 						<c:if test="${entity.status == 1 && op == 2}">
 							<shiro:hasPermission name="cms_measureComp_review">
-								<input type="submit" class="button_70px" name="submit" value="复核" onclick="$('#status').val(2); return Ops.submit();">&nbsp;&nbsp;
+								<input type="submit" class="button_70px" name="submit" value="复核" onclick="$('#status').val(2); check();">&nbsp;&nbsp;
 							</shiro:hasPermission>
 						</c:if>
 						<c:if test="${!empty entity.id}">

@@ -6,16 +6,22 @@ import com.zhanlu.custom.cms.service.StandardItemService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 通知
@@ -24,6 +30,8 @@ import java.util.List;
 @RequestMapping(value = "/custom/cms/standardItem")
 public class StandardItemController {
 
+    @Resource(name = "jdbcTemplate")
+    private JdbcTemplate jdbcTemplate;
     @Autowired
     private StandardItemService standardItemService;
     @Autowired
@@ -88,5 +96,48 @@ public class StandardItemController {
         ModelAndView mv = new ModelAndView("cms/standardItemView");
         mv.addObject("entity", entity);
         return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/check", method = RequestMethod.POST)
+    public Object check(StandardItem entity) {
+        Map<String, Object> resultMap = new LinkedHashMap<>();
+        resultMap.put("result", 1);
+
+        StringBuilder sqlBuf = new StringBuilder("SELECT id FROM cms_equipment WHERE 1=1");
+        List<Map<String, Object>> maps = null;
+        if (entity.getId() == null || entity.getId().longValue() < 1) {
+            if (!resultMap.containsKey("msg") && StringUtils.isNotBlank(entity.getCode())) {
+                maps = jdbcTemplate.queryForList(sqlBuf.toString() + " AND code='" + entity.getCode() + "'");
+                if (maps != null && maps.size() >= 1) {
+                    resultMap.put("result", 0);
+                    resultMap.put("msg", "标准项编号【" + entity.getCode() + "】已存在");
+                }
+            }
+            if (!resultMap.containsKey("msg") && StringUtils.isNotBlank(entity.getName())) {
+                maps = jdbcTemplate.queryForList(sqlBuf.toString() + " AND name='" + entity.getName() + "'");
+                if (maps != null && maps.size() >= 1) {
+                    resultMap.put("result", 0);
+                    resultMap.put("msg", "标准项名称【" + entity.getCode() + "】已存在");
+                }
+            }
+        } else {
+            StandardItem tmp = standardItemService.findById(entity.getId());
+            if (!resultMap.containsKey("msg") && StringUtils.isNotBlank(entity.getCode())) {
+                maps = jdbcTemplate.queryForList(sqlBuf.toString() + " AND code='" + entity.getCode() + "'");
+                if (maps != null && maps.size() >= (entity.getCode().equals(tmp.getCode()) ? 2 : 1)) {
+                    resultMap.put("result", 0);
+                    resultMap.put("msg", "标准项编号【" + entity.getCode() + "】已存在");
+                }
+            }
+            if (!resultMap.containsKey("msg") && StringUtils.isNotBlank(entity.getName())) {
+                maps = jdbcTemplate.queryForList(sqlBuf.toString() + " AND name='" + entity.getName() + "'");
+                if (maps != null && maps.size() >= (entity.getName().equals(tmp.getName()) ? 2 : 1)) {
+                    resultMap.put("result", 0);
+                    resultMap.put("msg", "标准项名称【" + entity.getCode() + "】已存在");
+                }
+            }
+        }
+        return resultMap;
     }
 }
