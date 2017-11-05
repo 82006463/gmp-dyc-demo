@@ -99,11 +99,11 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">测量范围上限<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">使用范围上限<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
 					<input type="text" id="measureRangeMin" name="measureRangeMin" value="${entity.measureRangeMin}" class="input_240 validate[required,custom[number]]" />
 				</td>
-				<td class="td_table_1">测量范围下限<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">使用范围下限<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
 					<input type="text" id="measureRangeMax" name="measureRangeMax" value="${entity.measureRangeMax}" class="input_240 validate[required,custom[number]]" />
 				</td>

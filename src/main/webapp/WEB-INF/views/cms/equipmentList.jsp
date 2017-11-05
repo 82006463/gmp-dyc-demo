@@ -53,7 +53,7 @@
 			<tr>
 				<td align=center width=15% class="td_list_1">器具编号</td>
 				<td align=center width=25% class="td_list_1">器具名称</td>
-				<td align=center width=15% class="td_list_1">测量范围上限-下限</td>
+				<td align=center width=15% class="td_list_1">使用范围下限-上限</td>
 				<td align=center width=5% class="td_list_1">校准方式</td>
 				<td align=center width=10% class="td_list_1">上次校准时间</td>
 				<td align=center width=10% class="td_list_1">待校准时间</td>

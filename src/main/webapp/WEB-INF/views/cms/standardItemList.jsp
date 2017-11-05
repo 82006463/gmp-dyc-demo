@@ -53,7 +53,7 @@
 			<tr>
 				<td align=center width=25% class="td_list_1">标准项编号</td>
 				<td align=center width=30% class="td_list_1">标准项名称</td>
-				<td align=center width=15% class="td_list_1">测量范围上限-下限</td>
+				<td align=center width=15% class="td_list_1">测量范围下限-上限</td>
 				<td align=center width=5% class="td_list_1">不确定度</td>
 				<td align=center width=10% class="td_list_1">校准参量</td>
 				<td align=center width=5% class="td_list_1">状态</td>

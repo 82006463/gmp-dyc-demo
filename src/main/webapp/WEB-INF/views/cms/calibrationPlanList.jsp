@@ -20,7 +20,7 @@
 				if($('#measureCompId').val()=='') {
 					alert('请选择计量公司');
 				} else if($('#approver').val()=='') {
-					alert('请输入计量公司负责人');
+					alert('请输入计量实施人');
 				} else {
 					$.getJSON('${ctx}/custom/cms/${type}/sendTask',{measureCompId:$('#measureCompId').val(), approver:$('#approver').val()}, function (data) {
 						alert(data.msg);
@@ -63,7 +63,7 @@
 							</c:forEach>
 						</select>
 					</td>
-					<td class="td_table_1">计量公司负责人：</td>
+					<td class="td_table_1">计量实施人：</td>
 					<td class="td_table_2">
 						<input type="text" id="approver" name="approver" class="input_240" value=""/>
 					</td>
