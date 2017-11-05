@@ -8,6 +8,7 @@ import com.zhanlu.custom.cms.service.MeasureCompService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -83,13 +84,17 @@ public class CompUserController {
             entity.setUpdaterId(user.getId());
             entity.setUpdateTime(new Date());
         }
-        if (entity.getCompType() != null) {
-            if (entity.getCompType().intValue() == 2) {
-                entity.setMeasureCompId(null);
-            } else {
+        String compId = req.getParameter("compId");
+        if (StringUtils.isNotBlank(compId)) {
+            if (entity.getCompType().intValue() == 1) {
+                entity.setMeasureCompId(Long.parseLong(compId));
                 entity.setDrugCompId(null);
+            } else {
+                entity.setMeasureCompId(null);
+                entity.setDrugCompId(Long.parseLong(compId));
             }
         } else {
+            entity.setMeasureCompId(null);
             entity.setDrugCompId(null);
         }
         compUserService.saveOrUpdate(entity);
