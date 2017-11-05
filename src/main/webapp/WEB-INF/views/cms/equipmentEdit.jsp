@@ -15,7 +15,7 @@
 					type: 'POST',
 					async: false,
 					url: '${ctx}/custom/cms/equipment/check',
-					data: {id:$('#id').val(), code:$('#code').val(), name:$('#name').val()},
+					data: {id:$('#id').val(), code:$('#code').val()},
 					success: function(data){
 						if(data.result == 1){
 							result = true;
