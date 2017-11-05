@@ -53,6 +53,8 @@
 			<tr>
 				<td align=center width=15% class="td_list_1">编号</td>
 				<td align=center width=20% class="td_list_1">姓名</td>
+				<td align=center width=20% class="td_list_1">公司类型</td>
+				<td align=center width=20% class="td_list_1">公司</td>
 				<td align=center width=5% class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
@@ -60,6 +62,8 @@
 				<tr>
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.name}</td>
+					<td class="td_list_2" align=left>${item.compType==1 ? '计量公司' : item.compType==2 ? '药企':''}</td>
+					<td class="td_list_2" align=left>${item.compType==1 ? item.measureComp.name : item.compType==2 ? item.drugComp.name:''}</td>
 					<td class="td_list_2" align=left>${item.status==0 ? '删除':item.status == 1 ? '复核中':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
