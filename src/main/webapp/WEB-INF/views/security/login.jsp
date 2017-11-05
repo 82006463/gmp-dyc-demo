@@ -17,7 +17,7 @@
 	</script>
 </head>
 
-<body style="width: 100%; height: 100%; background-size:auto; background:url(styles/images/dyc-bg.jpg);">
+<body style="background-image:url(styles/images/dyc-bg.jpg); background-size:100% 100%;-moz-background-size:100% 100%;">
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
