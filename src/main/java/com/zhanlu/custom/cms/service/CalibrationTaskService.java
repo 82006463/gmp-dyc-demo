@@ -31,6 +31,8 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
     private CalibrationExtService calibrationExtService;
     @Autowired
     private CalibrationTmpService calibrationTmpService;
+    @Autowired
+    private CalibrationHistService calibrationHistService;
 
     @Value("${upload.file.path}")
     private String filePath;
@@ -61,6 +63,16 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
             } else {
                 tmpPath = null;
             }
+            CalibrationHist hist = null;
+            //复核完成进入校准历史
+            if (entity.getStatus().intValue() == 4) {
+                hist = new CalibrationHist();
+                hist.setCreaterId(entity.getCreaterId());
+                hist.setCreateTime(entity.getCreateTime());
+                hist.setUpdaterId(entity.getUpdaterId());
+                hist.setUpdateTime(entity.getUpdateTime());
+                hist.setCalibrationMode(entity.getCalibrationMode());
+            }
             if (entity.getCalibrationMode().intValue() == 1) {
                 CalibrationIn plan = calibrationInService.findById(Long.parseLong(planId));
                 plan.setCertCode(certCodes == null ? null : certCodes[i]);
@@ -78,6 +90,17 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 cal.setTime(eq.getLastActualDate());
                 cal.add(Calendar.MONTH, eq.getCalibrationCycle());
                 eq.setExpectDate(cal.getTime());
+
+                if (hist != null) {
+                    hist.setTenantId(plan.getTenantId());
+                    hist.setEquipmentId(plan.getEquipmentId());
+                    hist.setLastExpectDate(plan.getLastExpectDate());
+                    hist.setLastActualDate(plan.getLastActualDate());
+                    hist.setExpectDate(plan.getExpectDate());
+                    hist.setActualDate(plan.getActualDate());
+                    hist.setCertCode(plan.getCertCode());
+                    hist.setCalibrationResult(plan.getCalibrationResult());
+                }
             } else if (entity.getCalibrationMode().intValue() == 2) {
                 CalibrationExt plan = calibrationExtService.findById(Long.parseLong(planId));
                 plan.setCertCode(certCodes == null ? null : certCodes[i]);
@@ -95,6 +118,17 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 cal.setTime(eq.getLastActualDate());
                 cal.add(Calendar.MONTH, eq.getCalibrationCycle());
                 eq.setExpectDate(cal.getTime());
+
+                if (hist != null) {
+                    hist.setTenantId(plan.getTenantId());
+                    hist.setEquipmentId(plan.getEquipmentId());
+                    hist.setLastExpectDate(plan.getLastExpectDate());
+                    hist.setLastActualDate(plan.getLastActualDate());
+                    hist.setExpectDate(plan.getExpectDate());
+                    hist.setActualDate(plan.getActualDate());
+                    hist.setCertCode(plan.getCertCode());
+                    hist.setCalibrationResult(plan.getCalibrationResult());
+                }
             } else if (entity.getCalibrationMode().intValue() == 3) {
                 CalibrationTmp plan = calibrationTmpService.findById(Long.parseLong(planId));
                 plan.setCertCode(certCodes == null ? null : certCodes[i]);
@@ -112,6 +146,21 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 cal.setTime(eq.getLastActualDate());
                 cal.add(Calendar.MONTH, eq.getCalibrationCycle());
                 eq.setExpectDate(cal.getTime());
+
+                if (hist != null) {
+                    hist.setTenantId(plan.getTenantId());
+                    hist.setEquipmentId(plan.getEquipmentId());
+                    hist.setLastExpectDate(plan.getLastExpectDate());
+                    hist.setLastActualDate(plan.getLastActualDate());
+                    hist.setExpectDate(plan.getExpectDate());
+                    hist.setActualDate(plan.getActualDate());
+                    hist.setCertCode(plan.getCertCode());
+                    hist.setCalibrationResult(plan.getCalibrationResult());
+                }
+            }
+
+            if (hist != null) {
+                calibrationHistService.save(hist);
             }
         }
         return entity;

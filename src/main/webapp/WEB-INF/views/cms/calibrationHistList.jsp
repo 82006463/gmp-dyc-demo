@@ -26,21 +26,24 @@
 			<tr>
 				<td align=center width=25% class="td_list_1">器具编号</td>
 				<td align=center width=35% class="td_list_1">器具名称</td>
-				<td align=center width=10% class="td_list_1">校准时间</td>
+				<td align=center width=10% class="td_list_1">上次校准时间</td>
 				<td align=center width=5% class="td_list_1">校准方式</td>
+				<td align=center width=10% class="td_list_1">记录/证书编号</td>
 				<td align=center width=5% class="td_list_1">校准结果</td>
-				<td align=center width=10% class="td_list_1">校准证书编号</td>
-				<td align=center width=10% class="td_list_1">操作</td>
+				<td align=center width=10% class="td_list_1">实际校准时间</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item" varStatus="index">
 				<tr>
-					<td class="td_list_2" align=left>${index.count}</td>
 					<td class="td_list_2" align=left>${item.equipment.code}</td>
 					<td class="td_list_2" align=left>${item.equipment.name}</td>
-					<td class="td_list_2" align=left>${item.equipment.room}</td>
-					<td class="td_list_2" align=left>${item.equipment.name}</td>
-					<td class="td_list_2" align=left>${item.equipment.room}</td>
-					<td class="td_list_2" align=left>${item.status > 0 ? '正常':''}</td>
+					<td class="td_list_2" align=left>
+						<c:if test="${empty item.lastActualDate}">N.A.</c:if>
+						<c:if test="${!empty item.lastActualDate}"><fmt:formatDate value="${item.lastActualDate}" pattern="yyyy-MM-dd"/></c:if>
+					</td>
+					<td class="td_list_2" align=left>${item.calibrationMode==1 ? '内校':item.calibrationMode==2 ? '外校':item.calibrationMode==3 ? '临校':'N.A.'}</td>
+					<td class="td_list_2" align=left>${item.certCode}</td>
+					<td class="td_list_2" align=left>${item.calibrationResult==1 ? '合格':item.calibrationResult==0 ? '不合格':'N.A.'}</td>
+					<td class="td_list_2" align=left><fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/></td>
 				</tr>
 			</c:forEach>
 			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup}"/>
