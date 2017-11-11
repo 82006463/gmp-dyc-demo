@@ -60,7 +60,7 @@
 					<%--<td class="td_list_2" align=left>${item.measureComp.name}</td>--%>
 					<td class="td_list_2" align=left>${item.user.fullname}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					<td class="td_list_2" align=left>${item.status==1 ? '审核中':item.status==2 ? '拒绝中':item.status==3 ? '复核中':item.status==4 ? '完成':''}</td>
+					<td class="td_list_2" align=left>${item.status==1 ? '执行中':item.status==2 ? '拒绝中':item.status==3 ? '复核中':item.status==4 ? '完成':''}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${item.current == username && item.status < 4}">
 							<a href="${ctx}/custom/cms/calibrationTask/update/${item.id}" class="btnEdit" title="编辑">编辑</a>

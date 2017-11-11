@@ -50,7 +50,7 @@ public class CalibrationTask extends IdEntity {
         this.tenantId = tenantId;
     }
 
-    @Column(name = "task_code")
+    @Column(name = "task_code", length = 30)
     public String getTaskCode() {
         return taskCode;
     }

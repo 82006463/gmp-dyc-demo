@@ -46,6 +46,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
     @Transactional
     public CalibrationTask updateTask(CalibrationTask entity, CommonsMultipartFile[] files, Map<String, String[]> paramMap) throws Exception {
         String[] planIds = paramMap.get("planId");
+        String[] certCodes = paramMap.get("certCode");
         String[] calibrationResults = paramMap.get("calibrationResult");
         String[] actualDates = paramMap.get("actualDate");
         for (int i = 0; i < planIds.length; i++) {
@@ -62,6 +63,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
             }
             if (entity.getCalibrationMode().intValue() == 1) {
                 CalibrationIn plan = calibrationInService.findById(Long.parseLong(planId));
+                plan.setCertCode(certCodes == null ? null : certCodes[i]);
                 plan.setCalibrationResult(calibrationResults == null ? null : calibrationResults[i]);
                 plan.setActualDate(actualDates == null ? null : DateUtils.parseDate(actualDates[i], new String[]{"yyyy-MM-dd"}));
                 if (StringUtils.isNotBlank(tmpPath))
@@ -78,6 +80,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 eq.setExpectDate(cal.getTime());
             } else if (entity.getCalibrationMode().intValue() == 2) {
                 CalibrationExt plan = calibrationExtService.findById(Long.parseLong(planId));
+                plan.setCertCode(certCodes == null ? null : certCodes[i]);
                 plan.setCalibrationResult(calibrationResults == null ? null : calibrationResults[i]);
                 plan.setActualDate(actualDates == null ? null : DateUtils.parseDate(actualDates[i], new String[]{"yyyy-MM-dd"}));
                 if (StringUtils.isNotBlank(tmpPath))
@@ -94,6 +97,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 eq.setExpectDate(cal.getTime());
             } else if (entity.getCalibrationMode().intValue() == 3) {
                 CalibrationTmp plan = calibrationTmpService.findById(Long.parseLong(planId));
+                plan.setCertCode(certCodes == null ? null : certCodes[i]);
                 plan.setCalibrationResult(calibrationResults == null ? null : calibrationResults[i]);
                 plan.setActualDate(actualDates == null ? null : DateUtils.parseDate(actualDates[i], new String[]{"yyyy-MM-dd"}));
                 if (StringUtils.isNotBlank(tmpPath))

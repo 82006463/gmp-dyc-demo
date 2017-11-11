@@ -32,8 +32,8 @@
 				<td align=center width=20% class="td_list_1">器具名称</td>
 				<td align=center width=10% class="td_list_1">所在房间</td>
 				<td align=center width=10% class="td_list_1">上次校准时间</td>
-				<td align=center width=10% class="td_list_1">上次校准单位</td>
 				<td align=center width=10% class="td_list_1">校准有效期</td>
+				<td align=center width=10% class="td_list_1">记录/证书编号</td>
 				<td align=center width=10% class="td_list_1">校准结果</td>
 				<td align=center width=10% class="td_list_1">实际校准时间</td>
 				<td align=center width=10% class="td_list_1">动作</td>
@@ -50,22 +50,38 @@
 						<c:if test="${empty item.lastActualDate}">N.A.</c:if>
 						<c:if test="${!empty item.lastActualDate}"><fmt:formatDate value="${item.lastActualDate}" pattern="yyyy-MM-dd"/></c:if>
 					</td>
-					<td class="td_list_2" align=left>${item.equipment.calibrationCycle}</td>
 					<td class="td_list_2" align=left>
 						<fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/>
 					</td>
+
+					<c:if test="${!empty entity.current && fn:toLowerCase(entity.current) == fn:toLowerCase(entity.approver) && (entity.status==1 || entity.status==2)}">
+						<td class="td_list_2" align=left>
+							<input type="text" id="certCode" name="certCode" value="${item.certCode}" class="input_240" style="width: 100%;"/>
+						</td>
+						<td class="td_list_2" align=left>
+							<select name="calibrationResult" class="input_select" style="width: 100%;">
+								<option value="">-请选择-</option>
+								<option value="1" ${item.calibrationResult==1 ? 'selected="selected"':''}>合格</option>
+								<option value="0" ${item.calibrationResult==0 ? 'selected="selected"':''}>不合格</option>
+							</select>
+						</td>
+						<td class="td_list_2" align=left>
+							<input type="text" name="actualDate" value="<fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/>" class="input_240" style="width: 100%;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
+						</td>
+					</c:if>
+					<c:if test="${!empty entity.current && fn:toLowerCase(entity.current) == fn:toLowerCase(entity.reviewer) && entity.status==3}">
+						<td class="td_list_2" align=left>${item.certCode}
+							<input type="hidden" name="certCode" value="${item.certCode}" class="input_240" />
+							<input type="hidden" name="calibrationResult" value="${item.calibrationResult}" class="input_240" />
+							<input type="hidden" name="actualDate" value="<fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/>" class="input_240" />
+						</td>
+						<td class="td_list_2" align=left>${item.calibrationResult==1 ? '合格':'不合格'}</td>
+						<td class="td_list_2" align=left><fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/></td>
+					</c:if>
+
 					<td class="td_list_2" align=left>
-						<select name="calibrationResult" class="input_select" style="width: 100%;">
-							<option value="">-请选择-</option>
-							<option value="1" ${item.calibrationResult==1 ? 'selected="selected"':''}>合格</option>
-							<option value="0" ${item.calibrationResult==0 ? 'selected="selected"':''}>不合格</option>
-						</select>
-					</td>
-					<td class="td_list_2" align=left>
-						<input type="text" name="actualDate" value="<fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/>" class="input_240" style="width: 100%;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
-					</td>
-					<td class="td_list_2" align=left>
-						<input type="file" name="files" class="input_240" style="width: 100%;"/>
+						<%--<input type="file" name="files" class="input_240" style="width: 100%;"/>--%>
+						<input type=button class='button_70px' value="上传" onclick="alert('正式版功能');"/>
 					</td>
 				</tr>
 			</c:forEach>

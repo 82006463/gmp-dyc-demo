@@ -26,6 +26,8 @@ public class CalibrationIn extends IdEntity {
     private Date expectDate;
     //实际校准时间
     private Date actualDate;
+    //记录/证书编号
+    private String certCode;
     //校准结果
     private String calibrationResult;
     //附件路径
@@ -105,6 +107,15 @@ public class CalibrationIn extends IdEntity {
 
     public void setActualDate(Date actualDate) {
         this.actualDate = actualDate;
+    }
+
+    @Column(name = "cert_code", length = 20)
+    public String getCertCode() {
+        return certCode;
+    }
+
+    public void setCertCode(String certCode) {
+        this.certCode = certCode;
     }
 
     @Column(name = "calibration_result", length = 10)
