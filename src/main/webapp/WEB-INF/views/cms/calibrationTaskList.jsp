@@ -48,19 +48,17 @@
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align=center width=5% class="td_list_1">编号</td>
-				<td align=center width=45% class="td_list_1">计量公司</td>
-				<td align=center width=10% class="td_list_1">审核人</td>
-				<td align=center width=10% class="td_list_1">复核人</td>
+				<%--<td align=center width=45% class="td_list_1">计量公司</td>--%>
+				<td align=center width=10% class="td_list_1">任务发起人</td>
 				<td align=center width=10% class="td_list_1">任务生成日期</td>
 				<td align=center width=10% class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item" varStatus="index">
 				<tr>
-					<td class="td_list_2" align=left>${index.count}</td>
-					<td class="td_list_2" align=left>${item.measureComp.name}</td>
-					<td class="td_list_2" align=left>${item.approver}</td>
-					<td class="td_list_2" align=left>${item.reviewer}</td>
+					<td class="td_list_2" align=left>${item.taskCode}</td>
+					<%--<td class="td_list_2" align=left>${item.measureComp.name}</td>--%>
+					<td class="td_list_2" align=left>${item.user.fullname}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td class="td_list_2" align=left>${item.status==1 ? '审核中':item.status==2 ? '拒绝中':item.status==3 ? '复核中':item.status==4 ? '完成':''}</td>
 					<td class="td_list_2" align=left>

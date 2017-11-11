@@ -8,6 +8,7 @@ import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.common.service.CommonService;
 import com.zhanlu.framework.security.entity.User;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,6 +98,8 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
             task.setCreaterId(user.getId());
             task.setCreateTime(new Date());
             task.setStatus(1);
+            task.setTaskCode(user.getOrg().getCode() + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss"));
+            task.setDrugCompId(user.getOrg().getId());
             task.setMeasureCompId(measureCompId);
             task.setApprover(approver);
             task.setReviewer(user.getUsername());

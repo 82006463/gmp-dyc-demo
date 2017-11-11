@@ -47,14 +47,20 @@
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
 				<td class="td_table_1">待校准日期：</td>
-				<td class="td_table_2" colspan="3">
+				<td class="td_table_2">
 					<input type="text" name="filter_GED_expectDate" value="${param['filter_GED_expectDate']}" class="input_240" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>~
 					<input type="text" name="filter_LED_expectDate" value="${param['filter_LED_expectDate']}" class="input_240" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>
 				</td>
+				<c:if test="${status == 2}">
+					<td class="td_table_1">计量实施人：</td>
+					<td class="td_table_2">
+						<input type="text" id="approver" name="approver" class="input_240" value=""/>
+					</td>
+				</c:if>
 			</tr>
 			<c:if test="${status == 2}">
 				<tr>
-					<td class="td_table_1">计量公司：</td>
+					<%--<td class="td_table_1">计量公司：</td>
 					<td class="td_table_2">
 						<select id="measureCompId" name="measureCompId" class="input_select">
 							<option value="">-请选择-</option>
@@ -62,11 +68,7 @@
 								<option value="${item.id}">${item.name}</option>
 							</c:forEach>
 						</select>
-					</td>
-					<td class="td_table_1">计量实施人：</td>
-					<td class="td_table_2">
-						<input type="text" id="approver" name="approver" class="input_240" value=""/>
-					</td>
+					</td>--%>
 				</tr>
 			</c:if>
 			<tr>

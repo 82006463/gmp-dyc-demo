@@ -74,17 +74,18 @@ public class CalibrationInController {
         String measureCompId = req.getParameter("measureCompId");
         String approver = req.getParameter("approver");
         User user = cmsService.getUser(approver);
-        if (StringUtils.isBlank(measureCompId)) {
+        /*if (StringUtils.isBlank(measureCompId)) {
             resultMap.put("msg", "请选择计量公司");
-        } else if (StringUtils.isBlank(approver)) {
-            resultMap.put("msg", "请输入计量公司负责人");
+        } else */
+            if (StringUtils.isBlank(approver)) {
+            resultMap.put("msg", "请输入计量实施人");
         } else if (user == null) {
             resultMap.put("msg", "计量公司负责人账号不存在");
         }
         if (resultMap.size() > 1) {
             return resultMap;
         }
-        resultMap = calibrationInService.sendTask(user, Long.parseLong(measureCompId), approver);
+        resultMap = calibrationInService.sendTask(user, null, approver);
         return resultMap;
     }
 

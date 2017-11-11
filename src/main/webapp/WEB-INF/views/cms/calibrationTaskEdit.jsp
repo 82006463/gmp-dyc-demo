@@ -46,9 +46,14 @@
 					</td>
 					<td class="td_list_2" align=left>${item.equipment.name}</td>
 					<td class="td_list_2" align=left>${item.equipment.room}</td>
-					<td class="td_list_2" align=left><fmt:formatDate value="${item.lastActualDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left>
+						<c:if test="${empty item.lastActualDate}">N.A.</c:if>
+						<c:if test="${!empty item.lastActualDate}"><fmt:formatDate value="${item.lastActualDate}" pattern="yyyy-MM-dd"/></c:if>
+					</td>
 					<td class="td_list_2" align=left>${item.equipment.calibrationCycle}</td>
-					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left>
+						<fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/>
+					</td>
 					<td class="td_list_2" align=left>
 						<select name="calibrationResult" class="input_select" style="width: 100%;">
 							<option value="">-请选择-</option>
@@ -69,11 +74,11 @@
 				<td class="td_table_2">
 				</td>
 				<td class="td_table_2" colspan="8">
-					<c:if test="${!empty entity.current && entity.current == entity.approver && (entity.status==1 || entity.status==2)}">
+					<c:if test="${!empty entity.current && fn:toLowerCase(entity.current) == fn:toLowerCase(entity.approver) && (entity.status==1 || entity.status==2)}">
 						<input type='submit' id="tempBtn" class='button_70px' value="暂存"/>
 						<input type='submit' id="submitBtn" class='button_70px' value="提交" onclick="$('#status').val(3);"/>
 					</c:if>
-					<c:if test="${!empty entity.current && entity.current == entity.reviewer && entity.status==3}">
+					<c:if test="${!empty entity.current && fn:toLowerCase(entity.current) == fn:toLowerCase(entity.reviewer) && entity.status==3}">
 						<input type='submit' id="reviewBtn" class='button_70px' value="复核" onclick="$('#status').val(4);"/>
 						<input type='submit' id="rejectBtn" class='button_70px' value="拒绝" onclick="$('#status').val(2);"/>
 					</c:if>

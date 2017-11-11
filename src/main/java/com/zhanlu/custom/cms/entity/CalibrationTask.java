@@ -1,6 +1,8 @@
 package com.zhanlu.custom.cms.entity;
 
 import com.zhanlu.framework.common.entity.IdEntity;
+import com.zhanlu.framework.security.entity.Org;
+import com.zhanlu.framework.security.entity.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,13 +17,19 @@ public class CalibrationTask extends IdEntity {
 
     //租户ID
     private Long tenantId;
+    //任务编号：企业编号+yyMMddHHmmss
+    private String taskCode;
     //计量公司
     private Long measureCompId;
     private MeasureComp measureComp;
+    //药企
+    private Long drugCompId;
+    private Org drugComp;
     //校准方式：1:内校, 2:外校, 3:临校
     private Integer calibrationMode;
     //审核人
     private String approver;
+    private User user;
     //复核人
     private String reviewer;
     //当前处理人
@@ -40,6 +48,15 @@ public class CalibrationTask extends IdEntity {
 
     public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
+    }
+
+    @Column(name = "task_code")
+    public String getTaskCode() {
+        return taskCode;
+    }
+
+    public void setTaskCode(String taskCode) {
+        this.taskCode = taskCode;
     }
 
     @Column(name = "measure_comp_id")
@@ -61,6 +78,25 @@ public class CalibrationTask extends IdEntity {
         this.measureComp = measureComp;
     }
 
+    @Column(name = "drug_comp_id")
+    public Long getDrugCompId() {
+        return drugCompId;
+    }
+
+    public void setDrugCompId(Long drugCompId) {
+        this.drugCompId = drugCompId;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "drug_comp_id", insertable = false, updatable = false)
+    public Org getDrugComp() {
+        return drugComp;
+    }
+
+    public void setDrugComp(Org drugComp) {
+        this.drugComp = drugComp;
+    }
+
     @Column(name = "calibration_mode")
     public Integer getCalibrationMode() {
         return calibrationMode;
@@ -77,6 +113,16 @@ public class CalibrationTask extends IdEntity {
 
     public void setApprover(String approver) {
         this.approver = approver;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "approver", referencedColumnName = "username", insertable = false, updatable = false)
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Column(name = "reviewer", length = 20)
