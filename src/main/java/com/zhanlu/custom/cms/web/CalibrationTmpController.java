@@ -81,7 +81,7 @@ public class CalibrationTmpController {
             if (StringUtils.isBlank(approver)) {
             resultMap.put("msg", "请输入计量实施人");
         } else if (user == null) {
-            resultMap.put("msg", "计量公司负责人账号不存在");
+            resultMap.put("msg", "计量实施人账号不存在");
         }
         if (resultMap.size() > 1) {
             return resultMap;
@@ -93,7 +93,7 @@ public class CalibrationTmpController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public ModelAndView delete(@PathVariable("id") Long id, Integer status) {
         CalibrationTmp entity = calibrationTmpService.findById(id);
-        entity.setStatus(0);
+        entity.setStatus(1);
         calibrationTmpService.saveOrUpdate(entity);
         ModelAndView mv = new ModelAndView("redirect:/custom/cms/calibrationTmp/" + status);
         return mv;
