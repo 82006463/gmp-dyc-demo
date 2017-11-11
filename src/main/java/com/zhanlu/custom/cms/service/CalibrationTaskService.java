@@ -87,6 +87,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 }
 
                 Equipment eq = equipmentService.findById(plan.getEquipmentId());
+                eq.setLastExpectDate(eq.getExpectDate());
                 eq.setLastActualDate(plan.getActualDate());
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(eq.getLastActualDate());
@@ -115,6 +116,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 }
 
                 Equipment eq = equipmentService.findById(plan.getEquipmentId());
+                eq.setLastExpectDate(eq.getExpectDate());
                 eq.setLastActualDate(plan.getActualDate());
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(eq.getLastActualDate());
@@ -143,6 +145,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 }
 
                 Equipment eq = equipmentService.findById(plan.getEquipmentId());
+                eq.setLastExpectDate(eq.getExpectDate());
                 eq.setLastActualDate(plan.getActualDate());
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(eq.getLastActualDate());

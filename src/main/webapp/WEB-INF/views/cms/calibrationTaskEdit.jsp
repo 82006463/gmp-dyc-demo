@@ -11,8 +11,29 @@
 		<script type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
 		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
 		<script type="text/javascript">
-			function updateTask() {
-				bringback('${item.id}','${item.name}');
+			function updateTask(status) {
+			    var result = true;
+			    if(status==3) {
+					$('[name=certCode]').each(function () {
+						if($.trim($(this).val())==''){
+						    alert('记录/证书编号不能为空');
+						    result = false;
+						}
+                    });
+                    $('[name=calibrationResult]').each(function () {
+                        if($.trim($(this).val())==''){
+                            alert('校验结果不能为空');
+                            result = false;
+                        }
+                    });
+                    $('[name=actualDate]').each(function () {
+                        if($.trim($(this).val())==''){
+                            alert('实际校验日期不能为空');
+                            result = false;
+                        }
+                    });
+				}
+				return result;
 			}
 		</script>
 	</head>
