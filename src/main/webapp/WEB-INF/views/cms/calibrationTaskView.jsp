@@ -23,11 +23,11 @@
 				<td align=center width=10% class="td_list_1">器具编号</td>
 				<td align=center width=20% class="td_list_1">器具名称</td>
 				<td align=center width=10% class="td_list_1">所在房间</td>
-				<td align=center width=10% class="td_list_1">上次校准时间</td>
-				<td align=center width=10% class="td_list_1">校准有效期</td>
+				<td align=center width=10% class="td_list_1">出厂编号</td>
 				<td align=center width=10% class="td_list_1">记录/证书编号</td>
 				<td align=center width=10% class="td_list_1">校准结果</td>
 				<td align=center width=10% class="td_list_1">实际校准时间</td>
+				<td align=center width=10% class="td_list_1">备注</td>
 				<td align=center width=10% class="td_list_1">动作</td>
 			</tr>
 			<c:forEach items="${children}" var="item" varStatus="index">
@@ -43,6 +43,7 @@
 					<td class="td_list_2" align=left>${item.certCode}</td>
 					<td class="td_list_2" align=left>${item.calibrationResult}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left>${item.remark}</td>
 					<td class="td_list_2" align=left>
 						<a href="${ctx}/custom/cms/calibrationTask/download/${entity.id}?planId=${item.id}" title="下载" target="_blank" onclick="alert('正式版功能');return false;">下载</a>
 					</td>

@@ -51,6 +51,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
         String[] certCodes = paramMap.get("certCode");
         String[] calibrationResults = paramMap.get("calibrationResult");
         String[] actualDates = paramMap.get("actualDate");
+        String[] remark = paramMap.get("remark");
         for (int i = 0; i < planIds.length; i++) {
             String planId = planIds[i];
             String tmpPath = this.filePath + "calibrationTask/" + entity.getCalibrationMode();
@@ -80,6 +81,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 plan.setCertCode(certCodes == null ? null : certCodes[i]);
                 plan.setCalibrationResult(calibrationResults == null ? null : calibrationResults[i]);
                 plan.setActualDate(actualDates == null ? null : DateUtils.parseDate(actualDates[i], new String[]{"yyyy-MM-dd"}));
+                plan.setRemark(remark == null ? null : remark[i]);
                 if (StringUtils.isNotBlank(tmpPath))
                     plan.setFilePath(tmpPath);
                 if (calibrationResults != null && calibrationResults[i].equals("0")) {
@@ -104,12 +106,14 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                     hist.setActualDate(plan.getActualDate());
                     hist.setCertCode(plan.getCertCode());
                     hist.setCalibrationResult(plan.getCalibrationResult());
+                    hist.setRemark(plan.getRemark());
                 }
             } else if (entity.getCalibrationMode().intValue() == 2) {
                 CalibrationExt plan = calibrationExtService.findById(Long.parseLong(planId));
                 plan.setCertCode(certCodes == null ? null : certCodes[i]);
                 plan.setCalibrationResult(calibrationResults == null ? null : calibrationResults[i]);
                 plan.setActualDate(actualDates == null ? null : DateUtils.parseDate(actualDates[i], new String[]{"yyyy-MM-dd"}));
+                plan.setRemark(remark == null ? null : remark[i]);
                 if (StringUtils.isNotBlank(tmpPath))
                     plan.setFilePath(tmpPath);
                 if (calibrationResults != null && calibrationResults[i].equals("0")) {
@@ -134,12 +138,14 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                     hist.setActualDate(plan.getActualDate());
                     hist.setCertCode(plan.getCertCode());
                     hist.setCalibrationResult(plan.getCalibrationResult());
+                    hist.setRemark(plan.getRemark());
                 }
             } else if (entity.getCalibrationMode().intValue() == 3) {
                 CalibrationTmp plan = calibrationTmpService.findById(Long.parseLong(planId));
                 plan.setCertCode(certCodes == null ? null : certCodes[i]);
                 plan.setCalibrationResult(calibrationResults == null ? null : calibrationResults[i]);
                 plan.setActualDate(actualDates == null ? null : DateUtils.parseDate(actualDates[i], new String[]{"yyyy-MM-dd"}));
+                plan.setRemark(remark == null ? null : remark[i]);
                 if (StringUtils.isNotBlank(tmpPath))
                     plan.setFilePath(tmpPath);
                 if (calibrationResults != null && calibrationResults[i].equals("0")) {
@@ -164,6 +170,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                     hist.setActualDate(plan.getActualDate());
                     hist.setCertCode(plan.getCertCode());
                     hist.setCalibrationResult(plan.getCalibrationResult());
+                    hist.setRemark(plan.getRemark());
                 }
             }
 

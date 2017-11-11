@@ -56,6 +56,7 @@
 				<td align=center width=10% class="td_list_1">记录/证书编号</td>
 				<td align=center width=10% class="td_list_1">校准结果</td>
 				<td align=center width=10% class="td_list_1">实际校准时间</td>
+				<td align=center width=10% class="td_list_1">备注</td>
 				<td align=center width=10% class="td_list_1">动作</td>
 			</tr>
 			<c:forEach items="${children}" var="item" varStatus="index">
@@ -81,15 +82,20 @@
 						<td class="td_list_2" align=left>
 							<input type="text" name="actualDate" value="<fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/>" class="input_240" style="width: 100%;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', maxDate:'%y-%M-%d'});" readonly="readonly"/>
 						</td>
+                        <td class="td_list_2" align=left>
+                            <input type="text" name="remark" value="${item.remark}" class="input_240" style="width: 100%;" />
+                        </td>
 					</c:if>
 					<c:if test="${(entity.status==3) && fn:toLowerCase(username)!=fn:toLowerCase(entity.approver)}">
 						<td class="td_list_2" align=left>${item.certCode}
 							<input type="hidden" name="certCode" value="${item.certCode}" class="input_240" />
 							<input type="hidden" name="calibrationResult" value="${item.calibrationResult}" class="input_240" />
 							<input type="hidden" name="actualDate" value="<fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/>" class="input_240" />
+                            <input type="hidden" name="remark" value="${item.remark}" class="input_240" style="width: 100%;" />
 						</td>
 						<td class="td_list_2" align=left>${item.calibrationResult==1 ? '合格':'不合格'}</td>
 						<td class="td_list_2" align=left><fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/></td>
+                        <td class="td_list_2" align=left>${item.remark}</td>
 					</c:if>
 
 					<td class="td_list_2" align=left>

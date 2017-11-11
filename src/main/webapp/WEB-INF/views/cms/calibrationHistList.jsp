@@ -60,13 +60,14 @@
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align=center width=15% class="td_list_1">任务编号</td>
-				<td align=center width=35% class="td_list_1">器具编号/器具名称</td>
+				<td align=center width=25% class="td_list_1">器具编号/器具名称</td>
 				<td align=center width=10% class="td_list_1">所在房间</td>
 				<td align=center width=10% class="td_list_1">上次校准时间</td>
 				<td align=center width=5% class="td_list_1">校准方式</td>
 				<td align=center width=10% class="td_list_1">记录/证书编号</td>
 				<td align=center width=5% class="td_list_1">校准结果</td>
 				<td align=center width=10% class="td_list_1">实际校准时间</td>
+				<td align=center width=10% class="td_list_1">备注</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item" varStatus="index">
 				<tr>
@@ -81,6 +82,7 @@
 					<td class="td_list_2" align=left>${item.certCode}</td>
 					<td class="td_list_2" align=left>${item.calibrationResult==1 ? '合格':item.calibrationResult==0 ? '不合格':'N.A.'}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left>${empty item.remark ? 'N.A.':item.remark}</td>
 				</tr>
 			</c:forEach>
 			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }" lookup="${lookup}"/>

@@ -30,6 +30,8 @@ public class CalibrationExt extends IdEntity {
     private String certCode;
     //校准结果
     private String calibrationResult;
+    //备注
+    private String remark;
     //附件路径
     private String filePath;
 
@@ -125,6 +127,15 @@ public class CalibrationExt extends IdEntity {
 
     public void setCalibrationResult(String calibrationResult) {
         this.calibrationResult = calibrationResult;
+    }
+
+    @Column(name = "remark", length = 50)
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     @Column(name = "file_path", length = 100)

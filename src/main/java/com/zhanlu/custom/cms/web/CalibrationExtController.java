@@ -38,7 +38,7 @@ public class CalibrationExtController {
     private CmsService cmsService;
 
     @RequestMapping(value = "/{status}", method = RequestMethod.GET)
-    public ModelAndView list(Page<CalibrationExt> page, @PathVariable Integer status, HttpServletRequest req) {
+    public ModelAndView list(Page<CalibrationExt> page, @PathVariable Integer status, Integer taskStatus, HttpServletRequest req) {
         User user = cmsService.getUser(req);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(req);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
@@ -49,7 +49,13 @@ public class CalibrationExtController {
             mv.addObject("status", status);
             mv.addObject("measureComps", measureCompService.findList(null));
         } else {
-            filters.add(new PropertyFilter("LEI_status", "3"));
+            if (taskStatus != null && taskStatus.intValue() == 0) {
+                filters.add(new PropertyFilter("LEI_status", "2"));
+            } else if (taskStatus != null && taskStatus.intValue() == 1) {
+                filters.add(new PropertyFilter("EQI_status", "3"));
+            } else {
+                filters.add(new PropertyFilter("LEI_status", "3"));
+            }
             mv.addObject("status", 1);
         }
         //设置默认排序方式

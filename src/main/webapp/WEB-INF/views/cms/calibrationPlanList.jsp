@@ -51,15 +51,21 @@
 					<input type="text" name="filter_GED_expectDate" value="${param['filter_GED_expectDate']}" class="input_240" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>~
 					<input type="text" name="filter_LED_expectDate" value="${param['filter_LED_expectDate']}" class="input_240" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>
 				</td>
-				<c:if test="${status == 3}">
-					<td class="td_table_1">计量实施人：</td>
-					<td class="td_table_2">
-						<input type="text" id="approver" name="approver" class="input_240" value=""/>
-					</td>
-				</c:if>
+				<td class="td_table_1">是否已生成任务：</td>
+				<td class="td_table_2">
+					<select id="taskStatus" name="taskStatus" class="input_select">
+						<option value="">-请选择-</option>
+						<option value="0" ${param['taskStatus']==0 ? 'selected="selected"':''}>未生成</option>
+						<option value="1" ${param['taskStatus']==1 ? 'selected="selected"':''}>已生成</option>
+					</select>
+				</td>
 			</tr>
 			<c:if test="${status == 3}">
 				<tr>
+					<td class="td_table_1">计量实施人：</td>
+					<td class="td_table_2" colspan="3">
+						<input type="text" id="approver" name="approver" class="input_240" value=""/>
+					</td>
 					<%--<td class="td_table_1">计量公司：</td>
 					<td class="td_table_2">
 						<select id="measureCompId" name="measureCompId" class="input_select">

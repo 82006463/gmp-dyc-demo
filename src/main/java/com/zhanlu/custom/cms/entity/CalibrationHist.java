@@ -36,6 +36,8 @@ public class CalibrationHist extends IdEntity {
     private String certCode;
     //校准结果
     private String calibrationResult;
+    //备注
+    private String remark;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -145,6 +147,15 @@ public class CalibrationHist extends IdEntity {
 
     public void setCalibrationResult(String calibrationResult) {
         this.calibrationResult = calibrationResult;
+    }
+
+    @Column(name = "remark", length = 50)
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     @Column(name = "cert_code", length = 50)

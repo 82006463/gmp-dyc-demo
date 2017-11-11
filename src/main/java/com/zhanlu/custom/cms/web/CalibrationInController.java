@@ -36,7 +36,7 @@ public class CalibrationInController {
     private CmsService cmsService;
 
     @RequestMapping(value = "/{status}", method = RequestMethod.GET)
-    public ModelAndView list(Page<CalibrationIn> page, @PathVariable Integer status, HttpServletRequest request) {
+    public ModelAndView list(Page<CalibrationIn> page, @PathVariable Integer status, Integer taskStatus, HttpServletRequest request) {
         User user = cmsService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
@@ -47,7 +47,13 @@ public class CalibrationInController {
             mv.addObject("status", status);
             mv.addObject("measureComps", measureCompService.findList(null));
         } else {
-            filters.add(new PropertyFilter("LEI_status", "3"));
+            if (taskStatus != null && taskStatus.intValue() == 0) {
+                filters.add(new PropertyFilter("LEI_status", "2"));
+            } else if (taskStatus != null && taskStatus.intValue() == 1) {
+                filters.add(new PropertyFilter("EQI_status", "3"));
+            } else {
+                filters.add(new PropertyFilter("LEI_status", "3"));
+            }
             mv.addObject("status", 1);
         }
         //设置默认排序方式
@@ -78,7 +84,7 @@ public class CalibrationInController {
         /*if (StringUtils.isBlank(measureCompId)) {
             resultMap.put("msg", "请选择计量公司");
         } else */
-            if (StringUtils.isBlank(approver)) {
+        if (StringUtils.isBlank(approver)) {
             resultMap.put("msg", "请输入计量实施人");
         } else if (user == null) {
             resultMap.put("msg", "计量实施人账号不存在");
