@@ -57,72 +57,78 @@
 			<tr>
 				<td class="td_table_1">器具编号<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="code" name="code" class="input_240 validate[required,minSize[1],maxSize[50]]" value="${entity.code}" />
+					<input type="text" id="code" name="code" class="input_240 validate[required,minSize[1],maxSize[50]]" value="${entity.code}" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 				<td class="td_table_1">器具名称<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="name" name="name" class="input_520 validate[required,minSize[1],maxSize[100]]" value="${entity.name}" />
+					<input type="text" id="name" name="name" class="input_520 validate[required,minSize[1],maxSize[100]]" value="${entity.name}" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
 				<td class="td_table_1">型号<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="model" name="model" value="${entity.model}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					<input type="text" id="model" name="model" value="${entity.model}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 				<td class="td_table_1">出厂编号<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="factoryCode" name="factoryCode" value="${entity.factoryCode}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					<input type="text" id="factoryCode" name="factoryCode" value="${entity.factoryCode}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
 				<td class="td_table_1">所在房间<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="room" name="room" value="${entity.room}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					<input type="text" id="room" name="room" value="${entity.room}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 				<td class="td_table_1">所属设备<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="equipment" name="equipment" value="${entity.equipment}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					<input type="text" id="equipment" name="equipment" value="${entity.equipment}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
 				<td class="td_table_1">功能<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="func" name="func" value="${entity.func}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					<input type="text" id="func" name="func" value="${entity.func}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 				<td class="td_table_1">精度<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="precision" name="precision" value="${entity.precision}" class="input_240 validate[required,minSize[1],maxSize[20]]" />
+					<input type="text" id="precision" name="precision" value="${entity.precision}" class="input_240 validate[required,minSize[1],maxSize[20]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
 				<td class="td_table_1">校准<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="calibration" name="calibration" value="${entity.calibration}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					<input type="text" id="calibration" name="calibration" value="${entity.calibration}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 				<td class="td_table_1">校准名称<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="calibrationName" name="calibrationName" value="${entity.calibrationName}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
+					<input type="text" id="calibrationName" name="calibrationName" value="${entity.calibrationName}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
 				<td class="td_table_1">使用范围下限<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="measureRangeMin" name="measureRangeMin" value="${entity.measureRangeMin}" class="input_240 validate[required,custom[number]]" />
+					<input type="text" id="measureRangeMin" name="measureRangeMin" value="${entity.measureRangeMin}" class="input_240 validate[required,custom[number]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 				<td class="td_table_1">使用范围上限<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="measureRangeMax" name="measureRangeMax" value="${entity.measureRangeMax}" class="input_240 validate[required,custom[number]]" />
+					<input type="text" id="measureRangeMax" name="measureRangeMax" value="${entity.measureRangeMax}" class="input_240 validate[required,custom[number]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
 				<td class="td_table_1">校准方式<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="radio" id="calibrationMode1" name="calibrationMode" value="1" class="validate[required]" ${entity.calibrationMode==1 ? 'checked="checked"':''}/>&nbsp;内校
-					<input type="radio" id="calibrationMode2" name="calibrationMode" value="2" class="validate[required]" ${entity.calibrationMode==2 ? 'checked="checked"':''}/>&nbsp;外校
+					<c:if test="${op!=2}">
+						<input type="radio" id="calibrationMode1" name="calibrationMode" value="1" class="validate[required]" ${entity.calibrationMode==1 ? 'checked="checked"':''}/>&nbsp;内校
+						<input type="radio" id="calibrationMode2" name="calibrationMode" value="2" class="validate[required]" ${entity.calibrationMode==2 ? 'checked="checked"':''}/>&nbsp;外校
+					</c:if>
+					<c:if test="${op==2}">
+						<input type="hidden" name="calibrationMode" value="${entity.calibrationMode}" />
+						${entity.calibrationMode==1 ? '内校':entity.calibrationMode==2 ? '外校':''}
+					</c:if>
 				</td>
 				<td class="td_table_1">校准周期(单位:月)<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="calibrationCycle" name="calibrationCycle" value="${entity.calibrationCycle}" class="input_240 validate[required,custom[number]]" />
+					<input type="text" id="calibrationCycle" name="calibrationCycle" value="${entity.calibrationCycle}" class="input_240 validate[required,custom[number]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
@@ -136,12 +142,18 @@
 				</td>
 				<td class="td_table_1">待校准时间<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<c:if test="${empty entity.lastActualDate}">
-						<input type="text" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
+					<c:if test="${op!=2}">
+						<c:if test="${empty entity.lastActualDate}">
+							<input type="text" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
+						</c:if>
+						<c:if test="${!empty entity.lastActualDate}">
+							<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>
+							<input type="hidden" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" readonly="readonly"/>
+						</c:if>
 					</c:if>
-					<c:if test="${!empty entity.lastActualDate}">
+					<c:if test="${op==2}">
+						<input type="hidden" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" />
 						<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>
-						<input type="hidden" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" readonly="readonly"/>
 					</c:if>
 				</td>
 			</tr>
@@ -151,7 +163,7 @@
 				<td colspan="1">
 					<c:if test="${(empty entity.status || entity.status > 0) && op != 2}">
 						<shiro:hasPermission name="cms_equipment_edit">
-							<input type="submit" class="button_70px" name="submit" value="提交" onclick="return check();">&nbsp;&nbsp;
+							<input type="submit" class="button_70px" name="submit" value="提交" onclick="$('#status').val(1); return check();">&nbsp;&nbsp;
 						</shiro:hasPermission>
 					</c:if>
 					<c:if test="${entity.status == 1 && op == 2}">
