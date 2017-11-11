@@ -31,8 +31,7 @@
 				<td align=center width=10% class="td_list_1">器具编号</td>
 				<td align=center width=20% class="td_list_1">器具名称</td>
 				<td align=center width=10% class="td_list_1">所在房间</td>
-				<td align=center width=10% class="td_list_1">上次校准时间</td>
-				<td align=center width=10% class="td_list_1">校准有效期</td>
+				<td align=center width=10% class="td_list_1">出厂编号</td>
 				<td align=center width=10% class="td_list_1">记录/证书编号</td>
 				<td align=center width=10% class="td_list_1">校准结果</td>
 				<td align=center width=10% class="td_list_1">实际校准时间</td>
@@ -46,13 +45,7 @@
 					</td>
 					<td class="td_list_2" align=left>${item.equipment.name}</td>
 					<td class="td_list_2" align=left>${item.equipment.room}</td>
-					<td class="td_list_2" align=left>
-						<c:if test="${empty item.lastActualDate}">N.A.</c:if>
-						<c:if test="${!empty item.lastActualDate}"><fmt:formatDate value="${item.lastActualDate}" pattern="yyyy-MM-dd"/></c:if>
-					</td>
-					<td class="td_list_2" align=left>
-						<fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/>
-					</td>
+					<td class="td_list_2" align=left>${item.equipment.factoryCode}</td>
 
 					<c:if test="${!empty entity.current && fn:toLowerCase(entity.current) == fn:toLowerCase(entity.approver) && (entity.status==1 || entity.status==2)}">
 						<td class="td_list_2" align=left>
@@ -66,7 +59,7 @@
 							</select>
 						</td>
 						<td class="td_list_2" align=left>
-							<input type="text" name="actualDate" value="<fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/>" class="input_240" style="width: 100%;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
+							<input type="text" name="actualDate" value="<fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/>" class="input_240" style="width: 100%;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', maxDate:'%y-%M-%d'});" readonly="readonly"/>
 						</td>
 					</c:if>
 					<c:if test="${!empty entity.current && fn:toLowerCase(entity.current) == fn:toLowerCase(entity.reviewer) && entity.status==3}">

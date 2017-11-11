@@ -63,11 +63,10 @@ public class EquipmentController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") Long id, String op) {
+    public ModelAndView edit(@PathVariable("id") Long id) {
         Equipment entity = equipmentService.findById(id);
         ModelAndView mv = new ModelAndView("cms/equipmentEdit");
         mv.addObject("entity", entity);
-        mv.addObject("op", op);
         return mv;
     }
 

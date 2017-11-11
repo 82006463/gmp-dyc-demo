@@ -40,6 +40,7 @@ public class CalibrationMonthQtz {
         Page<Equipment> pageEq = new Page<>(Integer.MAX_VALUE);
         List<PropertyFilter> filters = new ArrayList<>(4);
         String year = DateFormatUtils.format(new Date(), "yyyy");
+        filters.add(new PropertyFilter("GEI_status", "4"));
         filters.add(new PropertyFilter("GED_expectDate", year + "-01-01 00:00:00"));
         filters.add(new PropertyFilter("LED_expectDate", year + "-12-31 23:59:59"));
         pageEq = equipmentService.findPage(pageEq, filters);
@@ -109,6 +110,7 @@ public class CalibrationMonthQtz {
         Calendar cal = Calendar.getInstance();
         String year = DateFormatUtils.format(cal.getTime(), "yyyy");
         String nextYear = (Integer.parseInt(year) + 1) + "";
+        filters.add(new PropertyFilter("GEI_status", "4"));
         filters.add(new PropertyFilter("GED_expectDate", year + "-01-01 00:00:00"));
         filters.add(new PropertyFilter("LED_expectDate", year + "-12-31 23:59:59"));
         pageEq = equipmentService.findPage(pageEq, filters);
