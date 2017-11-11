@@ -36,6 +36,8 @@ public class CalibrationHist extends IdEntity {
     private String certCode;
     //校准结果
     private String calibrationResult;
+    //校准状态：0:延期, 1:正常
+    private Integer calibrationStatus;
     //备注
     private String remark;
 
@@ -147,6 +149,15 @@ public class CalibrationHist extends IdEntity {
 
     public void setCalibrationResult(String calibrationResult) {
         this.calibrationResult = calibrationResult;
+    }
+
+    @Column(name = "calibration_status")
+    public Integer getCalibrationStatus() {
+        return calibrationStatus;
+    }
+
+    public void setCalibrationStatus(Integer calibrationStatus) {
+        this.calibrationStatus = calibrationStatus;
     }
 
     @Column(name = "remark", length = 50)
