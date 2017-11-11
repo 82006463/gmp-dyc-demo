@@ -66,7 +66,7 @@
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>【${item.measureRangeMin}】至【${item.measureRangeMax}】</td>
 					<td class="td_list_2" align=left>${item.calibrationMode == 1 ? '内校':item.calibrationMode == 2 ? '外校':''}</td>
-					<td class="td_list_2" align=left><fmt:formatDate value="${item.lastExpectDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left><fmt:formatDate value="${item.lastActualDate}" pattern="yyyy-MM-dd"/></td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
 					<td class="td_list_2" align=left>${item.status == 0 ? '删除':item.status == 1 ? '复核中':'正常'}</td>
 					<td class="td_list_2" align=left>

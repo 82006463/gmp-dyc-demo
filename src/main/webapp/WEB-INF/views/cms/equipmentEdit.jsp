@@ -10,20 +10,26 @@
 	<script type="text/javascript">
 		function check() {
 			var result = false;
+			var _measureRangeMin = $('#measureRangeMin').val();
+            var _measureRangeMax = $('#measureRangeMax').val();
 			if(Ops.submit()) {
-				$.ajax({
-					type: 'POST',
-					async: false,
-					url: '${ctx}/custom/cms/equipment/check',
-					data: {id:$('#id').val(), code:$('#code').val()},
-					success: function(data){
-						if(data.result == 1){
-							result = true;
-						} else {
-							alert(data.msg);
-						}
-					}
-				});
+			    if (parseInt(_measureRangeMin) > parseInt(_measureRangeMax)) {
+					alert('使用范围下限不能大于使用范围上限');
+				} else {
+                    $.ajax({
+                        type: 'POST',
+                        async: false,
+                        url: '${ctx}/custom/cms/equipment/check',
+                        data: {id:$('#id').val(), code:$('#code').val()},
+                        success: function(data){
+                            if(data.result == 1){
+                                result = true;
+                            } else {
+                                alert(data.msg);
+                            }
+                        }
+                    });
+				}
 			}
 			return result;
 		}
@@ -99,11 +105,11 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">使用范围上限<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">使用范围下限<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
 					<input type="text" id="measureRangeMin" name="measureRangeMin" value="${entity.measureRangeMin}" class="input_240 validate[required,custom[number]]" />
 				</td>
-				<td class="td_table_1">使用范围下限<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">使用范围上限<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
 					<input type="text" id="measureRangeMax" name="measureRangeMax" value="${entity.measureRangeMax}" class="input_240 validate[required,custom[number]]" />
 				</td>
@@ -122,18 +128,18 @@
 			<tr>
 				<td class="td_table_1">上次校准时间<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<c:if test="${empty entity.lastExpectDate}">N.A.</c:if>
-					<c:if test="${!empty entity.lastExpectDate}">
-						<fmt:formatDate value="${entity.lastExpectDate}" pattern="yyyy-MM-dd"/>
-						<input type="hidden" id="lastExpectDate" name="lastExpectDate" value="<fmt:formatDate value="${entity.lastExpectDate}" pattern="yyyy-MM-dd"/>" class="input_240" readonly="readonly"/>
+					<c:if test="${empty entity.lastActualDate}">N.A.</c:if>
+					<c:if test="${!empty entity.lastActualDate}">
+						<fmt:formatDate value="${entity.lastActualDate}" pattern="yyyy-MM-dd"/>
+						<input type="hidden" id="lastExpectDate" name="lastExpectDate" value="<fmt:formatDate value="${entity.lastActualDate}" pattern="yyyy-MM-dd"/>" class="input_240" readonly="readonly"/>
 					</c:if>
 				</td>
 				<td class="td_table_1">待校准时间<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<c:if test="${empty entity.lastExpectDate}">
+					<c:if test="${empty entity.lastActualDate}">
 						<input type="text" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
 					</c:if>
-					<c:if test="${!empty entity.lastExpectDate}">
+					<c:if test="${!empty entity.lastActualDate}">
 						<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>
 						<input type="hidden" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" readonly="readonly"/>
 					</c:if>
