@@ -35,7 +35,10 @@
 					<td class="td_list_2" align=left>${item.equipment.code}</td>
 					<td class="td_list_2" align=left>${item.equipment.name}</td>
 					<td class="td_list_2" align=left>${item.equipment.room}</td>
-					<td class="td_list_2" align=left><fmt:formatDate value="${item.lastActualDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_list_2" align=left>
+						<c:if test="${empty item.lastActualDate}">N.A.</c:if>
+						<c:if test="${!empty item.lastActualDate}"><fmt:formatDate value="${item.lastActualDate}" pattern="yyyy-MM-dd"/></c:if>
+					</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
 					<td class="td_list_2" align=left>${item.certCode}</td>
 					<td class="td_list_2" align=left>${item.calibrationResult}</td>
