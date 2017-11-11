@@ -67,11 +67,13 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
             //复核完成进入校准历史
             if (entity.getStatus().intValue() == 4) {
                 hist = new CalibrationHist();
+                hist.setTenantId(entity.getTenantId());
                 hist.setCreaterId(entity.getCreaterId());
                 hist.setCreateTime(entity.getCreateTime());
                 hist.setUpdaterId(entity.getUpdaterId());
                 hist.setUpdateTime(entity.getUpdateTime());
                 hist.setCalibrationMode(entity.getCalibrationMode());
+                hist.setTaskCode(entity.getTaskCode());
             }
             if (entity.getCalibrationMode().intValue() == 1) {
                 CalibrationIn plan = calibrationInService.findById(Long.parseLong(planId));
@@ -92,7 +94,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 eq.setExpectDate(cal.getTime());
 
                 if (hist != null) {
-                    hist.setTenantId(plan.getTenantId());
+                    hist.setEquipmentCode(eq.getCode());
                     hist.setEquipmentId(plan.getEquipmentId());
                     hist.setLastExpectDate(plan.getLastExpectDate());
                     hist.setLastActualDate(plan.getLastActualDate());
@@ -120,7 +122,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 eq.setExpectDate(cal.getTime());
 
                 if (hist != null) {
-                    hist.setTenantId(plan.getTenantId());
+                    hist.setEquipmentCode(eq.getCode());
                     hist.setEquipmentId(plan.getEquipmentId());
                     hist.setLastExpectDate(plan.getLastExpectDate());
                     hist.setLastActualDate(plan.getLastActualDate());
@@ -148,7 +150,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 eq.setExpectDate(cal.getTime());
 
                 if (hist != null) {
-                    hist.setTenantId(plan.getTenantId());
+                    hist.setEquipmentCode(eq.getCode());
                     hist.setEquipmentId(plan.getEquipmentId());
                     hist.setLastExpectDate(plan.getLastExpectDate());
                     hist.setLastActualDate(plan.getLastActualDate());

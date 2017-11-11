@@ -15,6 +15,10 @@ public class CalibrationHist extends IdEntity {
 
     //租户ID
     private Long tenantId;
+    //任务编号：企业编号+yyMMddHHmmss
+    private String taskCode;
+    //器具编号
+    private String equipmentCode;
     //器具
     private Long equipmentId;
     private Equipment equipment;
@@ -46,6 +50,24 @@ public class CalibrationHist extends IdEntity {
 
     public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
+    }
+
+    @Column(name = "task_code", length = 30)
+    public String getTaskCode() {
+        return taskCode;
+    }
+
+    public void setTaskCode(String taskCode) {
+        this.taskCode = taskCode;
+    }
+
+    @Column(name = "equipment_code", length = 50)
+    public String getEquipmentCode() {
+        return equipmentCode;
+    }
+
+    public void setEquipmentCode(String equipmentCode) {
+        this.equipmentCode = equipmentCode;
     }
 
     @Column(name = "equipment_id")
