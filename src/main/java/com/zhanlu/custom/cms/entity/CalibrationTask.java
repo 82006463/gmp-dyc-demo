@@ -30,10 +30,6 @@ public class CalibrationTask extends IdEntity {
     //审核人
     private String approver;
     private User user;
-    //复核人
-    private String reviewer;
-    //当前处理人
-    private String current;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -123,24 +119,6 @@ public class CalibrationTask extends IdEntity {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @Column(name = "reviewer", length = 20)
-    public String getReviewer() {
-        return reviewer;
-    }
-
-    public void setReviewer(String reviewer) {
-        this.reviewer = reviewer;
-    }
-
-    @Column(name = "current", length = 20)
-    public String getCurrent() {
-        return current;
-    }
-
-    public void setCurrent(String current) {
-        this.current = current;
     }
 
     @Column(name = "creater_id")

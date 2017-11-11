@@ -74,8 +74,6 @@ public class CalibrationExtService extends CommonService<CalibrationExt, Long> {
             task.setDrugCompId(user.getOrg().getId());
             task.setMeasureCompId(measureCompId);
             task.setApprover(approver);
-            task.setReviewer(user.getUsername());
-            task.setCurrent(task.getApprover());
             task.setCalibrationMode(2);
             calibrationTaskService.save(task);
             for (CalibrationExt entity : page.getResult()) {

@@ -62,8 +62,13 @@
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td class="td_list_2" align=left>${item.status==1 ? '执行中':item.status==2 ? '拒绝中':item.status==3 ? '复核中':item.status==4 ? '完成':''}</td>
 					<td class="td_list_2" align=left>
-						<c:if test="${item.current == username && item.status < 4}">
+						<c:if test="${(item.status==1 || item.status==2) && fn:toLowerCase(username)==fn:toLowerCase(item.approver)}">
 							<a href="${ctx}/custom/cms/calibrationTask/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
+						</c:if>
+						<c:if test="${(item.status==3) && fn:toLowerCase(username)!=fn:toLowerCase(item.approver)}">
+							<shiro:hasPermission name="cms_calibrationTask_review">
+								<a href="${ctx}/custom/cms/calibrationTask/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
+							</shiro:hasPermission>
 						</c:if>
 						<a href="${ctx}/custom/cms/calibrationTask/view/${item.id}" class="btnView" title="查看">查看</a>
 					</td>

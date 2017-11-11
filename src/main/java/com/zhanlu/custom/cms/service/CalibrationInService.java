@@ -74,8 +74,6 @@ public class CalibrationInService extends CommonService<CalibrationIn, Long> {
             task.setDrugCompId(user.getOrg().getId());
             task.setMeasureCompId(measureCompId);
             task.setApprover(approver);
-            task.setReviewer(user.getUsername());
-            task.setCurrent(task.getApprover());
             task.setCalibrationMode(1);
             calibrationTaskService.save(task);
             for (CalibrationIn entity : page.getResult()) {

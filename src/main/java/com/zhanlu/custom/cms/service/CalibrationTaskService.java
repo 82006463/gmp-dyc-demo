@@ -92,6 +92,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(eq.getLastActualDate());
                 cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                cal.add(Calendar.DAY_OF_YEAR, -1);
                 eq.setExpectDate(cal.getTime());
 
                 if (hist != null) {
@@ -121,6 +122,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(eq.getLastActualDate());
                 cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                cal.add(Calendar.DAY_OF_YEAR, -1);
                 eq.setExpectDate(cal.getTime());
 
                 if (hist != null) {
@@ -150,6 +152,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(eq.getLastActualDate());
                 cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                cal.add(Calendar.DAY_OF_YEAR, -1);
                 eq.setExpectDate(cal.getTime());
 
                 if (hist != null) {

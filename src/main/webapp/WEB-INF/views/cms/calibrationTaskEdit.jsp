@@ -67,8 +67,7 @@
 					<td class="td_list_2" align=left>${item.equipment.name}</td>
 					<td class="td_list_2" align=left>${item.equipment.room}</td>
 					<td class="td_list_2" align=left>${item.equipment.factoryCode}</td>
-
-					<c:if test="${!empty entity.current && fn:toLowerCase(entity.current) == fn:toLowerCase(entity.approver) && (entity.status==1 || entity.status==2)}">
+					<c:if test="${(entity.status==1 || entity.status==2) && fn:toLowerCase(username)==fn:toLowerCase(entity.approver)}">
 						<td class="td_list_2" align=left>
 							<input type="text" id="certCode" name="certCode" value="${item.certCode}" class="input_240" style="width: 100%;"/>
 						</td>
@@ -83,7 +82,7 @@
 							<input type="text" name="actualDate" value="<fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/>" class="input_240" style="width: 100%;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', maxDate:'%y-%M-%d'});" readonly="readonly"/>
 						</td>
 					</c:if>
-					<c:if test="${!empty entity.current && fn:toLowerCase(entity.current) == fn:toLowerCase(entity.reviewer) && entity.status==3}">
+					<c:if test="${(entity.status==3) && fn:toLowerCase(username)!=fn:toLowerCase(entity.approver)}">
 						<td class="td_list_2" align=left>${item.certCode}
 							<input type="hidden" name="certCode" value="${item.certCode}" class="input_240" />
 							<input type="hidden" name="calibrationResult" value="${item.calibrationResult}" class="input_240" />
@@ -104,13 +103,15 @@
 				<td class="td_table_2">
 				</td>
 				<td class="td_table_2" colspan="8">
-					<c:if test="${!empty entity.current && fn:toLowerCase(entity.current) == fn:toLowerCase(entity.approver) && (entity.status==1 || entity.status==2)}">
+					<c:if test="${(entity.status==1 || entity.status==2) && fn:toLowerCase(username)==fn:toLowerCase(entity.approver)}">
 						<input type='submit' id="tempBtn" class='button_70px' value="暂存"/>
 						<input type='submit' id="submitBtn" class='button_70px' value="提交" onclick="$('#status').val(3);"/>
 					</c:if>
-					<c:if test="${!empty entity.current && fn:toLowerCase(entity.current) == fn:toLowerCase(entity.reviewer) && entity.status==3}">
-						<input type='submit' id="reviewBtn" class='button_70px' value="复核" onclick="$('#status').val(4);"/>
-						<input type='submit' id="rejectBtn" class='button_70px' value="拒绝" onclick="$('#status').val(2);"/>
+					<c:if test="${(entity.status==3) && fn:toLowerCase(username)!=fn:toLowerCase(entity.approver)}">
+						<shiro:hasPermission name="cms_calibrationTask_review">
+							<input type='submit' id="reviewBtn" class='button_70px' value="复核" onclick="$('#status').val(4);"/>
+							<input type='submit' id="rejectBtn" class='button_70px' value="拒绝" onclick="$('#status').val(2);"/>
+						</shiro:hasPermission>
 					</c:if>
 				</td>
 			</tr>

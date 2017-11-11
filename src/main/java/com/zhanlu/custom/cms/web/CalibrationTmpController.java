@@ -48,6 +48,7 @@ public class CalibrationTmpController {
             mv.addObject("measureComps", measureCompService.findList(null));
         } else {
             calibrationTmpService.init(user);
+            filters.add(new PropertyFilter("LEI_status", "3"));
             mv.addObject("status", 1);
         }
         //设置默认排序方式
