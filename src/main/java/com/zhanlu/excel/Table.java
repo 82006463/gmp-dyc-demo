@@ -27,14 +27,29 @@ public class Table {
         return instance;
     }
 
-    public List<String> setHeader(List<String> header) {
-        this.header = header;
-        return this.header;
+    public Table setCompInfo(String compInfo) {
+        this.compInfo = compInfo;
+        return this;
     }
 
-    public List<String> addRow(List<String> row) {
+    public Table setSearch(List<String> search) {
+        this.search = search;
+        return this;
+    }
+
+    public Table setHeader(List<String> header) {
+        this.header = header;
+        return this;
+    }
+
+    public Table setBody(List<List<String>> body) {
+        this.body = body;
+        return this;
+    }
+
+    public Table addRow(List<String> row) {
         body.add(row);
-        return row;
+        return this;
     }
 
     public boolean build(OutputStream out) {
