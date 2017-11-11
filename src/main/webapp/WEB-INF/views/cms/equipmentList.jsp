@@ -75,12 +75,12 @@
 								<shiro:hasPermission name="cms_equipment_delete">
 									<a href="${ctx}/custom/cms/equipment/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 								</shiro:hasPermission>
-								<c:if test="${item.status==1 || item.status==2 || item.status>=4}">
+								<c:if test="${(item.status==1 || item.status==2 || item.status>=4) && userId==item.createrId}">
 									<shiro:hasPermission name="cms_equipment_edit">
 										<a href="${ctx}/custom/cms/equipment/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
 									</shiro:hasPermission>
 								</c:if>
-								<c:if test="${item.status==3 && userId!=item.createrId}">
+								<c:if test="${(item.status==3) && userId!=item.createrId}">
 									<shiro:hasPermission name="cms_equipment_review">
 										<a href="${ctx}/custom/cms/equipment/update/${item.id}" class="btnEdit" title="复核">复核</a>
 									</shiro:hasPermission>

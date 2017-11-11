@@ -160,13 +160,13 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr align="left">
 				<td colspan="1">
-					<c:if test="${entity.status!=3}">
+					<c:if test="${entity.status!=3 && userId==entity.createrId}">
 						<shiro:hasPermission name="cms_equipment_edit">
 							<input type="submit" class="button_70px" name="submit" value="暂存" onclick="$('#status').val(1); return check();">&nbsp;&nbsp;
 							<input type="submit" class="button_70px" name="submit" value="提交" onclick="$('#status').val(3); return check();">
 						</shiro:hasPermission>
 					</c:if>
-					<c:if test="${entity.status==3}">
+					<c:if test="${entity.status==3 && userId!=entity.createrId}">
 						<shiro:hasPermission name="cms_equipment_review">
 							<input type="submit" class="button_70px" name="submit" value="拒绝" onclick="$('#status').val(2); return check();">&nbsp;&nbsp;
 							<input type="submit" class="button_70px" name="submit" value="复核" onclick="$('#status').val(4); return check();">
