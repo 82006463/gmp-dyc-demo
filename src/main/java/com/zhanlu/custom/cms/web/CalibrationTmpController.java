@@ -42,9 +42,9 @@ public class CalibrationTmpController {
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         ModelAndView mv = new ModelAndView("cms/calibrationPlanList");
         mv.addObject("type", "calibrationTmp");
-        if (status != null && status.intValue() == 2) {
+        if (status != null && status.intValue() == 3) {
             filters.add(new PropertyFilter("EQI_status", status.toString()));
-            mv.addObject("status", 2);
+            mv.addObject("status", status);
             mv.addObject("measureComps", measureCompService.findList(null));
         } else {
             calibrationTmpService.init(user);
@@ -93,7 +93,7 @@ public class CalibrationTmpController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public ModelAndView delete(@PathVariable("id") Long id, Integer status) {
         CalibrationTmp entity = calibrationTmpService.findById(id);
-        entity.setStatus(1);
+        entity.setStatus(0);
         calibrationTmpService.saveOrUpdate(entity);
         ModelAndView mv = new ModelAndView("redirect:/custom/cms/calibrationTmp/" + status);
         return mv;

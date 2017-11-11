@@ -44,9 +44,9 @@ public class CalibrationExtController {
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         ModelAndView mv = new ModelAndView("cms/calibrationPlanList");
         mv.addObject("type", "calibrationExt");
-        if (status != null && status.intValue() == 2) {
+        if (status != null && status.intValue() == 3) {
             filters.add(new PropertyFilter("EQI_status", status.toString()));
-            mv.addObject("status", 2);
+            mv.addObject("status", status);
             mv.addObject("measureComps", measureCompService.findList(null));
         } else {
             mv.addObject("status", 1);
@@ -94,7 +94,7 @@ public class CalibrationExtController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public ModelAndView delete(@PathVariable("id") Long id, Integer status) {
         CalibrationExt entity = calibrationExtService.findById(id);
-        entity.setStatus(1);
+        entity.setStatus(0);
         calibrationExtService.saveOrUpdate(entity);
         ModelAndView mv = new ModelAndView("redirect:/custom/cms/calibrationExt/" + status);
         return mv;

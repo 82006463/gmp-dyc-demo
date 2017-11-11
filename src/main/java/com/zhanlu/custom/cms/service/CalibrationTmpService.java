@@ -66,13 +66,14 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
         Page<CalibrationTmp> page = new Page<>(Integer.MAX_VALUE);
         List<PropertyFilter> filters = new ArrayList<>();
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
-        filters.add(new PropertyFilter("EQI_status", "1"));
+        filters.add(new PropertyFilter("GEI_status", "1"));
+        filters.add(new PropertyFilter("LEI_status", "2"));
         page = this.findPage(page, filters);
 
         Map<String, Object> resultMap = new LinkedHashMap<>();
         if (page != null && page.getResult().size() > 0) {
             for (CalibrationTmp entity : page.getResult()) {
-                entity.setStatus(2);
+                entity.setStatus(3);
             }
             resultMap.put("result", 1);
             resultMap.put("msg", "任务生成成功");
@@ -88,7 +89,7 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
         Page<CalibrationTmp> page = new Page<>(Integer.MAX_VALUE);
         List<PropertyFilter> filters = new ArrayList<>();
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
-        filters.add(new PropertyFilter("EQI_status", "2"));
+        filters.add(new PropertyFilter("EQI_status", "3"));
         page = this.findPage(page, filters);
 
         Map<String, Object> resultMap = new LinkedHashMap<>();
@@ -107,7 +108,7 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
             task.setCalibrationMode(3);
             calibrationTaskService.save(task);
             for (CalibrationTmp entity : page.getResult()) {
-                entity.setStatus(3);
+                entity.setStatus(4);
                 entity.setTaskId(task.getId());
             }
             resultMap.put("result", 1);
