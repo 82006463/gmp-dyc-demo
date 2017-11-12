@@ -51,6 +51,7 @@ public class CalibrationTaskController {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(req);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         filters.add(new PropertyFilter("LEI_status", "3"));
+        filters.add(new PropertyFilter("EQS_approver", (String) req.getSession().getAttribute("username")));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");

@@ -1,6 +1,7 @@
 package com.zhanlu.excel;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 
 import java.io.OutputStream;
@@ -10,9 +11,9 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/11/4.
  */
-public class Table {
+public class ExcelUtils {
 
-    private static final Table instance = new Table();
+    private static final ExcelUtils instance = new ExcelUtils();
 
     //公司信息
     private String compInfo;
@@ -23,31 +24,31 @@ public class Table {
     //表体
     private List<List<String>> body = new ArrayList<>();
 
-    public static Table getInstance() {
+    public static ExcelUtils getInstance() {
         return instance;
     }
 
-    public Table setCompInfo(String compInfo) {
+    public ExcelUtils setCompInfo(String compInfo) {
         this.compInfo = compInfo;
         return this;
     }
 
-    public Table setSearch(List<String> search) {
+    public ExcelUtils setSearch(List<String> search) {
         this.search = search;
         return this;
     }
 
-    public Table setHeader(List<String> header) {
+    public ExcelUtils setHeader(List<String> header) {
         this.header = header;
         return this;
     }
 
-    public Table setBody(List<List<String>> body) {
+    public ExcelUtils setBody(List<List<String>> body) {
         this.body = body;
         return this;
     }
 
-    public Table addRow(List<String> row) {
+    public ExcelUtils addRow(List<String> row) {
         body.add(row);
         return this;
     }
@@ -61,27 +62,33 @@ public class Table {
         int rowIndex = 0;
         int columnIndex = 0;
         String cellItem = null;
+        HSSFRow row = null;
+        HSSFCell cell = null;
 
         //公司
-        HSSFRow row = sheet.createRow(rowIndex);
-        HSSFCell cell = row.createCell(0);
-        cell.setCellValue("公司名");
-        cell = row.createCell(1);
-        cell.setCellValue(compInfo);
+        if (StringUtils.isNotBlank(compInfo)) {
+            row = sheet.createRow(rowIndex);
+            cell = row.createCell(0);
+            cell.setCellValue("公司名");
+            cell = row.createCell(1);
+            cell.setCellValue(compInfo);
+        }
 
         //搜索条件
-        rowIndex++;
-        columnIndex = 0;
-        row = sheet.createRow(rowIndex);
-        for (int i = 0; i < search.size(); i++) {
-            cellItem = search.get(i);
-            cell = row.createCell(columnIndex);
-            cell.setCellValue(cellItem);
-            columnIndex++;
-            if (columnIndex == 2 && i < search.size() - 1) {
-                rowIndex++;
-                row.createCell(columnIndex);
-                columnIndex = 0;
+        if (search != null && search.size() > 0) {
+            rowIndex++;
+            columnIndex = 0;
+            row = sheet.createRow(rowIndex);
+            for (int i = 0; i < search.size(); i++) {
+                cellItem = search.get(i);
+                cell = row.createCell(columnIndex);
+                cell.setCellValue(cellItem);
+                columnIndex++;
+                if (columnIndex == 2 && i < search.size() - 1) {
+                    rowIndex++;
+                    row.createCell(columnIndex);
+                    columnIndex = 0;
+                }
             }
         }
 

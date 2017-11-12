@@ -1,6 +1,4 @@
-import org.apache.commons.lang.time.DateFormatUtils;
-
-import java.util.Calendar;
+import com.zhanlu.excel.ExcelUtils;
 
 /**
  * Created by Administrator on 2017/5/1.
@@ -30,9 +28,9 @@ public class Test {
         outClient.close();
         inClient.close();*/
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, 1);
-        System.err.println(cal.get(Calendar.MONTH));
-        System.err.println(DateFormatUtils.format(cal.getTime(), "yyyy-MM-dd"));
+
+        ExcelUtils table = ExcelUtils.getInstance();
+        table.setCompInfo("aaaaa");
+
     }
 }
