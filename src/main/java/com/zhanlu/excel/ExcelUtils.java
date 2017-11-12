@@ -82,9 +82,10 @@ public class ExcelUtils {
                 cell = row.createCell(columnIndex);
                 cell.setCellValue(cellItem);
                 columnIndex++;
-                if (columnIndex == 2 && i < search.size() - 1) {
+                if (columnIndex == 2) {
                     rowIndex++;
-                    row.createCell(columnIndex);
+                    row = sheet.createRow(rowIndex);
+                    row.createCell(rowIndex);
                     columnIndex = 0;
                 }
             }
