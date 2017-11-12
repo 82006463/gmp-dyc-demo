@@ -2,6 +2,7 @@ package com.zhanlu.framework.security.web;
 
 import com.zhanlu.framework.security.entity.User;
 import com.zhanlu.framework.security.service.UserService;
+import com.zhanlu.framework.security.shiro.ShiroUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
@@ -44,7 +45,7 @@ public class LoginController {
                 token.setRememberMe(true);
             }
             subject.login(token);
-            request.getSession().setAttribute("userId", userService.findUserByName(user.getUsername()).getId());
+            request.getSession().setAttribute("userId", ShiroUtils.getUserId());
             request.getSession().setAttribute("username", user.getUsername());
             return "redirect:/index";
             //return "redirect:/flow/task/list";

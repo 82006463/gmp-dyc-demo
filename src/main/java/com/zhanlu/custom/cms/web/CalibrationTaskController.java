@@ -8,6 +8,8 @@ import com.zhanlu.custom.cms.service.*;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
+import com.zhanlu.framework.security.shiro.ShiroPrincipal;
+import com.zhanlu.framework.security.shiro.ShiroUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,9 @@ public class CalibrationTaskController {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(req);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         filters.add(new PropertyFilter("LEI_status", "3"));
-        filters.add(new PropertyFilter("EQS_approver", (String) req.getSession().getAttribute("username")));
+        if (!ShiroUtils.getPrincipal().getAuthorities().contains("cms_calibrationTask_review")) {
+            filters.add(new PropertyFilter("EQS_approver", (String) req.getSession().getAttribute("username")));
+        }
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("id");
