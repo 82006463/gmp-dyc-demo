@@ -47,7 +47,6 @@ public class CalibrationTmpController {
             mv.addObject("status", status);
             mv.addObject("measureComps", measureCompService.findList(null));
         } else {
-            calibrationTmpService.init(user);
             if (taskStatus != null && taskStatus.intValue() == 0) {
                 filters.add(new PropertyFilter("LEI_status", "2"));
             } else if (taskStatus != null && taskStatus.intValue() == 1) {

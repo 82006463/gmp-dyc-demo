@@ -36,32 +36,6 @@ public class CalibrationTmpService extends CommonService<CalibrationTmp, Long> {
     }
 
     @Transactional
-    public boolean init(User user) {
-        Page<Equipment> page = new Page<>(Integer.MAX_VALUE);
-        List<PropertyFilter> filters = new ArrayList<>();
-        filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
-        filters.add(new PropertyFilter("EQI_tmpStatus", "1"));
-        equipmentService.findPage(page, filters);
-        if (page != null && page.getResult().size() > 0) {
-            for (Equipment eq : page.getResult()) {
-                eq.setTmpStatus(2);
-
-                CalibrationTmp entity = new CalibrationTmp();
-                entity.setTenantId(eq.getTenantId());
-                entity.setCreaterId(user.getId());
-                entity.setCreateTime(new Date());
-                entity.setStatus(1);
-                entity.setEquipmentId(eq.getId());
-                entity.setLastExpectDate(eq.getLastExpectDate());
-                entity.setLastActualDate(eq.getLastActualDate());
-                entity.setExpectDate(eq.getExpectDate());
-                this.save(entity);
-            }
-        }
-        return true;
-    }
-
-    @Transactional
     public Map<String, Object> generateTask(User user) {
         Page<CalibrationTmp> page = new Page<>(Integer.MAX_VALUE);
         List<PropertyFilter> filters = new ArrayList<>();

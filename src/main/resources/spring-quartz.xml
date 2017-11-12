@@ -12,6 +12,18 @@
 		</property>
 	</bean>
 
+	<!-- 月度校准计划：临时 -->
+	<bean id="calibrationMonthQtzGenerateMonthTmpJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="calibrationMonthQtz"></property>
+		<property name="targetMethod" value="generateMonthTmp"></property>
+		<property name="concurrent" value="false"></property>
+	</bean>
+	<bean id="calibrationMonthQtzGenerateMonthTmpTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="calibrationMonthQtzGenerateMonthTmpJob" />
+		<property name="cronExpression" value="59 59 1 * * ?" />
+	</bean>
+
+	<!-- 月度校准计划：内校、外校 -->
 	<bean id="calibrationMonthQtzGenerateMonthJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="calibrationMonthQtz"></property>
 		<property name="targetMethod" value="generateMonth"></property>
@@ -19,9 +31,10 @@
 	</bean>
 	<bean id="calibrationMonthQtzGenerateMonthTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="calibrationMonthQtzGenerateMonthJob" />
-		<property name="cronExpression" value="0 0/1 * * * ?" />
+		<property name="cronExpression" value="59 59 1 1 * ?" />
 	</bean>
 
+	<!-- 年度校准计划 -->
 	<bean id="calibrationMonthQtzGenerateYearJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="calibrationMonthQtz"></property>
 		<property name="targetMethod" value="generateYear"></property>
@@ -29,7 +42,7 @@
 	</bean>
 	<bean id="calibrationMonthQtzGenerateYearTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="calibrationMonthQtzGenerateYearJob" />
-		<property name="cronExpression" value="59 59 23 31 12 ?" />
+		<property name="cronExpression" value="59 59 1 31 12 ?" />
 	</bean>
 
 </beans>

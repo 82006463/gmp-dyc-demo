@@ -1,13 +1,7 @@
 package com.zhanlu.custom.cms.quartz;
 
-import com.zhanlu.custom.cms.entity.CalibrationExt;
-import com.zhanlu.custom.cms.entity.CalibrationIn;
-import com.zhanlu.custom.cms.entity.CalibrationYear;
-import com.zhanlu.custom.cms.entity.Equipment;
-import com.zhanlu.custom.cms.service.CalibrationExtService;
-import com.zhanlu.custom.cms.service.CalibrationInService;
-import com.zhanlu.custom.cms.service.CalibrationYearService;
-import com.zhanlu.custom.cms.service.EquipmentService;
+import com.zhanlu.custom.cms.entity.*;
+import com.zhanlu.custom.cms.service.*;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -15,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 月度校准定时器
@@ -29,11 +20,57 @@ public class CalibrationMonthQtz {
     @Autowired
     private EquipmentService equipmentService;
     @Autowired
-    private CalibrationExtService calibrationExtService;
-    @Autowired
     private CalibrationInService calibrationInService;
     @Autowired
+    private CalibrationExtService calibrationExtService;
+    @Autowired
+    private CalibrationTmpService calibrationTmpService;
+    @Autowired
     private CalibrationYearService calibrationYearService;
+
+    @Transactional
+    public void generateMonthTmp() {
+        Map<Long, Equipment> eqMap = new LinkedHashMap<>();
+        Page<Equipment> pageEq = new Page<>(Integer.MAX_VALUE);
+        List<PropertyFilter> filters = new ArrayList<>();
+        filters.add(new PropertyFilter("EQI_tmpStatus", "1"));
+        equipmentService.findPage(pageEq, filters);
+        if (pageEq != null && pageEq.getResult().size() > 0) {
+            for (Equipment eq : pageEq.getResult())
+                eqMap.put(eq.getId(), eq);
+        }
+        filters.clear();
+        filters.add(new PropertyFilter("LTI_expectDate", DateFormatUtils.format(new Date(), "yyyy-MM-dd")));
+        equipmentService.findPage(pageEq, filters);
+        if (pageEq != null && pageEq.getResult().size() > 0) {
+            for (Equipment eq : pageEq.getResult())
+                eqMap.put(eq.getId(), eq);
+        }
+
+        Calendar cal = Calendar.getInstance();
+        String d1 = DateFormatUtils.format(cal.getTime(), "yyyy-MM") + "-01 00:00:00";
+        String d2 = DateFormatUtils.format(cal.getTime(), "yyyy-MM") + "-" + cal.getActualMaximum(Calendar.DATE) + " 23:59:59";
+        Page<CalibrationTmp> pageTmp = new Page<>(Integer.MAX_VALUE);
+        filters.clear();
+        for (Map.Entry<Long, Equipment> entry : eqMap.entrySet()) {
+            filters.add(new PropertyFilter("EQL_equipmentId", entry.getValue().getId().toString()));
+            filters.add(new PropertyFilter("GED_expectDate", d1));
+            filters.add(new PropertyFilter("LED_expectDate", d2));
+            calibrationTmpService.findPage(pageTmp, filters);
+            if (pageTmp != null && pageTmp.getResult().size() > 0) {
+                CalibrationTmp entity = new CalibrationTmp();
+                entity.setTenantId(entry.getValue().getTenantId());
+                entity.setCreaterId(entry.getValue().getCreaterId());
+                entity.setCreateTime(new Date());
+                entity.setStatus(1);
+                entity.setEquipmentId(entry.getValue().getId());
+                entity.setLastExpectDate(entry.getValue().getLastExpectDate());
+                entity.setLastActualDate(entry.getValue().getLastActualDate());
+                entity.setExpectDate(entry.getValue().getExpectDate());
+                calibrationTmpService.save(entity);
+            }
+        }
+    }
 
     @Transactional
     public void generateMonth() {
