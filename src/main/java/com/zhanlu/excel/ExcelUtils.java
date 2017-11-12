@@ -1,10 +1,8 @@
 package com.zhanlu.excel;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +51,7 @@ public class ExcelUtils {
         return this;
     }
 
-    public boolean build(OutputStream out) {
+    public HSSFWorkbook build() {
         HSSFWorkbook wb = new HSSFWorkbook();
         HSSFSheet sheet = wb.createSheet();
         HSSFCellStyle cellStyle = wb.createCellStyle();
@@ -114,13 +112,6 @@ public class ExcelUtils {
                 columnIndex++;
             }
         }
-
-        try {
-            wb.write(out);
-            IOUtils.closeQuietly(out);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+        return wb;
     }
 }
