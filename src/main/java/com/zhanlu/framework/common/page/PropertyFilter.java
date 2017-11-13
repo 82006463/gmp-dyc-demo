@@ -113,6 +113,8 @@ public class PropertyFilter {
         for (Map.Entry<String, Object> entry : filterParamMap.entrySet()) {
             String filterName = entry.getKey();
             String value = (String) entry.getValue();
+            if (StringUtils.isBlank(value))
+                continue;
             //如果value值为空,则忽略此filter.
             if (StringUtils.isNotBlank(value)) {
                 PropertyFilter filter = new PropertyFilter(filterName, value);
