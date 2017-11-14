@@ -47,7 +47,7 @@ public class CalibrationInController {
             mv.addObject("status", status);
             mv.addObject("measureComps", measureCompService.findList(null));
         } else {
-            if (taskStatus != null && taskStatus.intValue() == 0) {
+            if (taskStatus != null && taskStatus.intValue() == -1) {
                 filters.add(new PropertyFilter("LEI_status", "2"));
             } else if (taskStatus != null && taskStatus.intValue() == 1) {
                 filters.add(new PropertyFilter("EQI_status", "3"));

@@ -106,7 +106,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                     hist.setActualDate(plan.getActualDate());
                     hist.setCertCode(plan.getCertCode());
                     hist.setCalibrationResult(plan.getCalibrationResult());
-                    hist.setCalibrationStatus(plan.getExpectDate() == null ? 1 : plan.getExpectDate().before(plan.getActualDate()) ? 0 : 1);
+                    hist.setCalibrationStatus(plan.getExpectDate() == null ? 1 : plan.getExpectDate().before(plan.getActualDate()) ? -1 : 1);
                     hist.setRemark(plan.getRemark());
                 }
             } else if (entity.getCalibrationMode().intValue() == 2) {
@@ -139,7 +139,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                     hist.setActualDate(plan.getActualDate());
                     hist.setCertCode(plan.getCertCode());
                     hist.setCalibrationResult(plan.getCalibrationResult());
-                    hist.setCalibrationStatus(plan.getExpectDate() == null ? 1 : plan.getExpectDate().before(plan.getActualDate()) ? 0 : 1);
+                    hist.setCalibrationStatus(plan.getExpectDate() == null ? 1 : plan.getExpectDate().before(plan.getActualDate()) ? -1 : 1);
                     hist.setRemark(plan.getRemark());
                 }
             } else if (entity.getCalibrationMode().intValue() == 3) {
@@ -172,7 +172,7 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                     hist.setActualDate(plan.getActualDate());
                     hist.setCertCode(plan.getCertCode());
                     hist.setCalibrationResult(plan.getCalibrationResult());
-                    hist.setCalibrationStatus(plan.getExpectDate() == null ? 1 : plan.getExpectDate().before(plan.getActualDate()) ? 0 : 1);
+                    hist.setCalibrationStatus(plan.getExpectDate() == null ? 1 : plan.getExpectDate().before(plan.getActualDate()) ? -1 : 1);
                     hist.setRemark(plan.getRemark());
                 }
             }

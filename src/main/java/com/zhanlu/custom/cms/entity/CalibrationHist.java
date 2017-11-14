@@ -34,9 +34,9 @@ public class CalibrationHist extends IdEntity {
     private Date actualDate;
     //记录/证书编号
     private String certCode;
-    //校准结果
+    //校准结果:-1:不合格, 1:不合格
     private String calibrationResult;
-    //校准状态：0:延期, 1:正常
+    //校准状态：-1:延期, 1:正常
     private Integer calibrationStatus;
     //备注
     private String remark;

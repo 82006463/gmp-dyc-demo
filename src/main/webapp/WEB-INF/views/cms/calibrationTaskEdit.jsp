@@ -76,7 +76,7 @@
 							<select name="calibrationResult" class="input_select" style="width: 100%;">
 								<option value="">-请选择-</option>
 								<option value="1" ${item.calibrationResult==1 ? 'selected="selected"':''}>合格</option>
-								<option value="0" ${item.calibrationResult==0 ? 'selected="selected"':''}>不合格</option>
+								<option value="-1" ${item.calibrationResult==-1 ? 'selected="selected"':''}>不合格</option>
 							</select>
 						</td>
 						<td class="td_list_2" align=left>

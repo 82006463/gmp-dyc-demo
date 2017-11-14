@@ -4,11 +4,15 @@ import com.zhanlu.custom.cms.entity.CalibrationExt;
 import com.zhanlu.custom.cms.service.CalibrationExtService;
 import com.zhanlu.custom.cms.service.CmsService;
 import com.zhanlu.custom.cms.service.MeasureCompService;
+import com.zhanlu.excel.ExcelUtils;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +57,7 @@ public class CalibrationExtController {
             mv.addObject("status", status);
             mv.addObject("measureComps", measureCompService.findList(null));
         } else {
-            if (taskStatus != null && taskStatus.intValue() == 0) {
+            if (taskStatus != null && taskStatus.intValue() == -1) {
                 filters.add(new PropertyFilter("LEI_status", "2"));
             } else if (taskStatus != null && taskStatus.intValue() == 1) {
                 filters.add(new PropertyFilter("EQI_status", "3"));
@@ -86,7 +94,7 @@ public class CalibrationExtController {
         /*if (StringUtils.isBlank(measureCompId)) {
             resultMap.put("msg", "请选择计量公司");
         } else */
-            if (StringUtils.isBlank(approver)) {
+        if (StringUtils.isBlank(approver)) {
             resultMap.put("msg", "请输入计量实施人");
         } else if (user == null) {
             resultMap.put("msg", "计量实施人账号不存在");
@@ -113,6 +121,22 @@ public class CalibrationExtController {
         ModelAndView mv = new ModelAndView("cms/calibrationExtView");
         mv.addObject("entity", entity);
         return mv;
+    }
+
+    @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
+    public void exportExcel(HttpServletRequest req, HttpServletResponse resp) {
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("multipart/form-data");
+        try (OutputStream out = resp.getOutputStream()) {
+            String fileName = URLEncoder.encode("任务-" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xlsx", "UTF-8");
+            resp.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+            ExcelUtils table = ExcelUtils.getInstance();
+            table.setCompInfo("aaaaa");
+            HSSFWorkbook workbook = table.build();
+            workbook.write(out);
+        } catch (Exception e) {
+
+        }
     }
 
 }

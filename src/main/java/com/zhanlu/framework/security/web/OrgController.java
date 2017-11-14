@@ -52,7 +52,9 @@ public class OrgController {
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
-        model.addAttribute("entity", new Org());
+        Org entith = new Org();
+        entith.setStatus(1);
+        model.addAttribute("entity", entith);
         return "security/orgEdit";
     }
 

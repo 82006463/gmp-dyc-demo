@@ -30,6 +30,11 @@
 					});
 				}
 			}
+
+            function exportExcel() {
+			    $('#downloadBtn').prop('href', '${ctx}/custom/cms/${type}/exportExcel');
+                $('#downloadBtn').click();
+            }
 		</script>
 	</head>
 
@@ -56,7 +61,7 @@
 					<td class="td_table_2">
 						<select id="taskStatus" name="taskStatus" class="input_select">
 							<option value="">-请选择-</option>
-							<option value="0" ${param['taskStatus']==0 ? 'selected="selected"':''}>未生成</option>
+							<option value="0" ${param['taskStatus']==-1 ? 'selected="selected"':''}>未生成</option>
 							<option value="1" ${param['taskStatus']==1 ? 'selected="selected"':''}>已生成</option>
 						</select>
 					</td>
@@ -90,6 +95,7 @@
 					<c:if test="${status == 3}">
 						<input type="button" class='button_70px' value="发送任务" onclick="sendask(this);"/>
 						<input type="button" class='button_70px' value="导出Excel"/>
+						<a id="downloadBtn" href="#" target="_blank"></a>
 					</c:if>
 				</td>
 			</tr>
