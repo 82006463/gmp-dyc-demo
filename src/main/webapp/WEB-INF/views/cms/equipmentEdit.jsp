@@ -64,53 +64,53 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">型号<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">型号：</td>
 				<td class="td_table_2">
-					<input type="text" id="model" name="model" value="${entity.model}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+					<input type="text" id="model" name="model" value="${entity.model}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
-				<td class="td_table_1">出厂编号<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">出厂编号：</td>
 				<td class="td_table_2">
-					<input type="text" id="factoryCode" name="factoryCode" value="${entity.factoryCode}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
-				</td>
-			</tr>
-			<tr>
-				<td class="td_table_1">所在房间<b class="requiredWarn">*</b>：</td>
-				<td class="td_table_2">
-					<input type="text" id="room" name="room" value="${entity.room}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
-				</td>
-				<td class="td_table_1">所属设备<b class="requiredWarn">*</b>：</td>
-				<td class="td_table_2">
-					<input type="text" id="equipment" name="equipment" value="${entity.equipment}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+					<input type="text" id="factoryCode" name="factoryCode" value="${entity.factoryCode}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">功能<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">所在房间：</td>
 				<td class="td_table_2">
-					<input type="text" id="func" name="func" value="${entity.func}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+					<input type="text" id="room" name="room" value="${entity.room}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
-				<td class="td_table_1">精度<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">所属设备：</td>
 				<td class="td_table_2">
-					<input type="text" id="precision" name="precision" value="${entity.precision}" class="input_240 validate[required,minSize[1],maxSize[20]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
-				</td>
-			</tr>
-			<tr>
-				<td class="td_table_1">校准<b class="requiredWarn">*</b>：</td>
-				<td class="td_table_2">
-					<input type="text" id="calibration" name="calibration" value="${entity.calibration}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
-				</td>
-				<td class="td_table_1">校准名称<b class="requiredWarn">*</b>：</td>
-				<td class="td_table_2">
-					<input type="text" id="calibrationName" name="calibrationName" value="${entity.calibrationName}" class="input_240 validate[required,minSize[1],maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+					<input type="text" id="equipment" name="equipment" value="${entity.equipment}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">使用范围下限<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">功能：</td>
 				<td class="td_table_2">
-					<input type="text" id="measureRangeMin" name="measureRangeMin" value="${entity.measureRangeMin}" class="input_240 validate[required,custom[number]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+					<input type="text" id="func" name="func" value="${entity.func}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
-				<td class="td_table_1">使用范围上限<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">精度：</td>
 				<td class="td_table_2">
-					<input type="text" id="measureRangeMax" name="measureRangeMax" value="${entity.measureRangeMax}" class="input_240 validate[required,custom[number]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+					<input type="text" id="precision" name="precision" value="${entity.precision}" class="input_240 validate[maxSize[20]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+				</td>
+			</tr>
+			<tr>
+				<td class="td_table_1">校准：</td>
+				<td class="td_table_2">
+					<input type="text" id="calibration" name="calibration" value="${entity.calibration}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+				</td>
+				<td class="td_table_1">校准名称：</td>
+				<td class="td_table_2">
+					<input type="text" id="calibrationName" name="calibrationName" value="${entity.calibrationName}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+				</td>
+			</tr>
+			<tr>
+				<td class="td_table_1">使用范围下限：</td>
+				<td class="td_table_2">
+					<input type="text" id="measureRangeMin" name="measureRangeMin" value="${entity.measureRangeMin}" class="input_240 validate[custom[number]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+				</td>
+				<td class="td_table_1">使用范围上限：</td>
+				<td class="td_table_2">
+					<input type="text" id="measureRangeMax" name="measureRangeMax" value="${entity.measureRangeMax}" class="input_240 validate[custom[number]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
