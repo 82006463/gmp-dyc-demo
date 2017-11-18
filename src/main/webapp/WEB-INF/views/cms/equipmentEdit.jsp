@@ -94,11 +94,11 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">校准：</td>
+				<td class="td_table_1">校准规范编号：</td>
 				<td class="td_table_2">
 					<input type="text" id="calibration" name="calibration" value="${entity.calibration}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
-				<td class="td_table_1">校准名称：</td>
+				<td class="td_table_1">校准规范编号：</td>
 				<td class="td_table_2">
 					<input type="text" id="calibrationName" name="calibrationName" value="${entity.calibrationName}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>

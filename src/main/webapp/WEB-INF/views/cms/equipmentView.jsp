@@ -44,9 +44,9 @@
 				</tr>
 
 				<tr>
-					<td class="td_table_1">校准：</td>
+					<td class="td_table_1">校准规范编号：</td>
 					<td class="td_table_2">${entity.calibration}</td>
-					<td class="td_table_1">校准名称：</td>
+					<td class="td_table_1">校准规范编号：</td>
 					<td class="td_table_2">${entity.calibrationName}</td>
 				</tr>
 				<tr>
