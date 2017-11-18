@@ -1,11 +1,10 @@
 package com.zhanlu.custom.cms.entity;
 
 import com.zhanlu.framework.common.entity.IdEntity;
+import com.zhanlu.framework.security.entity.Role;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -15,14 +14,21 @@ import java.util.Date;
 @Table(name = "cms_comp_notify")
 public class CompNotify extends IdEntity {
 
-    //租户ID
-    private Long tenantId;
     //接收人
-    private Integer notifyType;
+    private Long roleId;
+    private Role role;
     //通知标题
     private String subject;
     //通知内容
     private String content;
+
+    //系统版本
+    private String sysVer;
+    //模块，模块版本
+    private String module;
+    private String moduleVer;
+    //发送时间
+    private Date sendTime;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -30,22 +36,23 @@ public class CompNotify extends IdEntity {
     private Long updaterId;
     private Date updateTime;
 
-    @Column(name = "tenant_id")
-    public Long getTenantId() {
-        return tenantId;
+    @Column(name = "role_id")
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setTenantId(Long tenantId) {
-        this.tenantId = tenantId;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
-    @Column(name = "notify_type")
-    public Integer getNotifyType() {
-        return notifyType;
+    @ManyToOne
+    @JoinColumn(name = "role_id", insertable = false, updatable = false)
+    public Role getRole() {
+        return role;
     }
 
-    public void setNotifyType(Integer notifyType) {
-        this.notifyType = notifyType;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Column(name = "subject", length = 100)
@@ -64,6 +71,43 @@ public class CompNotify extends IdEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Column(name = "sys_ver", length = 20)
+    public String getSysVer() {
+        return sysVer;
+    }
+
+    public void setSysVer(String sysVer) {
+        this.sysVer = sysVer;
+    }
+
+    @Column(name = "module", length = 20)
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
+    }
+
+    @Column(name = "module_ver", length = 20)
+    public String getModuleVer() {
+        return moduleVer;
+    }
+
+    public void setModuleVer(String moduleVer) {
+        this.moduleVer = moduleVer;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "send_time")
+    public Date getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(Date sendTime) {
+        this.sendTime = sendTime;
     }
 
     @Column(name = "creater_id")
