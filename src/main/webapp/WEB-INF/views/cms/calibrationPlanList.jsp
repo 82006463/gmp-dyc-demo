@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-		<title>月度${fn:contains(type,'Ext') ? '外校':fn:contains(type,'In') ? '内校':fn:contains(type,'Tmp') ? '临校':''}${status==3 ? '任务':''}</title>
+		<title>月度${fn:contains(type,'Ext') ? '外校':fn:contains(type,'In') ? '内校':fn:contains(type,'Tmp') ? '临校':''}${status==3 ? '任务':'计划'}</title>
 		<%@ include file="/common/meta.jsp"%>
 		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
 		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
@@ -48,7 +48,7 @@
 		<input type="hidden" name="order" id="order" value="${page.order}"/>
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
-				<td class="td_table_top" align="center">月度${fn:contains(type,'Ext') ? '外校':fn:contains(type,'In') ? '内校':fn:contains(type,'Tmp') ? '临校':''}${status==3 ? '任务':''}</td>
+				<td class="td_table_top" align="center">月度${fn:contains(type,'Ext') ? '外校':fn:contains(type,'In') ? '内校':fn:contains(type,'Tmp') ? '临校':''}${status==3 ? '任务':'计划'}</td>
 			</tr>
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">

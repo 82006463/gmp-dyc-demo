@@ -69,7 +69,7 @@ public class CalibrationHistController {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("multipart/form-data");
         try (OutputStream out = resp.getOutputStream()) {
-            String fileName = URLEncoder.encode("任务-" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xls", "UTF-8");
+            String fileName = URLEncoder.encode("校准历史-" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xls", "UTF-8");
             resp.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
             ExcelUtils table = new ExcelUtils();
             table.setComp("公司名：", user.getOrg().getName());
@@ -128,7 +128,7 @@ public class CalibrationHistController {
                     tmpList.add(tmp.getCertCode());
                     tmpList.add(tmp.getCalibrationResult().equals("1") ? "合格" : "不合格");
                     tmpList.add(tmp.getActualDate() == null ? "N.A." : DateFormatUtils.format(tmp.getActualDate(), "yyyy-MM-dd"));
-                    tmpList.add(tmp.getCalibrationStatus().intValue() == 1 ? "正常" : "延期");
+                    tmpList.add(tmp.getCalibrationStatus() == null ? "N.A." : tmp.getCalibrationStatus().intValue() == 1 ? "正常" : "延期");
                     tmpList.add(StringUtils.isBlank(tmp.getRemark()) ? "N.A." : tmp.getRemark());
                     body.add(tmpList);
                 }

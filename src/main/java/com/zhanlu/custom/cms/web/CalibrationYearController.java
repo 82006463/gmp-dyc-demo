@@ -69,7 +69,7 @@ public class CalibrationYearController {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("multipart/form-data");
         try (OutputStream out = resp.getOutputStream()) {
-            String fileName = URLEncoder.encode("任务-" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xls", "UTF-8");
+            String fileName = URLEncoder.encode("年度校准计划-" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xls", "UTF-8");
             resp.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
             ExcelUtils table = new ExcelUtils();
             table.setComp("公司名：", user.getOrg().getName());
