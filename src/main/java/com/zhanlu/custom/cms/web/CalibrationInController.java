@@ -165,10 +165,10 @@ public class CalibrationInController {
                     List<String> tmpList = new ArrayList<>();
                     tmpList.add(equipment.getCode());
                     tmpList.add(equipment.getName());
-                    tmpList.add(equipment.getRoom());
+                    tmpList.add(StringUtils.isBlank(equipment.getRoom()) ? "N.A." : equipment.getRoom());
                     tmpList.add(tmp.getLastActualDate() == null ? "N.A." : DateFormatUtils.format(tmp.getLastActualDate(), "yyyy-MM-dd"));
-                    tmpList.add(equipment.getCalibrationCycle() + "");
-                    tmpList.add(DateFormatUtils.format(tmp.getExpectDate(), "yyyy-MM-dd"));
+                    tmpList.add(equipment.getCalibrationCycle() == null ? "N.A." : equipment.getCalibrationCycle() + "");
+                    tmpList.add(tmp.getExpectDate() == null ? "N.A." : DateFormatUtils.format(tmp.getExpectDate(), "yyyy-MM-dd"));
                     body.add(tmpList);
                 }
                 table.setBody(body);

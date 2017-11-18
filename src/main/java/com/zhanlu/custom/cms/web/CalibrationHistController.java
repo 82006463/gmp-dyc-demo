@@ -137,7 +137,7 @@ public class CalibrationHistController {
                     tmpList.add(tmp.getTaskCode());
                     tmpList.add(equipment.getCode());
                     tmpList.add(equipment.getName());
-                    tmpList.add(equipment.getRoom());
+                    tmpList.add(StringUtils.isBlank(equipment.getRoom()) ? "N.A." : equipment.getRoom());
                     tmpList.add(tmp.getExpectDate() == null ? "N.A." : DateFormatUtils.format(tmp.getExpectDate(), "yyyy-MM-dd"));
                     if (tmp.getCalibrationMode().intValue() == 1) {
                         tmpList.add("内校");
@@ -148,7 +148,7 @@ public class CalibrationHistController {
                     } else {
                         tmpList.add("N.A.");
                     }
-                    tmpList.add(tmp.getCertCode());
+                    tmpList.add(StringUtils.isBlank(tmp.getCertCode()) ? "N.A." : tmp.getCertCode());
                     tmpList.add(tmp.getCalibrationResult().equals("1") ? "合格" : "不合格");
                     tmpList.add(tmp.getActualDate() == null ? "N.A." : DateFormatUtils.format(tmp.getActualDate(), "yyyy-MM-dd"));
                     tmpList.add(tmp.getCalibrationStatus() == null ? "N.A." : tmp.getCalibrationStatus().intValue() == 1 ? "正常" : "延期");

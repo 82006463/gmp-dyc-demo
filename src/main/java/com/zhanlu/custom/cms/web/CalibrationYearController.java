@@ -1,6 +1,5 @@
 package com.zhanlu.custom.cms.web;
 
-import com.zhanlu.custom.cms.entity.CalibrationExt;
 import com.zhanlu.custom.cms.entity.CalibrationYear;
 import com.zhanlu.custom.cms.entity.Equipment;
 import com.zhanlu.custom.cms.service.CalibrationYearService;
@@ -107,7 +106,7 @@ public class CalibrationYearController {
                     List<String> tmpList = new ArrayList<>();
                     tmpList.add(equipment.getCode());
                     tmpList.add(equipment.getName());
-                    tmpList.add(equipment.getRoom());
+                    tmpList.add(StringUtils.isBlank(equipment.getRoom()) ? "N.A." : equipment.getRoom());
                     tmpList.add(tmp.getExpectDate() == null ? "N.A." : DateFormatUtils.format(tmp.getExpectDate(), "yyyy-MM-dd"));
                     if (tmp.getCalibrationMode().intValue() == 1) {
                         tmpList.add("内校");

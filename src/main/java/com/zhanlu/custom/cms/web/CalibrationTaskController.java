@@ -195,10 +195,10 @@ public class CalibrationTaskController {
                         tmpList.add(equipment.getName());
                         tmpList.add(StringUtils.isBlank(equipment.getRoom()) ? "N.A." : equipment.getRoom());
                         tmpList.add(StringUtils.isBlank(equipment.getFactoryCode()) ? "N.A." : equipment.getFactoryCode());
-                        tmpList.add("N.A.");
-                        tmpList.add("N.A.");
-                        tmpList.add("N.A.");
-                        tmpList.add("N.A.");
+                        tmpList.add("");
+                        tmpList.add("");
+                        tmpList.add("");
+                        tmpList.add("");
                         body.add(tmpList);
                     }
                 }
