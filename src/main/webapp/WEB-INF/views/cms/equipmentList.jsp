@@ -73,7 +73,9 @@
 						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
 					</c:if>
 					<input type='submit' class='button_70px' value='查询'/>
-					<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>
+					<shiro:hasPermission name="cms_equipment_export">
+						<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>
+					</shiro:hasPermission>
 				</td>
 			</tr>
 		</table>

@@ -40,7 +40,9 @@
 			<tr>
 				<td class="td_table_2" align="center" colspan="2">
 					<input type='submit' id="searchBtn" class='button_70px' value='查询'/>
-					<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>
+					<shiro:hasPermission name="cms_calibrationYear_export">
+						<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>
+					</shiro:hasPermission>
 				</td>
 			</tr>
 		</table>

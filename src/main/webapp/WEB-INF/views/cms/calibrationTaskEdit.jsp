@@ -123,7 +123,9 @@
 							<input type='submit' id="rejectBtn" class='button_70px' value="拒绝" onclick="$('#status').val(2);"/>
 						</shiro:hasPermission>
 					</c:if>
-					<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>
+					<shiro:hasPermission name="cms_calibrationTask_export">
+						<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>
+					</shiro:hasPermission>
 				</td>
 			</tr>
 		</table>

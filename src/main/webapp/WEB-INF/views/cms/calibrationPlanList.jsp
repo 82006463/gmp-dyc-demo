@@ -95,7 +95,9 @@
 						<input type="button" class='button_70px' value="发送任务" onclick="sendask(this);"/>
 						<%--<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>--%>
 					</c:if>
-					<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>
+					<shiro:hasPermission name="cms_${type}${status}_export">
+						<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>
+					</shiro:hasPermission>
 				</td>
 			</tr>
 		</table>
