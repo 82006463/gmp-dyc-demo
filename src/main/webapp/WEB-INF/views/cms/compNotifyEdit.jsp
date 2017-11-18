@@ -69,7 +69,7 @@
 				<tr>
 					<td class="td_table_1">通知内容<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2" colspan="3">
-						<textarea id="content" name="content" class="input_textarea_600 validate[required,minSize[1],maxSize[490]]">${entity.content}</textarea>
+						<textarea id="content" name="content" rows="25" cols="165" class="validate[required,minSize[1],maxSize[490]]">${entity.content}</textarea>
 					</td>
 				</tr>
 			</table>
