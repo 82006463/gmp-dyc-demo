@@ -100,9 +100,9 @@
 					</td>
 					<td class="td_list_2" align=left>${item.calibrationMode==1 ? '内校':item.calibrationMode==2 ? '外校':item.calibrationMode==3 ? '临校':'N.A.'}</td>
 					<td class="td_list_2" align=left>${item.certCode}</td>
-					<td class="td_list_2" align=left>${item.calibrationResult==1 ? '合格':item.calibrationResult==0 ? '不合格':'N.A.'}</td>
+					<td class="td_list_2" align=left>${item.calibrationResult==1 ? '合格':item.calibrationResult<=0 ? '不合格':'N.A.'}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.actualDate}" pattern="yyyy-MM-dd"/></td>
-					<td class="td_list_2" align=left>${item.calibrationStatus==1 ? '正常':item.calibrationStatus==0 ? '延期':'N.A.'}</td>
+					<td class="td_list_2" align=left>${item.calibrationStatus==1 ? '正常':item.calibrationStatus<=0 ? '延期':'N.A.'}</td>
 					<td class="td_list_2" align=left>${empty item.remark ? 'N.A.':item.remark}</td>
 				</tr>
 			</c:forEach>
