@@ -37,10 +37,7 @@
 			}
 
             function exportFile() {
-                $('#downloadBtn').prop('href', '${ctx}/custom/cms/calibrationTask/exportFile?taskId='+$('#id').val());
-                $('#downloadBtn').trigger('click');
-                $('#downloadBtn').prop('href', '#');
-                return false;
+                exportExcel('${ctx}/custom/cms/calibrationTask/exportFile?taskId='+$('#id').val());
             }
 		</script>
 	</head>
@@ -126,7 +123,7 @@
 							<input type='submit' id="rejectBtn" class='button_70px' value="拒绝" onclick="$('#status').val(2);"/>
 						</shiro:hasPermission>
 					</c:if>
-					<a id="downloadBtn" class='button_70px' href="#" target="_blank" onclick="return exportFile();">导出Excel</a>
+					<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>
 				</td>
 			</tr>
 		</table>

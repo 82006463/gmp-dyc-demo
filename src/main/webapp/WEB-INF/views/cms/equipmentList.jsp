@@ -11,10 +11,7 @@
 		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
 		<script type="text/javascript">
             function exportFile() {
-                $('#downloadBtn').prop('href', '${ctx}/custom/cms/equipment/exportFile?'+$('#mainForm').serialize());
-                $('#downloadBtn').trigger('click');
-                $('#downloadBtn').prop('href', '#');
-                return false;
+                exportExcel('${ctx}/custom/cms/equipment/exportFile?'+$('#mainForm').serialize());
             }
 		</script>
 	</head>
@@ -76,7 +73,7 @@
 						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
 					</c:if>
 					<input type='submit' class='button_70px' value='查询'/>
-					<a id="downloadBtn" class='button_70px' href="#" target="_blank" onclick="return exportFile();">导出Excel</a>
+					<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>
 				</td>
 			</tr>
 		</table>

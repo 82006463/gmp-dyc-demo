@@ -32,10 +32,7 @@
 			}
 
             function exportFile() {
-			    $('#downloadBtn').prop('href', '${ctx}/custom/cms/${type}/${status}/exportFile?'+$('#mainForm').serialize());
-                $('#downloadBtn').trigger('click');
-				$('#downloadBtn').prop('href', '#');
-				return false;
+                exportExcel('${ctx}/custom/cms/${type}/${status}/exportFile?'+$('#mainForm').serialize());
             }
 		</script>
 	</head>
@@ -98,7 +95,7 @@
 						<input type="button" class='button_70px' value="发送任务" onclick="sendask(this);"/>
 						<%--<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>--%>
 					</c:if>
-					<a id="downloadBtn" class='button_70px' href="#" target="_blank" onclick="return exportFile();">导出Excel</a>
+					<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>
 				</td>
 			</tr>
 		</table>

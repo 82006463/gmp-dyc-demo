@@ -12,10 +12,7 @@
 		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
 		<script type="text/javascript">
             function exportFile() {
-                $('#downloadBtn').prop('href', '${ctx}/custom/cms/calibrationHist/exportFile?'+$('#mainForm').serialize());
-                $('#downloadBtn').trigger('click');
-                $('#downloadBtn').prop('href', '#');
-                return false;
+                exportExcel('${ctx}/custom/cms/calibrationHist/exportFile?'+$('#mainForm').serialize());
             }
 		</script>
 	</head>
@@ -80,7 +77,7 @@
 			<tr>
 				<td class="td_table_2" align="center" colspan="4">
 					<input type='submit' id="searchBtn" class='button_70px' value='查询'/>
-					<a id="downloadBtn" class='button_70px' href="#" target="_blank" onclick="return exportFile();">导出Excel</a>
+					<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>
 				</td>
 			</tr>
 		</table>
