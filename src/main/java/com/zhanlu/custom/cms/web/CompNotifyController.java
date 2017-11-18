@@ -7,7 +7,6 @@ import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
 import com.zhanlu.framework.security.service.RoleService;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +43,11 @@ public class CompNotifyController {
             page.setOrder(Page.ASC);
         }
         page = compNotifyService.findPage(page, filters);
+        if (page.getResult() != null && page.getResult().size() > 0) {
+            for (CompNotify tmp : page.getResult()) {
+                tmp.setContent(tmp.getContent() == null ? "" : tmp.getContent().replace("\n", "<br/>"));
+            }
+        }
         ModelAndView mv = new ModelAndView("cms/compNotifyList");
         mv.addObject("page", page);
         return mv;
@@ -92,6 +96,7 @@ public class CompNotifyController {
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("id") Long id) {
         CompNotify entity = compNotifyService.findById(id);
+        entity.setContent(entity.getContent() == null ? "" : entity.getContent().replace("\n", "<br/>"));
         ModelAndView mv = new ModelAndView("cms/compNotifyView");
         mv.addObject("entity", entity);
         return mv;
