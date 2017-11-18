@@ -30,7 +30,7 @@ public class Test {
 
 
         ExcelUtils table = ExcelUtils.getInstance();
-        table.setCompInfo("aaaaa");
+        table.setComp("公司名：","aaaaa");
 
     }
 }

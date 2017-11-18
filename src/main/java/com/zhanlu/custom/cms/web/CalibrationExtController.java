@@ -120,8 +120,8 @@ public class CalibrationExtController {
         return mv;
     }
 
-    @RequestMapping(value = "/exportFile", method = RequestMethod.GET)
-    public void exportFile(HttpServletRequest req, HttpServletResponse resp) {
+    @RequestMapping(value = "/{status}/exportFile", method = RequestMethod.GET)
+    public void exportFile(@PathVariable Integer status, HttpServletRequest req, HttpServletResponse resp) {
         User user = cmsService.getUser(req);
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("multipart/form-data");
@@ -129,7 +129,9 @@ public class CalibrationExtController {
             String fileName = URLEncoder.encode("任务-" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xls", "UTF-8");
             resp.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
             ExcelUtils table = ExcelUtils.getInstance();
-            table.setCompInfo("aaaaa");
+            table.setComp("公司名：", user.getOrg().getName());
+            table.setUser("导出人：", user.getFullname());
+            table.setDate("导出日期：", DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
 
             List<String> search = new ArrayList<>();
             List<String> header = new ArrayList<>();
@@ -137,7 +139,7 @@ public class CalibrationExtController {
             Page<CalibrationExt> pageExt = new Page<>(Integer.MAX_VALUE);
             List<PropertyFilter> filters = new ArrayList<>();
             filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
-            filters.add(new PropertyFilter("EQI_status", "3"));
+            filters.add(new PropertyFilter(status.intValue() == 3 ? "EQI_status" : "LTI_status", "3"));
             if (StringUtils.isNotBlank(req.getParameter("filter_GED_expectDate"))) {
                 filters.add(new PropertyFilter("GED_expectDate", req.getParameter("filter_GED_expectDate")));
                 search.add("待校准日期：" + req.getParameter("filter_GED_expectDate"));
@@ -164,14 +166,12 @@ public class CalibrationExtController {
                     tmpList.add(equipment.getRoom());
                     body.add(tmpList);
                 }
-                if (body.size() > 0) {
-                    table.setBody(body);
-                }
+                table.setBody(body);
             }
             HSSFWorkbook workbook = table.build();
             workbook.write(out);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

@@ -7,14 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/11/4.
+ * Excel Tool
  */
 public class ExcelUtils {
 
     private static final ExcelUtils instance = new ExcelUtils();
 
     //公司信息
-    private String compInfo;
+    private String compKey;
+    private String compVal;
+    //人员信息
+    private String userKey;
+    private String userVal;
+    //日期
+    private String dateKey;
+    private String dateVal;
     //搜索条件
     private List<String> search;
     //表头
@@ -26,8 +33,21 @@ public class ExcelUtils {
         return instance;
     }
 
-    public ExcelUtils setCompInfo(String compInfo) {
-        this.compInfo = compInfo;
+    public ExcelUtils setComp(String compKey, String compVal) {
+        this.compKey = compKey;
+        this.compVal = compVal;
+        return this;
+    }
+
+    public ExcelUtils setUser(String userKey, String userVal) {
+        this.userKey = userKey;
+        this.userVal = userVal;
+        return this;
+    }
+
+    public ExcelUtils setDate(String dateKey, String dateVal) {
+        this.dateKey = dateKey;
+        this.dateVal = dateVal;
         return this;
     }
 
@@ -64,12 +84,32 @@ public class ExcelUtils {
         HSSFCell cell = null;
 
         //公司
-        if (StringUtils.isNotBlank(compInfo)) {
+        if (StringUtils.isNotBlank(compKey) && StringUtils.isNotBlank(compVal)) {
             row = sheet.createRow(rowIndex);
             cell = row.createCell(0);
-            cell.setCellValue("公司名");
+            cell.setCellValue(compKey);
             cell = row.createCell(1);
-            cell.setCellValue(compInfo);
+            cell.setCellValue(compVal);
+        }
+
+        //人员
+        if (StringUtils.isNotBlank(userKey) && StringUtils.isNotBlank(userVal)) {
+            rowIndex++;
+            row = sheet.createRow(rowIndex);
+            cell = row.createCell(0);
+            cell.setCellValue(userKey);
+            cell = row.createCell(1);
+            cell.setCellValue(userVal);
+        }
+
+        //日期
+        if (StringUtils.isNotBlank(dateKey) && StringUtils.isNotBlank(dateVal)) {
+            rowIndex++;
+            row = sheet.createRow(rowIndex);
+            cell = row.createCell(0);
+            cell.setCellValue(dateKey);
+            cell = row.createCell(1);
+            cell.setCellValue(dateVal);
         }
 
         //搜索条件
@@ -85,14 +125,16 @@ public class ExcelUtils {
                 if (columnIndex == 2) {
                     rowIndex++;
                     row = sheet.createRow(rowIndex);
-                    row.createCell(rowIndex);
                     columnIndex = 0;
+                } else if (columnIndex == 1 && i == search.size() - 1) {
+                    rowIndex++;
                 }
             }
+        } else {
+            rowIndex++;
         }
 
         //表头
-        rowIndex++;
         rowIndex++;
         columnIndex = 0;
         row = sheet.createRow(rowIndex);
@@ -103,16 +145,19 @@ public class ExcelUtils {
         }
 
         //表体
-        for (List<String> rowItem : body) {
-            rowIndex++;
-            columnIndex = 0;
-            row = sheet.createRow(rowIndex);
-            for (String item : rowItem) {
-                cell = row.createCell(columnIndex);
-                cell.setCellValue(item);
-                columnIndex++;
+        if (body != null && body.size() > 0) {
+            for (List<String> rowItem : body) {
+                rowIndex++;
+                columnIndex = 0;
+                row = sheet.createRow(rowIndex);
+                for (String item : rowItem) {
+                    cell = row.createCell(columnIndex);
+                    cell.setCellValue(item);
+                    columnIndex++;
+                }
             }
         }
+
         return wb;
     }
 }
