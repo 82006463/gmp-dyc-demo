@@ -35,12 +35,19 @@
 				}
 				return result;
 			}
+
+            function exportFile() {
+                $('#downloadBtn').prop('href', '${ctx}/custom/cms/calibrationTask/exportFile?taskId='+$('#id').val());
+                $('#downloadBtn').trigger('click');
+                $('#downloadBtn').prop('href', '#');
+                return false;
+            }
 		</script>
 	</head>
 
 	<body>
 	<form id="mainForm" enctype="multipart/form-data" action="${ctx}/custom/cms/calibrationTask/update" method="post">
-		<input type="hidden" name="id" value="${entity.id}" class="input_240" />
+		<input type="hidden" id="id" name="id" value="${entity.id}" class="input_240" />
 		<input type="hidden" id="status" name="status" value="${entity.status}" class="input_240" />
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
@@ -119,6 +126,7 @@
 							<input type='submit' id="rejectBtn" class='button_70px' value="拒绝" onclick="$('#status').val(2);"/>
 						</shiro:hasPermission>
 					</c:if>
+					<a id="downloadBtn" class='button_70px' href="#" target="_blank" onclick="return exportFile();">导出Excel</a>
 				</td>
 			</tr>
 		</table>

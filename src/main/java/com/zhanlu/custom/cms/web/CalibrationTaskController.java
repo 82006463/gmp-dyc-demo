@@ -1,17 +1,16 @@
 package com.zhanlu.custom.cms.web;
 
-import com.zhanlu.custom.cms.entity.CalibrationExt;
-import com.zhanlu.custom.cms.entity.CalibrationIn;
-import com.zhanlu.custom.cms.entity.CalibrationTask;
-import com.zhanlu.custom.cms.entity.CalibrationTmp;
+import com.zhanlu.custom.cms.entity.*;
 import com.zhanlu.custom.cms.service.*;
+import com.zhanlu.excel.ExcelUtils;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
-import com.zhanlu.framework.security.shiro.ShiroPrincipal;
 import com.zhanlu.framework.security.shiro.ShiroUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -153,6 +153,98 @@ public class CalibrationTaskController {
             }
         }
         return null;
+    }
+
+    @RequestMapping(value = "/exportFile", method = RequestMethod.GET)
+    public void exportFile(Long taskId, HttpServletRequest req, HttpServletResponse resp) {
+        User user = cmsService.getUser(req);
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("multipart/form-data");
+        try (OutputStream out = resp.getOutputStream()) {
+            String fileName = URLEncoder.encode("待办任务-" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xls", "UTF-8");
+            resp.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+            ExcelUtils table = new ExcelUtils();
+            table.setComp("公司名：", user.getOrg().getName());
+            table.setUser("导出人：", user.getFullname());
+            table.setDate("导出日期：", DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
+
+            List<String> header = new ArrayList<>();
+            header.add("器具编号");
+            header.add("器具名称");
+            header.add("所在房间");
+            header.add("出厂编号");
+            header.add("记录/证书编号");
+            header.add("校准结果");
+            header.add("实际校准时间");
+            header.add("备注");
+            table.setHeader(header);
+
+            CalibrationTask entity = calibrationTaskService.findById(taskId);
+            List<PropertyFilter> filters = new ArrayList<>();
+            filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
+            filters.add(new PropertyFilter("EQL_taskId", taskId.toString()));
+            List<List<String>> body = new ArrayList<>();
+            if (entity.getCalibrationMode().intValue() == 1) {
+                Page<CalibrationIn> page = new Page<>(Integer.MAX_VALUE);
+                calibrationInService.findPage(page, filters);
+                if (page.getResult() != null && !page.getResult().isEmpty()) {
+                    for (CalibrationIn tmp : page.getResult()) {
+                        Equipment equipment = tmp.getEquipment();
+                        List<String> tmpList = new ArrayList<>();
+                        tmpList.add(equipment.getCode());
+                        tmpList.add(equipment.getName());
+                        tmpList.add(StringUtils.isBlank(equipment.getRoom()) ? "N.A." : equipment.getRoom());
+                        tmpList.add(StringUtils.isBlank(equipment.getFactoryCode()) ? "N.A." : equipment.getFactoryCode());
+                        tmpList.add("N.A.");
+                        tmpList.add("N.A.");
+                        tmpList.add("N.A.");
+                        tmpList.add("N.A.");
+                        body.add(tmpList);
+                    }
+                }
+            } else if (entity.getCalibrationMode().intValue() == 2) {
+                Page<CalibrationExt> page = new Page<>(Integer.MAX_VALUE);
+                calibrationExtService.findPage(page, filters);
+                if (page.getResult() != null && !page.getResult().isEmpty()) {
+                    for (CalibrationExt tmp : page.getResult()) {
+                        Equipment equipment = tmp.getEquipment();
+                        List<String> tmpList = new ArrayList<>();
+                        tmpList.add(equipment.getCode());
+                        tmpList.add(equipment.getName());
+                        tmpList.add(StringUtils.isBlank(equipment.getRoom()) ? "N.A." : equipment.getRoom());
+                        tmpList.add(StringUtils.isBlank(equipment.getFactoryCode()) ? "N.A." : equipment.getFactoryCode());
+                        tmpList.add("N.A.");
+                        tmpList.add("N.A.");
+                        tmpList.add("N.A.");
+                        tmpList.add("N.A.");
+                        body.add(tmpList);
+                    }
+                }
+            } else if (entity.getCalibrationMode().intValue() == 3) {
+                Page<CalibrationTmp> page = new Page<>(Integer.MAX_VALUE);
+                calibrationTmpService.findPage(page, filters);
+                if (page.getResult() != null && !page.getResult().isEmpty()) {
+                    for (CalibrationTmp tmp : page.getResult()) {
+                        Equipment equipment = tmp.getEquipment();
+                        List<String> tmpList = new ArrayList<>();
+                        tmpList.add(equipment.getCode());
+                        tmpList.add(equipment.getName());
+                        tmpList.add(StringUtils.isBlank(equipment.getRoom()) ? "N.A." : equipment.getRoom());
+                        tmpList.add(StringUtils.isBlank(equipment.getFactoryCode()) ? "N.A." : equipment.getFactoryCode());
+                        tmpList.add("N.A.");
+                        tmpList.add("N.A.");
+                        tmpList.add("N.A.");
+                        tmpList.add("N.A.");
+                        body.add(tmpList);
+                    }
+                }
+            }
+            table.setBody(body);
+            HSSFWorkbook workbook = table.build();
+            workbook.write(out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
