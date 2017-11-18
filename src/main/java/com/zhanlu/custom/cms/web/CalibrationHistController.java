@@ -1,11 +1,17 @@
 package com.zhanlu.custom.cms.web;
 
+import com.zhanlu.custom.cms.entity.CalibrationExt;
 import com.zhanlu.custom.cms.entity.CalibrationHist;
+import com.zhanlu.custom.cms.entity.Equipment;
 import com.zhanlu.custom.cms.service.CalibrationHistService;
 import com.zhanlu.custom.cms.service.CmsService;
+import com.zhanlu.excel.ExcelUtils;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,6 +61,84 @@ public class CalibrationHistController {
         ModelAndView mv = new ModelAndView("cms/calibrationHistView");
         mv.addObject("entity", entity);
         return mv;
+    }
+
+    @RequestMapping(value = "/exportFile", method = RequestMethod.GET)
+    public void exportFile(HttpServletRequest req, HttpServletResponse resp) {
+        User user = cmsService.getUser(req);
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("multipart/form-data");
+        try (OutputStream out = resp.getOutputStream()) {
+            String fileName = URLEncoder.encode("任务-" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xls", "UTF-8");
+            resp.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+            ExcelUtils table = new ExcelUtils();
+            table.setComp("公司名：", user.getOrg().getName());
+            table.setUser("导出人：", user.getFullname());
+            table.setDate("导出日期：", DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
+
+            List<String> search = new ArrayList<>();
+            List<String> header = new ArrayList<>();
+
+            Page<CalibrationHist> page = new Page<>(Integer.MAX_VALUE);
+            List<PropertyFilter> filters = new ArrayList<>();
+            filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
+            if (StringUtils.isNotBlank(req.getParameter("filter_GED_expectDate"))) {
+                filters.add(new PropertyFilter("GED_expectDate", req.getParameter("filter_GED_expectDate")));
+                search.add("待校准日期：" + req.getParameter("filter_GED_expectDate"));
+            }
+            if (StringUtils.isNotBlank(req.getParameter("filter_LED_expectDate"))) {
+                filters.add(new PropertyFilter("LED_expectDate", req.getParameter("filter_LED_expectDate")));
+                search.add("待校准日期：" + req.getParameter("filter_LED_expectDate"));
+            }
+            calibrationHistService.findPage(page, filters);
+            if (search.size() > 0) {
+                table.setSearch(search);
+            }
+            header.add("任务编号");
+            header.add("器具编号");
+            header.add("器具名称");
+            header.add("所在房间");
+            header.add("待校准时间");
+            header.add("校准方式");
+            header.add("记录/证书编号");
+            header.add("校准结果");
+            header.add("实际校准时间");
+            header.add("校准状态");
+            header.add("备注");
+            table.setHeader(header);
+            if (page.getResult() != null && !page.getResult().isEmpty()) {
+                List<List<String>> body = new ArrayList<>();
+                for (CalibrationHist tmp : page.getResult()) {
+                    Equipment equipment = tmp.getEquipment();
+                    List<String> tmpList = new ArrayList<>();
+                    tmpList.add(tmp.getTaskCode());
+                    tmpList.add(equipment.getCode());
+                    tmpList.add(equipment.getName());
+                    tmpList.add(equipment.getRoom());
+                    tmpList.add(tmp.getExpectDate() == null ? "N.A." : DateFormatUtils.format(tmp.getExpectDate(), "yyyy-MM-dd"));
+                    if (tmp.getCalibrationMode().intValue() == 1) {
+                        tmpList.add("内校");
+                    } else if (tmp.getCalibrationMode().intValue() == 1) {
+                        tmpList.add("外校");
+                    } else if (tmp.getCalibrationMode().intValue() == 1) {
+                        tmpList.add("临校");
+                    } else {
+                        tmpList.add("N.A.");
+                    }
+                    tmpList.add(tmp.getCertCode());
+                    tmpList.add(tmp.getCalibrationResult().equals("1") ? "合格" : "不合格");
+                    tmpList.add(tmp.getActualDate() == null ? "N.A." : DateFormatUtils.format(tmp.getActualDate(), "yyyy-MM-dd"));
+                    tmpList.add(tmp.getCalibrationStatus().intValue() == 1 ? "正常" : "延期");
+                    tmpList.add(StringUtils.isBlank(tmp.getRemark()) ? "N.A." : tmp.getRemark());
+                    body.add(tmpList);
+                }
+                table.setBody(body);
+            }
+            HSSFWorkbook workbook = table.build();
+            workbook.write(out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

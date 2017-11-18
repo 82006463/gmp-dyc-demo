@@ -46,7 +46,7 @@
 				<td class="td_table_2">
 					<select name="filter_EQI_status" class="input_select">
 						<option value="">-请选择-</option>
-						<option value="0" ${param['filter_EQI_status']==-1 ? 'selected="selected"':''}>失效</option>
+						<option value="-1" ${param['filter_EQI_status']==-1 ? 'selected="selected"':''}>失效</option>
 						<option value="1" ${param['filter_EQI_status']==1 ? 'selected="selected"':''}>暂存中</option>
 						<option value="2" ${param['filter_EQI_status']==2 ? 'selected="selected"':''}>拒绝中</option>
 						<option value="3" ${param['filter_EQI_status']==3 ? 'selected="selected"':''}>复核中</option>

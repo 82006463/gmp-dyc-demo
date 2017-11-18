@@ -10,6 +10,14 @@
 		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
 		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
+		<script type="text/javascript">
+            function exportFile() {
+                $('#downloadBtn').prop('href', '${ctx}/custom/cms/calibrationHist/exportFile?'+$('#mainForm').serialize());
+                $('#downloadBtn').trigger('click');
+                $('#downloadBtn').prop('href', '#');
+                return false;
+            }
+		</script>
 	</head>
 
 	<body>
@@ -72,6 +80,7 @@
 			<tr>
 				<td class="td_table_2" align="center" colspan="4">
 					<input type='submit' id="searchBtn" class='button_70px' value='查询'/>
+					<a id="downloadBtn" class='button_70px' href="#" target="_blank" onclick="return exportFile();">导出Excel</a>
 				</td>
 			</tr>
 		</table>

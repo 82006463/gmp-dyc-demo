@@ -128,7 +128,7 @@ public class CalibrationExtController {
         try (OutputStream out = resp.getOutputStream()) {
             String fileName = URLEncoder.encode("任务-" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xls", "UTF-8");
             resp.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
-            ExcelUtils table = ExcelUtils.getInstance();
+            ExcelUtils table = new ExcelUtils();
             table.setComp("公司名：", user.getOrg().getName());
             table.setUser("导出人：", user.getFullname());
             table.setDate("导出日期：", DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
@@ -139,7 +139,7 @@ public class CalibrationExtController {
             Page<CalibrationExt> pageExt = new Page<>(Integer.MAX_VALUE);
             List<PropertyFilter> filters = new ArrayList<>();
             filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
-            filters.add(new PropertyFilter(status.intValue() == 3 ? "EQI_status" : "LTI_status", "3"));
+            filters.add(new PropertyFilter(status.intValue() == 3 ? "EQI_status" : "LEI_status", "3"));
             if (StringUtils.isNotBlank(req.getParameter("filter_GED_expectDate"))) {
                 filters.add(new PropertyFilter("GED_expectDate", req.getParameter("filter_GED_expectDate")));
                 search.add("待校准日期：" + req.getParameter("filter_GED_expectDate"));
@@ -154,16 +154,22 @@ public class CalibrationExtController {
             }
             header.add("器具编号");
             header.add("器具名称");
-            header.add("器具名称");
+            header.add("所在房间");
+            header.add("上次校准日期");
+            header.add("校准周期(月)");
+            header.add("待校准日期");
             table.setHeader(header);
             if (pageExt.getResult() != null && !pageExt.getResult().isEmpty()) {
                 List<List<String>> body = new ArrayList<>();
-                for (CalibrationExt ext : pageExt.getResult()) {
-                    Equipment equipment = ext.getEquipment();
+                for (CalibrationExt tmp : pageExt.getResult()) {
+                    Equipment equipment = tmp.getEquipment();
                     List<String> tmpList = new ArrayList<>();
                     tmpList.add(equipment.getCode());
                     tmpList.add(equipment.getName());
                     tmpList.add(equipment.getRoom());
+                    tmpList.add(tmp.getLastActualDate() == null ? "N.A." : DateFormatUtils.format(tmp.getLastActualDate(), "yyyy-MM-dd"));
+                    tmpList.add(equipment.getCalibrationCycle() + "");
+                    tmpList.add(DateFormatUtils.format(tmp.getExpectDate(), "yyyy-MM-dd"));
                     body.add(tmpList);
                 }
                 table.setBody(body);

@@ -2,6 +2,7 @@ package com.zhanlu.excel;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +11,6 @@ import java.util.List;
  * Excel Tool
  */
 public class ExcelUtils {
-
-    private static final ExcelUtils instance = new ExcelUtils();
 
     //公司信息
     private String compKey;
@@ -28,10 +27,6 @@ public class ExcelUtils {
     private List<String> header = new ArrayList<>();
     //表体
     private List<List<String>> body = new ArrayList<>();
-
-    public static ExcelUtils getInstance() {
-        return instance;
-    }
 
     public ExcelUtils setComp(String compKey, String compVal) {
         this.compKey = compKey;
@@ -75,7 +70,7 @@ public class ExcelUtils {
         HSSFWorkbook wb = new HSSFWorkbook();
         HSSFSheet sheet = wb.createSheet();
         HSSFCellStyle cellStyle = wb.createCellStyle();
-        cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        cellStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
 
         int rowIndex = 0;
         int columnIndex = 0;
@@ -88,6 +83,7 @@ public class ExcelUtils {
             row = sheet.createRow(rowIndex);
             cell = row.createCell(0);
             cell.setCellValue(compKey);
+            sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 1, 3));
             cell = row.createCell(1);
             cell.setCellValue(compVal);
         }
@@ -118,6 +114,11 @@ public class ExcelUtils {
             columnIndex = 0;
             row = sheet.createRow(rowIndex);
             for (int i = 0; i < search.size(); i++) {
+                if (columnIndex == 0) {
+                    sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, 1));
+                } else if (columnIndex == 1) {
+                    sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 2, 3));
+                }
                 cellItem = search.get(i);
                 cell = row.createCell(columnIndex);
                 cell.setCellValue(cellItem);
@@ -138,7 +139,9 @@ public class ExcelUtils {
         rowIndex++;
         columnIndex = 0;
         row = sheet.createRow(rowIndex);
-        for (String item : header) {
+        for (int i = 0; i < header.size(); i++) {
+            sheet.setColumnWidth(i, 5120);
+            String item = header.get(i);
             cell = row.createCell(columnIndex);
             cell.setCellValue(item);
             columnIndex++;
