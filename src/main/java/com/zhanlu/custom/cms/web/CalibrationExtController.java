@@ -1,6 +1,7 @@
 package com.zhanlu.custom.cms.web;
 
 import com.zhanlu.custom.cms.entity.CalibrationExt;
+import com.zhanlu.custom.cms.entity.Equipment;
 import com.zhanlu.custom.cms.service.CalibrationExtService;
 import com.zhanlu.custom.cms.service.CmsService;
 import com.zhanlu.custom.cms.service.MeasureCompService;
@@ -8,7 +9,6 @@ import com.zhanlu.excel.ExcelUtils;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
-import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -25,10 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 月度外校
@@ -123,15 +120,54 @@ public class CalibrationExtController {
         return mv;
     }
 
-    @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
-    public void exportExcel(HttpServletRequest req, HttpServletResponse resp) {
+    @RequestMapping(value = "/exportFile", method = RequestMethod.GET)
+    public void exportFile(HttpServletRequest req, HttpServletResponse resp) {
+        User user = cmsService.getUser(req);
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("multipart/form-data");
         try (OutputStream out = resp.getOutputStream()) {
-            String fileName = URLEncoder.encode("任务-" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xlsx", "UTF-8");
+            String fileName = URLEncoder.encode("任务-" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xls", "UTF-8");
             resp.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
             ExcelUtils table = ExcelUtils.getInstance();
             table.setCompInfo("aaaaa");
+
+            List<String> search = new ArrayList<>();
+            List<String> header = new ArrayList<>();
+
+            Page<CalibrationExt> pageExt = new Page<>(Integer.MAX_VALUE);
+            List<PropertyFilter> filters = new ArrayList<>();
+            filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
+            filters.add(new PropertyFilter("EQI_status", "3"));
+            if (StringUtils.isNotBlank(req.getParameter("filter_GED_expectDate"))) {
+                filters.add(new PropertyFilter("GED_expectDate", req.getParameter("filter_GED_expectDate")));
+                search.add("待校准日期：" + req.getParameter("filter_GED_expectDate"));
+            }
+            if (StringUtils.isNotBlank(req.getParameter("filter_LED_expectDate"))) {
+                filters.add(new PropertyFilter("LED_expectDate", req.getParameter("filter_LED_expectDate")));
+                search.add("待校准日期：" + req.getParameter("filter_LED_expectDate"));
+            }
+            calibrationExtService.findPage(pageExt, filters);
+            if (search.size() > 0) {
+                table.setSearch(search);
+            }
+            header.add("器具编号");
+            header.add("器具名称");
+            header.add("器具名称");
+            table.setHeader(header);
+            if (pageExt.getResult() != null && !pageExt.getResult().isEmpty()) {
+                List<List<String>> body = new ArrayList<>();
+                for (CalibrationExt ext : pageExt.getResult()) {
+                    Equipment equipment = ext.getEquipment();
+                    List<String> tmpList = new ArrayList<>();
+                    tmpList.add(equipment.getCode());
+                    tmpList.add(equipment.getName());
+                    tmpList.add(equipment.getRoom());
+                    body.add(tmpList);
+                }
+                if (body.size() > 0) {
+                    table.setBody(body);
+                }
+            }
             HSSFWorkbook workbook = table.build();
             workbook.write(out);
         } catch (Exception e) {

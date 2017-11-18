@@ -31,9 +31,11 @@
 				}
 			}
 
-            function exportExcel() {
-			    $('#downloadBtn').prop('href', '${ctx}/custom/cms/${type}/exportExcel');
-                $('#downloadBtn').click();
+            function exportFile() {
+			    $('#downloadBtn').prop('href', '${ctx}/custom/cms/${type}/exportFile?'+$('#mainForm').serialize());
+                $('#downloadBtn').trigger('click');
+				$('#downloadBtn').prop('href', '#');
+				return false;
             }
 		</script>
 	</head>
@@ -94,8 +96,8 @@
 					</c:if>
 					<c:if test="${status == 3}">
 						<input type="button" class='button_70px' value="发送任务" onclick="sendask(this);"/>
-						<input type="button" class='button_70px' value="导出Excel"/>
-						<a id="downloadBtn" href="#" target="_blank"></a>
+						<%--<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>--%>
+						<a id="downloadBtn" class='button_70px' href="#" target="_blank" onclick="return exportFile();">导出Excel</a>
 					</c:if>
 				</td>
 			</tr>
