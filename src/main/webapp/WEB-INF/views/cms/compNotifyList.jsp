@@ -56,7 +56,7 @@
 				<tr>
 					<td class="td_list_2" align=left>${item.subject}</td>
 					<td class="td_list_2" align=left>${item.content}</td>
-					<td class="td_list_2" align=left>${item.status==0 ? '删除':'正常'}</td>
+					<td class="td_list_2" align=left>${item.status<=0 ? '删除':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<c:if test="${item.status > 0}">
