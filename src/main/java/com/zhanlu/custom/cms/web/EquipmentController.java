@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -160,6 +161,7 @@ public class EquipmentController {
             table.setComp("公司名：", user.getOrg().getName());
             table.setUser("导出人：", user.getFullname());
             table.setDate("导出日期：", DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
+            table.setFile("文件名称：", URLDecoder.decode(fileName, "UTF-8"));
 
             List<String> search = new ArrayList<>();
             List<String> header = new ArrayList<>();

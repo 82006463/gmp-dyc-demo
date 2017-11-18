@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -167,6 +168,7 @@ public class CalibrationTaskController {
             table.setComp("公司名：", user.getOrg().getName());
             table.setUser("导出人：", user.getFullname());
             table.setDate("导出日期：", DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
+            table.setFile("文件名称：", URLDecoder.decode(fileName, "UTF-8"));
 
             List<String> header = new ArrayList<>();
             header.add("器具编号");
@@ -213,10 +215,10 @@ public class CalibrationTaskController {
                         tmpList.add(equipment.getName());
                         tmpList.add(StringUtils.isBlank(equipment.getRoom()) ? "N.A." : equipment.getRoom());
                         tmpList.add(StringUtils.isBlank(equipment.getFactoryCode()) ? "N.A." : equipment.getFactoryCode());
-                        tmpList.add("N.A.");
-                        tmpList.add("N.A.");
-                        tmpList.add("N.A.");
-                        tmpList.add("N.A.");
+                        tmpList.add("");
+                        tmpList.add("");
+                        tmpList.add("");
+                        tmpList.add("");
                         body.add(tmpList);
                     }
                 }
@@ -231,10 +233,10 @@ public class CalibrationTaskController {
                         tmpList.add(equipment.getName());
                         tmpList.add(StringUtils.isBlank(equipment.getRoom()) ? "N.A." : equipment.getRoom());
                         tmpList.add(StringUtils.isBlank(equipment.getFactoryCode()) ? "N.A." : equipment.getFactoryCode());
-                        tmpList.add("N.A.");
-                        tmpList.add("N.A.");
-                        tmpList.add("N.A.");
-                        tmpList.add("N.A.");
+                        tmpList.add("");
+                        tmpList.add("");
+                        tmpList.add("");
+                        tmpList.add("");
                         body.add(tmpList);
                     }
                 }

@@ -21,6 +21,9 @@ public class ExcelUtils {
     //日期
     private String dateKey;
     private String dateVal;
+    //页面
+    private String fileKey;
+    private String fileVal;
     //搜索条件
     private List<String> search;
     //表头
@@ -43,6 +46,12 @@ public class ExcelUtils {
     public ExcelUtils setDate(String dateKey, String dateVal) {
         this.dateKey = dateKey;
         this.dateVal = dateVal;
+        return this;
+    }
+
+    public ExcelUtils setFile(String fileKey, String fileVal) {
+        this.fileKey = fileKey;
+        this.fileVal = fileVal;
         return this;
     }
 
@@ -106,6 +115,17 @@ public class ExcelUtils {
             cell.setCellValue(dateKey);
             cell = row.createCell(1);
             cell.setCellValue(dateVal);
+        }
+
+        //页面
+        if (StringUtils.isNotBlank(fileKey) && StringUtils.isNotBlank(fileVal)) {
+            rowIndex++;
+            row = sheet.createRow(rowIndex);
+            cell = row.createCell(0);
+            cell.setCellValue(fileKey);
+            sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 1, 2));
+            cell = row.createCell(1);
+            cell.setCellValue(fileVal);
         }
 
         //搜索条件
