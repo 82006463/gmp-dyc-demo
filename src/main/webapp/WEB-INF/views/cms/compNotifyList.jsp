@@ -24,15 +24,6 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 			<tr>
-				<td class="td_table_1">接收人：</td>
-				<td class="td_table_2">
-					<select name="filter_EQI_notifyType" class="input_select">
-						<option value="">--请选择--</option>
-						<option value="1" ${param['filter_EQI_notifyType']==1 ? 'selected="selected"':''}>所有客户</option>
-						<option value="2" ${param['filter_EQI_notifyType']==2 ? 'selected="selected"':''}>所有计量服务商</option>
-						<option value="3" ${param['filter_EQI_notifyType']==3 ? 'selected="selected"':''}>所有系统用户</option>
-					</select>
-				</td>
 				<td class="td_table_1">通知标题：</td>
 				<td class="td_table_2">
 					<input type="text" class="input_240" name="filter_LIKES_subject" value="${param['filter_LIKES_subject']}"/>
@@ -56,15 +47,13 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=15% class="td_list_1">接收人</td>
 				<td align=center width=20% class="td_list_1">通知标题</td>
-				<td align=center width=50% class="td_list_1">通知内容</td>
+				<td align=center width=65% class="td_list_1">通知内容</td>
 				<td align=center width=5% class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item">
 				<tr>
-					<td class="td_list_2" align=left>${item.notifyType==1 ? '所有客户':item.notifyType==2 ? '所有计量服务商':item.notifyType==3 ? '所有系统用户':''}</td>
 					<td class="td_list_2" align=left>${item.subject}</td>
 					<td class="td_list_2" align=left>${item.content}</td>
 					<td class="td_list_2" align=left>${item.status==0 ? '删除':'正常'}</td>

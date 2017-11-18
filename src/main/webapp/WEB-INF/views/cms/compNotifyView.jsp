@@ -19,16 +19,25 @@
 			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="td_table_1">接收人：</td>
-					<td class="td_table_2">${entity.notifyType==1 ? '所有客户':entity.notifyType==2 ? '所有计量服务商':entity.notifyType==3 ? '所有系统用户':''}</td>
+					<td class="td_table_1">系统版本<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">${entity.sysVer}</td>
+					<td class="td_table_1">发送时间<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2"><fmt:formatDate value="${entity.sendTime}" pattern="yyyy-MM-dd"/></td>
 				</tr>
 				<tr>
+					<td class="td_table_1">模块<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">${entity.module}</td>
+					<td class="td_table_1">模块版本<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">${entity.moduleVer}</td>
+				</tr>
+
+				<tr>
 					<td class="td_table_1">通知标题：</td>
-					<td class="td_table_2">${entity.subject}</td>
+					<td class="td_table_2" colspan="3">${entity.subject}</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">通知内容：</td>
-					<td class="td_table_2">${entity.content}</td>
+					<td class="td_table_2" colspan="3">${entity.content}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">

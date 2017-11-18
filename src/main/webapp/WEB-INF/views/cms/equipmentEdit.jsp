@@ -143,11 +143,11 @@
 				<td class="td_table_2">
 					<c:if test="${entity.status!=3}">
 						<c:if test="${empty entity.lastActualDate}">
-							<input type="text" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
+							<input type="text" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
 						</c:if>
 						<c:if test="${!empty entity.lastActualDate}">
 							<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>
-							<input type="hidden" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required,minSize[1],maxSize[20]]" readonly="readonly"/>
+							<input type="hidden" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required]" readonly="readonly"/>
 						</c:if>
 					</c:if>
 					<c:if test="${entity.status==3}">

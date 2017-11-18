@@ -17,7 +17,6 @@
 			<input type="hidden" name="id" id="id" value="${entity.id}"/>
 			<input type="hidden" name="status" id="status" value="${entity.status}"/>
 
-			<input type="hidden" id="tenantId" name="tenantId" value="${entity.tenantId}"/>
 			<input type="hidden" id="createrId" name="createrId" value="${entity.createrId}"/>
 			<input type="hidden" id="createTime" name="createTime" value="<fmt:formatDate value="${entity.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
 			<input type="hidden" id="updaterId" name="updaterId" value="${entity.updaterId}"/>
@@ -29,25 +28,47 @@
 			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px">
 				<tr>
-					<td class="td_table_1">接收人<b class="requiredWarn">*</b>：</td>
-					<td class="td_table_2">
-						<select id="notifyType" name="notifyType" class="input_select validate[required]">
+					<td class="td_table_1">接收角色<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2" colspan="3">
+						<select id="roleId" name="roleId" class="input_select validate[required]">
 							<option value="">-请选择-</option>
-							<option value="1" <c:if test="${entity.notifyType==1}">selected="selected"</c:if>>所有客户</option>
-							<option value="2" <c:if test="${entity.notifyType==2}">selected="selected"</c:if>>所有计量服务商</option>
-							<option value="3" <c:if test="${entity.notifyType==3}">selected="selected"</c:if>>所有系统用户</option>
+							<c:forEach items="${roles}" var="role">
+								<option value="${role.id}" ${entity.roleId==role.id ? 'selected="selected"':''}>${role.name}</option>
+							</c:forEach>
 						</select>
 					</td>
 				</tr>
+
+				<tr>
+					<td class="td_table_1">系统版本<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="sysVer" name="sysVer" value="${entity.sysVer}" class="input_240 validate[required,minSize[1],maxSize[20]]" />
+					</td>
+					<td class="td_table_1">发送时间<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="sendTime" name="sendTime" value="<fmt:formatDate value="${entity.sendTime}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">模块<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="module" name="module" value="${entity.module}" class="input_240 validate[required,minSize[1],maxSize[20]]" />
+					</td>
+					<td class="td_table_1">模块版本<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_2">
+						<input type="text" id="moduleVer" name="moduleVer" value="${entity.moduleVer}" class="input_240 validate[required,minSize[1],maxSize[20]]" />
+					</td>
+				</tr>
+
 				<tr>
 					<td class="td_table_1">通知标题<b class="requiredWarn">*</b>：</td>
-					<td class="td_table_2">
+					<td class="td_table_2" colspan="3">
 						<input type="text" id="subject" name="subject" value="${entity.subject}" class="input_240 validate[required,minSize[1],maxSize[50]]" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">通知内容<b class="requiredWarn">*</b>：</td>
-					<td class="td_table_2">
+					<td class="td_table_2" colspan="3">
 						<textarea id="content" name="content" class="input_textarea_600 validate[required,minSize[1],maxSize[490]]">${entity.content}</textarea>
 					</td>
 				</tr>
