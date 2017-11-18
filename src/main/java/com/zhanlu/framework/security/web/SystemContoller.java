@@ -61,6 +61,7 @@ public class SystemContoller {
 	public String right(Model model) {
 		//return "system/right";
 		//return "redirect:/flow/task/list";
-		return "redirect:/custom/cms/calibrationTask";
+		//return "redirect:/custom/cms/calibrationTask";
+		return "redirect:/custom/cms/compNotify";
 	}
 }
