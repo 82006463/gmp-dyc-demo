@@ -98,7 +98,7 @@
 				<td class="td_table_2">
 					<input type="text" id="calibration" name="calibration" value="${entity.calibration}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
-				<td class="td_table_1">校准规范编号：</td>
+				<td class="td_table_1">校准规范名称：</td>
 				<td class="td_table_2">
 					<input type="text" id="calibrationName" name="calibrationName" value="${entity.calibrationName}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
@@ -125,7 +125,7 @@
 						${entity.calibrationMode==1 ? '内校':entity.calibrationMode==2 ? '外校':''}
 					</c:if>
 				</td>
-				<td class="td_table_1">校准周期(单位:月)<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">校准周期(月)<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
 					<input type="text" id="calibrationCycle" name="calibrationCycle" value="${entity.calibrationCycle}" class="input_240 validate[required,custom[number]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
 				</td>

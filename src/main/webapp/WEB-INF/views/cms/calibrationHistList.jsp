@@ -54,7 +54,7 @@
 					<select name="filter_EQS_calibrationResult" class="input_select">
 						<option value="">-请选择-</option>
 						<option value="1" ${param['filter_EQS_calibrationResult']==1 ? 'selected="selected"':''}>合格</option>
-						<option value="0" ${param['filter_EQS_calibrationResult']==-1 ? 'selected="selected"':''}>不合格</option>
+						<option value="-1" ${param['filter_EQS_calibrationResult']==-1 ? 'selected="selected"':''}>不合格</option>
 					</select>
 				</td>
 			</tr>
@@ -73,7 +73,7 @@
 					<select name="filter_EQI_calibrationStatus" class="input_select">
 						<option value="">-请选择-</option>
 						<option value="1" ${param['filter_EQI_calibrationStatus']==1 ? 'selected="selected"':''}>正常</option>
-						<option value="0" ${param['filter_EQI_calibrationStatus']==-1 ? 'selected="selected"':''}>延期</option>
+						<option value="-1" ${param['filter_EQI_calibrationStatus']==-1 ? 'selected="selected"':''}>延期</option>
 					</select>
 				</td>
 			</tr>

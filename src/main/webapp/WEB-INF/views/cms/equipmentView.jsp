@@ -46,7 +46,7 @@
 				<tr>
 					<td class="td_table_1">校准规范编号：</td>
 					<td class="td_table_2">${entity.calibration}</td>
-					<td class="td_table_1">校准规范编号：</td>
+					<td class="td_table_1">校准规范名称：</td>
 					<td class="td_table_2">${entity.calibrationName}</td>
 				</tr>
 				<tr>
@@ -58,7 +58,7 @@
 				<tr>
 					<td class="td_table_1">校准方式：</td>
 					<td class="td_table_2">${entity.calibrationMode}</td>
-					<td class="td_table_1">校准周期：</td>
+					<td class="td_table_1">校准周期(月)：</td>
 					<td class="td_table_2">${entity.calibrationCycle}</td>
 				</tr>
 				<tr>

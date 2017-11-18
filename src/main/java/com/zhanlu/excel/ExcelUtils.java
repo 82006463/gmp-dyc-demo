@@ -111,6 +111,7 @@ public class ExcelUtils {
         //搜索条件
         if (search != null && search.size() > 0) {
             rowIndex++;
+            rowIndex++;
             columnIndex = 0;
             row = sheet.createRow(rowIndex);
             for (int i = 0; i < search.size(); i++) {

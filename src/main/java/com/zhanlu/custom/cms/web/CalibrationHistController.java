@@ -1,6 +1,5 @@
 package com.zhanlu.custom.cms.web;
 
-import com.zhanlu.custom.cms.entity.CalibrationExt;
 import com.zhanlu.custom.cms.entity.CalibrationHist;
 import com.zhanlu.custom.cms.entity.Equipment;
 import com.zhanlu.custom.cms.service.CalibrationHistService;
@@ -82,14 +81,38 @@ public class CalibrationHistController {
             Page<CalibrationHist> page = new Page<>(Integer.MAX_VALUE);
             List<PropertyFilter> filters = new ArrayList<>();
             filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
-            if (StringUtils.isNotBlank(req.getParameter("filter_GED_expectDate"))) {
-                filters.add(new PropertyFilter("GED_expectDate", req.getParameter("filter_GED_expectDate")));
-                search.add("待校准日期：" + req.getParameter("filter_GED_expectDate"));
+            if (StringUtils.isNotBlank(req.getParameter("filter_GED_actualDate"))) {
+                filters.add(new PropertyFilter("GED_actualDate", req.getParameter("filter_GED_actualDate")));
+                search.add("实际校准时间：" + req.getParameter("filter_GED_actualDate"));
             }
-            if (StringUtils.isNotBlank(req.getParameter("filter_LED_expectDate"))) {
-                filters.add(new PropertyFilter("LED_expectDate", req.getParameter("filter_LED_expectDate")));
-                search.add("待校准日期：" + req.getParameter("filter_LED_expectDate"));
+            if (StringUtils.isNotBlank(req.getParameter("filter_LED_actualDate"))) {
+                filters.add(new PropertyFilter("LED_actualDate", req.getParameter("filter_LED_actualDate")));
+                search.add("实际校准时间：" + req.getParameter("filter_LED_actualDate"));
             }
+            if (StringUtils.isNotBlank(req.getParameter("filter_EQS_taskCode"))) {
+                filters.add(new PropertyFilter("EQS_taskCode", req.getParameter("filter_EQS_taskCode")));
+                search.add("任务编号：" + req.getParameter("filter_EQS_taskCode"));
+            }
+            if (StringUtils.isNotBlank(req.getParameter("filter_EQS_equipmentCode"))) {
+                filters.add(new PropertyFilter("EQS_equipmentCode", req.getParameter("filter_EQS_equipmentCode")));
+                search.add("器具编号：" + req.getParameter("filter_EQS_equipmentCode"));
+            }
+            if (StringUtils.isNotBlank(req.getParameter("filter_EQS_calibrationResult"))) {
+                String calibrationResult = req.getParameter("filter_EQS_calibrationResult");
+                filters.add(new PropertyFilter("EQS_calibrationResult", calibrationResult));
+                search.add("校准结果：" + (calibrationResult.equals("1") ? "合格" : "不合格"));
+            }
+            if (StringUtils.isNotBlank(req.getParameter("filter_EQI_calibrationMode"))) {
+                String calibrationMode = req.getParameter("filter_EQI_calibrationMode");
+                filters.add(new PropertyFilter("EQI_calibrationMode", calibrationMode));
+                search.add("校准方式：" + (calibrationMode.equals("1") ? "内校" : calibrationMode.equals("2") ? "外校" : "临校"));
+            }
+            if (StringUtils.isNotBlank(req.getParameter("filter_EQI_calibrationStatus"))) {
+                String calibrationStatus = req.getParameter("filter_EQI_calibrationStatus");
+                filters.add(new PropertyFilter("EQI_calibrationStatus", calibrationStatus));
+                search.add("校准状态：" + (calibrationStatus.equals("1") ? "正常" : "延期"));
+            }
+
             calibrationHistService.findPage(page, filters);
             if (search.size() > 0) {
                 table.setSearch(search);

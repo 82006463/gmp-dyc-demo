@@ -9,6 +9,14 @@
 		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
 		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
 		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
+		<script type="text/javascript">
+            function exportFile() {
+                $('#downloadBtn').prop('href', '${ctx}/custom/cms/equipment/exportFile?'+$('#mainForm').serialize());
+                $('#downloadBtn').trigger('click');
+                $('#downloadBtn').prop('href', '#');
+                return false;
+            }
+		</script>
 	</head>
 
 	<body>
@@ -68,6 +76,7 @@
 						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
 					</c:if>
 					<input type='submit' class='button_70px' value='查询'/>
+					<a id="downloadBtn" class='button_70px' href="#" target="_blank" onclick="return exportFile();">导出Excel</a>
 				</td>
 			</tr>
 		</table>
@@ -93,7 +102,7 @@
 						<c:if test="${!empty item.lastActualDate}"><fmt:formatDate value="${item.lastActualDate}" pattern="yyyy-MM-dd"/></c:if>
 					</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.expectDate}" pattern="yyyy-MM-dd"/></td>
-					<td class="td_list_2" align=left>${item.status <= 0 ? '删除':item.status==1 ? '暂存中':item.status==2 ? '拒绝中':item.status==3 ? '复核中':'正常'}</td>
+					<td class="td_list_2" align=left>${item.status <= 0 ? '失效':item.status==1 ? '暂存中':item.status==2 ? '拒绝中':item.status==3 ? '复核中':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<c:if test="${item.status > 0}">
