@@ -148,8 +148,8 @@ public class CalibrationMonthQtz {
         String year = DateFormatUtils.format(cal.getTime(), "yyyy");
         String nextYear = (Integer.parseInt(year) + 1) + "";
         filters.add(new PropertyFilter("GEI_status", "4"));
-        filters.add(new PropertyFilter("GED_expectDate", year + "-01-01 00:00:00"));
-        filters.add(new PropertyFilter("LED_expectDate", year + "-12-31 23:59:59"));
+        filters.add(new PropertyFilter("GED_expectDate", nextYear + "-01-01 00:00:00"));
+        filters.add(new PropertyFilter("LED_expectDate", nextYear + "-12-31 23:59:59"));
         pageEq = equipmentService.findPage(pageEq, filters);
         List<Equipment> equipments = pageEq.getResult();
         if (equipments == null || equipments.isEmpty()) {
@@ -161,9 +161,6 @@ public class CalibrationMonthQtz {
             if (eq.getCalibrationMode() == null)
                 continue;
             cal.setTime(eq.getExpectDate());
-            if (year.equals(DateFormatUtils.format(cal.getTime(), "yyyy"))) {
-                cal.add(Calendar.YEAR, 1);
-            }
             if (!nextYear.equals(DateFormatUtils.format(cal.getTime(), "yyyy"))) {
                 continue;
             }
