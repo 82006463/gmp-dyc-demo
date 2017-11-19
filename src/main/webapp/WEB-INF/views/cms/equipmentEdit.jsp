@@ -33,6 +33,28 @@
 			}
 			return result;
 		}
+
+		function updateExpectDate() {
+			var _cycle = $('#calibrationCycle').val();
+			var _usageMode = $('[name=usageMode]:checked').val();
+			var _lastActualDate = $('#lastActualDate').val();
+			if(_lastActualDate) {
+			    var _date = new Date(_lastActualDate);
+			    if(_usageMode==1) {
+                    _date.setMonth(_date.getMonth() + parseInt(_cycle));
+				} else {
+                    _date.setMonth(_date.getMonth() + parseInt(_cycle)*2);
+				}
+                _date.setDate(_date.getDate()-1);
+                var _month = _date.getMonth()+1;
+                if(_month < 10)
+                    _month = '0' + _month;
+                var _day = _date.getDate();
+                if(_day < 10)
+                    _day = '0' + _day;
+			    $('#expectDate').val(_date.getFullYear() + '-' + _month + '-' + _day);
+			}
+        }
 	</script>
 </head>
 
@@ -106,8 +128,8 @@
 				<td class="td_table_1">使用方式：</td>
 				<td class="td_table_2">
 					<c:if test="${entity.status!=3}">
-						<input type="radio" id="usageMode1" name="usageMode" value="1" class="validate[required]" ${empty entity.usageMode || entity.usageMode==1 ? 'checked="checked"':''}/>&nbsp;常规
-						<input type="radio" id="usageMode2" name="usageMode" value="2" class="validate[required]" ${entity.usageMode==2 ? 'checked="checked"':''}/>&nbsp;替换
+						<input type="radio" id="usageMode1" name="usageMode" value="1" class="validate[required]" ${empty entity.usageMode || entity.usageMode==1 ? 'checked="checked"':''} onclick="updateExpectDate();"/>&nbsp;常规
+						<input type="radio" id="usageMode2" name="usageMode" value="2" class="validate[required]" ${entity.usageMode==2 ? 'checked="checked"':''} onclick="updateExpectDate();"/>&nbsp;替换
 					</c:if>
 					<c:if test="${entity.status==3}">
 						<input type="hidden" name="usageMode" value="${entity.usageMode}" />
@@ -184,7 +206,7 @@
 				</td>
 				<td class="td_table_1">校准周期(月)<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="calibrationCycle" name="calibrationCycle" value="${entity.calibrationCycle}" class="input_240 validate[required,custom[number]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+					<input type="text" id="calibrationCycle" name="calibrationCycle" value="${entity.calibrationCycle}" class="input_240 validate[required,custom[number]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if> onblur="updateExpectDate();"/>
 				</td>
 			</tr>
 			<tr>
@@ -203,13 +225,11 @@
 							<input type="text" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'%y-%M-{%d+1}'});" readonly="readonly"/>
 						</c:if>
 						<c:if test="${!empty entity.lastActualDate}">
-							<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>
-							<input type="hidden" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required]" readonly="readonly"/>
+							<input type="text" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240" readonly="readonly"/>
 						</c:if>
 					</c:if>
 					<c:if test="${entity.status==3}">
-						<input type="hidden" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" />
-						<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>
+						<input type="text" id="expectDate" name="expectDate" value="<fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/>" class="input_240" readonly="readonly"/>
 					</c:if>
 				</td>
 			</tr>
