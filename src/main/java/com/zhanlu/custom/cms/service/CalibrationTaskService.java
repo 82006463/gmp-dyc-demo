@@ -93,7 +93,11 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 eq.setLastActualDate(plan.getActualDate());
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(eq.getLastActualDate());
-                cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                if (eq.getUsageMode() == null || eq.getUsageMode().intValue() == 1) {
+                    cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                } else {
+                    cal.add(Calendar.MONTH, eq.getCalibrationCycle() * 2);
+                }
                 cal.add(Calendar.DAY_OF_YEAR, -1);
                 eq.setExpectDate(cal.getTime());
 
@@ -126,7 +130,11 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 eq.setLastActualDate(plan.getActualDate());
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(eq.getLastActualDate());
-                cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                if (eq.getUsageMode() == null || eq.getUsageMode().intValue() == 1) {
+                    cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                } else {
+                    cal.add(Calendar.MONTH, eq.getCalibrationCycle() * 2);
+                }
                 cal.add(Calendar.DAY_OF_YEAR, -1);
                 eq.setExpectDate(cal.getTime());
 
@@ -159,7 +167,11 @@ public class CalibrationTaskService extends CommonService<CalibrationTask, Long>
                 eq.setLastActualDate(plan.getActualDate());
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(eq.getLastActualDate());
-                cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                if (eq.getUsageMode() == null || eq.getUsageMode().intValue() == 1) {
+                    cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                } else {
+                    cal.add(Calendar.MONTH, eq.getCalibrationCycle() * 2);
+                }
                 cal.add(Calendar.DAY_OF_YEAR, -1);
                 eq.setExpectDate(cal.getTime());
 

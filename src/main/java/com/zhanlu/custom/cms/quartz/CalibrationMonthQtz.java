@@ -163,10 +163,18 @@ public class CalibrationMonthQtz {
             cal.setTime(eq.getExpectDate());
             cal.add(Calendar.YEAR, 1);
             for (int i = 1; i <= 12; i++) {
-                cal.add(Calendar.MONTH, -eq.getCalibrationCycle());
-                if (year.equals(DateFormatUtils.format(cal.getTime(), "yyyy"))) {
-                    cal.add(Calendar.MONTH, eq.getCalibrationCycle());
-                    break;
+                if (eq.getUsageMode() == null || eq.getUsageMode().intValue() == 1) {
+                    cal.add(Calendar.MONTH, -eq.getCalibrationCycle());
+                    if (year.equals(DateFormatUtils.format(cal.getTime(), "yyyy"))) {
+                        cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                        break;
+                    }
+                } else {
+                    cal.add(Calendar.MONTH, -eq.getCalibrationCycle() * 2);
+                    if (year.equals(DateFormatUtils.format(cal.getTime(), "yyyy"))) {
+                        cal.add(Calendar.MONTH, eq.getCalibrationCycle() * 2);
+                        break;
+                    }
                 }
             }
             for (int i = 1; i <= 12; i++) {
@@ -178,7 +186,11 @@ public class CalibrationMonthQtz {
                 filters.add(new PropertyFilter("GED_expectDate", DateFormatUtils.format(cal.getTime(), "yyyy-MM") + "-01 00:00:00"));
                 filters.add(new PropertyFilter("LED_expectDate", DateFormatUtils.format(cal.getTime(), "yyyy-MM") + "-" + cal.getActualMaximum(Calendar.DATE) + " 23:59:59"));
                 saveYear(eq, cal.getTime(), pageYear, filters);
-                cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                if (eq.getUsageMode() == null || eq.getUsageMode().intValue() == 1) {
+                    cal.add(Calendar.MONTH, eq.getCalibrationCycle());
+                } else {
+                    cal.add(Calendar.MONTH, eq.getCalibrationCycle() * 2);
+                }
             }
         }
     }
