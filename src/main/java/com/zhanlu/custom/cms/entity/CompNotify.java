@@ -64,7 +64,7 @@ public class CompNotify extends IdEntity {
         this.subject = subject;
     }
 
-    @Column(name = "content", length = 500)
+    @Column(name = "content", length = 1000)
     public String getContent() {
         return content;
     }
