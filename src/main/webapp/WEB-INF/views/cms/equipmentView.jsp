@@ -55,10 +55,10 @@
 					<td class="td_table_2">${empty entity.precision ? 'N.A.':entity.precision}</td>
 				</tr>
 				<tr>
+					<td class="td_table_1">器具类型：</td>
+					<td class="td_table_2">${empty entity.type ? 'N.A.':entity.type.name}</td>
 					<td class="td_table_1">校准公司：</td>
 					<td class="td_table_2">${empty entity.calibrationComp ? 'N.A.':entity.calibrationComp}</td>
-					<td class="td_table_1">校准联系人：</td>
-					<td class="td_table_2">${empty entity.calibrationOwner ? 'N.A.':entity.calibrationOwner}</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">校准规范编号：</td>

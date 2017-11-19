@@ -6,6 +6,7 @@ import com.zhanlu.custom.cms.service.EquipmentService;
 import com.zhanlu.excel.ExcelUtils;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
+import com.zhanlu.framework.config.service.DataDictService;
 import com.zhanlu.framework.security.entity.User;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -34,6 +35,8 @@ import java.util.*;
 @RequestMapping(value = "/custom/cms/equipment")
 public class EquipmentController {
 
+    @Autowired
+    private DataDictService dataDictService;
     @Resource(name = "jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -63,6 +66,7 @@ public class EquipmentController {
         Equipment entity = new Equipment();
         entity.setTmpStatus(1);
         mv.addObject("entity", entity);
+        mv.addObject("equipTypes", dataDictService.findItems("equipType"));
         return mv;
     }
 
@@ -71,6 +75,7 @@ public class EquipmentController {
         Equipment entity = equipmentService.findById(id);
         ModelAndView mv = new ModelAndView("cms/equipmentEdit");
         mv.addObject("entity", entity);
+        mv.addObject("equipTypes", dataDictService.findItems("equipType"));
         return mv;
     }
 

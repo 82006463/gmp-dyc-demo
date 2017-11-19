@@ -131,13 +131,24 @@
 				</td>
 			</tr>
 			<tr>
+				<td class="td_table_1">器具类型：</td>
+				<td class="td_table_2">
+					<c:if test="${entity.status!=3}">
+						<select name="typeId" class="input_select">
+							<option value="">-请选择-</option>
+							<c:forEach items="${equipTypes}" var="et">
+								<option value="${et.id}" ${et.id==entity.typeId ? 'selected="selected"':''}>${et.name}</option>
+							</c:forEach>
+						</select>
+					</c:if>
+					<c:if test="${entity.status==3}">
+						<input type="hidden" name="typeId" value="${entity.typeId}" />
+						${empty entity.type ? 'N.A.':type.name}
+					</c:if>
+				</td>
 				<td class="td_table_1">校准公司：</td>
 				<td class="td_table_2">
 					<input type="text" id="calibrationComp" name="calibrationComp" value="${entity.calibrationComp}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
-				</td>
-				<td class="td_table_1">校准联系人：</td>
-				<td class="td_table_2">
-					<input type="text" id="calibrationOwner" name="calibrationOwner" value="${entity.calibrationOwner}" class="input_240 validate[maxSize[10]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>

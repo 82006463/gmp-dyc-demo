@@ -1,12 +1,10 @@
 package com.zhanlu.custom.cms.entity;
 
 import com.zhanlu.framework.common.entity.IdEntity;
+import com.zhanlu.framework.config.entity.DataDict;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -69,8 +67,9 @@ public class Equipment extends IdEntity {
     private String factoryArea;
     //校准公司
     private String calibrationComp;
-    //校准联系人
-    private String calibrationOwner;
+    //器具类型
+    private Long typeId;
+    private DataDict type;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -315,13 +314,23 @@ public class Equipment extends IdEntity {
         this.calibrationComp = calibrationComp;
     }
 
-    @Column(name = "calibration_owner", length = 10)
-    public String getCalibrationOwner() {
-        return calibrationOwner;
+    @Column(name = "type_id")
+    public Long getTypeId() {
+        return typeId;
     }
 
-    public void setCalibrationOwner(String calibrationOwner) {
-        this.calibrationOwner = calibrationOwner;
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id", insertable = false, updatable = false)
+    public DataDict getType() {
+        return type;
+    }
+
+    public void setType(DataDict type) {
+        this.type = type;
     }
 
     @Column(name = "creater_id")
