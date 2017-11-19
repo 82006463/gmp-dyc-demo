@@ -6,6 +6,7 @@
     <bean id="schedulerQuartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
+				<ref bean="calibrationMonthQtzGenerateMonthTmpTrigger" />
 				<ref bean="calibrationMonthQtzGenerateMonthTrigger" />
 				<ref bean="calibrationMonthQtzGenerateYearTrigger" />
 			</list>
