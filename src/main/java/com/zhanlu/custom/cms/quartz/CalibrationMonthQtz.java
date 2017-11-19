@@ -161,7 +161,12 @@ public class CalibrationMonthQtz {
             if (eq.getCalibrationMode() == null)
                 continue;
             cal.setTime(eq.getExpectDate());
-            cal.add(Calendar.YEAR, 1);
+            if (year.equals(DateFormatUtils.format(cal.getTime(), "yyyy"))) {
+                cal.add(Calendar.YEAR, 1);
+            }
+            if (!nextYear.equals(DateFormatUtils.format(cal.getTime(), "yyyy"))) {
+                continue;
+            }
             for (int i = 1; i <= 12; i++) {
                 if (eq.getUsageMode() == null || eq.getUsageMode().intValue() == 1) {
                     cal.add(Calendar.MONTH, -eq.getCalibrationCycle());
