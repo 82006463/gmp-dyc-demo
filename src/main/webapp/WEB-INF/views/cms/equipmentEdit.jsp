@@ -56,17 +56,17 @@
 			<tr>
 				<td class="td_table_1">器具编号<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="code" name="code" class="input_240 validate[required,minSize[1],maxSize[50]]" value="${entity.code}" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+					<input type="text" id="code" name="code" class="input_240 validate[required,minSize[1],maxSize[50]]" value="${entity.code}" <c:if test="${entity.status==3 || !empty entity.id}">readonly="readonly"</c:if>/>
 				</td>
 				<td class="td_table_1">器具名称<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="name" name="name" class="input_520 validate[required,minSize[1],maxSize[100]]" value="${entity.name}" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+					<input type="text" id="name" name="name" class="input_240 validate[required,minSize[1],maxSize[100]]" value="${entity.name}" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">型号：</td>
+				<td class="td_table_1">生产厂家：</td>
 				<td class="td_table_2">
-					<input type="text" id="model" name="model" value="${entity.model}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+					<input type="text" id="factory" name="factory" value="${entity.factory}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
 				<td class="td_table_1">出厂编号：</td>
 				<td class="td_table_2">
@@ -74,13 +74,50 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">所在房间：</td>
+				<td class="td_table_1">型号：</td>
 				<td class="td_table_2">
-					<input type="text" id="room" name="room" value="${entity.room}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+					<input type="text" id="model" name="model" value="${entity.model}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
 				<td class="td_table_1">所属设备：</td>
 				<td class="td_table_2">
 					<input type="text" id="equipment" name="equipment" value="${entity.equipment}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+				</td>
+			</tr>
+			<tr>
+				<td class="td_table_1">厂区：</td>
+				<td class="td_table_2">
+					<input type="text" id="factoryArea" name="roofactoryAream" value="${entity.factoryArea}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+				</td>
+				<td class="td_table_1">车间：</td>
+				<td class="td_table_2">
+					<input type="text" id="workshop" name="workshop" value="${entity.workshop}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+				</td>
+			</tr>
+			<tr>
+				<td class="td_table_1">所属部门：</td>
+				<td class="td_table_2">
+					<input type="text" id="deptName" name="deptName" value="${entity.deptName}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+				</td>
+				<td class="td_table_1">所在房间：</td>
+				<td class="td_table_2">
+					<input type="text" id="room" name="room" value="${entity.room}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+				</td>
+			</tr>
+			<tr>
+				<td class="td_table_1">使用方式：</td>
+				<td class="td_table_2">
+					<c:if test="${entity.status!=3}">
+						<input type="radio" id="usageMode1" name="usageMode" value="1" class="validate[required]" ${empty entity.usageMode || entity.usageMode==1 ? 'checked="checked"':''}/>&nbsp;常规
+						<input type="radio" id="usageMode2" name="usageMode" value="2" class="validate[required]" ${entity.usageMode==2 ? 'checked="checked"':''}/>&nbsp;替换
+					</c:if>
+					<c:if test="${entity.status==3}">
+						<input type="hidden" name="usageMode" value="${entity.usageMode}" />
+						${entity.calibrationMode==1 ? '常规':entity.calibrationMode==2 ? '替换':''}
+					</c:if>
+				</td>
+				<td class="td_table_1">级别：</td>
+				<td class="td_table_2">
+					<input type="text" id="level" name="level" value="${entity.level}" class="input_240 validate[maxSize[10]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
@@ -91,6 +128,16 @@
 				<td class="td_table_1">精度：</td>
 				<td class="td_table_2">
 					<input type="text" id="precision" name="precision" value="${entity.precision}" class="input_240 validate[maxSize[20]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+				</td>
+			</tr>
+			<tr>
+				<td class="td_table_1">校准公司：</td>
+				<td class="td_table_2">
+					<input type="text" id="calibrationComp" name="calibrationComp" value="${entity.calibrationComp}" class="input_240 validate[maxSize[50]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+				</td>
+				<td class="td_table_1">校准联系人：</td>
+				<td class="td_table_2">
+					<input type="text" id="calibrationOwner" name="calibrationOwner" value="${entity.calibrationOwner}" class="input_240 validate[maxSize[10]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
@@ -136,7 +183,7 @@
 					<c:if test="${empty entity.lastActualDate}">N.A.</c:if>
 					<c:if test="${!empty entity.lastActualDate}">
 						<fmt:formatDate value="${entity.lastActualDate}" pattern="yyyy-MM-dd"/>
-						<input type="hidden" id="lastExpectDate" name="lastExpectDate" value="<fmt:formatDate value="${entity.lastActualDate}" pattern="yyyy-MM-dd"/>" class="input_240" readonly="readonly"/>
+						<input type="hidden" id="lastActualDate" name="lastActualDate" value="<fmt:formatDate value="${entity.lastActualDate}" pattern="yyyy-MM-dd"/>" class="input_240" readonly="readonly"/>
 					</c:if>
 				</td>
 				<td class="td_table_1">待校准时间<b class="requiredWarn">*</b>：</td>

@@ -26,23 +26,40 @@
 				</tr>
 				<tr>
 					<td class="td_table_1">型号：</td>
-					<td class="td_table_2">${entity.model}</td>
-					<td class="td_table_1">出厂编号：</td>
-					<td class="td_table_2">${entity.factoryCode}</td>
+					<td class="td_table_2">${empty entity.model ? 'N.A.':entity.model}</td>
+					<td class="td_table_1">所属设备：</td>
+					<td class="td_table_2">${empty entity.equipment ? 'N.A.':entity.equipment}</td>
 				</tr>
 				<tr>
+					<td class="td_table_1">厂区：</td>
+					<td class="td_table_2">${empty entity.factoryArea ? 'N.A.':entity.factoryArea}</td>
+					<td class="td_table_1">车间：</td>
+					<td class="td_table_2">${empty entity.workshop ? 'N.A.':entity.workshop}</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">所属部门：</td>
+					<td class="td_table_2">${empty entity.deptName ? 'N.A.':entity.deptName}</td>
 					<td class="td_table_1">所在房间：</td>
-					<td class="td_table_2">${entity.room}</td>
-					<td class="td_table_1">所属设备：</td>
-					<td class="td_table_2">${entity.equipment}</td>
+					<td class="td_table_2">${empty entity.room ? 'N.A.':entity.room}</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">使用方式：</td>
+					<td class="td_table_2">${entity.calibrationMode==1 ? '常规':entity.calibrationMode==2 ? '替换':''}</td>
+					<td class="td_table_1">级别：</td>
+					<td class="td_table_2">${empty entity.level ? 'N.A.':entity.level}</td>
 				</tr>
 				<tr>
 					<td class="td_table_1">功能：</td>
-					<td class="td_table_2">${entity.func}</td>
+					<td class="td_table_2">${empty entity.func ? 'N.A.':entity.func}</td>
 					<td class="td_table_1">精度：</td>
-					<td class="td_table_2">${entity.precision}</td>
+					<td class="td_table_2">${empty entity.precision ? 'N.A.':entity.precision}</td>
 				</tr>
-
+				<tr>
+					<td class="td_table_1">校准公司：</td>
+					<td class="td_table_2">${empty entity.calibrationComp ? 'N.A.':entity.calibrationComp}</td>
+					<td class="td_table_1">校准联系人：</td>
+					<td class="td_table_2">${empty entity.calibrationOwner ? 'N.A.':entity.calibrationOwner}</td>
+				</tr>
 				<tr>
 					<td class="td_table_1">校准规范编号：</td>
 					<td class="td_table_2">${entity.calibration}</td>
@@ -63,7 +80,10 @@
 				</tr>
 				<tr>
 					<td class="td_table_1">上次校准时间：</td>
-					<td class="td_table_2"><fmt:formatDate value="${entity.lastExpectDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_table_2">
+						<c:if test="${empty entity.lastActualDate}">N.A.</c:if>
+						<fmt:formatDate value="${entity.lastActualDate}" pattern="yyyy-MM-dd"/>
+					</td>
 					<td class="td_table_1">待校准时间：</td>
 					<td class="td_table_2"><fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/></td>
 				</tr>
