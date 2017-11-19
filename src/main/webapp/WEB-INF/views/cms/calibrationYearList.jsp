@@ -36,9 +36,13 @@
 					<input type="text" name="filter_GED_expectDate" value="${param['filter_GED_expectDate']}" class="input_240" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>~
 					<input type="text" name="filter_LED_expectDate" value="${param['filter_LED_expectDate']}" class="input_240" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>
 				</td>
+				<td class="td_table_1">器具编号：</td>
+				<td class="td_table_2">
+					<input type="text" name="filter_EQS_equipmentCode" value="${param['filter_EQS_equipmentCode']}" class="input_240" />
+				</td>
 			</tr>
 			<tr>
-				<td class="td_table_2" align="center" colspan="2">
+				<td class="td_table_2" align="center" colspan="4">
 					<input type='submit' id="searchBtn" class='button_70px' value='查询'/>
 					<shiro:hasPermission name="cms_calibrationYear_export">
 						<input type="button" class='button_70px' value="导出Excel" onclick="exportFile();"/>

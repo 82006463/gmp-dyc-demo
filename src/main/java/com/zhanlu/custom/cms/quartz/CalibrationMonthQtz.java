@@ -193,6 +193,7 @@ public class CalibrationMonthQtz {
         entity.setCreateTime(new Date());
         entity.setStatus(1);
         entity.setEquipmentId(eq.getId());
+        entity.setEquipmentCode(eq.getCode());
         entity.setExpectDate(expectDate);
         entity.setCalibrationMode(eq.getCalibrationMode());
         calibrationYearService.save(entity);

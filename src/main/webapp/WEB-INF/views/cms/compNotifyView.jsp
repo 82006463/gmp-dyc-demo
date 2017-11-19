@@ -21,7 +21,7 @@
 				<tr>
 					<td class="td_table_1">系统版本<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">${entity.sysVer}</td>
-					<td class="td_table_1">发送时间<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">发送日期<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2"><fmt:formatDate value="${entity.sendTime}" pattern="yyyy-MM-dd"/></td>
 				</tr>
 				<tr>

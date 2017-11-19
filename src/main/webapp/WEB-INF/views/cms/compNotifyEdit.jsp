@@ -44,7 +44,7 @@
 					<td class="td_table_2">
 						<input type="text" id="sysVer" name="sysVer" value="${entity.sysVer}" class="input_240 validate[required,minSize[1],maxSize[20]]" />
 					</td>
-					<td class="td_table_1">发送时间<b class="requiredWarn">*</b>：</td>
+					<td class="td_table_1">发送日期<b class="requiredWarn">*</b>：</td>
 					<td class="td_table_2">
 						<input type="text" id="sendTime" name="sendTime" value="<fmt:formatDate value="${entity.sendTime}" pattern="yyyy-MM-dd"/>" class="input_240 validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly"/>
 					</td>

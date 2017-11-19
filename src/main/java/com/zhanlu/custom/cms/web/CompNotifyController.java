@@ -39,8 +39,8 @@ public class CompNotifyController {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
-            page.setOrderBy("id");
-            page.setOrder(Page.ASC);
+            page.setOrderBy("sendTime");
+            page.setOrder(Page.DESC);
         }
         page = compNotifyService.findPage(page, filters);
         if (page.getResult() != null && page.getResult().size() > 0) {

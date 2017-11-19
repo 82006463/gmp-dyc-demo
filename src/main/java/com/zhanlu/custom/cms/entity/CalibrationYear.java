@@ -18,6 +18,8 @@ public class CalibrationYear extends IdEntity {
     //器具
     private Long equipmentId;
     private Equipment equipment;
+    //器具编号
+    private String equipmentCode;
     //上次待校准时间
     private Date lastExpectDate;
     //上次实际校准时间
@@ -51,6 +53,15 @@ public class CalibrationYear extends IdEntity {
 
     public void setEquipmentId(Long equipmentId) {
         this.equipmentId = equipmentId;
+    }
+
+    @Column(name = "equipment_code", length = 50)
+    public String getEquipmentCode() {
+        return equipmentCode;
+    }
+
+    public void setEquipmentCode(String equipmentCode) {
+        this.equipmentCode = equipmentCode;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

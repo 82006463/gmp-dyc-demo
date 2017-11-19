@@ -47,16 +47,20 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=20% class="td_list_1">通知标题</td>
-				<td align=center width=65% class="td_list_1">通知内容</td>
-				<td align=center width=5% class="td_list_1">状态</td>
-				<td align=center width=10% class="td_list_1">操作</td>
+				<td align=center width=7% class="td_list_1">发送日期</td>
+				<td align=center width=15% class="td_list_1">通知标题</td>
+				<td align=center width=5% class="td_list_1">系统版本</td>
+				<td align=center width=8% class="td_list_1">模块-模块版本</td>
+				<td align=center class="td_list_1">通知内容</td>
+				<td align=center width=8% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item">
 				<tr>
+					<td class="td_list_2" align=left><fmt:formatDate value="${item.sendTime}" pattern="yyyy-MM-dd"/></td>
 					<td class="td_list_2" align=left>${item.subject}</td>
+					<td class="td_list_2" align=left>${item.sysVer}</td>
+					<td class="td_list_2" align=left>${item.module}-v${item.moduleVer}</td>
 					<td class="td_list_2" align=left>${item.content}</td>
-					<td class="td_list_2" align=left>${item.status<=0 ? '删除':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<c:if test="${item.status > 0}">
