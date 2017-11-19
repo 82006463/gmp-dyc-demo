@@ -44,7 +44,7 @@
 				</tr>
 				<tr>
 					<td class="td_table_1">使用方式：</td>
-					<td class="td_table_2">${entity.calibrationMode==1 ? '常规':entity.calibrationMode==2 ? '替换':''}</td>
+					<td class="td_table_2">${entity.usageMode==1 ? '常规':entity.usageMode==2 ? '替换':''}</td>
 					<td class="td_table_1">级别：</td>
 					<td class="td_table_2">${empty entity.level ? 'N.A.':entity.level}</td>
 				</tr>

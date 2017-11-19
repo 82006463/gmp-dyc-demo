@@ -45,7 +45,6 @@
 		<input type="hidden" id="tenantId" name="tenantId" value="${entity.tenantId}"/>
 		<input type="hidden" id="createrId" name="createrId" value="${entity.createrId}"/>
 		<input type="hidden" id="createTime" name="createTime" value="<fmt:formatDate value="${entity.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
-		<input type="hidden" id="updaterId" name="updaterId" value="${entity.updaterId}"/>
 		<input type="hidden" id="updateTime" name="updateTime" value="<fmt:formatDate value="${entity.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
 		<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
@@ -112,7 +111,7 @@
 					</c:if>
 					<c:if test="${entity.status==3}">
 						<input type="hidden" name="usageMode" value="${entity.usageMode}" />
-						${entity.calibrationMode==1 ? '常规':entity.calibrationMode==2 ? '替换':''}
+						${entity.usageMode==1 ? '常规':entity.usageMode==2 ? '替换':''}
 					</c:if>
 				</td>
 				<td class="td_table_1">级别：</td>
@@ -143,7 +142,7 @@
 					</c:if>
 					<c:if test="${entity.status==3}">
 						<input type="hidden" name="typeId" value="${entity.typeId}" />
-						${empty entity.type ? 'N.A.':type.name}
+						${empty entity.type ? 'N.A.':entity.type.name}
 					</c:if>
 				</td>
 				<td class="td_table_1">校准公司：</td>
@@ -185,7 +184,7 @@
 				</td>
 				<td class="td_table_1">校准周期(月)<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="calibrationCycle" name="calibrationCycle" value="${entity.calibrationCycle}" class="input_240 validate[required,custom[number]]" <c:if test="${op==2}">readonly="readonly"</c:if>/>
+					<input type="text" id="calibrationCycle" name="calibrationCycle" value="${entity.calibrationCycle}" class="input_240 validate[required,custom[number]]" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
 				</td>
 			</tr>
 			<tr>
@@ -220,12 +219,14 @@
 				<td colspan="1">
 					<c:if test="${entity.status!=3}">
 						<shiro:hasPermission name="cms_equipment_edit">
+							<input type="hidden" id="updaterId" name="updaterId" value="${userId}"/>
 							<input type="submit" class="button_70px" name="submit" value="暂存" onclick="$('#status').val(1); return check();">&nbsp;&nbsp;
 							<input type="submit" class="button_70px" name="submit" value="提交" onclick="$('#status').val(3); return check();">
 						</shiro:hasPermission>
 					</c:if>
-					<c:if test="${entity.status==3 && userId!=entity.createrId}">
+					<c:if test="${entity.status==3 && userId!=entity.updaterId}">
 						<shiro:hasPermission name="cms_equipment_review">
+							<input type="hidden" id="updaterId" name="updaterId" value="${entity.updaterId}"/>
 							<input type="submit" class="button_70px" name="submit" value="拒绝" onclick="$('#status').val(2); return check();">&nbsp;&nbsp;
 							<input type="submit" class="button_70px" name="submit" value="复核" onclick="$('#status').val(4); return check();">
 						</shiro:hasPermission>

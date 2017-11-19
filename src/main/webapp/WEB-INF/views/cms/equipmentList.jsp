@@ -113,7 +113,7 @@
 										<a href="${ctx}/custom/cms/equipment/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
 									</shiro:hasPermission>
 								</c:if>
-								<c:if test="${(item.status==3) && userId!=item.createrId}">
+								<c:if test="${(item.status==3) && userId!=item.updaterId}">
 									<shiro:hasPermission name="cms_equipment_review">
 										<a href="${ctx}/custom/cms/equipment/update/${item.id}" class="btnEdit" title="复核">复核</a>
 									</shiro:hasPermission>
