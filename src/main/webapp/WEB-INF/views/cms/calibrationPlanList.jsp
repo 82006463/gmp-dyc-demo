@@ -87,7 +87,7 @@
 			</c:if>
 			<tr>
 				<td class="td_table_2" align="center" colspan="4">
-					<input type='submit' id="searchBtn" class='button_70px' value='查询'/>
+					<input type='submit' id="searchBtn" class='button_70px' value='查询' onclick="search();"/>
 					<c:if test="${status != 3}">
 						<input type="button" class='button_70px' value="生成任务" onclick="generateTask(this);"/>
 					</c:if>

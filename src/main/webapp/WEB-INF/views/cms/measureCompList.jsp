@@ -45,7 +45,7 @@
 					<c:if test="${!empty lookup}">
 						<input type='button' onclick="javascript:bringback('','')" class='button_70px' value='重置'/>
 					</c:if>
-					<input type='submit' class='button_70px' value='查询'/>
+					<input type='submit' class='button_70px' value='查询' onclick="search();"/>
 				</td>
 			</tr>
 		</table>
