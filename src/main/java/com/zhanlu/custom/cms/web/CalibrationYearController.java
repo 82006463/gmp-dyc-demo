@@ -44,6 +44,7 @@ public class CalibrationYearController {
         User user = cmsService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
+        filters.add(new PropertyFilter("EQI_status", "1"));
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
             page.setOrderBy("expectDate");
