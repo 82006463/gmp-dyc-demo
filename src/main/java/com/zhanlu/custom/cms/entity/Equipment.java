@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 
 /**
@@ -23,6 +24,8 @@ public class Equipment extends IdEntity {
     private String name;
     //型号
     private String model;
+    //生产厂家
+    private String factory;
     //出厂编号
     private String factoryCode;
     //所在房间
@@ -53,6 +56,21 @@ public class Equipment extends IdEntity {
     private Date lastActualDate;
     //待校准时间
     private Date expectDate;
+
+    //使用方式:常规，替换, 如果是替换，那他的待校准日期就是加双倍的周期
+    private Integer usageMode;
+    //级别
+    private String level;
+    //所属部门
+    private String deptName;
+    //车间
+    private String workshop;
+    //厂区
+    private String factoryArea;
+    //校准公司
+    private String calibrationComp;
+    //校准联系人
+    private String calibrationOwner;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -232,6 +250,78 @@ public class Equipment extends IdEntity {
 
     public void setExpectDate(Date expectDate) {
         this.expectDate = expectDate;
+    }
+
+    @Column(name = "factory", length = 50)
+    public String getFactory() {
+        return factory;
+    }
+
+    public void setFactory(String factory) {
+        this.factory = factory;
+    }
+
+    @Column(name = "usage_mode", length = 50)
+    public Integer getUsageMode() {
+        return usageMode;
+    }
+
+    public void setUsageMode(Integer usageMode) {
+        this.usageMode = usageMode;
+    }
+
+    @Column(name = "level", length = 10)
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    @Column(name = "dept_name", length = 50)
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    @Column(name = "workshop", length = 50)
+    public String getWorkshop() {
+        return workshop;
+    }
+
+    public void setWorkshop(String workshop) {
+        this.workshop = workshop;
+    }
+
+    @Column(name = "factory_area", length = 50)
+    public String getFactoryArea() {
+        return factoryArea;
+    }
+
+    public void setFactoryArea(String factoryArea) {
+        this.factoryArea = factoryArea;
+    }
+
+    @Column(name = "calibration_comp", length = 50)
+    public String getCalibrationComp() {
+        return calibrationComp;
+    }
+
+    public void setCalibrationComp(String calibrationComp) {
+        this.calibrationComp = calibrationComp;
+    }
+
+    @Column(name = "calibration_owner", length = 10)
+    public String getCalibrationOwner() {
+        return calibrationOwner;
+    }
+
+    public void setCalibrationOwner(String calibrationOwner) {
+        this.calibrationOwner = calibrationOwner;
     }
 
     @Column(name = "creater_id")
