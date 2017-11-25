@@ -5,10 +5,10 @@ import com.zhanlu.custom.cms.entity.Equipment;
 import com.zhanlu.custom.cms.service.CalibrationExtService;
 import com.zhanlu.custom.cms.service.CmsService;
 import com.zhanlu.custom.cms.service.MeasureCompService;
-import com.zhanlu.office.ExcelUtils;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
+import com.zhanlu.office.ExcelExporter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -129,7 +129,7 @@ public class CalibrationExtController {
         try (OutputStream out = resp.getOutputStream()) {
             String fileName = URLEncoder.encode("月度外校" + (status.intValue() == 3 ? "任务-" : "计划-") + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xls", "UTF-8");
             resp.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
-            ExcelUtils table = new ExcelUtils();
+            ExcelExporter table = ExcelExporter.getInstance();
             table.setComp("公司名：", user.getOrg().getName());
             table.setUser("导出人：", user.getFullname());
             table.setDate("导出日期：", DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));

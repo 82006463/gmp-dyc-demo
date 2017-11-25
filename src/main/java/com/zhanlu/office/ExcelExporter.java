@@ -10,7 +10,11 @@ import java.util.List;
 /**
  * Excel Tool
  */
-public class ExcelUtils {
+public class ExcelExporter {
+
+    public static ExcelExporter getInstance() {
+        return new ExcelExporter();
+    }
 
     //公司信息
     private String compKey;
@@ -31,46 +35,46 @@ public class ExcelUtils {
     //表体
     private List<List<String>> body = new ArrayList<>();
 
-    public ExcelUtils setComp(String compKey, String compVal) {
+    public ExcelExporter setComp(String compKey, String compVal) {
         this.compKey = compKey;
         this.compVal = compVal;
         return this;
     }
 
-    public ExcelUtils setUser(String userKey, String userVal) {
+    public ExcelExporter setUser(String userKey, String userVal) {
         this.userKey = userKey;
         this.userVal = userVal;
         return this;
     }
 
-    public ExcelUtils setDate(String dateKey, String dateVal) {
+    public ExcelExporter setDate(String dateKey, String dateVal) {
         this.dateKey = dateKey;
         this.dateVal = dateVal;
         return this;
     }
 
-    public ExcelUtils setFile(String fileKey, String fileVal) {
+    public ExcelExporter setFile(String fileKey, String fileVal) {
         this.fileKey = fileKey;
         this.fileVal = fileVal;
         return this;
     }
 
-    public ExcelUtils setSearch(List<String> search) {
+    public ExcelExporter setSearch(List<String> search) {
         this.search = search;
         return this;
     }
 
-    public ExcelUtils setHeader(List<String> header) {
+    public ExcelExporter setHeader(List<String> header) {
         this.header = header;
         return this;
     }
 
-    public ExcelUtils setBody(List<List<String>> body) {
+    public ExcelExporter setBody(List<List<String>> body) {
         this.body = body;
         return this;
     }
 
-    public ExcelUtils addRow(List<String> row) {
+    public ExcelExporter addRow(List<String> row) {
         body.add(row);
         return this;
     }

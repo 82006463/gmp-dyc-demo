@@ -4,10 +4,10 @@ import com.zhanlu.custom.cms.entity.CalibrationHist;
 import com.zhanlu.custom.cms.entity.Equipment;
 import com.zhanlu.custom.cms.service.CalibrationHistService;
 import com.zhanlu.custom.cms.service.CmsService;
-import com.zhanlu.office.ExcelUtils;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
+import com.zhanlu.office.ExcelExporter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -71,7 +71,7 @@ public class CalibrationHistController {
         try (OutputStream out = resp.getOutputStream()) {
             String fileName = URLEncoder.encode("校准历史-" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + ".xls", "UTF-8");
             resp.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
-            ExcelUtils table = new ExcelUtils();
+            ExcelExporter table = ExcelExporter.getInstance();
             table.setComp("公司名：", user.getOrg().getName());
             table.setUser("导出人：", user.getFullname());
             table.setDate("导出日期：", DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
