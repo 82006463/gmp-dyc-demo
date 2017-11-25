@@ -1,11 +1,7 @@
-import com.zhanlu.excel.ExcelUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 
 /**
  * Created by Administrator on 2017/5/1.
