@@ -22,8 +22,8 @@ import java.util.List;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = "/custom/dms/file")
-public class DmsFileController {
+@RequestMapping(value = "/custom/dms/file/req")
+public class FileReqController {
 
     @Autowired
     private DmsFileService dmsFileService;
@@ -51,7 +51,7 @@ public class DmsFileController {
         DmsFile entity = dmsFileService.findById(id);
         entity.setStatus(-1);
         dmsFileService.saveOrUpdate(entity);
-        ModelAndView mv = new ModelAndView("redirect:/custom/dms/file");
+        ModelAndView mv = new ModelAndView("redirect:/custom/dms/file/req");
         return mv;
     }
 

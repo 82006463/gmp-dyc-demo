@@ -1,8 +1,8 @@
-package com.zhanlu.custom.common.web;
+package com.zhanlu.custom.dms.web;
 
-import com.zhanlu.custom.common.entity.Printer;
 import com.zhanlu.custom.common.service.CustomService;
-import com.zhanlu.custom.common.service.PrinterService;
+import com.zhanlu.custom.dms.entity.DmsFile;
+import com.zhanlu.custom.dms.service.DmsFileService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
@@ -18,74 +18,74 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 打印机
+ * 月度外校
  */
 @Slf4j
 @Controller
-@RequestMapping(value = "/custom/printer")
-public class PrinterController {
+@RequestMapping(value = "/custom/dms/file/up")
+public class FileUpController {
 
     @Autowired
-    private PrinterService printerService;
+    private DmsFileService dmsFileService;
     @Autowired
     private CustomService customService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView list(Page<Printer> page, HttpServletRequest req) {
+    public ModelAndView list(Page<DmsFile> page, HttpServletRequest req) {
         User user = customService.getUser(req);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(req);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
-        ModelAndView mv = new ModelAndView("custom/printerList");
+        ModelAndView mv = new ModelAndView("dms/fileList");
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
-            page.setOrderBy("id");
+            page.setOrderBy("updateTime");
             page.setOrder(Page.DESC);
         }
-        page = printerService.findPage(page, filters);
+        page = dmsFileService.findPage(page, filters);
         mv.addObject("page", page);
         return mv;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView create() {
-        ModelAndView mv = new ModelAndView("custom/printerEdit");
-        Printer entity = new Printer();
+        ModelAndView mv = new ModelAndView("cms/equipmentEdit");
+        DmsFile entity = new DmsFile();
         mv.addObject("entity", entity);
         return mv;
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable("id") Long id) {
-        Printer entity = printerService.findById(id);
-        ModelAndView mv = new ModelAndView("custom/printerEdit");
+        DmsFile entity = dmsFileService.findById(id);
+        ModelAndView mv = new ModelAndView("dms/fileEdit");
         mv.addObject("entity", entity);
         return mv;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update(Printer entity, HttpServletRequest req) {
+    public ModelAndView update(DmsFile entity, HttpServletRequest req) {
         User user = customService.getUser(req);
         if (entity.getId() == null) {
             entity.setTenantId(user.getOrg().getId());
         }
-        printerService.saveOrUpdate(entity);
-        ModelAndView mv = new ModelAndView("redirect:/custom/printer");
+        dmsFileService.saveOrUpdate(entity);
+        ModelAndView mv = new ModelAndView("redirect:/custom/dms/file/up");
         return mv;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public ModelAndView delete(@PathVariable("id") Long id) {
-        Printer entity = printerService.findById(id);
+        DmsFile entity = dmsFileService.findById(id);
         entity.setStatus(-1);
-        printerService.saveOrUpdate(entity);
-        ModelAndView mv = new ModelAndView("redirect:/custom/printer");
+        dmsFileService.saveOrUpdate(entity);
+        ModelAndView mv = new ModelAndView("redirect:/custom/dms/file/up");
         return mv;
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("id") Long id) {
-        Printer entity = printerService.findById(id);
-        ModelAndView mv = new ModelAndView("custom/printerView");
+        DmsFile entity = dmsFileService.findById(id);
+        ModelAndView mv = new ModelAndView("dms/fileView");
         mv.addObject("entity", entity);
         return mv;
     }

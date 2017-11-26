@@ -1,7 +1,6 @@
 package com.zhanlu.custom.common.service;
 
 import com.zhanlu.framework.security.entity.User;
-import com.zhanlu.framework.security.service.OrgService;
 import com.zhanlu.framework.security.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,6 @@ public class CustomService {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private OrgService orgService;
 
     public User getUser(HttpServletRequest req) {
         String username = (String) req.getSession().getAttribute("username");

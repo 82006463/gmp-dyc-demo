@@ -57,12 +57,11 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td align=center width=15% class="td_list_1">打印机编号</td>
-				<td align=center width=25% class="td_list_1">打印机名称</td>
+				<td align=center width=25% class="td_list_1">打印机编号</td>
+				<td align=center width=30% class="td_list_1">打印机名称</td>
 				<td align=center width=15% class="td_list_1">打印机IP</td>
-				<td align=center width=5% class="td_list_1">打印机端口</td>
+				<td align=center width=10% class="td_list_1">打印机端口</td>
 				<td align=center width=10% class="td_list_1">打印机RMI端口</td>
-				<td align=center width=5% class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
 			</tr>
 			<c:forEach items="${page.result}" var="item">
@@ -72,7 +71,6 @@
 					<td class="td_list_2" align=left>${item.ip}</td>
 					<td class="td_list_2" align=left>${item.port}</td>
 					<td class="td_list_2" align=left>${item.rmiPort}</td>
-					<td class="td_list_2" align=left>${item.status <= 0 ? '失效':item.status==1 ? '暂存中':item.status==2 ? '拒绝中':item.status==3 ? '复核中':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<c:if test="${item.status > 0}">
@@ -90,7 +88,7 @@
 									</shiro:hasPermission>
 								</c:if>
 							</c:if>
-							<a href="${ctx}/custom/cms/equipment/view/${item.id}" class="btnView" title="查看">查看</a>
+							<a href="${ctx}/custom/printer/view/${item.id}" class="btnView" title="查看">查看</a>
 						</c:if>
 						<c:if test="${!empty lookup}">
 							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>

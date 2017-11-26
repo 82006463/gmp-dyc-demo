@@ -13,7 +13,7 @@
 </head>
 
 <body>
-	<form id="inputForm" action="${ctx}/custom/cms/equipment/update" method="post">
+	<form id="inputForm" action="${ctx}/custom/printer/update" method="post">
 		<input type="hidden" id="id" name="id" value="${entity.id}"/>
 		<input type="hidden" id="status" name="status" value="${entity.status}"/>
 		<input type="hidden" id="tenantId" name="tenantId" value="${entity.tenantId}"/>
@@ -26,11 +26,11 @@
 			<tr>
 				<td class="td_table_1">打印机编号<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="code" name="code" class="input_240 validate[required,minSize[1],maxSize[50]]" value="${entity.code}" <c:if test="${entity.status==3 || !empty entity.id}">readonly="readonly"</c:if>/>
+					<input type="text" id="code" name="code" class="input_240 validate[required,minSize[1],maxSize[50]]" value="${entity.code}" />
 				</td>
 				<td class="td_table_1">打印机名称<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="name" name="name" class="input_240 validate[required,minSize[1],maxSize[100]]" value="${entity.name}" <c:if test="${entity.status==3}">readonly="readonly"</c:if>/>
+					<input type="text" id="name" name="name" class="input_240 validate[required,minSize[1],maxSize[100]]" value="${entity.name}" />
 				</td>
 			</tr>
 			<tr>
