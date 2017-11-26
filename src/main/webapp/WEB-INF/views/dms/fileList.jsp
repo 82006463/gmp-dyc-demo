@@ -79,9 +79,11 @@
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>${item.fileVer}</td>
-					<td class="td_list_2" align=left><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd"/></td>
-					<td class="td_list_2" align=left>${item.createrId}</td>
-					<td class="td_list_2" align=left>${item.updaterId}</td>
+					<td class="td_list_2" align=left>
+						<fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd"/>
+					</td>
+					<td class="td_list_2" align=left>${empty item.creater ? 'N.A.':item.creater.fullname}</td>
+					<td class="td_list_2" align=left>${empty item.updater ? 'N.A.':item.updater.fullname}</td>
 					<td class="td_list_2" align=left>${item.status <= 0 ? '失效':item.status==1 ? '暂存中':item.status==2 ? '拒绝中':item.status==3 ? '复核中':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">

@@ -121,9 +121,8 @@ public class FileUpController {
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("id") Long id) {
-        DmsFile entity = dmsFileService.findById(id);
-        ModelAndView mv = new ModelAndView("dms/fileView");
-        mv.addObject("entity", entity);
+        ModelAndView mv = new ModelAndView("dms/filePreview");
+        mv.addObject("id", id);
         return mv;
     }
 
