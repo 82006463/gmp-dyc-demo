@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = "/custom/dms/file")
+@RequestMapping(value = "/custom/dms/file/view")
 public class FileViewController {
 
     @Autowired
@@ -43,23 +43,7 @@ public class FileViewController {
         }
         page = dmsFileService.findPage(page, filters);
         mv.addObject("page", page);
-        return mv;
-    }
-
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView delete(@PathVariable("id") Long id) {
-        DmsFile entity = dmsFileService.findById(id);
-        entity.setStatus(-1);
-        dmsFileService.saveOrUpdate(entity);
-        ModelAndView mv = new ModelAndView("redirect:/custom/dms/file/view");
-        return mv;
-    }
-
-    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
-    public ModelAndView view(@PathVariable("id") Long id) {
-        DmsFile entity = dmsFileService.findById(id);
-        ModelAndView mv = new ModelAndView("dms/fileView");
-        mv.addObject("entity", entity);
+        mv.addObject("type", "view");
         return mv;
     }
 

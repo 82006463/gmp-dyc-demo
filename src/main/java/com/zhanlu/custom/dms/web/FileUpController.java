@@ -8,6 +8,7 @@ import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,8 +20,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -56,6 +61,7 @@ public class FileUpController {
         }
         page = dmsFileService.findPage(page, filters);
         mv.addObject("page", page);
+        mv.addObject("type", "up");
         return mv;
     }
 
@@ -119,6 +125,20 @@ public class FileUpController {
         ModelAndView mv = new ModelAndView("dms/fileView");
         mv.addObject("entity", entity);
         return mv;
+    }
+
+    @RequestMapping(value = "/preview/{id}", method = RequestMethod.GET)
+    public void preview(@PathVariable("id") Long id, HttpServletResponse resp) {
+        DmsFile entity = dmsFileService.findById(id);
+        File file = new File(entity.getFilePath());
+        try (OutputStream out = resp.getOutputStream(); FileInputStream fis = new FileInputStream(file);) {
+            resp.setHeader("Content-Disposition", "inline;fileName=" + URLDecoder.decode(entity.getFileName(), "UTF-8"));
+            resp.setContentLength((int) file.length());
+            //resp.setContentType("multipart/form-data");
+            IOUtils.write(IOUtils.toByteArray(fis), out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @ResponseBody

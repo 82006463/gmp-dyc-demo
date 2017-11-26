@@ -7,12 +7,21 @@
 		<title>文件列表</title>
 		<%@ include file="/common/meta.jsp"%>
 		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
+		<link rel="stylesheet" type="text/css" href="${ctx}/styles/wbox/wbox/wbox.css" />
 		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="${ctx}/styles/wbox/wbox.js"></script>
 		<script src="${ctx}/styles/js/table.js" type="text/javascript"></script>
 		<script type="text/javascript">
-            function exportFile() {
-                exportExcel('${ctx}/custom/dms/file/up/exportFile?'+$('#mainForm').serialize());
-            }
+			var iframewbox;
+			function openPreview(curTag, url) {
+				iframewbox = $(curTag).wBox({
+					requestType: "iframe",
+					iframeWH: {width: 1200, height: 500},
+					title: "预览",
+					show: true,
+					target: url + "?lookup=1"
+				});
+			}
 		</script>
 	</head>
 
@@ -42,7 +51,7 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="left">
-					<c:if test="${empty lookup}">
+					<c:if test="${empty lookup && type=='up'}">
 						<shiro:hasPermission name="dms_file_up_edit">
 							<input type='button' onclick="addNew('${ctx}/custom/dms/file/up/create')" class='button_70px' value='新建'/>
 						</shiro:hasPermission>
@@ -76,11 +85,11 @@
 					<td class="td_list_2" align=left>${item.status <= 0 ? '失效':item.status==1 ? '暂存中':item.status==2 ? '拒绝中':item.status==3 ? '复核中':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
-							<c:if test="${item.status > 0}">
+							<c:if test="${item.status > 0 && type=='up'}">
 								<shiro:hasPermission name="dms_file_up_delete">
 									<a href="${ctx}/custom/dms/file/up/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 								</shiro:hasPermission>
-								<c:if test="${(item.status==1 || item.status==2 || item.status>=4)}">
+								<c:if test="${(item.status==1 || item.status==2)}">
 									<shiro:hasPermission name="dms_file_up_edit">
 										<a href="${ctx}/custom/dms/file/up/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
 									</shiro:hasPermission>
@@ -91,7 +100,7 @@
 									</shiro:hasPermission>
 								</c:if>
 							</c:if>
-							<a href="${ctx}/custom/dms/file/up/view/${item.id}" class="btnView" title="查看">查看</a>
+							<a href="#" class="btnView" title="预览" onclick="openPreview(this,'${ctx}/custom/dms/file/up/preview/${item.id}'); return false;">预览</a>
 						</c:if>
 						<c:if test="${!empty lookup}">
 							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>

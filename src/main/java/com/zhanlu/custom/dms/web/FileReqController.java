@@ -43,23 +43,7 @@ public class FileReqController {
         }
         page = dmsFileService.findPage(page, filters);
         mv.addObject("page", page);
-        return mv;
-    }
-
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView delete(@PathVariable("id") Long id, Integer status) {
-        DmsFile entity = dmsFileService.findById(id);
-        entity.setStatus(-1);
-        dmsFileService.saveOrUpdate(entity);
-        ModelAndView mv = new ModelAndView("redirect:/custom/dms/file/req");
-        return mv;
-    }
-
-    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
-    public ModelAndView view(@PathVariable("id") Long id) {
-        DmsFile entity = dmsFileService.findById(id);
-        ModelAndView mv = new ModelAndView("dms/fileView");
-        mv.addObject("entity", entity);
+        mv.addObject("type", "req");
         return mv;
     }
 
