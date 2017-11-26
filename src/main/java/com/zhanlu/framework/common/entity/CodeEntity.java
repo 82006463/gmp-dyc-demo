@@ -16,7 +16,7 @@ public class CodeEntity extends IdEntity {
     //描述
     protected String remark;
 
-    @Column(name = "code", nullable = false, length = 50)
+    @Column(name = "code", length = 50)
     public String getCode() {
         return code;
     }
@@ -25,7 +25,7 @@ public class CodeEntity extends IdEntity {
         this.code = code;
     }
 
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name", length = 100)
     public String getName() {
         return name;
     }
