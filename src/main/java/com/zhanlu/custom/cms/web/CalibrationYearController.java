@@ -3,7 +3,7 @@ package com.zhanlu.custom.cms.web;
 import com.zhanlu.custom.cms.entity.CalibrationYear;
 import com.zhanlu.custom.cms.entity.Equipment;
 import com.zhanlu.custom.cms.service.CalibrationYearService;
-import com.zhanlu.custom.cms.service.CmsService;
+import com.zhanlu.custom.common.service.CustomService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
@@ -37,11 +37,11 @@ public class CalibrationYearController {
     @Autowired
     private CalibrationYearService calibrationYearService;
     @Autowired
-    private CmsService cmsService;
+    private CustomService customService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<CalibrationYear> page, HttpServletRequest request) {
-        User user = cmsService.getUser(request);
+        User user = customService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         filters.add(new PropertyFilter("EQI_status", "1"));
@@ -66,7 +66,7 @@ public class CalibrationYearController {
 
     @RequestMapping(value = "/exportFile", method = RequestMethod.GET)
     public void exportFile(HttpServletRequest req, HttpServletResponse resp) {
-        User user = cmsService.getUser(req);
+        User user = customService.getUser(req);
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("multipart/form-data");
         try (OutputStream out = resp.getOutputStream()) {

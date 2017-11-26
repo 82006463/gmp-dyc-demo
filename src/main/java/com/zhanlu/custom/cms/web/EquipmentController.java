@@ -1,7 +1,7 @@
 package com.zhanlu.custom.cms.web;
 
 import com.zhanlu.custom.cms.entity.Equipment;
-import com.zhanlu.custom.cms.service.CmsService;
+import com.zhanlu.custom.common.service.CustomService;
 import com.zhanlu.custom.cms.service.EquipmentService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
@@ -42,11 +42,11 @@ public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
     @Autowired
-    private CmsService cmsService;
+    private CustomService customService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<Equipment> page, HttpServletRequest request) {
-        User user = cmsService.getUser(request);
+        User user = customService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         //设置默认排序方式
@@ -81,7 +81,7 @@ public class EquipmentController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ModelAndView update(Equipment entity, HttpServletRequest req) {
-        User user = cmsService.getUser(req);
+        User user = customService.getUser(req);
         if (entity.getId() == null) {
             entity.setCreaterId(user.getId());
             entity.setCreateTime(new Date());
@@ -113,7 +113,7 @@ public class EquipmentController {
     @ResponseBody
     @RequestMapping(value = "/check", method = RequestMethod.POST)
     public Object check(Equipment entity, HttpServletRequest req) {
-        User user = cmsService.getUser(req);
+        User user = customService.getUser(req);
         StringBuilder sqlBuf = new StringBuilder("SELECT id FROM cms_equipment WHERE 1=1 AND tenant_id=" + user.getOrg().getId());
 
         Map<String, Object> resultMap = new LinkedHashMap<>();
@@ -156,7 +156,7 @@ public class EquipmentController {
 
     @RequestMapping(value = "/exportFile", method = RequestMethod.GET)
     public void exportFile(HttpServletRequest req, HttpServletResponse resp) {
-        User user = cmsService.getUser(req);
+        User user = customService.getUser(req);
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("multipart/form-data");
         try (OutputStream out = resp.getOutputStream()) {

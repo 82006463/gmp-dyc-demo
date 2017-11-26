@@ -1,7 +1,7 @@
 package com.zhanlu.custom.cms.web;
 
 import com.zhanlu.custom.cms.entity.DrugComp;
-import com.zhanlu.custom.cms.service.CmsService;
+import com.zhanlu.custom.common.service.CustomService;
 import com.zhanlu.custom.cms.service.DrugCompService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
@@ -35,7 +35,7 @@ public class DrugCompController {
     @Autowired
     private DrugCompService drugCompService;
     @Autowired
-    private CmsService cmsService;
+    private CustomService customService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<DrugComp> page, HttpServletRequest request) {
@@ -70,7 +70,7 @@ public class DrugCompController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ModelAndView update(DrugComp entity, HttpServletRequest req) {
-        User user = cmsService.getUser(req);
+        User user = customService.getUser(req);
         if (entity.getId() == null) {
             entity.setCreaterId(user.getId());
             entity.setCreateTime(new Date());

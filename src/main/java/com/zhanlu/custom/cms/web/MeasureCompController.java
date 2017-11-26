@@ -3,7 +3,7 @@ package com.zhanlu.custom.cms.web;
 import com.zhanlu.custom.cms.entity.MeasureComp;
 import com.zhanlu.custom.cms.entity.MeasureCompStandardItem;
 import com.zhanlu.custom.cms.entity.StandardItem;
-import com.zhanlu.custom.cms.service.CmsService;
+import com.zhanlu.custom.common.service.CustomService;
 import com.zhanlu.custom.cms.service.MeasureCompService;
 import com.zhanlu.custom.cms.service.MeasureCompStandardItemService;
 import com.zhanlu.custom.cms.service.StandardItemService;
@@ -44,7 +44,7 @@ public class MeasureCompController {
     @Autowired
     private MeasureCompStandardItemService measureCompStandardItemService;
     @Autowired
-    private CmsService cmsService;
+    private CustomService customService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<MeasureComp> page, HttpServletRequest request) {
@@ -79,7 +79,7 @@ public class MeasureCompController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ModelAndView update(MeasureComp entity, HttpServletRequest req) {
-        User user = cmsService.getUser(req);
+        User user = customService.getUser(req);
         if (entity.getId() == null) {
             entity.setCreaterId(user.getId());
             entity.setCreateTime(new Date());

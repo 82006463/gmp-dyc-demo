@@ -14,6 +14,9 @@ import java.util.Date;
 @Entity
 @Table(name = "dms_file")
 public class DmsFile extends CodeEntity {
+
+    //租户ID
+    private Long tenantId;
     //文件版本
     private String fileVer;
     private String fileName;
@@ -24,6 +27,15 @@ public class DmsFile extends CodeEntity {
     private Date createTime;
     private Long updaterId;
     private Date updateTime;
+
+    @Column(name = "tenant_id")
+    public Long getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Long tenantId) {
+        this.tenantId = tenantId;
+    }
 
     @Column(name = "file_ver")
     public String getFileVer() {

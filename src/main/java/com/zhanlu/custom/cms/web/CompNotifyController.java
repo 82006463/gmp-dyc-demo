@@ -1,7 +1,7 @@
 package com.zhanlu.custom.cms.web;
 
 import com.zhanlu.custom.cms.entity.CompNotify;
-import com.zhanlu.custom.cms.service.CmsService;
+import com.zhanlu.custom.common.service.CustomService;
 import com.zhanlu.custom.cms.service.CompNotifyService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
@@ -31,11 +31,11 @@ public class CompNotifyController {
     @Autowired
     private CompNotifyService compNotifyService;
     @Autowired
-    private CmsService cmsService;
+    private CustomService customService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<CompNotify> page, HttpServletRequest request) {
-        User user = cmsService.getUser(request);
+        User user = customService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
@@ -73,7 +73,7 @@ public class CompNotifyController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ModelAndView update(CompNotify entity, HttpServletRequest req) {
-        User user = cmsService.getUser(req);
+        User user = customService.getUser(req);
         if (entity.getId() == null) {
             entity.setCreaterId(user.getId());
             entity.setCreateTime(new Date());

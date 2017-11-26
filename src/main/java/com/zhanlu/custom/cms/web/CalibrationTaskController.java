@@ -2,6 +2,7 @@ package com.zhanlu.custom.cms.web;
 
 import com.zhanlu.custom.cms.entity.*;
 import com.zhanlu.custom.cms.service.*;
+import com.zhanlu.custom.common.service.CustomService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
 import com.zhanlu.framework.security.entity.User;
@@ -46,11 +47,11 @@ public class CalibrationTaskController {
     @Autowired
     private CalibrationTaskService calibrationTaskService;
     @Autowired
-    private CmsService cmsService;
+    private CustomService customService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<CalibrationTask> page, HttpServletRequest req) {
-        User user = cmsService.getUser(req);
+        User user = customService.getUser(req);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(req);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         filters.add(new PropertyFilter("LEI_status", "3"));
@@ -75,7 +76,7 @@ public class CalibrationTaskController {
         CalibrationTask entity = calibrationTaskService.findById(id);
         mv.addObject("entity", entity);
 
-        User user = cmsService.getUser(req);
+        User user = customService.getUser(req);
         List<PropertyFilter> filters = new ArrayList<>();
         filters.add(new PropertyFilter("EQL_taskId", id.toString()));
         if (entity.getCalibrationMode().intValue() == 1) {
@@ -158,7 +159,7 @@ public class CalibrationTaskController {
 
     @RequestMapping(value = "/exportFile", method = RequestMethod.GET)
     public void exportFile(Long taskId, HttpServletRequest req, HttpServletResponse resp) {
-        User user = cmsService.getUser(req);
+        User user = customService.getUser(req);
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("multipart/form-data");
         try (OutputStream out = resp.getOutputStream()) {

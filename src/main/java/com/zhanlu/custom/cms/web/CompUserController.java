@@ -1,7 +1,7 @@
 package com.zhanlu.custom.cms.web;
 
 import com.zhanlu.custom.cms.entity.CompUser;
-import com.zhanlu.custom.cms.service.CmsService;
+import com.zhanlu.custom.common.service.CustomService;
 import com.zhanlu.custom.cms.service.CompUserService;
 import com.zhanlu.custom.cms.service.DrugCompService;
 import com.zhanlu.custom.cms.service.MeasureCompService;
@@ -34,11 +34,11 @@ public class CompUserController {
     @Autowired
     private DrugCompService drugCompService;
     @Autowired
-    private CmsService cmsService;
+    private CustomService customService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(Page<CompUser> page, HttpServletRequest request) {
-        User user = cmsService.getUser(request);
+        User user = customService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         //设置默认排序方式
         if (!page.isOrderBySetted()) {
@@ -76,7 +76,7 @@ public class CompUserController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ModelAndView update(CompUser entity, HttpServletRequest req) {
-        User user = cmsService.getUser(req);
+        User user = customService.getUser(req);
         if (entity.getId() == null) {
             entity.setCreaterId(user.getId());
             entity.setCreateTime(new Date());

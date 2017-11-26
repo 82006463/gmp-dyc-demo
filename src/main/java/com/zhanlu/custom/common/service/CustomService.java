@@ -1,4 +1,4 @@
-package com.zhanlu.custom.cms.service;
+package com.zhanlu.custom.common.service;
 
 import com.zhanlu.framework.security.entity.User;
 import com.zhanlu.framework.security.service.OrgService;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Administrator on 2017/10/28.
  */
 @Service
-public class CmsService {
+public class CustomService {
 
     @Autowired
     private UserService userService;

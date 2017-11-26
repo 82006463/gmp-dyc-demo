@@ -3,7 +3,7 @@ package com.zhanlu.custom.cms.web;
 import com.zhanlu.custom.cms.entity.CalibrationIn;
 import com.zhanlu.custom.cms.entity.Equipment;
 import com.zhanlu.custom.cms.service.CalibrationInService;
-import com.zhanlu.custom.cms.service.CmsService;
+import com.zhanlu.custom.common.service.CustomService;
 import com.zhanlu.custom.cms.service.MeasureCompService;
 import com.zhanlu.framework.common.page.Page;
 import com.zhanlu.framework.common.page.PropertyFilter;
@@ -39,11 +39,11 @@ public class CalibrationInController {
     @Autowired
     private CalibrationInService calibrationInService;
     @Autowired
-    private CmsService cmsService;
+    private CustomService customService;
 
     @RequestMapping(value = "/{status}", method = RequestMethod.GET)
     public ModelAndView list(Page<CalibrationIn> page, @PathVariable Integer status, Integer taskStatus, HttpServletRequest request) {
-        User user = cmsService.getUser(request);
+        User user = customService.getUser(request);
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
         filters.add(new PropertyFilter("EQL_tenantId", user.getOrg().getId().toString()));
         ModelAndView mv = new ModelAndView("cms/calibrationPlanList");
@@ -75,7 +75,7 @@ public class CalibrationInController {
     @ResponseBody
     @RequestMapping(value = "/generateTask", method = RequestMethod.GET)
     public Object generateTask(HttpServletRequest request) {
-        User user = cmsService.getUser(request);
+        User user = customService.getUser(request);
         return calibrationInService.generateTask(user);
     }
 
@@ -86,7 +86,7 @@ public class CalibrationInController {
         resultMap.put("result", 0);
         String measureCompId = req.getParameter("measureCompId");
         String approver = req.getParameter("approver");
-        User user = cmsService.getUser(approver);
+        User user = customService.getUser(approver);
         /*if (StringUtils.isBlank(measureCompId)) {
             resultMap.put("msg", "请选择计量公司");
         } else */
@@ -121,7 +121,7 @@ public class CalibrationInController {
 
     @RequestMapping(value = "/{status}/exportFile", method = RequestMethod.GET)
     public void exportFile(@PathVariable Integer status, HttpServletRequest req, HttpServletResponse resp) {
-        User user = cmsService.getUser(req);
+        User user = customService.getUser(req);
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("multipart/form-data");
         try (OutputStream out = resp.getOutputStream()) {
