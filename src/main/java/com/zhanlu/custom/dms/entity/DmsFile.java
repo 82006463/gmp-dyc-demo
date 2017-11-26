@@ -37,7 +37,7 @@ public class DmsFile extends CodeEntity {
         this.tenantId = tenantId;
     }
 
-    @Column(name = "file_ver")
+    @Column(name = "file_ver", length = 10)
     public String getFileVer() {
         return fileVer;
     }
@@ -46,7 +46,7 @@ public class DmsFile extends CodeEntity {
         this.fileVer = fileVer;
     }
 
-    @Column(name = "file_name")
+    @Column(name = "file_name", length = 50)
     public String getFileName() {
         return fileName;
     }
@@ -55,7 +55,7 @@ public class DmsFile extends CodeEntity {
         this.fileName = fileName;
     }
 
-    @Column(name = "file_path")
+    @Column(name = "file_path", length = 150)
     public String getFilePath() {
         return filePath;
     }
