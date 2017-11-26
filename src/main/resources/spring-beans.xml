@@ -54,6 +54,8 @@
 			    <value>com.zhanlu.framework.security.entity</value>
                 <value>com.zhanlu.framework.config.entity</value>
                 <value>com.zhanlu.custom.cms.entity</value>
+				<value>com.zhanlu.custom.dms.entity</value>
+				<value>com.zhanlu.custom.common.entity</value>
 			</list>
 		</property>
 		<property name="mappingResources">
