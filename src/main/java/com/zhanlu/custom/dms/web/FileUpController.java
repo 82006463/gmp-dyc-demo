@@ -89,7 +89,7 @@ public class FileUpController {
         if (files != null && files.length > 0) {
             CommonsMultipartFile file = files[0];
             entity.setFileName(file.getOriginalFilename());
-            File dir = new File("/dyc/upload/file//dms");
+            File dir = new File("/dyc/upload/file/dms");
             if (!dir.exists())
                 dir.mkdirs();
             entity.setFilePath(dir.getAbsolutePath() + "/" + entity.getFileName());
