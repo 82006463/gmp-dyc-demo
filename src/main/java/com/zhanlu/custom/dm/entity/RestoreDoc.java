@@ -23,10 +23,8 @@ public class RestoreDoc extends CodeEntity {
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
-    private User creater;
     private Date createTime;
     private Long updaterId;
-    private User updater;
     private Date updateTime;
 
     @Column(name = "tenant_id")
@@ -74,16 +72,6 @@ public class RestoreDoc extends CodeEntity {
         this.createrId = createrId;
     }
 
-    @JoinColumn(name = "creater_id", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    public User getCreater() {
-        return creater;
-    }
-
-    public void setCreater(User creater) {
-        this.creater = creater;
-    }
-
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "create_time")
     public Date getCreateTime() {
@@ -101,16 +89,6 @@ public class RestoreDoc extends CodeEntity {
 
     public void setUpdaterId(Long updaterId) {
         this.updaterId = updaterId;
-    }
-
-    @JoinColumn(name = "updater_id", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    public User getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(User updater) {
-        this.updater = updater;
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

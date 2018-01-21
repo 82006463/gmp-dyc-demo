@@ -16,17 +16,11 @@ public class BackupWinLog extends CodeEntity {
 
     //租户ID
     private Long tenantId;
-    //文件版本
-    private String fileVer;
-    private String fileName;
-    private String filePath;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
-    private User creater;
     private Date createTime;
     private Long updaterId;
-    private User updater;
     private Date updateTime;
 
     @Column(name = "tenant_id")
@@ -38,33 +32,6 @@ public class BackupWinLog extends CodeEntity {
         this.tenantId = tenantId;
     }
 
-    @Column(name = "file_ver", length = 10)
-    public String getFileVer() {
-        return fileVer;
-    }
-
-    public void setFileVer(String fileVer) {
-        this.fileVer = fileVer;
-    }
-
-    @Column(name = "file_name", length = 50)
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    @Column(name = "file_path", length = 150)
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
     @Column(name = "creater_id")
     public Long getCreaterId() {
         return createrId;
@@ -72,16 +39,6 @@ public class BackupWinLog extends CodeEntity {
 
     public void setCreaterId(Long createrId) {
         this.createrId = createrId;
-    }
-
-    @JoinColumn(name = "creater_id", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    public User getCreater() {
-        return creater;
-    }
-
-    public void setCreater(User creater) {
-        this.creater = creater;
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -101,16 +58,6 @@ public class BackupWinLog extends CodeEntity {
 
     public void setUpdaterId(Long updaterId) {
         this.updaterId = updaterId;
-    }
-
-    @JoinColumn(name = "updater_id", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    public User getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(User updater) {
-        this.updater = updater;
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

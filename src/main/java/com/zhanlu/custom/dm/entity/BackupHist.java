@@ -11,22 +11,31 @@ import java.util.Date;
  * 备份历史
  */
 @Entity
-@Table(name = "dms_file")
+@Table(name = "dm_backup_hist")
 public class BackupHist extends CodeEntity {
 
     //租户ID
     private Long tenantId;
-    //文件版本
-    private String fileVer;
-    private String fileName;
-    private String filePath;
+    //备份类型：1:文档备份, 2:数据库备份
+    private Integer bakType;
+    //备份开始时间
+    private Date beginTime;
+    //备份结束时间
+    private Date endTime;
+    //操作方式：1:自动备份, 2:手动备份
+    private Integer opMode;
+    //有无更新：1:有更新, 0:无更新
+    private Integer updateStatus;
+    //成功数量
+    private Integer successCount;
+    //失败数量
+    private Integer failCount;
+    private Long bakObjId;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
-    private User creater;
     private Date createTime;
     private Long updaterId;
-    private User updater;
     private Date updateTime;
 
     @Column(name = "tenant_id")
@@ -38,31 +47,78 @@ public class BackupHist extends CodeEntity {
         this.tenantId = tenantId;
     }
 
-    @Column(name = "file_ver", length = 10)
-    public String getFileVer() {
-        return fileVer;
+    @Column(name = "bak_type")
+    public Integer getBakType() {
+        return bakType;
     }
 
-    public void setFileVer(String fileVer) {
-        this.fileVer = fileVer;
+    public void setBakType(Integer bakType) {
+        this.bakType = bakType;
     }
 
-    @Column(name = "file_name", length = 50)
-    public String getFileName() {
-        return fileName;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "begin_time")
+    public Date getBeginTime() {
+        return beginTime;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
     }
 
-    @Column(name = "file_path", length = 150)
-    public String getFilePath() {
-        return filePath;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "end_time")
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    @Column(name = "op_mode")
+    public Integer getOpMode() {
+        return opMode;
+    }
+
+    public void setOpMode(Integer opMode) {
+        this.opMode = opMode;
+    }
+
+    @Column(name = "update_status")
+    public Integer getUpdateStatus() {
+        return updateStatus;
+    }
+
+    public void setUpdateStatus(Integer updateStatus) {
+        this.updateStatus = updateStatus;
+    }
+
+    @Column(name = "success_count")
+    public Integer getSuccessCount() {
+        return successCount;
+    }
+
+    public void setSuccessCount(Integer successCount) {
+        this.successCount = successCount;
+    }
+
+    @Column(name = "fail_count")
+    public Integer getFailCount() {
+        return failCount;
+    }
+
+    public void setFailCount(Integer failCount) {
+        this.failCount = failCount;
+    }
+
+    @Column(name = "bak_obj_id")
+    public Long getBakObjId() {
+        return bakObjId;
+    }
+
+    public void setBakObjId(Long bakObjId) {
+        this.bakObjId = bakObjId;
     }
 
     @Column(name = "creater_id")
@@ -72,16 +128,6 @@ public class BackupHist extends CodeEntity {
 
     public void setCreaterId(Long createrId) {
         this.createrId = createrId;
-    }
-
-    @JoinColumn(name = "creater_id", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    public User getCreater() {
-        return creater;
-    }
-
-    public void setCreater(User creater) {
-        this.creater = creater;
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -101,16 +147,6 @@ public class BackupHist extends CodeEntity {
 
     public void setUpdaterId(Long updaterId) {
         this.updaterId = updaterId;
-    }
-
-    @JoinColumn(name = "updater_id", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    public User getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(User updater) {
-        this.updater = updater;
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
