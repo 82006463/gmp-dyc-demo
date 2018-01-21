@@ -16,10 +16,6 @@ public class ClientSetting extends CodeEntity {
 
     //租户ID
     private Long tenantId;
-    //文件版本
-    private String fileVer;
-    private String fileName;
-    private String filePath;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -34,33 +30,6 @@ public class ClientSetting extends CodeEntity {
 
     public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
-    }
-
-    @Column(name = "file_ver", length = 10)
-    public String getFileVer() {
-        return fileVer;
-    }
-
-    public void setFileVer(String fileVer) {
-        this.fileVer = fileVer;
-    }
-
-    @Column(name = "file_name", length = 50)
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    @Column(name = "file_path", length = 150)
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
     }
 
     @Column(name = "creater_id")

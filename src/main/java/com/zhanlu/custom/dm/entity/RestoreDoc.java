@@ -17,9 +17,7 @@ public class RestoreDoc extends CodeEntity {
     //租户ID
     private Long tenantId;
     //文件版本
-    private String fileVer;
-    private String fileName;
-    private String filePath;
+    private Long backupDocId;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -36,31 +34,13 @@ public class RestoreDoc extends CodeEntity {
         this.tenantId = tenantId;
     }
 
-    @Column(name = "file_ver", length = 10)
-    public String getFileVer() {
-        return fileVer;
+    @Column(name = "backup_doc_id")
+    public Long getBackupDocId() {
+        return backupDocId;
     }
 
-    public void setFileVer(String fileVer) {
-        this.fileVer = fileVer;
-    }
-
-    @Column(name = "file_name", length = 50)
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    @Column(name = "file_path", length = 150)
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setBackupDocId(Long backupDocId) {
+        this.backupDocId = backupDocId;
     }
 
     @Column(name = "creater_id")

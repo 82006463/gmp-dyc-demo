@@ -1,10 +1,11 @@
 package com.zhanlu.custom.dm.entity;
 
 import com.zhanlu.framework.common.entity.CodeEntity;
-import com.zhanlu.framework.security.entity.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -17,9 +18,7 @@ public class RestoreDb extends CodeEntity {
     //租户ID
     private Long tenantId;
     //文件版本
-    private String fileVer;
-    private String fileName;
-    private String filePath;
+    private Long backupDbId;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -36,31 +35,13 @@ public class RestoreDb extends CodeEntity {
         this.tenantId = tenantId;
     }
 
-    @Column(name = "file_ver", length = 10)
-    public String getFileVer() {
-        return fileVer;
+    @Column(name = "backup_db_id")
+    public Long getBackupDbId() {
+        return backupDbId;
     }
 
-    public void setFileVer(String fileVer) {
-        this.fileVer = fileVer;
-    }
-
-    @Column(name = "file_name", length = 50)
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    @Column(name = "file_path", length = 150)
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setBackupDbId(Long backupDbId) {
+        this.backupDbId = backupDbId;
     }
 
     @Column(name = "creater_id")
