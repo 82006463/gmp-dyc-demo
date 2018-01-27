@@ -34,15 +34,6 @@ public class BackupDb extends CodeEntity {
     private String loginPwd;
     //数据库名
     private String dbName;
-
-    //源文件MD5
-    private String sourceMd5;
-    //备份件MD5
-    private String targetMd5;
-    //备份开始时间
-    private Date beginTime;
-    //备份结束时间
-    private Date endTime;
     //全量备份频次
     private String allCronExpr;
     //增量备份频次
@@ -136,44 +127,6 @@ public class BackupDb extends CodeEntity {
 
     public void setDbName(String bakPath) {
         this.dbName = dbName;
-    }
-
-    @Column(name = "source_md5", length = 130)
-    public String getSourceMd5() {
-        return sourceMd5;
-    }
-
-    public void setSourceMd5(String sourceMd5) {
-        this.sourceMd5 = sourceMd5;
-    }
-
-    @Column(name = "target_md5", length = 130)
-    public String getTargetMd5() {
-        return targetMd5;
-    }
-
-    public void setTargetMd5(String targetMd5) {
-        this.targetMd5 = targetMd5;
-    }
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "begin_time")
-    public Date getBeginTime() {
-        return beginTime;
-    }
-
-    public void setBeginTime(Date beginTime) {
-        this.beginTime = beginTime;
-    }
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "end_time")
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 
     @Column(name = "all_cron_expr", length = 50)
