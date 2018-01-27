@@ -9,32 +9,23 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * 备份数据库
+ * 备份详情
  */
 @Entity
-@Table(name = "dm_backup_db")
-public class BackupDb extends CodeEntity {
+@Table(name = "dm_backup_detail")
+public class BackupDetail extends CodeEntity {
 
     //租户ID
     private Long tenantId;
-    //本机MAC地址：自动获取,不可修改
-    private String macAddr;
-    //本机机器名：自动获取,可修改
-    private String host;
-    //本机IP：自动获取,可修改
-    private String ip;
 
-    //备份源：sqlserver:SQL Server、mysql:MySQL、oracle:Oracle
-    private String bakSource;
-    //登录方式：1:windows账户验证, 2:数据库账号验证
-    private Integer loginMode;
-    //用户名
-    private String loginUsername;
-    //密码
-    private String loginPwd;
-    //数据库名
-    private String dbName;
-
+    //备份类型：1:file, 2:db
+    private Integer bakType;
+    //备份类型ID
+    private Long bakTypeId;
+    //文件源路径
+    private String sourcePath;
+    //备份路径
+    private String targetPath;
     //源文件MD5
     private String sourceMd5;
     //备份件MD5
@@ -43,11 +34,8 @@ public class BackupDb extends CodeEntity {
     private Date beginTime;
     //备份结束时间
     private Date endTime;
-    //全量备份频次
-    private String allCronExpr;
-    //增量备份频次
-    private String incrCronExpr;
-
+    //Cron表达式
+    private String cronExpr;
     //操作方式：1:自动备份, 2:手动备份
     private Integer backupMode;
 
@@ -66,76 +54,40 @@ public class BackupDb extends CodeEntity {
         this.tenantId = tenantId;
     }
 
-    @Column(name = "mac_addr", length = 40)
-    public String getMacAddr() {
-        return macAddr;
+    @Column(name = "bak_type")
+    public Integer getBakType() {
+        return bakType;
     }
 
-    public void setMacAddr(String macAddr) {
-        this.macAddr = macAddr;
+    public void setBakType(Integer bakType) {
+        this.bakType = bakType;
     }
 
-    @Column(name = "host_", length = 30)
-    public String getHost() {
-        return host;
+    @Column(name = "bak_type_id")
+    public Long getBakTypeId() {
+        return bakTypeId;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setBakTypeId(Long bakTypeId) {
+        this.bakTypeId = bakTypeId;
     }
 
-    @Column(name = "ip_", length = 150)
-    public String getIp() {
-        return ip;
+    @Column(name = "source_path", length = 260)
+    public String getSourcePath() {
+        return sourcePath;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setSourcePath(String sourcePath) {
+        this.sourcePath = sourcePath;
     }
 
-    @Column(name = "bak_source", length = 120)
-    public String getBakSource() {
-        return bakSource;
+    @Column(name = "target_path", length = 260)
+    public String getTargetPath() {
+        return targetPath;
     }
 
-    public void setBakSource(String bakSource) {
-        this.bakSource = bakSource;
-    }
-
-    @Column(name = "login_mode")
-    public Integer getLoginMode() {
-        return loginMode;
-    }
-
-    public void setLoginMode(Integer loginMode) {
-        this.loginMode = loginMode;
-    }
-
-    @Column(name = "login_username", length = 40)
-    public String getLoginUsername() {
-        return loginUsername;
-    }
-
-    public void setLoginUsername(String loginUsername) {
-        this.loginUsername = loginUsername;
-    }
-
-    @Column(name = "password", length = 40)
-    public String getLoginPwd() {
-        return loginPwd;
-    }
-
-    public void setLoginPwd(String loginPwd) {
-        this.loginPwd = loginPwd;
-    }
-
-    @Column(name = "db_name", length = 30)
-    public String getDbName() {
-        return dbName;
-    }
-
-    public void setDbName(String bakPath) {
-        this.dbName = dbName;
+    public void setTargetPath(String targetPath) {
+        this.targetPath = targetPath;
     }
 
     @Column(name = "source_md5", length = 130)
@@ -176,22 +128,13 @@ public class BackupDb extends CodeEntity {
         this.endTime = endTime;
     }
 
-    @Column(name = "all_cron_expr", length = 50)
-    public String getAllCronExpr() {
-        return allCronExpr;
+    @Column(name = "cron_expr", length = 50)
+    public String getCronExpr() {
+        return cronExpr;
     }
 
-    public void setAllCronExpr(String allCronExpr) {
-        this.allCronExpr = allCronExpr;
-    }
-
-    @Column(name = "incr_cron_expr", length = 50)
-    public String getIncrCronExpr() {
-        return incrCronExpr;
-    }
-
-    public void setIncrCronExpr(String incrCronExpr) {
-        this.incrCronExpr = incrCronExpr;
+    public void setCronExpr(String cronExpr) {
+        this.cronExpr = cronExpr;
     }
 
     @Column(name = "backup_mode")

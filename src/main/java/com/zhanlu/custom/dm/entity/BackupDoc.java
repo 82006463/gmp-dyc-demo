@@ -45,7 +45,7 @@ public class BackupDoc extends CodeEntity {
     //Cron表达式
     private String cronExpr;
     //操作方式：1:自动备份, 2:手动备份
-    private Integer opMode;
+    private Integer backupMode;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -181,13 +181,13 @@ public class BackupDoc extends CodeEntity {
         this.cronExpr = cronExpr;
     }
 
-    @Column(name = "op_mode")
-    public Integer getOpMode() {
-        return opMode;
+    @Column(name = "backup_mode")
+    public Integer getBackupMode() {
+        return backupMode;
     }
 
-    public void setOpMode(Integer opMode) {
-        this.opMode = opMode;
+    public void setBackupMode(Integer backupMode) {
+        this.backupMode = backupMode;
     }
 
     @Column(name = "creater_id")
