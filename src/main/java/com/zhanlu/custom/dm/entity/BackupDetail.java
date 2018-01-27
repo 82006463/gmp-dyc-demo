@@ -17,7 +17,6 @@ public class BackupDetail extends CodeEntity {
 
     //租户ID
     private Long tenantId;
-
     //备份类型：1:file, 2:db
     private Integer bakType;
     //备份类型ID
