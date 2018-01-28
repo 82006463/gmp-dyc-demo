@@ -73,18 +73,17 @@
 				<td class="td_table_2">
 					<select id="bakSource" name="bakSource" class="input_select validate[required]">
 						<option value="">-请选择-</option>
-						<option value="1" ${entity.bakSource=='sqlserver' ? 'selected="selected"':''}>SQL Server</option>
-						<option value="2" ${entity.bakSource=='mysql' ? 'selected="selected"':''}>MySQL</option>
-						<option value="2" ${entity.bakSource=='oracle' ? 'selected="selected"':''}>Oracle</option>
+						<option value="sqlserver" ${entity.bakSource=='sqlserver' ? 'selected="selected"':''}>SQL Server</option>
+						<option value="mysql" ${entity.bakSource=='mysql' ? 'selected="selected"':''}>MySQL</option>
+						<option value="oracle" ${entity.bakSource=='oracle' ? 'selected="selected"':''}>Oracle</option>
 					</select>
 				</td>
 			</tr>
-
 			<tr>
 				<td class="td_table_1">登录方式<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="radio" id="loginMode1" name="loginMode" class="input_520 validate[required]" value="1" ${entity.loginMode==1 ? 'checked="checked"':''}/>&nbsp;Windows账户验证
-					<input type="radio" id="loginMode2" name="loginMode" class="input_520 validate[required]" value="2" ${entity.loginMode==2 ? 'checked="checked"':''}/>&nbsp;数据库账号验证
+					<input type="radio" id="loginMode1" name="loginMode" class="validate[required]" value="1" ${entity.loginMode==1 ? 'checked="checked"':''}/>&nbsp;Windows账户验证
+					<input type="radio" id="loginMode2" name="loginMode" class="validate[required]" value="2" ${entity.loginMode==2 ? 'checked="checked"':''}/>&nbsp;数据库账号验证
 				</td>
 			</tr>
 			<tr>

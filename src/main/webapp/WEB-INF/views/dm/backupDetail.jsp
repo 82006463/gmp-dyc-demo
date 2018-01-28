@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 	<head>
-		<title>器具</title>
+		<title>备份详情</title>
 		<%@ include file="/common/meta.jsp"%>
 		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
 		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
@@ -14,78 +14,45 @@
 		<form id="inputForm" action="" method="post">
 			<table width="100%" border="0" align="center" cellpadding="0" class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
-					<td class="td_table_top" align="center">器具</td>
+					<td class="td_table_top" align="center">备份详情</td>
 				</tr>
 			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="td_table_1">器具编号：</td>
-					<td class="td_table_2">${entity.code}</td>
-					<td class="td_table_1">器具名称：</td>
+					<td class="td_table_1">文件/数据库名称：</td>
 					<td class="td_table_2">${entity.name}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">型号：</td>
-					<td class="td_table_2">${empty entity.model ? 'N.A.':entity.model}</td>
-					<td class="td_table_1">所属设备：</td>
-					<td class="td_table_2">${empty entity.equipment ? 'N.A.':entity.equipment}</td>
+					<td class="td_table_1">文件源路径：</td>
+					<td class="td_table_2">${entity.sourcePath}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">厂区：</td>
-					<td class="td_table_2">${empty entity.factoryArea ? 'N.A.':entity.factoryArea}</td>
-					<td class="td_table_1">车间：</td>
-					<td class="td_table_2">${empty entity.workshop ? 'N.A.':entity.workshop}</td>
+					<td class="td_table_1">文件备份路径：</td>
+					<td class="td_table_2">${entity.targetPath}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">所属部门：</td>
-					<td class="td_table_2">${empty entity.deptName ? 'N.A.':entity.deptName}</td>
-					<td class="td_table_1">所在房间：</td>
-					<td class="td_table_2">${empty entity.room ? 'N.A.':entity.room}</td>
+					<td class="td_table_1">备份完成时间：</td>
+					<td class="td_table_2"><fmt:formatDate value="${entity.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				</tr>
 				<tr>
-					<td class="td_table_1">使用方式：</td>
-					<td class="td_table_2">${entity.usageMode==1 ? '常规':entity.usageMode==2 ? '替换':''}</td>
-					<td class="td_table_1">级别：</td>
-					<td class="td_table_2">${empty entity.level ? 'N.A.':entity.level}</td>
+					<td class="td_table_1">源文件MD5：</td>
+					<td class="td_table_2">${entity.sourceMd5}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">功能：</td>
-					<td class="td_table_2">${empty entity.func ? 'N.A.':entity.func}</td>
-					<td class="td_table_1">精度：</td>
-					<td class="td_table_2">${empty entity.precision ? 'N.A.':entity.precision}</td>
+					<td class="td_table_1">备份件MD5：</td>
+					<td class="td_table_2">${entity.targetMd5}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">器具类型：</td>
-					<td class="td_table_2">${empty entity.type ? 'N.A.':entity.type.name}</td>
-					<td class="td_table_1">校准公司：</td>
-					<td class="td_table_2">${empty entity.calibrationComp ? 'N.A.':entity.calibrationComp}</td>
+					<td class="td_table_1">MD5一致：</td>
+					<td class="td_table_2">${entity.sourceMd5 == entity.targetMd5 ? '一致':'不一致'}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">校准规范编号：</td>
-					<td class="td_table_2">${entity.calibration}</td>
-					<td class="td_table_1">校准规范名称：</td>
-					<td class="td_table_2">${entity.calibrationName}</td>
+					<td class="td_table_1">结果：</td>
+					<td class="td_table_2">${entity.name}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">测量范围上限：</td>
-					<td class="td_table_2">${entity.measureRangeMin}</td>
-					<td class="td_table_1">测量范围下限：</td>
-					<td class="td_table_2">${entity.measureRangeMax}</td>
-				</tr>
-				<tr>
-					<td class="td_table_1">校准方式：</td>
-					<td class="td_table_2">${entity.calibrationMode}</td>
-					<td class="td_table_1">校准周期(月)：</td>
-					<td class="td_table_2">${entity.calibrationCycle}</td>
-				</tr>
-				<tr>
-					<td class="td_table_1">上次校准时间：</td>
-					<td class="td_table_2">
-						<c:if test="${empty entity.lastActualDate}">N.A.</c:if>
-						<fmt:formatDate value="${entity.lastActualDate}" pattern="yyyy-MM-dd"/>
-					</td>
-					<td class="td_table_1">待校准时间：</td>
-					<td class="td_table_2"><fmt:formatDate value="${entity.expectDate}" pattern="yyyy-MM-dd"/></td>
+					<td class="td_table_1">说明：</td>
+					<td class="td_table_2">${entity.name}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">
