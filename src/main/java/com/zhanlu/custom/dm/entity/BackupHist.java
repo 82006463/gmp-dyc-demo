@@ -1,10 +1,11 @@
 package com.zhanlu.custom.dm.entity;
 
 import com.zhanlu.framework.common.entity.CodeEntity;
-import com.zhanlu.framework.security.entity.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -23,7 +24,7 @@ public class BackupHist extends CodeEntity {
     //备份结束时间
     private Date endTime;
     //操作方式：1:自动备份, 2:手动备份
-    private Integer opMode;
+    private Integer backupMode;
     //有无更新：1:有更新, 0:无更新
     private Integer updateStatus;
     //成功数量
@@ -76,13 +77,13 @@ public class BackupHist extends CodeEntity {
         this.endTime = endTime;
     }
 
-    @Column(name = "op_mode")
-    public Integer getOpMode() {
-        return opMode;
+    @Column(name = "backup_mode")
+    public Integer getBackupMode() {
+        return backupMode;
     }
 
-    public void setOpMode(Integer opMode) {
-        this.opMode = opMode;
+    public void setBackupMode(Integer backupMode) {
+        this.backupMode = backupMode;
     }
 
     @Column(name = "update_status")

@@ -19,8 +19,9 @@ public class BackupDetail extends CodeEntity {
     private Long tenantId;
     //备份类型：1:file, 2:db
     private Integer bakType;
-    //备份类型ID
+    //备份类型ID、名称
     private Long bakTypeId;
+    private String bakTypeName;
     //文件源路径
     private String sourcePath;
     //备份路径
@@ -69,6 +70,15 @@ public class BackupDetail extends CodeEntity {
 
     public void setBakTypeId(Long bakTypeId) {
         this.bakTypeId = bakTypeId;
+    }
+
+    @Column(name = "bak_type_name", length = 50)
+    public String getBakTypeName() {
+        return bakTypeName;
+    }
+
+    public void setBakTypeName(String bakTypeName) {
+        this.bakTypeName = bakTypeName;
     }
 
     @Column(name = "source_path", length = 260)
