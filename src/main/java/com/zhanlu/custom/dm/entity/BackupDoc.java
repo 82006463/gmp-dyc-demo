@@ -54,7 +54,7 @@ public class BackupDoc extends CodeEntity {
         this.tenantId = tenantId;
     }
 
-    @Column(name = "mac_addr", length = 40)
+    @Column(name = "mac_addr", length = 50)
     public String getMacAddr() {
         return macAddr;
     }
