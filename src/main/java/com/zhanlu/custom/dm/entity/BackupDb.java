@@ -35,9 +35,9 @@ public class BackupDb extends CodeEntity {
     //数据库名
     private String dbName;
     //全量备份频次
-    private String allCronExpr;
+    private String allCron;
     //增量备份频次
-    private String incrCronExpr;
+    private String incrCron;
 
     //操作方式：1:自动备份, 2:手动备份
     private Integer backupMode;
@@ -129,22 +129,22 @@ public class BackupDb extends CodeEntity {
         this.dbName = dbName;
     }
 
-    @Column(name = "all_cron_expr", length = 50)
-    public String getAllCronExpr() {
-        return allCronExpr;
+    @Column(name = "all_cron", length = 50)
+    public String getAllCron() {
+        return allCron;
     }
 
-    public void setAllCronExpr(String allCronExpr) {
-        this.allCronExpr = allCronExpr;
+    public void setAllCron(String allCron) {
+        this.allCron = allCron;
     }
 
-    @Column(name = "incr_cron_expr", length = 50)
-    public String getIncrCronExpr() {
-        return incrCronExpr;
+    @Column(name = "incr_cron", length = 50)
+    public String getIncrCron() {
+        return incrCron;
     }
 
-    public void setIncrCronExpr(String incrCronExpr) {
-        this.incrCronExpr = incrCronExpr;
+    public void setIncrCron(String incrCron) {
+        this.incrCron = incrCron;
     }
 
     @Column(name = "backup_mode")

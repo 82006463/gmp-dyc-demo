@@ -35,7 +35,7 @@ public class BackupDetail extends CodeEntity {
     //备份结束时间
     private Date endTime;
     //Cron表达式
-    private String cronExpr;
+    private String cron;
     //操作方式：1:自动备份, 2:手动备份
     private Integer backupMode;
 
@@ -137,13 +137,13 @@ public class BackupDetail extends CodeEntity {
         this.endTime = endTime;
     }
 
-    @Column(name = "cron_expr", length = 50)
-    public String getCronExpr() {
-        return cronExpr;
+    @Column(name = "cron_", length = 50)
+    public String getCron() {
+        return cron;
     }
 
-    public void setCronExpr(String cronExpr) {
-        this.cronExpr = cronExpr;
+    public void setCron(String cron) {
+        this.cron = cron;
     }
 
     @Column(name = "backup_mode")

@@ -16,6 +16,10 @@ public class ServerSetting extends CodeEntity {
 
     //租户ID
     private Long tenantId;
+    //自动对时状态：0:关闭, 1:开启
+    private Integer autoTimeStatus;
+    //自动对时频次：每天、每周一、每月一号
+    private String autoTimeCron;
 
     //创建者ID、创建时间、修改者ID、修改时间
     private Long createrId;
@@ -30,6 +34,24 @@ public class ServerSetting extends CodeEntity {
 
     public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
+    }
+
+    @Column(name = "auto_time_status")
+    public Integer getAutoTimeStatus() {
+        return autoTimeStatus;
+    }
+
+    public void setAutoTimeCron(String autoTimeCron) {
+        this.autoTimeCron = autoTimeCron;
+    }
+
+    @Column(name = "auto_time_cron", length = 50)
+    public String getAutoTimeCron() {
+        return autoTimeCron;
+    }
+
+    public void setAutoTimeStatus(Integer autoTimeStatus) {
+        this.autoTimeStatus = autoTimeStatus;
     }
 
     @Column(name = "creater_id")
