@@ -20,7 +20,7 @@ import java.util.List;
  * 备份文档
  */
 @Controller
-@RequestMapping(value = "/custom/dm/backupDoc")
+@RequestMapping(value = "/custom/dm/backupDetail")
 public class BackupDetailController {
 
     @Autowired
