@@ -77,19 +77,12 @@
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<c:if test="${item.status > 0}">
-								<shiro:hasPermission name="dm_backupDocdelete">
+								<shiro:hasPermission name="dm_backupDoc_delete">
 									<a href="${ctx}/custom/dm/backupDoc/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 								</shiro:hasPermission>
-								<c:if test="${(item.status==1 || item.status==2 || item.status>=4)}">
-									<shiro:hasPermission name="dm_backupDoc_edit">
-										<a href="${ctx}/custom/dm/backupDoc/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
-									</shiro:hasPermission>
-								</c:if>
-								<c:if test="${(item.status==3) && userId!=item.updaterId}">
-									<shiro:hasPermission name="dm_backupDoc_review">
-										<a href="${ctx}/custom/dm/backupDoc/update/${item.id}" class="btnEdit" title="复核">复核</a>
-									</shiro:hasPermission>
-								</c:if>
+								<shiro:hasPermission name="dm_backupDoc_edit">
+									<a href="${ctx}/custom/dm/backupDoc/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
+								</shiro:hasPermission>
 							</c:if>
 							<a href="${ctx}/custom/dm/backupDoc/view/${item.id}" class="btnView" title="查看">查看</a>
 						</c:if>

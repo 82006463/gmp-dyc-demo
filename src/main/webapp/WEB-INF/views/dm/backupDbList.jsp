@@ -17,7 +17,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/custom/dm/backupDoc" method="get">
+	<form id="mainForm" action="${ctx}/custom/dm/backupDb" method="get">
 		<input type="hidden" name="lookup" value="${lookup}" />
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="orderBy" id="orderBy" value="${page.orderBy}"/>
@@ -43,8 +43,8 @@
 			<tr>
 				<td align="left">
 					<c:if test="${empty lookup}">
-						<shiro:hasPermission name="dm_backupDoc_edit">
-							<input type='button' onclick="addNew('${ctx}/custom/dm/backupDoc/create')" class='button_70px' value='新建'/>
+						<shiro:hasPermission name="dm_backupDb_edit">
+							<input type='button' onclick="addNew('${ctx}/custom/dm/backupDb/create')" class='button_70px' value='新建'/>
 						</shiro:hasPermission>
 					</c:if>
 					<c:if test="${!empty lookup}">
@@ -60,7 +60,8 @@
 				<td align=center width=25% class="td_list_1">任务名称</td>
 				<td align=center width=15% class="td_list_1">客户端</td>
 				<td align=center width=5% class="td_list_1">备份源</td>
-				<td align=center width=10% class="td_list_1">备份频次</td>
+				<td align=center width=10% class="td_list_1">操作方式</td>
+				<td align=center width=10% class="td_list_1">备份方式</td>
 				<td align=center width=10% class="td_list_1">创建时间</td>
 				<td align=center width=5% class="td_list_1">状态</td>
 				<td align=center width=10% class="td_list_1">操作</td>
@@ -71,27 +72,23 @@
 					<td class="td_list_2" align=left>${item.name}</td>
 					<td class="td_list_2" align=left>${item.host}</td>
 					<td class="td_list_2" align=left>${item.bakSource}</td>
-					<td class="td_list_2" align=left>${item.cron}</td>
+					<td class="td_list_2" align=left>${item.backupMode==1 ? '自动备份':item.backupMode==2 ? '手动备份':''}</td>
+					<td class="td_list_2" align=left>${!empty item.allCron ? '全量备份':!empty item.incrCron ? '增量备份':''}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td class="td_list_2" align=left>${item.status <= 0 ? '失效':'正常'}</td>
 					<td class="td_list_2" align=left>
 						<c:if test="${empty lookup}">
 							<c:if test="${item.status > 0}">
-								<shiro:hasPermission name="dm_backupDocdelete">
-									<a href="${ctx}/custom/dm/backupDoc/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+								<shiro:hasPermission name="dm_backupDb_delete">
+									<a href="${ctx}/custom/dm/backupDb/delete/${item.id}" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 								</shiro:hasPermission>
 								<c:if test="${(item.status==1 || item.status==2 || item.status>=4)}">
-									<shiro:hasPermission name="dm_backupDoc_edit">
-										<a href="${ctx}/custom/dm/backupDoc/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
-									</shiro:hasPermission>
-								</c:if>
-								<c:if test="${(item.status==3) && userId!=item.updaterId}">
-									<shiro:hasPermission name="dm_backupDoc_review">
-										<a href="${ctx}/custom/dm/backupDoc/update/${item.id}" class="btnEdit" title="复核">复核</a>
+									<shiro:hasPermission name="dm_backupDb_edit">
+										<a href="${ctx}/custom/dm/backupDb/update/${item.id}" class="btnEdit" title="编辑">编辑</a>
 									</shiro:hasPermission>
 								</c:if>
 							</c:if>
-							<a href="${ctx}/custom/dm/backupDoc/view/${item.id}" class="btnView" title="查看">查看</a>
+							<a href="${ctx}/custom/dm/backupDb/view/${item.id}" class="btnView" title="查看">查看</a>
 						</c:if>
 						<c:if test="${!empty lookup}">
 							<a href="javascript:void(0)" class="btnSelect" title="选择" onclick="bringback('${item.id}','${item.name}')">选择</a>

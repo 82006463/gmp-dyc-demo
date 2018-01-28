@@ -37,7 +37,7 @@
 </head>
 
 <body>
-	<form id="inputForm" action="${ctx}/custom/dm/backupDoc/update" method="post">
+	<form id="inputForm" action="${ctx}/custom/dm/backupDb/update" method="post">
 		<input type="hidden" id="id" name="id" value="${entity.id}"/>
 		<input type="hidden" id="status" name="status" value="${entity.status}"/>
 		<input type="hidden" id="tenantId" name="tenantId" value="${entity.tenantId}"/>
@@ -71,25 +71,44 @@
 			<tr>
 				<td class="td_table_1">备份源<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="bakSource" name="bakSource" class="input_520 validate[required,minSize[1],maxSize[120]]" value="${entity.bakSource}" />
+					<select id="bakSource" name="bakSource" class="input_select validate[required]">
+						<option value="">-请选择-</option>
+						<option value="1" ${entity.bakSource=='sqlserver' ? 'selected="selected"':''}>SQL Server</option>
+						<option value="2" ${entity.bakSource=='mysql' ? 'selected="selected"':''}>MySQL</option>
+						<option value="2" ${entity.bakSource=='oracle' ? 'selected="selected"':''}>Oracle</option>
+					</select>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="td_table_1">登录方式<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_2">
+					<input type="radio" id="loginMode1" name="loginMode" class="input_520 validate[required]" value="1" ${entity.loginMode==1 ? 'checked="checked"':''}/>&nbsp;Windows账户验证
+					<input type="radio" id="loginMode2" name="loginMode" class="input_520 validate[required]" value="2" ${entity.loginMode==2 ? 'checked="checked"':''}/>&nbsp;数据库账号验证
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">备份路径<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">用户名<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="sourcePath" name="sourcePath" class="input_520 validate[required,minSize[1],maxSize[260]]" value="${entity.sourcePath}" />
+					<input type="text" id="loginUsername" name="loginUsername" class="input_520 validate[required,minSize[1],maxSize[40]]" value="${entity.loginUsername}" />
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">备份格式<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">密码<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="includeFormat" name="includeFormat" class="input_520 validate[required,minSize[1],maxSize[40]]" value="${entity.includeFormat}" />
+					<input type="text" id="loginPwd" name="loginPwd" class="input_520 validate[minSize[1],maxSize[40]]" value="${entity.loginPwd}" />
 				</td>
 			</tr>
 			<tr>
-				<td class="td_table_1">排除备份格式<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_1">全量备份频次<b class="requiredWarn">*</b>：</td>
 				<td class="td_table_2">
-					<input type="text" id="excludeFormat" name="excludeFormat" class="input_520 validate[minSize[1],maxSize[40]]" value="${entity.excludeFormat}" />
+					<input type="text" id="allCron" name="allCron" class="input_520 validate[required,minSize[1],maxSize[50]]" value="${entity.allCron}" />
+				</td>
+			</tr>
+			<tr>
+				<td class="td_table_1">增量备份频次<b class="requiredWarn">*</b>：</td>
+				<td class="td_table_2">
+					<input type="text" id="incrCron" name="incrCron" class="input_520 validate[required,minSize[1],maxSize[50]]" value="${entity.incrCron}" />
 				</td>
 			</tr>
 			<tr>
@@ -102,18 +121,12 @@
 					</select>
 				</td>
 			</tr>
-			<tr>
-				<td class="td_table_1">备份频次<b class="requiredWarn">*</b>：</td>
-				<td class="td_table_2">
-					<input type="text" id="cron" name="cron" class="input_520 validate[required,minSize[1],maxSize[50]]" value="${entity.cron}" />
-				</td>
-			</tr>
 		</table>
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr align="left">
 				<td colspan="1">
-					<shiro:hasPermission name="dm_backupDoc_edit">
-						<input type="hidden" id="updaterId" name="updaterId" value="${userId}"/>
+					<input type="hidden" id="updaterId" name="updaterId" value="${userId}"/>
+					<shiro:hasPermission name="dm_backupDb_edit">
 						<input type="submit" class="button_70px" name="submit" value="提交" onclick="$('#status').val(1); return Ops.submit();">
 					</shiro:hasPermission>
 					<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">

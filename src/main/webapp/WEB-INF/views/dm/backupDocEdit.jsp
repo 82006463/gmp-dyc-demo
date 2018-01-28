@@ -112,8 +112,8 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr align="left">
 				<td colspan="1">
+					<input type="hidden" id="updaterId" name="updaterId" value="${userId}"/>
 					<shiro:hasPermission name="dm_backupDoc_edit">
-						<input type="hidden" id="updaterId" name="updaterId" value="${userId}"/>
 						<input type="submit" class="button_70px" name="submit" value="提交" onclick="$('#status').val(1); return Ops.submit();">
 					</shiro:hasPermission>
 					<input type="button" class="button_70px" name="reback" value="返回" onclick="history.back()">
