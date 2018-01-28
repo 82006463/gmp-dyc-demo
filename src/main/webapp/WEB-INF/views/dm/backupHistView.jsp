@@ -19,40 +19,40 @@
 			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="td_table_1">文件/数据库名称：</td>
+					<td class="td_table_1">备份记录号：</td>
+					<td class="td_table_2">${entity.code}</td>
+				</tr>
+				<tr>
+					<td class="td_table_1">客户端：</td>
 					<td class="td_table_2">${entity.name}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">文件源路径：</td>
-					<td class="td_table_2">${entity.sourcePath}</td>
+					<td class="td_table_1">备份类型：</td>
+					<td class="td_table_2">${entity.bakType == 1 ? '文档备份':entity.bakType == 2 ? '数据库备份':''}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">文件备份路径：</td>
-					<td class="td_table_2">${entity.targetPath}</td>
+					<td class="td_table_1">备份开始时间：</td>
+					<td class="td_table_2"><fmt:formatDate value="${entity.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				</tr>
 				<tr>
-					<td class="td_table_1">备份完成时间：</td>
+					<td class="td_table_1">备份结束时间：</td>
 					<td class="td_table_2"><fmt:formatDate value="${entity.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				</tr>
 				<tr>
-					<td class="td_table_1">源文件MD5：</td>
-					<td class="td_table_2">${entity.sourceMd5}</td>
+					<td class="td_table_1">操作方式：</td>
+					<td class="td_table_2">${entity.backupMode == 1 ? '自动备份':entity.backupMode == 2 ? '手动备份':''}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">备份件MD5：</td>
-					<td class="td_table_2">${entity.targetMd5}</td>
+					<td class="td_table_1">有无更新：</td>
+					<td class="td_table_2">${entity.sourceMd5 == entity.targetMd5 ? '无更新':'有更新'}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">MD5一致：</td>
-					<td class="td_table_2">${entity.sourceMd5 == entity.targetMd5 ? '一致':'不一致'}</td>
+					<td class="td_table_1">成功数量：</td>
+					<td class="td_table_2">${entity.successCount}</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">结果：</td>
-					<td class="td_table_2">${entity.name}</td>
-				</tr>
-				<tr>
-					<td class="td_table_1">说明：</td>
-					<td class="td_table_2">${entity.name}</td>
+					<td class="td_table_1">失败数量：</td>
+					<td class="td_table_2">${entity.failCount}</td>
 				</tr>
 			</table>
 			<table align="center" border="0" cellpadding="0" cellspacing="0">

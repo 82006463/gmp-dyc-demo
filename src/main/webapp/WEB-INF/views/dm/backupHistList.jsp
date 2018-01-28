@@ -63,15 +63,15 @@
 				<tr>
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.name}</td>
-					<td class="td_list_2" align=left>${item.bakType == 1 ? '':item.bakType == 2 ? '':''}</td>
+					<td class="td_list_2" align=left>${item.bakType == 1 ? '文档备份':item.bakType == 2 ? '数据库备份':''}</td>
+					<td class="td_list_2" align=left><fmt:formatDate value="${item.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					<td class="td_list_2" align=left>${item.sourceMd5}</td>
-					<td class="td_list_2" align=left>${item.targetMd5}</td>
-					<td class="td_list_2" align=left>${item.sourceMd5 == item.targetMd5 ? '一致':'不一致'}</td>
-					<td class="td_list_2" align=left>${item.sourceMd5}</td>
-					<td class="td_list_2" align=left>${item.targetMd5}</td>
+					<td class="td_list_2" align=left>${item.backupMode == 1 ? '自动备份':item.backupMode == 2 ? '手动备份':''}</td>
+					<td class="td_list_2" align=left>${item.sourceMd5 == item.targetMd5 ? '无更新':'有更新'}</td>
+					<td class="td_list_2" align=left>${item.successCount}</td>
+					<td class="td_list_2" align=left>${item.failCount}</td>
 					<td class="td_list_2" align=left>
-						<a href="${ctx}/custom/dm/backupHist/view?id=${item.id}" class="btnView" title="查看">查看</a>
+						<a href="${ctx}/custom/dm/backupHist/view/${item.id}" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>
 			</c:forEach>
