@@ -63,7 +63,7 @@
 				<tr>
 					<td class="td_list_2" align=left>${item.code}</td>
 					<td class="td_list_2" align=left>${item.name}</td>
-					<td class="td_list_2" align=left>${item.targetPath}</td>
+					<td class="td_list_2" align=left>${item.bakType == 1 ? '':item.bakType == 2 ? '':''}</td>
 					<td class="td_list_2" align=left><fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td class="td_list_2" align=left>${item.sourceMd5}</td>
 					<td class="td_list_2" align=left>${item.targetMd5}</td>
